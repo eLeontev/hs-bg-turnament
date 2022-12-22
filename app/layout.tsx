@@ -2,7 +2,7 @@
 
 import { ApolloProvider } from '@apollo/client';
 
-import { useApollo } from '../lib/apollo-client';
+import { useApollo } from '../lib/graphql.client';
 
 import '../styles/globals.css';
 
