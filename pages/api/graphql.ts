@@ -1,42 +1,16 @@
-import { gql, ApolloServer } from 'apollo-server-micro';
+import { createYoga, createSchema } from 'graphql-yoga';
 
-const typeDefs = gql`
-  type User {
-    id: ID
-    name: String
-  }
-  type Query {
-    users: [User]
-  }
-`;
+import { grapqlUrl } from '../../constants/urls';
 
-const resolvers = {
-  Query: {
-    users: () => [
-      {
-        id: 'Foo',
-        name: 'test user',
-      },
-    ],
-  },
-};
+import { resolvers } from '../../graphql/resolvers';
+import { typeDefs } from '../../graphql/type-defs';
 
-const apolloServer = new ApolloServer({
+const schema = createSchema({
   typeDefs,
   resolvers,
 });
 
-const startServer = apolloServer.start();
-
-export default async function handler(req, res) {
-  await startServer;
-  await apolloServer.createHandler({
-    path: '/api/graphql',
-  })(req, res);
-}
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+export default createYoga({
+  schema,
+  graphqlEndpoint: grapqlUrl,
+});

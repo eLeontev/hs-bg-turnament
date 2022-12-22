@@ -1,9 +1,21 @@
+'use client';
+
+import { ApolloProvider } from '@apollo/client';
+
+import { useApollo } from '../lib/apollo-client';
+
 import '../styles/globals.css';
 
-const RootLayout = ({ children }: any) => (
-  <html lang="en">
-    <body>{children}</body>
-  </html>
-);
+const RootLayout = ({ children }: any) => {
+  const client = useApollo();
+
+  return (
+    <html lang="en">
+      <body>
+        <ApolloProvider client={client}>{children}</ApolloProvider>
+      </body>
+    </html>
+  );
+};
 
 export default RootLayout;
