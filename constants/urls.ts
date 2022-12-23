@@ -1,2 +1,5 @@
 export const grapqlUrl = '/api/graphql';
-export const iniUrl = '/api/init';
+
+export const rootPageUrl = '/';
+export const loginPageUrl = '/login';
+export const gameSearchPageUrl = '/game-search';
