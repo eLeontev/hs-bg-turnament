@@ -6,11 +6,11 @@ import { resolvers } from '../../graphql/resolvers';
 import { typeDefs } from '../../graphql/type-defs';
 
 const schema = createSchema({
-  typeDefs,
-  resolvers,
+    typeDefs,
+    resolvers,
 });
 
 export default createYoga({
-  schema,
-  graphqlEndpoint: grapqlUrl,
+    schema,
+    graphqlEndpoint: grapqlUrl,
 });
