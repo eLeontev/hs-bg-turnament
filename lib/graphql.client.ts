@@ -9,7 +9,7 @@ export const useApollo = () =>
         () =>
             new ApolloClient({
                 uri: `http://localhost:3000${grapqlUrl}`,
-                cache: new InMemoryCache(),
+                cache: new InMemoryCache({}),
             }),
         []
     );

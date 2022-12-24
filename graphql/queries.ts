@@ -13,3 +13,15 @@ export const getUsersQuery = gql`
         }
     }
 `;
+
+export const getPendingGamesQuery = gql`
+    query getPendingGamesQuery {
+        pendingGames {
+            gameId
+            authorId
+            authorLogin
+            createdDate
+            countOfPlayers
+        }
+    }
+`;

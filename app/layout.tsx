@@ -16,6 +16,7 @@ import { noLoginLabel } from '../constants/login.constants';
 import { getLogin } from '../utils.ts/storage.utils';
 
 import '../styles/globals.css';
+import { useSetPlayerId } from '../hooks/player-id.hook';
 
 const Login = ({ router }: { router: AppRouterInstance }) => {
     const login = getLogin();
@@ -33,6 +34,7 @@ const RootLayout = ({ children }: any) => {
     const client = useApollo();
     const router = useRouter();
 
+    useSetPlayerId();
     useRouting(router);
 
     return (

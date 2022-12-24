@@ -6,35 +6,54 @@ import { enterKey, keydownEventType } from '../constants/keyboard.constants';
 import {
     loginNotificationLabel,
     maxLoginLength,
+    noLogin,
 } from '../constants/login.constants';
 
 import { gameSearchPageUrl, loginPageUrl } from '../constants/urls';
-import { clearLogin, getLogin, setLogin } from '../utils.ts/storage.utils';
+import {
+    clearAllLocalStorageValues,
+    setLogin,
+} from '../utils.ts/storage.utils';
 
-export const shouldSkipLogin = (event: KeyboardEvent | MouseEvent) =>
+const shouldSkipLogin = (event: KeyboardEvent | MouseEvent) =>
     event.type === keydownEventType &&
     (event as KeyboardEvent).key !== enterKey;
 
-export const loginHandler = (
-    router: AppRouterInstance,
-    loginRef: RefObject<HTMLInputElement>
-) => {
+const getValidatedLogin = (loginRef: RefObject<HTMLInputElement>): string => {
     if (!loginRef.current) {
-        return;
+        return noLogin;
     }
 
     const trimmedLogin = loginRef.current.value.trim();
-    if (trimmedLogin && trimmedLogin.length < maxLoginLength) {
-        setLogin(trimmedLogin);
-        router.push(gameSearchPageUrl);
+    return trimmedLogin && trimmedLogin.length < maxLoginLength
+        ? trimmedLogin
+        : noLogin;
+};
 
-        return;
-    }
+export const loginAction =
+    (
+        setLogin: (login: string) => void,
+        loginRef: RefObject<HTMLInputElement>
+    ) =>
+    (event: MouseEvent | KeyboardEvent) => {
+        if (shouldSkipLogin(event)) {
+            return;
+        }
 
-    alert(loginNotificationLabel);
+        const validatedLogin = getValidatedLogin(loginRef);
+
+        setLogin(validatedLogin);
+        if (!validatedLogin) {
+            alert(loginNotificationLabel);
+        }
+    };
+
+export const loginHandler = (router: AppRouterInstance, login: string) => {
+    setLogin(login);
+    router.push(gameSearchPageUrl);
 };
 
 export const logoutHandler = (router: AppRouterInstance) => {
-    clearLogin();
+    clearAllLocalStorageValues();
     router.push(loginPageUrl);
 };

@@ -3,6 +3,15 @@ type User {
     name: String
 }
 
+type PendingGame {
+    gameId: ID
+    authorId: String!
+    authorLogin: String!
+    createdDate: String!
+    countOfPlayers: Int!
+}
+
 type Query {
     users: [User!]!
+    pendingGames: [PendingGame]!
 }
