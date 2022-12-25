@@ -8,14 +8,21 @@ import {
 
 import { getHash } from '../../utils.ts/hash-server.utils';
 
-export const createPendingGame = async (body: CreatePendingGameBody) => {
-    pendingGamesStore.pendingGamesAuthorIds.add(body.authorId);
+export const createPendingGame = async ({
+    authorId,
+    authorLogin,
+}: CreatePendingGameBody) => {
+    if (pendingGamesStore.pendingGamesAuthorIds.has(authorId)) {
+        throw new Error('only one game can be created at time');
+    }
+
+    pendingGamesStore.pendingGamesAuthorIds.add(authorId);
     pendingGamesStore.pendingGames = [
         ...pendingGamesStore.pendingGames,
         {
-            authorId: body.authorId,
+            authorId,
             gameId: await getHash(),
-            authorLogin: body.authorLogin,
+            authorLogin: authorLogin,
             createdDate: new Date().toUTCString(),
             countOfPlayers: 1,
         },
@@ -24,6 +31,10 @@ export const createPendingGame = async (body: CreatePendingGameBody) => {
 };
 
 export const deletePendingGame = ({ authorId }: DeletePendingGameBody) => {
+    if (!pendingGamesStore.pendingGamesAuthorIds.has(authorId)) {
+        throw new Error('you are not an author of any game');
+    }
+
     pendingGamesStore.pendingGamesAuthorIds.delete(authorId);
     pendingGamesStore.pendingGames = pendingGamesStore.pendingGames.filter(
         (pendingGame: PendingGame) => pendingGame.authorId !== authorId

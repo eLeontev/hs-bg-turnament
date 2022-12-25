@@ -15,3 +15,12 @@ type Query {
     users: [User!]!
     pendingGames: [PendingGame]!
 }
+
+type Message {
+    message: String!
+}
+
+type Mutation {
+    createPendingGameRequest(authorId: String, authorLogin: String): Message
+    deletePendingGameRequest(authorId: String): Message
+}

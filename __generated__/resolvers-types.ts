@@ -13,6 +13,28 @@ export type Scalars = {
   Float: number;
 };
 
+export type Message = {
+  __typename?: 'Message';
+  message: Scalars['String'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  createPendingGameRequest?: Maybe<Message>;
+  deletePendingGameRequest?: Maybe<Message>;
+};
+
+
+export type MutationCreatePendingGameRequestArgs = {
+  authorId?: InputMaybe<Scalars['String']>;
+  authorLogin?: InputMaybe<Scalars['String']>;
+};
+
+
+export type MutationDeletePendingGameRequestArgs = {
+  authorId?: InputMaybe<Scalars['String']>;
+};
+
 export type PendingGame = {
   __typename?: 'PendingGame';
   authorId: Scalars['String'];
@@ -107,6 +129,8 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
+  Message: ResolverTypeWrapper<Message>;
+  Mutation: ResolverTypeWrapper<{}>;
   PendingGame: ResolverTypeWrapper<PendingGame>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -118,10 +142,22 @@ export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
   ID: Scalars['ID'];
   Int: Scalars['Int'];
+  Message: Message;
+  Mutation: {};
   PendingGame: PendingGame;
   Query: {};
   String: Scalars['String'];
   User: User;
+}>;
+
+export type MessageResolvers<ContextType = any, ParentType extends ResolversParentTypes['Message'] = ResolversParentTypes['Message']> = ResolversObject<{
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  createPendingGameRequest?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, Partial<MutationCreatePendingGameRequestArgs>>;
+  deletePendingGameRequest?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, Partial<MutationDeletePendingGameRequestArgs>>;
 }>;
 
 export type PendingGameResolvers<ContextType = any, ParentType extends ResolversParentTypes['PendingGame'] = ResolversParentTypes['PendingGame']> = ResolversObject<{
@@ -145,6 +181,8 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 }>;
 
 export type Resolvers<ContextType = any> = ResolversObject<{
+  Message?: MessageResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
   PendingGame?: PendingGameResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

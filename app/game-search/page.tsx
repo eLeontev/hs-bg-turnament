@@ -1,15 +1,14 @@
 'use client';
 
-import { useLazyQuery, useQuery } from '@apollo/client';
-import { useState } from 'react';
-
 import { maxCountOfPlayers } from '../../constants/game-config.constants';
-import { usePendingGames } from '../../hooks/pending-games.hook';
+import {
+    useCreatePendingGame,
+    useDeletePendingGame,
+    usePendingGames,
+} from '../../hooks/pending-games.hooks';
 import { PendingGame } from '../../models/pending-games.models';
-import { createPendingGame } from '../../services/pending-games.service';
 import { getPlayerId } from '../../utils.ts/storage.utils';
 
-// TODO:switch to mutations
 const PendingGameComponent = ({
     authorId,
     authorLogin,
@@ -17,6 +16,7 @@ const PendingGameComponent = ({
     countOfPlayers,
 }: PendingGame) => {
     const canDeletePendingGame = authorId === getPlayerId();
+    const onClick = useDeletePendingGame();
 
     return (
         <section>
@@ -24,7 +24,7 @@ const PendingGameComponent = ({
             <b>author login:</b> {authorLogin}
             <b>count of the players:</b> {countOfPlayers}/{maxCountOfPlayers}
             {canDeletePendingGame && (
-                <button onClick={() => {}}>delete your own game</button>
+                <button onClick={onClick}>delete your own game</button>
             )}
         </section>
     );
@@ -64,11 +64,7 @@ const PendingGamesComponent = () => {
 };
 
 const CreateGame = () => {
-    const onClick = async () => {
-        await createPendingGame();
-        alert('new game has been created');
-    };
-
+    const onClick = useCreatePendingGame();
     return <button onClick={onClick}>create new game</button>;
 };
 
