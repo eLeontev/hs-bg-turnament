@@ -10,6 +10,7 @@ import {
     deletePendingGameMutation,
 } from '../graphql/mutations';
 import { getPendingGamesQuery } from '../graphql/queries';
+import { useSocketGameSearch } from '../lib/socket.client';
 import { MutationFn } from '../models/graphql.models';
 import {
     PendingGames,
@@ -28,6 +29,9 @@ export const usePendingGames = () => {
     const [pendingGames, setPendingGames] = useState<PendingGames>(
         data?.pendingGames || noPendingGames
     );
+
+    useSocketGameSearch(setPendingGames);
+
     const [refreshPendingGamesQuery] = useLazyQuery<PendingGamesQuery>(
         getPendingGamesQuery,
         {
@@ -35,6 +39,7 @@ export const usePendingGames = () => {
             notifyOnNetworkStatusChange: true,
         }
     );
+
     const refreshPendingGames = async () => {
         const { data } = await refreshPendingGamesQuery();
         setPendingGames(data?.pendingGames || noPendingGames);

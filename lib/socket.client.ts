@@ -1,38 +1,43 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import io, { Socket } from 'socket.io-client';
+import { socketRoomIds } from '../enums/socket.enums';
+import { PendingGames } from '../models/pending-games.models';
 
-export const useGameSubscription = (socket: Socket) => {
-    const [data, setGameData] = useState();
-
-    useEffect(() => {
-        socket.on('game-data', setGameData);
-
-        return () => {
-            socket.off('game-data');
-        };
-    }, [socket]);
-
-    return data;
-};
+let _socket: Socket;
 
 const initSocketConnection = async (setConnected: (socket: Socket) => void) => {
     await fetch('http://localhost:3000/api/socket');
-    const socket = io();
-    socket.on('connect', () => setConnected(socket));
+
+    if (!_socket) {
+        _socket = io();
+        _socket.on('connect', () => setConnected(_socket));
+    }
 };
 
-export const useSocket = () => {
+export const useSocket = () => useMemo(() => _socket, []);
+
+export const useSocketInitialization = () => {
     const [socket, setSocket] = useState<Socket>();
     useEffect(() => {
-        if (!socket) {
-            initSocketConnection(setSocket);
-            return;
-        }
-
+        initSocketConnection(setSocket);
         return () => {
-            // TODO:list of disconnections
+            socket && socket.off();
         };
     }, [socket]);
 
     return socket;
+};
+
+export const useSocketGameSearch = (
+    setPendingGames: (pendingGames: PendingGames) => void
+) => {
+    const socket = useSocket();
+
+    useEffect(() => {
+        socket.on(socketRoomIds.gameSearch, setPendingGames);
+
+        return () => {
+            socket.off(socketRoomIds.gameSearch);
+        };
+    }, [socket, setPendingGames]);
 };

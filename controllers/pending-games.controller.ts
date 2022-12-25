@@ -20,21 +20,28 @@ import {
     pendingGameCreatedMessage,
     pendingGameDeletedMessage,
 } from '../constants/pending-games.constants';
+import { NextApiResponse } from 'next';
+import { getSocket } from '../utils.ts/socket.utils';
+import { notifyPendingGames } from '../services/server/socket-notification.server.service';
 
 export const createPendingGameHandler = async (
-    body: MutationCreatePendingGameRequestArgs
+    body: MutationCreatePendingGameRequestArgs,
+    res: NextApiResponse
 ): Promise<Message> => {
     const createPendingGameBody = createPendingGameBodyValidator(body);
     await createPendingGame(createPendingGameBody);
+    notifyPendingGames(getSocket(res), getPendingGames());
 
     return pendingGameCreatedMessage;
 };
 
 export const deletePendingGameHandler = (
-    body: MutationDeletePendingGameRequestArgs
+    body: MutationDeletePendingGameRequestArgs,
+    res: NextApiResponse
 ): Message => {
     const deletePendingGameBody = deletePendingGameBodyValidator(body);
     deletePendingGame(deletePendingGameBody);
+    notifyPendingGames(getSocket(res), getPendingGames());
 
     return pendingGameDeletedMessage;
 };

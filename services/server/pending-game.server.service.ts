@@ -1,4 +1,5 @@
 import pendingGamesStore from '../../constants/pending-games.constants';
+import { socketRoomIds } from '../../enums/socket.enums';
 
 import {
     CreatePendingGameBody,
@@ -7,6 +8,7 @@ import {
 } from '../../models/pending-games.models';
 
 import { getHash } from '../../utils.ts/hash-server.utils';
+import { getSocket } from '../../utils.ts/socket.utils';
 
 export const createPendingGame = async ({
     authorId,
