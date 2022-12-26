@@ -31,3 +31,7 @@ export const leavePendingGameBodySchema = z.object({
     playerId: playerIdSchema,
     gameId: gameIdSchema,
 });
+
+export const startPendingGameBodySchema = z.object({
+    playerId: playerIdSchema,
+});

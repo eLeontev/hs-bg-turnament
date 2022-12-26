@@ -8,6 +8,7 @@ import {
     deletePendingGameBodySchema,
     joinPendingGameBodySchema,
     leavePendingGameBodySchema,
+    startPendingGameBodySchema,
 } from '../schemas/pending-games.schemas';
 
 import {
@@ -15,6 +16,7 @@ import {
     MutationDeletePendingGameRequestArgs,
     MutationJoinPendingGameRequestArgs,
     MutationLeavePendingGameRequestArgs,
+    MutationStartPendingGameRequestArgs,
 } from '../__generated__/resolvers-types';
 
 export const createPendingGameBodyValidator = (
@@ -32,3 +34,7 @@ export const joinPendingGameBodyValidator = (
 export const leavePendingGameBodyValidator = (
     body: MutationLeavePendingGameRequestArgs
 ) => leavePendingGameBodySchema.parse(body);
+
+export const startPendingGameBodyValidator = (
+    body: MutationStartPendingGameRequestArgs
+) => startPendingGameBodySchema.parse(body);

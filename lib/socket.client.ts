@@ -20,7 +20,7 @@ const initSocketConnection = async (setConnected: (socket: Socket) => void) => {
 export const useSocket = () => useMemo(() => _socket, []);
 
 export const useSocketInitialization = () => {
-    const [socket, setSocket] = useState<Socket>();
+    const [socket, setSocket] = useState(_socket);
     useEffect(() => {
         initSocketConnection(setSocket);
         return () => {

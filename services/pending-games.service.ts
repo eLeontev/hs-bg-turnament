@@ -4,6 +4,7 @@ import {
     DeletePendingGameBody,
     JoinPendingGameBody,
     LeavePendingGameBody,
+    StartPendingGameBody,
 } from '../models/pending-games.models';
 
 import { getLogin, getPlayerId } from '../utils.ts/storage.utils';
@@ -12,6 +13,7 @@ import {
     deletePendingGameBodyValidator,
     joinPendingGameBodyValidator,
     leavePendingGameBodyValidator,
+    startPendingGameBodyValidator,
 } from '../validators/pending-games.validators';
 
 import { Message } from '../__generated__/resolvers-types';
@@ -54,6 +56,15 @@ export const leavePendingGame = (
     leavePendingGameHandler({
         variables: leavePendingGameBodyValidator({
             gameId,
+            playerId: getPlayerId(),
+        }),
+    });
+
+export const startPendingGame = (
+    startPendingGameHandler: MutationFn<Message, StartPendingGameBody>
+) =>
+    startPendingGameHandler({
+        variables: startPendingGameBodyValidator({
             playerId: getPlayerId(),
         }),
     });

@@ -33,4 +33,5 @@ type Mutation {
         playerLogin: String
     ): Message
     leavePendingGameRequest(gameId: String!, playerId: String): Message
+    startPendingGameRequest(playerId: String): Message
 }

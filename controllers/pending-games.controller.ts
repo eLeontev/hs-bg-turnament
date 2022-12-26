@@ -4,6 +4,7 @@ import {
     getPendingGames,
     joinPendingGame,
     leavePendingGame,
+    startPendingGame,
 } from '../services/server/pending-game.server.service';
 
 import {
@@ -11,6 +12,7 @@ import {
     deletePendingGameBodyValidator,
     joinPendingGameBodyValidator,
     leavePendingGameBodyValidator,
+    startPendingGameBodyValidator,
 } from '../validators/pending-games.validators';
 
 import { withErrorHandler, withoutParent } from '../utils.ts/resolver.utils';
@@ -21,12 +23,14 @@ import {
     MutationDeletePendingGameRequestArgs,
     MutationJoinPendingGameRequestArgs,
     MutationLeavePendingGameRequestArgs,
+    MutationStartPendingGameRequestArgs,
 } from '../__generated__/resolvers-types';
 import {
     pendingGameCreatedMessage,
     pendingGameDeletedMessage,
     pendingGameJoinMessage,
     pendingGameLeaveMessage,
+    pendingGameStartMessage,
 } from '../constants/pending-games.constants';
 import { NextApiResponse } from 'next';
 import { getSocket } from '../utils.ts/socket.utils';
@@ -34,6 +38,7 @@ import {
     notifyPendingGames,
     notifyPlayerLeavePendingGame,
     notifyPlayerJoinPendingGame,
+    notifyStartPendingGame,
 } from '../services/server/socket-notification.server.service';
 
 export const createPendingGameHandler = async (
@@ -91,6 +96,20 @@ export const leavePendingGameHandler = (
     return pendingGameLeaveMessage;
 };
 
+export const startPendingGameHandler = (
+    body: MutationStartPendingGameRequestArgs,
+    res: NextApiResponse
+) => {
+    const startPendingGameBody = startPendingGameBodyValidator(body);
+    const gameId = startPendingGame(startPendingGameBody);
+
+    const socketServer = getSocket(res);
+    notifyPendingGames(socketServer, getPendingGames());
+    notifyStartPendingGame(socketServer, gameId);
+
+    return pendingGameStartMessage;
+};
+
 export const getPendingGamesRequest = getPendingGames;
 export const createPendingGameRequest = withoutParent(
     withErrorHandler(createPendingGameHandler)
@@ -104,4 +123,8 @@ export const joinPendingGameRequest = withoutParent(
 );
 export const leavePendingGameRequest = withoutParent(
     withErrorHandler(leavePendingGameHandler)
+);
+
+export const startPendingGameRequest = withoutParent(
+    withErrorHandler(startPendingGameHandler)
 );

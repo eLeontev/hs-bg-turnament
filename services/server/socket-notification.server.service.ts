@@ -2,12 +2,17 @@ import { Server } from 'Socket.IO';
 
 import { socketRoomIds } from '../../enums/socket.enums';
 import { PendingGames } from '../../models/pending-games.models';
-import { getJoinLeavePendingGameEventName } from '../../utils.ts/socket.utils';
+import {
+    getJoinLeavePendingGameEventName,
+    getStartPendingGameEventName,
+} from '../../utils.ts/socket.utils';
 
 export type SocketRoomData = {
     [socketRoomIds.gameSearch]: PendingGames;
     [socketRoomIds.joinLeavePendingGame]: never;
+    [socketRoomIds.startPendingGame]: never;
 };
+
 const emitData = <T extends socketRoomIds>(
     socketServer: Server,
     roomId: T,
@@ -36,3 +41,6 @@ export const notifyPlayerLeavePendingGame = (
     socketServer: Server,
     playerId: string
 ) => notifyPlayerJoinLeavePendingGame(socketServer, playerId);
+
+export const notifyStartPendingGame = (socketServer: Server, gameId: string) =>
+    socketServer.emit(getStartPendingGameEventName(gameId), 'game started');

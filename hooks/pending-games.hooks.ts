@@ -4,17 +4,20 @@ import {
     useMutation,
     useQuery,
 } from '@apollo/client';
-import { RefObject, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { RefObject, useEffect, useState } from 'react';
 import { noLogin } from '../constants/login.constants';
 import { pendingGameNameErrorMessage } from '../constants/pending-games.constants';
+import { gamePlayPageUrl } from '../constants/urls';
 import {
     createPendingGameMutation,
     deletePendingGameMutation,
     joinPendingGameMutation,
     leavePendingGameMutation,
+    startPendingGameMutation,
 } from '../graphql/mutations';
 import { getPendingGamesQuery } from '../graphql/queries';
-import { useSocketGameSearch } from '../lib/socket.client';
+import { useSocket, useSocketGameSearch } from '../lib/socket.client';
 import { MutationFn } from '../models/graphql.models';
 import {
     PendingGames,
@@ -26,7 +29,9 @@ import {
     deletePendingGame,
     joinPendingGame,
     leavePendingGame,
+    startPendingGame,
 } from '../services/pending-games.service';
+import { getStartPendingGameEventName } from '../utils.ts/socket.utils';
 import { Message } from '../__generated__/resolvers-types';
 
 const noPendingGames: PendingGames = [];
@@ -116,12 +121,31 @@ export const useJoinPendingGame = () => {
     return (gameId: string) => action(gameId);
 };
 
-export const useLeavePendingGame = () => {
+export const useStartPendingGame = () =>
+    usePendingGameMutation(
+        startPendingGameMutation,
+        startPendingGame,
+        'new game has been started'
+    );
+
+export const useLeavePendingGame = (gameId: string) => {
+    const socket = useSocket();
+    const router = useRouter();
+
+    useEffect(() => {
+        const eventName = getStartPendingGameEventName(gameId);
+        socket.on(eventName, () => {
+            socket.off(eventName);
+            router.push(gamePlayPageUrl);
+        });
+        // TODO: how to handle memory leak
+    }, [socket, router, gameId]);
+
     const action = usePendingGameMutation(
         leavePendingGameMutation,
         leavePendingGame,
         'left the game'
     );
 
-    return (gameId: string) => action(gameId);
+    return () => action(gameId);
 };

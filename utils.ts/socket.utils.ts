@@ -7,3 +7,6 @@ export const getSocket = (res: NextApiResponse): Server =>
 
 export const getJoinLeavePendingGameEventName = (playerId: string) =>
     `${socketRoomIds.joinLeavePendingGame}: ${playerId}`;
+
+export const getStartPendingGameEventName = (gameId: string) =>
+    `${socketRoomIds.startPendingGame}: ${gameId}`;

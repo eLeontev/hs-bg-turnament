@@ -8,6 +8,7 @@ import {
     useJoinPendingGame,
     useLeavePendingGame,
     usePendingGames,
+    useStartPendingGame,
 } from '../../hooks/pending-games.hooks';
 import { useSocketJoinLeavePendingGame } from '../../lib/socket.client';
 import { PendingGame, PendingGames } from '../../models/pending-games.models';
@@ -28,6 +29,7 @@ const PendingGameComponent = ({
 
     const deletePendingGame = useDeletePendingGame();
     const joinPendingGame = useJoinPendingGame();
+    const startPendingGame = useStartPendingGame();
 
     return (
         <section>
@@ -36,9 +38,12 @@ const PendingGameComponent = ({
             <b>game name:</b> {gameName}
             <b>count of the players:</b> {players.length}/{maxCountOfPlayers}
             {canDeletePendingGame && (
-                <button onClick={() => deletePendingGame(gameId)}>
-                    delete your own game
-                </button>
+                <section>
+                    <button onClick={startPendingGame}>start the game</button>
+                    <button onClick={() => deletePendingGame(gameId)}>
+                        delete your own game
+                    </button>
+                </section>
             )}
             {canJoinPendingGame && (
                 <button onClick={() => joinPendingGame(gameId)}>
@@ -118,13 +123,13 @@ const JoinedGameDetails = ({
 }: PendingGame) => {
     const playerId = getPlayerId();
 
-    const leavePendingGame = useLeavePendingGame();
+    const leavePendingGame = useLeavePendingGame(gameId);
     const canLeavePendingGame = authorId !== playerId;
 
     return (
         <section>
             {canLeavePendingGame && (
-                <button onClick={() => leavePendingGame(gameId)}>
+                <button onClick={() => leavePendingGame()}>
                     leave the game
                 </button>
             )}

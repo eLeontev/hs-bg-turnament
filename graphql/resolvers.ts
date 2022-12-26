@@ -6,6 +6,7 @@ import {
     getPendingGamesRequest,
     joinPendingGameRequest,
     leavePendingGameRequest,
+    startPendingGameRequest,
 } from '../controllers/pending-games.controller';
 
 export const resolvers: Resolvers = {
@@ -17,5 +18,6 @@ export const resolvers: Resolvers = {
         deletePendingGameRequest,
         joinPendingGameRequest,
         leavePendingGameRequest,
+        startPendingGameRequest,
     },
 };

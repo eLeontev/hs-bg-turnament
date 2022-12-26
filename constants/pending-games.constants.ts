@@ -21,6 +21,10 @@ export const pendingGameLeaveMessage: Message = {
     message: 'you left the pending game',
 };
 
+export const pendingGameStartMessage: Message = {
+    message: 'the game has started',
+};
+
 export const pendingGameNameErrorMessage = `game name length should be between the range ${minGameNameLength} and ${maxGameNameLength}`;
 
 const pendingGamesStore = {

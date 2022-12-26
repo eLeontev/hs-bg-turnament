@@ -7,6 +7,7 @@ import {
     JoinPendingGameBody,
     LeavePendingGameBody,
     PendingGame,
+    StartPendingGameBody,
 } from '../../models/pending-games.models';
 
 import { getHash } from '../../utils.ts/hash-server.utils';
@@ -127,6 +128,25 @@ export const leavePendingGame = ({
 
     console.log('leave', joinedPendingGame);
     updatePendingGame(joinedPendingGame);
+};
+
+export const startPendingGame = ({ playerId }: StartPendingGameBody) => {
+    const pendingGameToStart = pendingGamesStore.pendingGames.find(
+        ({ authorId }) => authorId === playerId
+    );
+
+    if (!pendingGameToStart) {
+        throw new Error(
+            'the game where you are an author is not found (only author of the game can start it)'
+        );
+    }
+
+    const { gameId } = pendingGameToStart;
+
+    console.log('start', gameId);
+    deletePendingGame({ authorId: playerId });
+
+    return gameId;
 };
 
 export const getPendingGames = () => {

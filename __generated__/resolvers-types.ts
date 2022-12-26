@@ -25,6 +25,7 @@ export type Mutation = {
   deletePendingGameRequest?: Maybe<Message>;
   joinPendingGameRequest?: Maybe<Message>;
   leavePendingGameRequest?: Maybe<Message>;
+  startPendingGameRequest?: Maybe<Message>;
 };
 
 
@@ -49,6 +50,11 @@ export type MutationJoinPendingGameRequestArgs = {
 
 export type MutationLeavePendingGameRequestArgs = {
   gameId: Scalars['String'];
+  playerId?: InputMaybe<Scalars['String']>;
+};
+
+
+export type MutationStartPendingGameRequestArgs = {
   playerId?: InputMaybe<Scalars['String']>;
 };
 
@@ -175,6 +181,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deletePendingGameRequest?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, Partial<MutationDeletePendingGameRequestArgs>>;
   joinPendingGameRequest?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<MutationJoinPendingGameRequestArgs, 'gameId'>>;
   leavePendingGameRequest?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<MutationLeavePendingGameRequestArgs, 'gameId'>>;
+  startPendingGameRequest?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, Partial<MutationStartPendingGameRequestArgs>>;
 }>;
 
 export type PendingGameResolvers<ContextType = any, ParentType extends ResolversParentTypes['PendingGame'] = ResolversParentTypes['PendingGame']> = ResolversObject<{
