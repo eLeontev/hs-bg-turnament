@@ -4,7 +4,9 @@ import {
     useMutation,
     useQuery,
 } from '@apollo/client';
-import { useState } from 'react';
+import { RefObject, useState } from 'react';
+import { noLogin } from '../constants/login.constants';
+import { pendingGameNameErrorMessage } from '../constants/pending-games.constants';
 import {
     createPendingGameMutation,
     deletePendingGameMutation,
@@ -13,9 +15,11 @@ import { getPendingGamesQuery } from '../graphql/queries';
 import { useSocketGameSearch } from '../lib/socket.client';
 import { MutationFn } from '../models/graphql.models';
 import {
+    PendingGameMutationConfig,
     PendingGames,
     PendingGamesQuery,
 } from '../models/pending-games.models';
+import { gameNameSchema } from '../schemas/pending-games.schemas';
 import {
     createPendingGame,
     deletePendingGame,
@@ -50,14 +54,17 @@ export const usePendingGames = () => {
 
 const usePendingGameMutation = <R, B>(
     mutation: DocumentNode,
-    serviceAction: (mutationFn: MutationFn<Message, B>) => R,
+    serviceAction: (
+        mutationFn: MutationFn<Message, B>,
+        config?: PendingGameMutationConfig<B>
+    ) => R,
     successMessage: string
 ) => {
     const [pendingGameMutation] = useMutation<Message, B>(mutation);
 
-    const action = async () => {
+    const action = async (config?: PendingGameMutationConfig<B>) => {
         try {
-            await serviceAction(pendingGameMutation);
+            await serviceAction(pendingGameMutation, config);
             alert(successMessage);
         } catch (e) {
             alert((e as { message: string }).message);
@@ -67,12 +74,30 @@ const usePendingGameMutation = <R, B>(
     return action;
 };
 
-export const useCreatePendingGame = () =>
-    usePendingGameMutation(
+export const useCreatePendingGame = (
+    gameNameRef: RefObject<HTMLInputElement>
+) => {
+    const action = usePendingGameMutation(
         createPendingGameMutation,
         createPendingGame,
         'new game has been created'
     );
+
+    return () => {
+        const validationResult = gameNameSchema.safeParse(
+            gameNameRef.current?.value
+        );
+        const gameName = validationResult.success
+            ? validationResult.data
+            : noLogin;
+
+        if (!gameName) {
+            return alert(pendingGameNameErrorMessage);
+        }
+
+        action({ gameName });
+    };
+};
 
 export const useDeletePendingGame = () =>
     usePendingGameMutation(

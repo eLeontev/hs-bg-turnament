@@ -19,6 +19,7 @@ export const getPendingGamesQuery = gql`
         pendingGames {
             gameId
             authorId
+            gameName
             authorLogin
             createdDate
             countOfPlayers

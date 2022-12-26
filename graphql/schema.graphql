@@ -5,6 +5,7 @@ type User {
 
 type PendingGame {
     gameId: ID
+    gameName: String!
     authorId: String!
     authorLogin: String!
     createdDate: String!
@@ -21,6 +22,10 @@ type Message {
 }
 
 type Mutation {
-    createPendingGameRequest(authorId: String, authorLogin: String): Message
+    createPendingGameRequest(
+        authorId: String
+        authorLogin: String
+        gameName: String
+    ): Message
     deletePendingGameRequest(authorId: String): Message
 }

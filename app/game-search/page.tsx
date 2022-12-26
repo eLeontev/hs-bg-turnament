@@ -1,5 +1,6 @@
 'use client';
 
+import { RefObject, useRef } from 'react';
 import { maxCountOfPlayers } from '../../constants/game-config.constants';
 import {
     useCreatePendingGame,
@@ -11,6 +12,7 @@ import { getPlayerId } from '../../utils.ts/storage.utils';
 
 const PendingGameComponent = ({
     authorId,
+    gameName,
     authorLogin,
     createdDate,
     countOfPlayers,
@@ -22,9 +24,10 @@ const PendingGameComponent = ({
         <section>
             <b>game created:</b> {createdDate}
             <b>author login:</b> {authorLogin}
+            <b>game name:</b> {gameName}
             <b>count of the players:</b> {countOfPlayers}/{maxCountOfPlayers}
             {canDeletePendingGame && (
-                <button onClick={onClick}>delete your own game</button>
+                <button onClick={() => onClick()}>delete your own game</button>
             )}
         </section>
     );
@@ -63,14 +66,32 @@ const PendingGamesComponent = () => {
     );
 };
 
-const CreateGame = () => {
-    const onClick = useCreatePendingGame();
+const CreateGameWithName = () => {
+    const gameNameRef = useRef<HTMLInputElement>(null);
+
+    return (
+        <>
+            <label>
+                Please enter game name before to create it:
+                <input type="text" ref={gameNameRef} />
+            </label>
+            <CreateGame gameNameRef={gameNameRef}></CreateGame>
+        </>
+    );
+};
+
+const CreateGame = ({
+    gameNameRef,
+}: {
+    gameNameRef: RefObject<HTMLInputElement>;
+}) => {
+    const onClick = useCreatePendingGame(gameNameRef);
     return <button onClick={onClick}>create new game</button>;
 };
 
 const GameSearch = () => (
     <section>
-        <CreateGame></CreateGame>
+        <CreateGameWithName></CreateGameWithName>
         <PendingGamesComponent></PendingGamesComponent>
     </section>
 );

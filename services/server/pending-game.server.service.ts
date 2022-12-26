@@ -13,6 +13,7 @@ import { getSocket } from '../../utils.ts/socket.utils';
 export const createPendingGame = async ({
     authorId,
     authorLogin,
+    gameName,
 }: CreatePendingGameBody) => {
     if (pendingGamesStore.pendingGamesAuthorIds.has(authorId)) {
         throw new Error('only one game can be created at time');
@@ -23,6 +24,7 @@ export const createPendingGame = async ({
         ...pendingGamesStore.pendingGames,
         {
             authorId,
+            gameName,
             gameId: await getHash(),
             authorLogin: authorLogin,
             createdDate: new Date().toUTCString(),

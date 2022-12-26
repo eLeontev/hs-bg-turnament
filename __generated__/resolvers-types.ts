@@ -28,6 +28,7 @@ export type Mutation = {
 export type MutationCreatePendingGameRequestArgs = {
   authorId?: InputMaybe<Scalars['String']>;
   authorLogin?: InputMaybe<Scalars['String']>;
+  gameName?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -42,6 +43,7 @@ export type PendingGame = {
   countOfPlayers: Scalars['Int'];
   createdDate: Scalars['String'];
   gameId?: Maybe<Scalars['ID']>;
+  gameName: Scalars['String'];
 };
 
 export type Query = {
@@ -166,6 +168,7 @@ export type PendingGameResolvers<ContextType = any, ParentType extends Resolvers
   countOfPlayers?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   createdDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   gameId?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  gameName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
