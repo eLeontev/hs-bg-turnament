@@ -3,7 +3,10 @@ import { z } from 'zod';
 import {
     createPendingGameBodySchema,
     deletePendingGameBodySchema,
+    joinPendingGameBodySchema,
+    leavePendingGameBodySchema,
 } from '../schemas/pending-games.schemas';
+import { Players } from './player-id.models';
 
 export type PendingGame = {
     authorId: string;
@@ -11,7 +14,7 @@ export type PendingGame = {
     gameName: string;
     authorLogin: string;
     createdDate: string;
-    countOfPlayers: number;
+    players: Players;
 };
 export type PendingGames = Array<PendingGame>;
 
@@ -20,4 +23,5 @@ export type PendingGamesQuery = { pendingGames: PendingGames };
 export type CreatePendingGameBody = z.infer<typeof createPendingGameBodySchema>;
 export type DeletePendingGameBody = z.infer<typeof deletePendingGameBodySchema>;
 
-export type PendingGameMutationConfig<B> = Partial<B>;
+export type JoinPendingGameBody = z.infer<typeof joinPendingGameBodySchema>;
+export type LeavePendingGameBody = z.infer<typeof leavePendingGameBodySchema>;

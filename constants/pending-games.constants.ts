@@ -13,6 +13,14 @@ export const pendingGameDeletedMessage: Message = {
     message: 'pending game deleted',
 };
 
+export const pendingGameJoinMessage: Message = {
+    message: 'you joined to the pending game',
+};
+
+export const pendingGameLeaveMessage: Message = {
+    message: 'you left the pending game',
+};
+
 export const pendingGameNameErrorMessage = `game name length should be between the range ${minGameNameLength} and ${maxGameNameLength}`;
 
 const pendingGamesStore = {

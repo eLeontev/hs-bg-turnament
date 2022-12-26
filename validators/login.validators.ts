@@ -1,5 +1,5 @@
 import { RefObject } from 'react';
-import { loginSchema } from '../schemas/login.schemas';
+import { playerLoginSchema } from '../schemas/player.schemas';
 
 const noLogin = ''; // TODO:improve valdiation flow
 
@@ -10,6 +10,6 @@ export const loginValidator = (
         return noLogin;
     }
 
-    const res = loginSchema.safeParse(loginRef.current.value.trim());
+    const res = playerLoginSchema.safeParse(loginRef.current.value.trim());
     return res.success ? res.data : noLogin;
 };

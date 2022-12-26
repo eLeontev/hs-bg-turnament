@@ -10,12 +10,13 @@ import { pendingGameNameErrorMessage } from '../constants/pending-games.constant
 import {
     createPendingGameMutation,
     deletePendingGameMutation,
+    joinPendingGameMutation,
+    leavePendingGameMutation,
 } from '../graphql/mutations';
 import { getPendingGamesQuery } from '../graphql/queries';
 import { useSocketGameSearch } from '../lib/socket.client';
 import { MutationFn } from '../models/graphql.models';
 import {
-    PendingGameMutationConfig,
     PendingGames,
     PendingGamesQuery,
 } from '../models/pending-games.models';
@@ -23,6 +24,8 @@ import { gameNameSchema } from '../schemas/pending-games.schemas';
 import {
     createPendingGame,
     deletePendingGame,
+    joinPendingGame,
+    leavePendingGame,
 } from '../services/pending-games.service';
 import { Message } from '../__generated__/resolvers-types';
 
@@ -52,17 +55,14 @@ export const usePendingGames = () => {
     return { pendingGames, loading, refreshPendingGames };
 };
 
-const usePendingGameMutation = <R, B>(
+const usePendingGameMutation = <R, B, C>(
     mutation: DocumentNode,
-    serviceAction: (
-        mutationFn: MutationFn<Message, B>,
-        config?: PendingGameMutationConfig<B>
-    ) => R,
+    serviceAction: (mutationFn: MutationFn<Message, B>, config: C) => R,
     successMessage: string
 ) => {
     const [pendingGameMutation] = useMutation<Message, B>(mutation);
 
-    const action = async (config?: PendingGameMutationConfig<B>) => {
+    const action = async (config: C) => {
         try {
             await serviceAction(pendingGameMutation, config);
             alert(successMessage);
@@ -95,7 +95,7 @@ export const useCreatePendingGame = (
             return alert(pendingGameNameErrorMessage);
         }
 
-        action({ gameName });
+        action(gameName);
     };
 };
 
@@ -105,3 +105,23 @@ export const useDeletePendingGame = () =>
         deletePendingGame,
         'new game has been deleted'
     );
+
+export const useJoinPendingGame = () => {
+    const action = usePendingGameMutation(
+        joinPendingGameMutation,
+        joinPendingGame,
+        'joined to the game'
+    );
+
+    return (gameId: string) => action(gameId);
+};
+
+export const useLeavePendingGame = () => {
+    const action = usePendingGameMutation(
+        leavePendingGameMutation,
+        leavePendingGame,
+        'left the game'
+    );
+
+    return (gameId: string) => action(gameId);
+};

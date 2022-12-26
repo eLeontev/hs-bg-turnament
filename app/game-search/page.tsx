@@ -5,29 +5,45 @@ import { maxCountOfPlayers } from '../../constants/game-config.constants';
 import {
     useCreatePendingGame,
     useDeletePendingGame,
+    useJoinPendingGame,
+    useLeavePendingGame,
     usePendingGames,
 } from '../../hooks/pending-games.hooks';
-import { PendingGame } from '../../models/pending-games.models';
+import { useSocketJoinLeavePendingGame } from '../../lib/socket.client';
+import { PendingGame, PendingGames } from '../../models/pending-games.models';
 import { getPlayerId } from '../../utils.ts/storage.utils';
 
 const PendingGameComponent = ({
     authorId,
     gameName,
+    gameId,
     authorLogin,
     createdDate,
-    countOfPlayers,
+    players,
 }: PendingGame) => {
-    const canDeletePendingGame = authorId === getPlayerId();
-    const onClick = useDeletePendingGame();
+    const playerId = getPlayerId();
+
+    const canDeletePendingGame = authorId === playerId;
+    const canJoinPendingGame = authorId !== playerId;
+
+    const deletePendingGame = useDeletePendingGame();
+    const joinPendingGame = useJoinPendingGame();
 
     return (
         <section>
             <b>game created:</b> {createdDate}
             <b>author login:</b> {authorLogin}
             <b>game name:</b> {gameName}
-            <b>count of the players:</b> {countOfPlayers}/{maxCountOfPlayers}
+            <b>count of the players:</b> {players.length}/{maxCountOfPlayers}
             {canDeletePendingGame && (
-                <button onClick={() => onClick()}>delete your own game</button>
+                <button onClick={() => deletePendingGame(gameId)}>
+                    delete your own game
+                </button>
+            )}
+            {canJoinPendingGame && (
+                <button onClick={() => joinPendingGame(gameId)}>
+                    join to the game
+                </button>
             )}
         </section>
     );
@@ -62,6 +78,7 @@ const PendingGamesComponent = () => {
             ) : (
                 <b>no games found</b>
             )}
+            <JoinedPendingGame pendingGames={pendingGames}></JoinedPendingGame>
         </section>
     );
 };
@@ -77,6 +94,53 @@ const CreateGameWithName = () => {
             </label>
             <CreateGame gameNameRef={gameNameRef}></CreateGame>
         </>
+    );
+};
+
+const JoinedPendingGame = ({
+    pendingGames,
+}: {
+    pendingGames: PendingGames;
+}) => {
+    const pendingGame = useSocketJoinLeavePendingGame(pendingGames);
+    return pendingGame ? (
+        <JoinedGameDetails {...pendingGame}></JoinedGameDetails>
+    ) : (
+        <>you do not have joined to any game yet</>
+    );
+};
+
+const JoinedGameDetails = ({
+    authorId,
+    gameName,
+    players,
+    gameId,
+}: PendingGame) => {
+    const playerId = getPlayerId();
+
+    const leavePendingGame = useLeavePendingGame();
+    const canLeavePendingGame = authorId !== playerId;
+
+    return (
+        <section>
+            {canLeavePendingGame && (
+                <button onClick={() => leavePendingGame(gameId)}>
+                    leave the game
+                </button>
+            )}
+            <p>
+                <b>Game name:</b> {gameName}
+            </p>
+            <p>List of players</p>
+            <ul>
+                {players.map(({ playerLogin, playerId: gamePlayerId }) => (
+                    <li key={gamePlayerId}>
+                        <b>{playerLogin}</b>
+                        {gamePlayerId === playerId ? '- it is you' : null}
+                    </li>
+                ))}
+            </ul>
+        </section>
     );
 };
 

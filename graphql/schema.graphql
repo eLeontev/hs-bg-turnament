@@ -1,6 +1,6 @@
-type User {
-    id: ID
-    name: String
+type Player {
+    playerId: String!
+    playerLogin: String!
 }
 
 type PendingGame {
@@ -9,11 +9,10 @@ type PendingGame {
     authorId: String!
     authorLogin: String!
     createdDate: String!
-    countOfPlayers: Int!
+    players: [Player!]!
 }
 
 type Query {
-    users: [User!]!
     pendingGames: [PendingGame]!
 }
 
@@ -28,4 +27,10 @@ type Mutation {
         gameName: String
     ): Message
     deletePendingGameRequest(authorId: String): Message
+    joinPendingGameRequest(
+        gameId: String!
+        playerId: String
+        playerLogin: String
+    ): Message
+    leavePendingGameRequest(gameId: String!, playerId: String): Message
 }
