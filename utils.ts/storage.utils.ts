@@ -7,14 +7,10 @@ enum localStorageKeys {
 
 const noValue = '';
 
-const inBrowser = <T>(cb: () => T): T | null =>
-    typeof localStorage !== 'undefined' ? cb() : null;
+const setItem = (key: localStorageKeys, value: string) =>
+    localStorage.setItem(key, value);
 
-const setItem = (key: localStorageKeys, value: string): null | void =>
-    inBrowser(() => localStorage.setItem(key, value));
-
-const getItem = (key: localStorageKeys) =>
-    inBrowser(() => localStorage.getItem(key));
+const getItem = (key: localStorageKeys) => localStorage.getItem(key);
 
 export const setLogin = (login: string): void | null =>
     setItem(localStorageKeys.login, login);
