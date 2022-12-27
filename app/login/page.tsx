@@ -1,23 +1,15 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useRef, RefObject, useState, Dispatch, SetStateAction } from 'react';
-import { noLogin } from '../../constants/login.constants';
+import { useRef } from 'react';
 
-import { loginAction, loginHandler } from '../../services/login.service';
-
-const LoginDefinition = ({ login }: { login: string }) => {
-    const router = useRouter();
-    loginHandler(router, login);
-
-    return <>loading...</>;
-};
+import { loginAction } from '../../services/login.service';
 
 const Login = () => {
-    const [login, setLogin] = useState(noLogin);
     const loginRef = useRef<HTMLInputElement>(null);
+    const router = useRouter();
 
-    const onLogin = loginAction(setLogin, loginRef);
+    const onLogin = loginAction(loginRef, router);
 
     return (
         <section>
@@ -34,7 +26,6 @@ const Login = () => {
                 </label>
                 <button onClick={onLogin}>Login</button>
             </section>
-            {login && <LoginDefinition login={login} />}
         </section>
     );
 };

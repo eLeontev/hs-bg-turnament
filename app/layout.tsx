@@ -1,50 +1,47 @@
 'use client';
 
+import { ReactElement, useEffect, useState } from 'react';
 import { ApolloProvider } from '@apollo/client';
 
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
-import { useRouter } from 'next/navigation';
-
-import { logoutHandler } from '../services/login.service';
-
-import { useRouting } from '../hooks/routing.hook';
+import { Navigation } from '../ui/components/navigation';
 
 import { useApollo } from '../lib/graphql.client';
 
-import { noLoginLabel } from '../constants/login.constants';
-
-import { getLogin } from '../utils.ts/storage.utils';
-
 import '../styles/globals.css';
-import { useSetPlayerId } from '../hooks/player-id.hook';
 
-const Login = ({ router }: { router: AppRouterInstance }) => {
-    const login = getLogin();
-
-    return login ? (
-        <button onClick={() => logoutHandler(router)}>
-            {login} {'>'} logout
-        </button>
-    ) : (
-        <span>{noLoginLabel}</span>
-    );
+export type LayoutProps = {
+    children: ReactElement;
 };
 
-const RootLayout = ({ children }: any) => {
-    const client = useApollo();
-    const router = useRouter();
+const BrowserProvider = ({ children }: LayoutProps) => {
+    const [isMounted, setMounted] = useState(false);
+    useEffect(() => setMounted(true), []);
 
-    useSetPlayerId();
-    useRouting(router);
+    if (!isMounted) {
+        return null;
+    }
+
+    return children;
+};
+
+const RootContent = ({ children }: LayoutProps) => {
+    const client = useApollo();
 
     return (
-        <html lang="en">
-            <body>
-                <Login router={router} />
-                <ApolloProvider client={client}>{children}</ApolloProvider>
-            </body>
-        </html>
+        <>
+            <Navigation></Navigation>
+            <ApolloProvider client={client}>{children}</ApolloProvider>
+        </>
     );
 };
+const RootLayout = ({ children }: LayoutProps) => (
+    <html lang="en">
+        <body>
+            <BrowserProvider>
+                <RootContent>{children}</RootContent>
+            </BrowserProvider>
+        </body>
+    </html>
+);
 
 export default RootLayout;

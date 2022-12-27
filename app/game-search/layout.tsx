@@ -1,10 +1,3 @@
-'use client';
+import { PrivateRouter } from '../../ui/routers/private-router';
 
-import { useSocketInitialization } from '../../lib/socket.client';
-
-const GameSearchLayout = ({ children }: any) => {
-    const socket = useSocketInitialization();
-    return socket ? <>{children}</> : <>loading...</>;
-};
-
-export default GameSearchLayout;
+export default PrivateRouter;

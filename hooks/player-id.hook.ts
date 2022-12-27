@@ -1,3 +1,5 @@
+'use client';
+
 import useSWR from 'swr';
 
 import { getPlayerIdRequest } from '../services/player-id.service';

@@ -1,21 +1,3 @@
-'use client';
+import { PrivateRouter } from '../../ui/routers/private-router';
 
-import Link from 'next/link';
-import { gameSearchPageUrl } from '../../constants/urls';
-import { useSocketInitialization } from '../../lib/socket.client';
-
-const GamePlayLayout = ({ children }: any) => {
-    const socket = useSocketInitialization();
-    return socket ? (
-        <>
-            <p>
-                <Link href={gameSearchPageUrl}>go to game search page</Link>
-            </p>
-            {children}
-        </>
-    ) : (
-        <>loading...</>
-    );
-};
-
-export default GamePlayLayout;
+export default PrivateRouter;

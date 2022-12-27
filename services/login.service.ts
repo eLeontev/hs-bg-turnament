@@ -17,29 +17,27 @@ const shouldSkipLogin = (event: KeyboardEvent | MouseEvent) =>
     (event as KeyboardEvent).key !== enterKey;
 
 export const loginAction =
-    (
-        setLogin: (login: string) => void,
-        loginRef: RefObject<HTMLInputElement>
-    ) =>
+    (loginRef: RefObject<HTMLInputElement>, router: AppRouterInstance) =>
     (event: MouseEvent | KeyboardEvent) => {
         if (shouldSkipLogin(event)) {
             return;
         }
 
-        const validatedLogin = loginValidator(loginRef);
+        const login = loginValidator(loginRef);
 
-        setLogin(validatedLogin);
-        if (!validatedLogin) {
+        if (!login) {
             alert(loginNotificationLabel);
+            return;
         }
-    };
 
-export const loginHandler = (router: AppRouterInstance, login: string) => {
-    setLogin(login);
-    router.push(gameSearchPageUrl);
-};
+        setLogin(login);
+        router.push(gameSearchPageUrl);
+    };
 
 export const logoutHandler = (router: AppRouterInstance) => {
     clearAllLocalStorageValues();
     router.push(loginPageUrl);
 };
+
+export const redirectToLoginPageHandler = (router: AppRouterInstance) =>
+    router.push(loginPageUrl);

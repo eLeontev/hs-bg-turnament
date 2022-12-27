@@ -1,3 +1,5 @@
+import { ResultOf } from '@graphql-typed-document-node/core';
+
 enum localStorageKeys {
     login = 'HS_BG_login',
     playerId = 'HS_BG_player-id',
@@ -5,11 +7,16 @@ enum localStorageKeys {
 
 const noValue = '';
 
-const setItem = (key: localStorageKeys, value: string): void =>
-    localStorage.setItem(key, value);
-const getItem = (key: localStorageKeys) => localStorage.getItem(key);
+const inBrowser = <T>(cb: () => T): T | null =>
+    typeof localStorage !== 'undefined' ? cb() : null;
 
-export const setLogin = (login: string): void =>
+const setItem = (key: localStorageKeys, value: string): null | void =>
+    inBrowser(() => localStorage.setItem(key, value));
+
+const getItem = (key: localStorageKeys) =>
+    inBrowser(() => localStorage.getItem(key));
+
+export const setLogin = (login: string): void | null =>
     setItem(localStorageKeys.login, login);
 export const getLogin = () => getItem(localStorageKeys.login);
 

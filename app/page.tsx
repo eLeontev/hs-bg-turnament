@@ -1,5 +1,7 @@
 'use client';
 
-const RootPage = () => null;
+import { WelcomeScreen } from '../ui/components/welcome';
 
-export default RootPage;
+const WelcomePage = () => <WelcomeScreen></WelcomeScreen>;
+
+export default WelcomePage;
