@@ -40,6 +40,7 @@ import {
     notifyPlayerJoinPendingGame,
     notifyStartPendingGame,
 } from '../services/server/socket-notification.server.service';
+import { startPlayGame } from '../services/server/play-game.service';
 
 export const createPendingGameHandler = async (
     body: MutationCreatePendingGameRequestArgs,
@@ -101,7 +102,9 @@ export const startPendingGameHandler = (
     res: NextApiResponse
 ) => {
     const startPendingGameBody = startPendingGameBodyValidator(body);
-    const gameId = startPendingGame(startPendingGameBody);
+    const { gameId, players } = startPendingGame(startPendingGameBody);
+
+    startPlayGame(gameId, players);
 
     const socketServer = getSocket(res);
     notifyPendingGames(socketServer, getPendingGames());

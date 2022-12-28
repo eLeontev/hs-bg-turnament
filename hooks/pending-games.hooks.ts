@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { RefObject, useEffect, useState } from 'react';
 import { noLogin } from '../constants/login.constants';
 import { pendingGameNameErrorMessage } from '../constants/pending-games.constants';
-import { gamePlayPageUrl } from '../constants/urls';
+import { playGamePageUrl } from '../constants/urls';
 import {
     createPendingGameMutation,
     deletePendingGameMutation,
@@ -136,7 +136,7 @@ export const useLeavePendingGame = (gameId: string) => {
         const eventName = getStartPendingGameEventName(gameId);
         socket.on(eventName, () => {
             socket.off(eventName);
-            router.push(gamePlayPageUrl);
+            router.push(playGamePageUrl);
         });
         // TODO: how to handle memory leak
     }, [socket, router, gameId]);

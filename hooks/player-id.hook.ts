@@ -2,16 +2,23 @@
 
 import useSWR from 'swr';
 
-import { getPlayerIdRequest } from '../services/player-id.service';
+import { getPlayerIdsRequest } from '../services/player-id.service';
 
 import { playerIdApiUrl } from '../constants/urls';
 
-import { getPlayerId, setPlayerId } from '../utils.ts/storage.utils';
+import {
+    getPlayerId,
+    setPlayerId,
+    setPrivatePlayerId,
+} from '../utils.ts/storage.utils';
 
 export const useSetPlayerId = () => {
-    const { data: playerId } = useSWR(playerIdApiUrl, getPlayerIdRequest);
+    const { data } = useSWR(playerIdApiUrl, getPlayerIdsRequest);
 
-    if (!getPlayerId() && playerId) {
+    if (!getPlayerId() && data) {
+        const { playerId, privatePlayerId } = data;
+
         setPlayerId(playerId);
+        setPrivatePlayerId(privatePlayerId);
     }
 };

@@ -1,10 +1,17 @@
-let playerId: string = '';
+import { PlayerId, PrivatePlayerId } from '../models/common.models';
 
-export const getPlayerIdRequest = (
+let playerIds: PlayerIds;
+
+export type PlayerIds = {
+    playerId: PlayerId;
+    privatePlayerId: PrivatePlayerId;
+};
+
+export const getPlayerIdsRequest = (
     ...args: [RequestInfo | URL, RequestInit | undefined]
-): Promise<string> =>
-    playerId
-        ? Promise.resolve(playerId)
+): Promise<PlayerIds> =>
+    playerIds
+        ? Promise.resolve(playerIds)
         : fetch(...args)
               .then((res) => res.json())
-              .then((res) => (playerId = res.playerId));
+              .then((res: PlayerIds) => (playerIds = res));

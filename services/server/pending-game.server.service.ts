@@ -146,7 +146,7 @@ export const startPendingGame = ({ playerId }: StartPendingGameBody) => {
     console.log('start', gameId);
     deletePendingGame({ authorId: playerId });
 
-    return gameId;
+    return pendingGameToStart;
 };
 
 export const getPendingGames = () => {
