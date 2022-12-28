@@ -1,9 +1,8 @@
-export type PlayerId = {
-    playerId: string;
-};
+import { PlayerId, PlayerLogin } from './common.models';
 
-export type Player = PlayerId & {
-    playerLogin: string;
+export type Player = {
+    playerId: PlayerId;
+    playerLogin: PlayerLogin;
 };
 
 export type Players = Array<Player>;

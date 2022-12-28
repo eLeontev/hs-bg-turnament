@@ -1,5 +1,6 @@
 import { ResultOf } from '@graphql-typed-document-node/core';
 import {
+    GameId,
     PlayerId,
     PlayerLogin,
     PrivatePlayerId,
@@ -9,6 +10,7 @@ enum localStorageKeys {
     login = 'HS_BG_login',
     playerId = 'HS_BG_player-id',
     privatePlayerId = 'HS_BG_private_player-id',
+    gameId = 'HS_BG_game-id',
 }
 
 const noValue = '';
@@ -30,6 +32,10 @@ export const setPrivatePlayerId = (privatePlayerId: PrivatePlayerId) =>
     setItem(localStorageKeys.privatePlayerId, privatePlayerId);
 export const getPrivatePlayerId = () =>
     getItem(localStorageKeys.privatePlayerId);
+
+export const setGameId = (gameId: GameId) =>
+    setItem(localStorageKeys.gameId, gameId);
+export const getGameId = () => getItem(localStorageKeys.gameId);
 
 export const clearAllLocalStorageValues = () => {
     Object.values(localStorageKeys).forEach((key: localStorageKeys) =>

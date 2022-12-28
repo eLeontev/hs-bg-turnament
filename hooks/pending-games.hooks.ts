@@ -18,7 +18,8 @@ import {
 } from '../graphql/mutations';
 import { getPendingGamesQuery } from '../graphql/queries';
 import { useSocket, useSocketGameSearch } from '../lib/socket.client';
-import { MutationFn } from '../models/graphql.models';
+import { GameId } from '../models/common.models';
+import { Message, MutationFn } from '../models/graphql.models';
 import {
     PendingGames,
     PendingGamesQuery,
@@ -32,7 +33,7 @@ import {
     startPendingGame,
 } from '../services/pending-games.service';
 import { getStartPendingGameEventName } from '../utils.ts/socket.utils';
-import { Message } from '../__generated__/resolvers-types';
+import { setGameId } from '../utils.ts/storage.utils';
 
 const noPendingGames: PendingGames = [];
 
@@ -118,7 +119,7 @@ export const useJoinPendingGame = () => {
         'joined to the game'
     );
 
-    return (gameId: string) => action(gameId);
+    return (gameId: GameId) => action(gameId);
 };
 
 export const useStartPendingGame = () =>
@@ -128,7 +129,7 @@ export const useStartPendingGame = () =>
         'new game has been started'
     );
 
-export const useLeavePendingGame = (gameId: string) => {
+export const useLeavePendingGame = (gameId: GameId) => {
     const socket = useSocket();
     const router = useRouter();
 
@@ -136,6 +137,8 @@ export const useLeavePendingGame = (gameId: string) => {
         const eventName = getStartPendingGameEventName(gameId);
         socket.on(eventName, () => {
             socket.off(eventName);
+
+            setGameId(gameId);
             router.push(playGamePageUrl);
         });
         // TODO: how to handle memory leak

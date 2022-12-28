@@ -76,7 +76,15 @@ export type Player = {
 
 export type Query = {
   __typename?: 'Query';
+  initPlayGameRequest?: Maybe<Message>;
   pendingGames: Array<Maybe<PendingGame>>;
+};
+
+
+export type QueryInitPlayGameRequestArgs = {
+  gameId: Scalars['String'];
+  playerId?: InputMaybe<Scalars['String']>;
+  privatePlayerId?: InputMaybe<Scalars['String']>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -201,6 +209,7 @@ export type PlayerResolvers<ContextType = any, ParentType extends ResolversParen
 }>;
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  initPlayGameRequest?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<QueryInitPlayGameRequestArgs, 'gameId'>>;
   pendingGames?: Resolver<Array<Maybe<ResolversTypes['PendingGame']>>, ParentType, ContextType>;
 }>;
 

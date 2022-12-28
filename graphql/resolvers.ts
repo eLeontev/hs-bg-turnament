@@ -8,10 +8,12 @@ import {
     leavePendingGameRequest,
     startPendingGameRequest,
 } from '../controllers/pending-games.controller';
+import { initPlayGameRequest } from '../controllers/play-game.controller';
 
 export const resolvers: Resolvers = {
     Query: {
         pendingGames: getPendingGamesRequest,
+        initPlayGameRequest,
     },
     Mutation: {
         createPendingGameRequest,
