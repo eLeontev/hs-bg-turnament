@@ -32,6 +32,7 @@ import {
     leavePendingGame,
     startPendingGame,
 } from '../services/pending-games.service';
+import { retrievePrivatePlayerId } from '../services/player-id.service';
 import { getStartPendingGameEventName } from '../utils.ts/socket.utils';
 import { setGameId } from '../utils.ts/storage.utils';
 
@@ -89,7 +90,7 @@ export const useCreatePendingGame = (
         'new game has been created'
     );
 
-    return () => {
+    return async () => {
         const validationResult = gameNameSchema.safeParse(
             gameNameRef.current?.value
         );
@@ -101,6 +102,7 @@ export const useCreatePendingGame = (
             return alert(pendingGameNameErrorMessage);
         }
 
+        await retrievePrivatePlayerId();
         action(gameName);
     };
 };
@@ -119,7 +121,10 @@ export const useJoinPendingGame = () => {
         'joined to the game'
     );
 
-    return (gameId: GameId) => action(gameId);
+    return async (gameId: GameId) => {
+        await retrievePrivatePlayerId();
+        action(gameId);
+    };
 };
 
 export const useStartPendingGame = () =>
