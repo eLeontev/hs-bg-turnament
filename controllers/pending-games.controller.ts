@@ -39,6 +39,7 @@ import {
     notifyPlayerLeavePendingGame,
     notifyPlayerJoinPendingGame,
     notifyStartPendingGame,
+    notifyPendingGameFinished,
 } from '../services/server/socket-notification.server.service';
 import { startPlayGame } from '../services/server/play-game.service';
 
@@ -62,7 +63,9 @@ export const deletePendingGameHandler = (
 ): Message => {
     const deletePendingGameBody = deletePendingGameBodyValidator(body);
     deletePendingGame(deletePendingGameBody);
-    notifyPendingGames(getSocket(res), getPendingGames());
+
+    const socketServer = getSocket(res);
+    notifyPendingGames(socketServer, getPendingGames());
 
     return pendingGameDeletedMessage;
 };
@@ -114,6 +117,7 @@ export const startPendingGameHandler = (
 };
 
 export const getPendingGamesRequest = getPendingGames;
+
 export const createPendingGameRequest = withoutParent(
     withErrorHandler(createPendingGameHandler)
 );

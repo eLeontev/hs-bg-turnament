@@ -50,9 +50,19 @@ export const deletePendingGame = ({ authorId }: DeletePendingGameBody) => {
     }
 
     pendingGamesStore.pendingGamesAuthorIds.delete(authorId);
+    const pendingGame = pendingGamesStore.pendingGames.find(
+        (pendingGame: PendingGame) => pendingGame.authorId === authorId
+    );
+
+    if (!pendingGame) {
+        throw new Error('game to delete not found');
+    }
+
     pendingGamesStore.pendingGames = pendingGamesStore.pendingGames.filter(
         (pendingGame: PendingGame) => pendingGame.authorId !== authorId
     );
+
+    console.log('delete', pendingGame.gameId);
 };
 
 const updatePendingGame = (joinedPendingGame: PendingGame) => {

@@ -10,3 +10,9 @@ export const getJoinLeavePendingGameEventName = (playerId: string) =>
 
 export const getStartPendingGameEventName = (gameId: string) =>
     `${socketRoomIds.startPendingGame}: ${gameId}`;
+
+export const getPlayersOnlineEventName = (gameId: string) =>
+    `${socketRoomIds.onlinePlayers}: ${gameId}`;
+
+export const getPlayerOfflineEventName = (gameId: string) =>
+    `${socketRoomIds.offlinePlayer}: ${gameId}`;

@@ -7,10 +7,12 @@ import {
     useDeletePendingGame,
     useJoinPendingGame,
     useLeavePendingGame,
+    useOnlinePlayerStatuses,
     usePendingGames,
     useStartPendingGame,
 } from '../../hooks/pending-games.hooks';
 import { useSocketJoinLeavePendingGame } from '../../lib/socket.client';
+import { PlayerId } from '../../models/common.models';
 import { PendingGame, PendingGames } from '../../models/pending-games.models';
 import { getPlayerId } from '../../utils.ts/storage.utils';
 
@@ -22,7 +24,7 @@ const PendingGameComponent = ({
     createdDate,
     players,
 }: PendingGame) => {
-    const playerId = getPlayerId();
+    const playerId = getPlayerId() as PlayerId;
 
     const canDeletePendingGame = authorId === playerId;
     const canJoinPendingGame = authorId !== playerId;
@@ -40,7 +42,7 @@ const PendingGameComponent = ({
             {canDeletePendingGame && (
                 <section>
                     <button onClick={startPendingGame}>start the game</button>
-                    <button onClick={() => deletePendingGame(gameId)}>
+                    <button onClick={() => deletePendingGame()}>
                         delete your own game
                     </button>
                 </section>
@@ -121,7 +123,8 @@ const JoinedGameDetails = ({
     players,
     gameId,
 }: PendingGame) => {
-    const playerId = getPlayerId();
+    const playerId = getPlayerId() as PlayerId;
+    const onlinePlayerIds = useOnlinePlayerStatuses(gameId, playerId);
 
     const leavePendingGame = useLeavePendingGame(gameId);
     const canLeavePendingGame = authorId !== playerId;
@@ -141,7 +144,10 @@ const JoinedGameDetails = ({
                 {players.map(({ playerLogin, playerId: gamePlayerId }) => (
                     <li key={gamePlayerId}>
                         <b>{playerLogin}</b>
-                        {gamePlayerId === playerId ? '- it is you' : null}
+                        {gamePlayerId === playerId && '- it is you'}
+                        {onlinePlayerIds.has(gamePlayerId)
+                            ? 'Online'
+                            : 'Offline'}
                     </li>
                 ))}
             </ul>

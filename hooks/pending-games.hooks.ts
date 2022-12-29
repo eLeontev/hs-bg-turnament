@@ -9,6 +9,7 @@ import { RefObject, useEffect, useState } from 'react';
 import { noLogin } from '../constants/login.constants';
 import { pendingGameNameErrorMessage } from '../constants/pending-games.constants';
 import { playGamePageUrl } from '../constants/urls';
+import { socketRoomIds } from '../enums/socket.enums';
 import {
     createPendingGameMutation,
     deletePendingGameMutation,
@@ -18,7 +19,7 @@ import {
 } from '../graphql/mutations';
 import { getPendingGamesQuery } from '../graphql/queries';
 import { useSocket, useSocketGameSearch } from '../lib/socket.client';
-import { GameId } from '../models/common.models';
+import { GameId, PlayerId } from '../models/common.models';
 import { Message, MutationFn } from '../models/graphql.models';
 import {
     PendingGames,
@@ -33,16 +34,24 @@ import {
     startPendingGame,
 } from '../services/pending-games.service';
 import { retrievePrivatePlayerId } from '../services/player-id.service';
-import { getStartPendingGameEventName } from '../utils.ts/socket.utils';
+import {
+    getPlayersOnlineEventName,
+    getStartPendingGameEventName,
+} from '../utils.ts/socket.utils';
 import { setGameId } from '../utils.ts/storage.utils';
 
 const noPendingGames: PendingGames = [];
 
 export const usePendingGames = () => {
     const { data, loading } = useQuery<PendingGamesQuery>(getPendingGamesQuery);
-    const [pendingGames, setPendingGames] = useState<PendingGames>(
-        data?.pendingGames || noPendingGames
-    );
+    const [pendingGames, setPendingGames] =
+        useState<PendingGames>(noPendingGames);
+
+    useEffect(() => {
+        if (data?.pendingGames) {
+            setPendingGames(data?.pendingGames);
+        }
+    }, [data]);
 
     useSocketGameSearch(setPendingGames);
 
@@ -107,12 +116,19 @@ export const useCreatePendingGame = (
     };
 };
 
-export const useDeletePendingGame = () =>
-    usePendingGameMutation(
+export const useDeletePendingGame = () => {
+    const socket = useSocket();
+    const action = usePendingGameMutation(
         deletePendingGameMutation,
         deletePendingGame,
         'new game has been deleted'
     );
+
+    return async () => {
+        await action(null);
+        socket.emit(socketRoomIds.leaveGameOnlineStatus);
+    };
+};
 
 export const useJoinPendingGame = () => {
     const action = usePendingGameMutation(
@@ -155,5 +171,40 @@ export const useLeavePendingGame = (gameId: GameId) => {
         'left the game'
     );
 
-    return () => action(gameId);
+    return async () => {
+        await action(gameId);
+        socket.emit(socketRoomIds.leaveGameOnlineStatus);
+    };
+};
+
+export const useOnlinePlayerStatuses = (gameId: string, playerId: PlayerId) => {
+    const socket = useSocket();
+    const [onlinePlayerIds, setOnlinePlayerIds] = useState(new Set<PlayerId>());
+    useEffect(() => {
+        socket.emit(socketRoomIds.joinGameOnlineStatus, {
+            gameId,
+            playerId,
+        });
+    }, [socket, gameId, playerId]);
+
+    useEffect(() => {
+        const playerOnlineEventName = getPlayersOnlineEventName(gameId);
+        socket.on(playerOnlineEventName, (playerIds: Array<PlayerId>) =>
+            setOnlinePlayerIds(new Set(playerIds))
+        );
+
+        socket.on(socketRoomIds.leaveGameOnlineStatus, (playerId: PlayerId) =>
+            setOnlinePlayerIds((set) => {
+                set.delete(playerId);
+                return new Set(set);
+            })
+        );
+
+        return () => {
+            socket.removeAllListeners(playerOnlineEventName);
+            socket.removeAllListeners(socketRoomIds.leaveGameOnlineStatus);
+        };
+    }, [socket, gameId, setOnlinePlayerIds]);
+
+    return onlinePlayerIds;
 };
