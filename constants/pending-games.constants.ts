@@ -27,6 +27,12 @@ export const pendingGameStartMessage: Message = {
 
 export const pendingGameNameErrorMessage = `game name length should be between the range ${minGameNameLength} and ${maxGameNameLength}`;
 
+export const createPendingGameLabel = 'Create pending game';
+export const deletePendingGameLabel = 'Delete pending game';
+export const joinPendingGameLabel = 'Join pending game';
+export const leavePendingGameLabel = 'Leave pending game';
+export const startPendingGameLabel = 'Start pending game';
+
 const pendingGamesStore = {
     pendingGames: [] as PendingGames,
     pendingGamesAuthorIds: new Set<string>(),

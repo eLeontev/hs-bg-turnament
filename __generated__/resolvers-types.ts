@@ -30,14 +30,15 @@ export type Mutation = {
 
 
 export type MutationCreatePendingGameRequestArgs = {
-  authorId?: InputMaybe<Scalars['String']>;
-  authorLogin?: InputMaybe<Scalars['String']>;
   gameName?: InputMaybe<Scalars['String']>;
+  playerId?: InputMaybe<Scalars['String']>;
+  playerLogin?: InputMaybe<Scalars['String']>;
 };
 
 
 export type MutationDeletePendingGameRequestArgs = {
-  authorId?: InputMaybe<Scalars['String']>;
+  gameId: Scalars['String'];
+  playerId?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -55,6 +56,7 @@ export type MutationLeavePendingGameRequestArgs = {
 
 
 export type MutationStartPendingGameRequestArgs = {
+  gameId: Scalars['String'];
   playerId?: InputMaybe<Scalars['String']>;
 };
 
@@ -186,10 +188,10 @@ export type MessageResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   createPendingGameRequest?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, Partial<MutationCreatePendingGameRequestArgs>>;
-  deletePendingGameRequest?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, Partial<MutationDeletePendingGameRequestArgs>>;
+  deletePendingGameRequest?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<MutationDeletePendingGameRequestArgs, 'gameId'>>;
   joinPendingGameRequest?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<MutationJoinPendingGameRequestArgs, 'gameId'>>;
   leavePendingGameRequest?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<MutationLeavePendingGameRequestArgs, 'gameId'>>;
-  startPendingGameRequest?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, Partial<MutationStartPendingGameRequestArgs>>;
+  startPendingGameRequest?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<MutationStartPendingGameRequestArgs, 'gameId'>>;
 }>;
 
 export type PendingGameResolvers<ContextType = any, ParentType extends ResolversParentTypes['PendingGame'] = ResolversParentTypes['PendingGame']> = ResolversObject<{

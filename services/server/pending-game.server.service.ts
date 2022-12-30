@@ -13,45 +13,47 @@ import {
 import { getHash } from '../../utils.ts/hash-server.utils';
 
 export const createPendingGame = async ({
-    authorId,
-    authorLogin,
+    playerId,
+    playerLogin,
     gameName,
 }: CreatePendingGameBody) => {
-    if (pendingGamesStore.pendingGamesAuthorIds.has(authorId)) {
+    if (pendingGamesStore.pendingGamesAuthorIds.has(playerId)) {
         throw new Error('only one game can be created at time');
     }
 
     const gameId = await getHash();
-    pendingGamesStore.pendingGamesAuthorIds.add(authorId);
+    pendingGamesStore.pendingGamesAuthorIds.add(playerId);
     pendingGamesStore.pendingGames = [
         ...pendingGamesStore.pendingGames,
         {
-            authorId,
             gameName,
             gameId,
-            authorLogin,
+            authorId: playerId,
+            authorLogin: playerLogin,
             createdDate: new Date().toUTCString(),
             players: [
                 {
-                    playerId: authorId,
-                    playerLogin: authorLogin,
+                    playerId,
+                    playerLogin,
                 },
             ],
         },
     ];
 
     console.log('create', pendingGamesStore.pendingGames);
-    return { gameId, playerId: authorId };
 };
 
-export const deletePendingGame = ({ authorId }: DeletePendingGameBody) => {
-    if (!pendingGamesStore.pendingGamesAuthorIds.has(authorId)) {
+export const deletePendingGame = ({
+    playerId,
+    gameId,
+}: DeletePendingGameBody) => {
+    if (!pendingGamesStore.pendingGamesAuthorIds.has(playerId)) {
         throw new Error('you are not an author of any game');
     }
 
-    pendingGamesStore.pendingGamesAuthorIds.delete(authorId);
+    pendingGamesStore.pendingGamesAuthorIds.delete(playerId);
     const pendingGame = pendingGamesStore.pendingGames.find(
-        (pendingGame: PendingGame) => pendingGame.authorId === authorId
+        (pendingGame: PendingGame) => pendingGame.gameId === gameId
     );
 
     if (!pendingGame) {
@@ -59,7 +61,7 @@ export const deletePendingGame = ({ authorId }: DeletePendingGameBody) => {
     }
 
     pendingGamesStore.pendingGames = pendingGamesStore.pendingGames.filter(
-        (pendingGame: PendingGame) => pendingGame.authorId !== authorId
+        (pendingGame: PendingGame) => pendingGame.gameId !== gameId
     );
 
     console.log('delete', pendingGame.gameId);
@@ -140,7 +142,10 @@ export const leavePendingGame = ({
     updatePendingGame(joinedPendingGame);
 };
 
-export const startPendingGame = ({ playerId }: StartPendingGameBody) => {
+export const startPendingGame = ({
+    playerId,
+    gameId,
+}: StartPendingGameBody) => {
     const pendingGameToStart = pendingGamesStore.pendingGames.find(
         ({ authorId }) => authorId === playerId
     );
@@ -151,10 +156,14 @@ export const startPendingGame = ({ playerId }: StartPendingGameBody) => {
         );
     }
 
-    const { gameId } = pendingGameToStart;
+    if (pendingGameToStart.gameId !== gameId) {
+        throw new Error(
+            'the selected game does not match to the game where you are an author'
+        );
+    }
 
     console.log('start', gameId);
-    deletePendingGame({ authorId: playerId });
+    deletePendingGame({ playerId, gameId });
 
     return pendingGameToStart;
 };

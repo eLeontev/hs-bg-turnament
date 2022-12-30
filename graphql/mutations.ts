@@ -2,13 +2,13 @@ import { gql } from '@apollo/client';
 
 export const createPendingGameMutation = gql`
     mutation createPendingGame(
-        $authorId: String!
-        $authorLogin: String!
+        $playerId: String!
+        $playerLogin: String!
         $gameName: String!
     ) {
         createPendingGameRequest(
-            authorId: $authorId
-            authorLogin: $authorLogin
+            playerId: $playerId
+            playerLogin: $playerLogin
             gameName: $gameName
         ) {
             message
@@ -17,8 +17,8 @@ export const createPendingGameMutation = gql`
 `;
 
 export const deletePendingGameMutation = gql`
-    mutation deletePendingGame($authorId: String!) {
-        deletePendingGameRequest(authorId: $authorId) {
+    mutation deletePendingGame($gameId: String!, $playerId: String!) {
+        deletePendingGameRequest(gameId: $gameId, playerId: $playerId) {
             message
         }
     }
@@ -49,8 +49,8 @@ export const leavePendingGameMutation = gql`
 `;
 
 export const startPendingGameMutation = gql`
-    mutation startPendingGame($playerId: String) {
-        startPendingGameRequest(playerId: $playerId) {
+    mutation startPendingGame($gameId: String!, $playerId: String) {
+        startPendingGameRequest(gameId: $gameId, playerId: $playerId) {
             message
         }
     }

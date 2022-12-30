@@ -34,25 +34,18 @@ import {
 } from '../constants/pending-games.constants';
 import { NextApiResponse } from 'next';
 import { getSocket } from '../utils.ts/socket.utils';
-import {
-    notifyPendingGames,
-    notifyPlayerLeavePendingGame,
-    notifyPlayerJoinPendingGame,
-    notifyStartPendingGame,
-    notifyPendingGameFinished,
-} from '../services/server/socket-notification.server.service';
 import { startPlayGame } from '../services/server/play-game.service';
+import { notifyPendingGames } from '../sockets/pending-games.notification.socket';
 
 export const createPendingGameHandler = async (
     body: MutationCreatePendingGameRequestArgs,
     res: NextApiResponse
 ): Promise<Message> => {
     const createPendingGameBody = createPendingGameBodyValidator(body);
-    const { playerId, gameId } = await createPendingGame(createPendingGameBody);
+    await createPendingGame(createPendingGameBody);
 
     const socketServer = getSocket(res);
     notifyPendingGames(socketServer, getPendingGames());
-    notifyPlayerJoinPendingGame(socketServer, playerId, gameId);
 
     return pendingGameCreatedMessage;
 };
@@ -75,13 +68,11 @@ export const joinPendingGameHandler = (
     res: NextApiResponse
 ): Message => {
     const joinPendingGameBody = joinPendingGameBodyValidator(body);
-    const { playerId, gameId } = joinPendingGameBody;
 
     joinPendingGame(joinPendingGameBody);
 
     const socketServer = getSocket(res);
     notifyPendingGames(socketServer, getPendingGames());
-    notifyPlayerJoinPendingGame(socketServer, playerId, gameId);
 
     return pendingGameJoinMessage;
 };
@@ -95,7 +86,6 @@ export const leavePendingGameHandler = (
 
     const socketServer = getSocket(res);
     notifyPendingGames(socketServer, getPendingGames());
-    notifyPlayerLeavePendingGame(socketServer, leavePendingGameBody.playerId);
 
     return pendingGameLeaveMessage;
 };
@@ -111,7 +101,6 @@ export const startPendingGameHandler = (
 
     const socketServer = getSocket(res);
     notifyPendingGames(socketServer, getPendingGames());
-    notifyStartPendingGame(socketServer, gameId);
 
     return pendingGameStartMessage;
 };

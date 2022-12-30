@@ -25,16 +25,20 @@ export const createPendingGame = (
     createPendingGameHandler({
         variables: createPendingGameBodyValidator({
             gameName,
-            authorId: getPlayerId(),
-            authorLogin: getLogin(),
+            playerId: getPlayerId(),
+            playerLogin: getLogin(),
         }),
     });
 
 export const deletePendingGame = (
-    deletePendingGameHandler: MutationFn<Message, DeletePendingGameBody>
+    deletePendingGameHandler: MutationFn<Message, DeletePendingGameBody>,
+    gameId: string
 ) =>
     deletePendingGameHandler({
-        variables: deletePendingGameBodyValidator({ authorId: getPlayerId() }),
+        variables: deletePendingGameBodyValidator({
+            gameId,
+            playerId: getPlayerId(),
+        }),
     });
 
 export const joinPendingGame = (
@@ -61,10 +65,12 @@ export const leavePendingGame = (
     });
 
 export const startPendingGame = (
-    startPendingGameHandler: MutationFn<Message, StartPendingGameBody>
+    startPendingGameHandler: MutationFn<Message, StartPendingGameBody>,
+    gameId: string
 ) =>
     startPendingGameHandler({
         variables: startPendingGameBodyValidator({
+            gameId,
             playerId: getPlayerId(),
         }),
     });

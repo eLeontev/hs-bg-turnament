@@ -1,6 +1,7 @@
 import { NextApiResponse } from 'next';
 import { Server } from 'Socket.IO';
-import { socketRoomIds } from '../enums/socket.enums';
+import { socketRoomIds, socketRooms } from '../enums/socket.enums';
+import { GameId } from '../models/common.models';
 
 export const getSocket = (res: NextApiResponse): Server =>
     (res?.socket as any)?.server?.io as Server;
@@ -16,3 +17,6 @@ export const getPlayersOnlineEventName = (gameId: string) =>
 
 export const getPlayerOfflineEventName = (gameId: string) =>
     `${socketRoomIds.offlinePlayer}: ${gameId}`;
+
+export const getPendingGameRoom = (gameId: GameId) =>
+    `${socketRooms.pendingGame}: ${gameId}`;

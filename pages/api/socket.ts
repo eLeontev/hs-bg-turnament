@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Server } from 'Socket.IO';
-import { registerSocketListeners } from '../../services/server/socket-notification.server.service';
+import { registeCommunication } from '../../sockets/initialization';
 
 import { getSocket } from '../../utils.ts/socket.utils';
 
@@ -11,7 +11,7 @@ export const socketInitialization = (res: NextApiResponse) => {
         socketServer = new Server(res.socket.server);
         res.socket.server.io = socketServer;
 
-        registerSocketListeners(socketServer);
+        registeCommunication(socketServer);
     }
 };
 

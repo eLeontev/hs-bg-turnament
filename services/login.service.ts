@@ -5,7 +5,7 @@ import { enterKey, keydownEventType } from '../constants/keyboard.constants';
 
 import { loginNotificationLabel } from '../constants/login.constants';
 
-import { gameSearchPageUrl, loginPageUrl } from '../constants/urls';
+import { pendingGamesPageUrl, loginPageUrl } from '../constants/urls';
 import {
     clearAllLocalStorageValues,
     setLogin,
@@ -31,7 +31,7 @@ export const loginAction =
         }
 
         setLogin(login);
-        router.push(gameSearchPageUrl);
+        router.push(pendingGamesPageUrl);
     };
 
 export const logoutHandler = (router: AppRouterInstance) => {

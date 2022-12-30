@@ -14,11 +14,12 @@ export const gameNameSchema = z
     .max(maxGameNameLength);
 
 export const deletePendingGameBodySchema = z.object({
-    authorId: playerIdSchema,
+    playerId: playerIdSchema,
+    gameId: gameIdSchema,
 });
 export const createPendingGameBodySchema = z.object({
-    authorId: playerIdSchema,
-    authorLogin: playerLoginSchema,
+    playerId: playerIdSchema,
+    playerLogin: playerLoginSchema,
     gameName: gameNameSchema,
 });
 
@@ -34,4 +35,5 @@ export const leavePendingGameBodySchema = z.object({
 
 export const startPendingGameBodySchema = z.object({
     playerId: playerIdSchema,
+    gameId: gameIdSchema,
 });
