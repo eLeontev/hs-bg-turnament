@@ -1,8 +1,8 @@
 export enum socketRoomChangesEventNames {
     joinPendingGamesRoom = 'joinPendingGamesRoom',
     leavePendingGamesRoom = 'leavePendingGamesRoom',
-    joinPendingGameRoom = 'joinPendingGameRoom',
-    leavePendingGameRoom = 'leavePendingGameRoom',
+    joinOnlineGameRoom = 'joinOnlineGameRoom',
+    leaveOnlineGameRoom = 'leaveOnlineGameRoom',
 }
 
 export enum pendingGamesRoomEventNames {
@@ -16,5 +16,5 @@ export enum builtInSocketEventNames {
 
 export enum socketRooms {
     pendingGames = 'pendingGames',
-    pendingGame = 'pendingGame',
+    onlineGame = 'onlineGame',
 }
