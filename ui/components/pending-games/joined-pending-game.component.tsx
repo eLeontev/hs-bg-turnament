@@ -3,6 +3,11 @@ import { LeavePendingGame } from './leave-pending-game.component';
 import { StartPendingGame } from './start-pending-game.component';
 
 import {
+    useOnlineGameSocketRoom,
+    useOnlinePlayerIds,
+} from '../../../hooks/online-game.socket.hooks';
+
+import {
     PendingGame,
     PendingGames,
 } from '../../../models/pending-games.models';
@@ -29,6 +34,9 @@ export const JoinedPendingGameContainer = ({
 };
 
 export const JoinedPendingGame = ({ pendingGame }: JoinedPendingGameProps) => {
+    const onlinePlayerIds = useOnlinePlayerIds();
+    useOnlineGameSocketRoom(pendingGame.gameId);
+
     const { authorId, gameId } = pendingGame;
     const isAuthor = authorId === getPlayerId();
 
@@ -37,6 +45,7 @@ export const JoinedPendingGame = ({ pendingGame }: JoinedPendingGameProps) => {
             {isAuthor && <StartPendingGame gameId={gameId}></StartPendingGame>}
             {!isAuthor && <LeavePendingGame gameId={gameId}></LeavePendingGame>}
             <JoinedPendingGamePlayers
+                onlinePlayerIds={onlinePlayerIds}
                 players={pendingGame.players}
             ></JoinedPendingGamePlayers>
         </>

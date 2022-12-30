@@ -9,6 +9,6 @@ import { builtInSocketEventNames } from '../enums/socket.enums';
 export const registeCommunication = (io: Server) => {
     io.on(builtInSocketEventNames.connection, (socket: Socket) => {
         initPendingGamesRoom(socket);
-        initOnlineGameRoom(socket);
+        initOnlineGameRoom(io, socket);
     });
 };

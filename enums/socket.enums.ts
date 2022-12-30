@@ -9,6 +9,10 @@ export enum pendingGamesRoomEventNames {
     getPendingGames = 'getPendingGames',
 }
 
+export enum onlineGameRoomEventNames {
+    onlinePlayerIds = 'onlinePlayerIds',
+}
+
 export enum builtInSocketEventNames {
     connection = 'connection',
     disconnect = 'disconnect',
