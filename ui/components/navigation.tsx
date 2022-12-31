@@ -2,6 +2,7 @@ import { Header, Container, Title } from '@mantine/core';
 import styled from '@emotion/styled';
 
 import { Login } from './login';
+import { Logo } from './logo';
 
 const headerHeight = 60;
 
@@ -15,7 +16,7 @@ const StyledContainer = styled(Container)`
 export const Navigation = () => (
     <Header height={headerHeight}>
         <StyledContainer fluid>
-            <Title order={4}>HS BG Competition</Title>
+            <Logo></Logo>
             <Login></Login>
         </StyledContainer>
     </Header>
