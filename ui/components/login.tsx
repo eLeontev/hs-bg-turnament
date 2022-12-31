@@ -1,6 +1,9 @@
 'use client';
 
+import { Group, Text } from '@mantine/core';
 import { useRouter } from 'next/navigation';
+
+import { Button } from './button.component';
 
 import {
     logoutHandler,
@@ -14,15 +17,18 @@ export const Login = () => {
     const login = getLogin();
 
     return login ? (
-        <>
-            <span>
-                Hi, <b>{login}</b>
-            </span>
-            <button onClick={() => logoutHandler(router)}>Logout</button>
-        </>
+        <Group spacing="xs">
+            <Text>Welcome,</Text>
+            <Text fw={700}>{login}</Text>
+            <Button
+                onClick={() => logoutHandler(router)}
+                label={'Logout'}
+            ></Button>
+        </Group>
     ) : (
-        <button onClick={() => redirectToLoginPageHandler(router)}>
-            Login
-        </button>
+        <Button
+            onClick={() => redirectToLoginPageHandler(router)}
+            label={'Login'}
+        ></Button>
     );
 };

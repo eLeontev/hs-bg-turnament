@@ -2,6 +2,7 @@
 
 import { ReactElement, useEffect, useState } from 'react';
 import { ApolloProvider } from '@apollo/client';
+import { MantineProvider } from '@mantine/core';
 
 import { Navigation } from '../ui/components/navigation';
 
@@ -37,9 +38,15 @@ const RootContent = ({ children }: LayoutProps) => {
 const RootLayout = ({ children }: LayoutProps) => (
     <html lang="en">
         <body>
-            <BrowserProvider>
-                <RootContent>{children}</RootContent>
-            </BrowserProvider>
+            <MantineProvider
+                withGlobalStyles
+                withNormalizeCSS
+                theme={{ colorScheme: 'dark' }}
+            >
+                <BrowserProvider>
+                    <RootContent>{children}</RootContent>
+                </BrowserProvider>
+            </MantineProvider>
         </body>
     </html>
 );

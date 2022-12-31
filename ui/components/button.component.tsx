@@ -1,5 +1,7 @@
+import { Button as UIButton } from '@mantine/core';
+
 export type ButtonProps = { onClick: () => void; label: string };
 
 export const Button = ({ onClick, label }: ButtonProps) => (
-    <button onClick={onClick}>{label}</button>
+    <UIButton onClick={onClick}>{label}</UIButton>
 );

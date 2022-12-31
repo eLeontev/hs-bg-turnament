@@ -12,7 +12,13 @@
     },
     "dependencies": {
         "@apollo/client": "^3.7.2",
+        "@emotion/react": "^11.10.5",
+        "@emotion/server": "^11.10.0",
+        "@emotion/styled": "^11.10.5",
         "@graphql-tools/schema": "^9.0.12",
+        "@mantine/core": "^5.9.6",
+        "@mantine/hooks": "^5.9.6",
+        "@mantine/next": "^5.9.6",
         "@next/font": "13.0.7",
         "@types/node": "18.11.17",
         "@types/react": "18.0.26",
