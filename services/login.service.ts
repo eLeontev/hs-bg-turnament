@@ -1,41 +1,26 @@
-import { RefObject, KeyboardEvent, MouseEvent } from 'react';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 
-import { enterKey, keydownEventType } from '../constants/keyboard.constants';
+import { playerLoginSchema } from '../schemas/player.schemas';
 
-import { loginNotificationLabel } from '../constants/login.constants';
+import { loginNotificationLabel, noLogin } from '../constants/login.constants';
+import { loginPageUrl } from '../constants/urls';
 
-import { pendingGamesPageUrl, loginPageUrl } from '../constants/urls';
-import {
-    clearAllLocalStorageValues,
-    setLogin,
-} from '../utils.ts/storage.utils';
-import { loginValidator } from '../validators/login.validators';
+import { PlayerLogin } from '../models/common.models';
+import { SetRecoilLogin } from '../models/login.models';
 
-const shouldSkipLogin = (event: KeyboardEvent | MouseEvent) =>
-    event.type === keydownEventType &&
-    (event as KeyboardEvent).key !== enterKey;
+import { clearAllLocalStorageValues } from '../utils.ts/storage.utils';
 
-export const loginAction =
-    (loginRef: RefObject<HTMLInputElement>, router: AppRouterInstance) =>
-    (event: MouseEvent | KeyboardEvent) => {
-        if (shouldSkipLogin(event)) {
-            return;
-        }
+export const loginValidator = (value: PlayerLogin) =>
+    playerLoginSchema.safeParse(value.trim()).success
+        ? null
+        : loginNotificationLabel;
 
-        const login = loginValidator(loginRef);
-
-        if (!login) {
-            alert(loginNotificationLabel);
-            return;
-        }
-
-        setLogin(login);
-        router.push(pendingGamesPageUrl);
-    };
-
-export const logoutHandler = (router: AppRouterInstance) => {
+export const logoutHandler = (
+    router: AppRouterInstance,
+    setRecoilLogin: SetRecoilLogin
+) => {
     clearAllLocalStorageValues();
+    setRecoilLogin(noLogin);
     router.push(loginPageUrl);
 };
 

@@ -1,32 +1,44 @@
 'use client';
 
+import { TextInput, Group, Card, LoadingOverlay } from '@mantine/core';
 import { useRouter } from 'next/navigation';
-import { useRef } from 'react';
 
-import { loginAction } from '../../services/login.service';
+import { Button } from '../../ui/components/button.component';
+
+import { useLogin } from '../../hooks/login.hook';
+import { useSetRecoilState } from 'recoil';
+
+import { playerLoginState } from '../../ui/atoms/player-login.atom';
+
+const inputLabel = 'Login';
+const inputPlaceholder = 'Your Login';
+const loginButtonLabel = 'Login';
 
 const Login = () => {
-    const loginRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
-
-    const onLogin = loginAction(loginRef, router);
+    const setRecoilLogin = useSetRecoilState(playerLoginState);
+    const { inputProps, onSubmit, visible } = useLogin(router, setRecoilLogin);
 
     return (
-        <section>
-            Login
-            <section>
-                <label htmlFor="name">
-                    To start the game search you need to enter login
-                    <input
-                        onKeyDown={onLogin}
-                        ref={loginRef}
-                        name="name"
-                        type="text"
-                    />
-                </label>
-                <button onClick={onLogin}>Login</button>
-            </section>
-        </section>
+        <Card mx="auto" maw="300px">
+            <LoadingOverlay visible={visible} overlayBlur={2} />
+            <form onSubmit={onSubmit}>
+                <TextInput
+                    withAsterisk
+                    label={inputLabel}
+                    placeholder={inputPlaceholder}
+                    {...inputProps}
+                />
+
+                <Group mt="md">
+                    <Button
+                        fullWidth
+                        type="submit"
+                        label={loginButtonLabel}
+                    ></Button>
+                </Group>
+            </form>
+        </Card>
     );
 };
 

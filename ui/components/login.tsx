@@ -2,6 +2,7 @@
 
 import { Group, Text } from '@mantine/core';
 import { useRouter } from 'next/navigation';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { Button } from './button.component';
 
@@ -10,18 +11,18 @@ import {
     redirectToLoginPageHandler,
 } from '../../services/login.service';
 
-import { getLogin } from '../../utils.ts/storage.utils';
+import { playerLoginState } from '../atoms/player-login.atom';
 
 export const Login = () => {
     const router = useRouter();
-    const login = getLogin();
+    const [login, setRecoilLogin] = useRecoilState(playerLoginState);
 
     return login ? (
         <Group spacing="xs">
             <Text>Welcome,</Text>
             <Text fw={700}>{login}</Text>
             <Button
-                onClick={() => logoutHandler(router)}
+                onClick={() => logoutHandler(router, setRecoilLogin)}
                 label={'Logout'}
             ></Button>
         </Group>

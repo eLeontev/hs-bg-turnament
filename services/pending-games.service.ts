@@ -1,3 +1,11 @@
+import {
+    createPendingGameBodyValidator,
+    deletePendingGameBodyValidator,
+    joinPendingGameBodyValidator,
+    leavePendingGameBodyValidator,
+    startPendingGameBodyValidator,
+} from '../validators/pending-games.validators';
+
 import { MutationFn } from '../models/graphql.models';
 import {
     CreatePendingGameBody,
@@ -7,14 +15,7 @@ import {
     StartPendingGameBody,
 } from '../models/pending-games.models';
 
-import { getLogin, getPlayerId } from '../utils.ts/storage.utils';
-import {
-    createPendingGameBodyValidator,
-    deletePendingGameBodyValidator,
-    joinPendingGameBodyValidator,
-    leavePendingGameBodyValidator,
-    startPendingGameBodyValidator,
-} from '../validators/pending-games.validators';
+import { getPlayerId, getLogin } from '../utils.ts/storage.utils';
 
 import { Message } from '../__generated__/resolvers-types';
 

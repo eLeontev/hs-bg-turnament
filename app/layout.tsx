@@ -2,13 +2,17 @@
 
 import { ReactElement, useEffect, useState } from 'react';
 import { ApolloProvider } from '@apollo/client';
-import { MantineProvider } from '@mantine/core';
+import { AppShell, MantineProvider } from '@mantine/core';
 
 import { Navigation } from '../ui/components/navigation';
 
 import { useApollo } from '../lib/graphql.client';
 
 import '../styles/globals.css';
+import { RecoilRoot, useSetRecoilState } from 'recoil';
+import { playerLoginState } from '../ui/atoms/player-login.atom';
+import { getLogin } from '../utils.ts/storage.utils';
+import { noLogin } from '../constants/login.constants';
 
 export type LayoutProps = {
     children: ReactElement;
@@ -16,7 +20,12 @@ export type LayoutProps = {
 
 const BrowserProvider = ({ children }: LayoutProps) => {
     const [isMounted, setMounted] = useState(false);
-    useEffect(() => setMounted(true), []);
+    const setPlayerLogin = useSetRecoilState(playerLoginState);
+
+    useEffect(() => {
+        setPlayerLogin(getLogin() || noLogin);
+        setMounted(true);
+    }, [setPlayerLogin]);
 
     if (!isMounted) {
         return null;
@@ -29,10 +38,20 @@ const RootContent = ({ children }: LayoutProps) => {
     const client = useApollo();
 
     return (
-        <>
-            <Navigation></Navigation>
+        <AppShell
+            padding="md"
+            header={<Navigation></Navigation>}
+            styles={(theme) => ({
+                main: {
+                    backgroundColor:
+                        theme.colorScheme === 'dark'
+                            ? theme.colors.dark[8]
+                            : theme.colors.gray[0],
+                },
+            })}
+        >
             <ApolloProvider client={client}>{children}</ApolloProvider>
-        </>
+        </AppShell>
     );
 };
 const RootLayout = ({ children }: LayoutProps) => (
@@ -41,11 +60,13 @@ const RootLayout = ({ children }: LayoutProps) => (
             <MantineProvider
                 withGlobalStyles
                 withNormalizeCSS
-                theme={{ colorScheme: 'dark' }}
+                theme={{ colorScheme: 'dark', loader: 'dots' }}
             >
-                <BrowserProvider>
-                    <RootContent>{children}</RootContent>
-                </BrowserProvider>
+                <RecoilRoot>
+                    <BrowserProvider>
+                        <RootContent>{children}</RootContent>
+                    </BrowserProvider>
+                </RecoilRoot>
             </MantineProvider>
         </body>
     </html>

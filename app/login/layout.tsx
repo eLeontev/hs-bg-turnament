@@ -1,24 +1,26 @@
 'use client';
 
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useRecoilValue } from 'recoil';
 
-import { getLogin } from '../../utils.ts/storage.utils';
 import { rootPageUrl } from '../../constants/urls';
+
+import { playerLoginState } from '../../ui/atoms/player-login.atom';
 
 export type LoginlayoutProps = {
     children: ReactElement;
 };
 
 const Loginlayout = ({ children }: LoginlayoutProps) => {
-    const isLoggedIn = getLogin();
+    const isLoggedIn = useRecoilValue(playerLoginState);
     const router = useRouter();
 
-    if (isLoggedIn) {
-        router.push(rootPageUrl);
-
-        return null;
-    }
+    useEffect(() => {
+        if (isLoggedIn) {
+            router.push(rootPageUrl);
+        }
+    }, [isLoggedIn, router]);
 
     return children;
 };
