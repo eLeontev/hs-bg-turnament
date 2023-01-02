@@ -1,5 +1,6 @@
 'use client';
 
+import { Grid } from '@mantine/core';
 import { usePendingGames } from '../../hooks/pending-games/pending-games.hooks';
 
 import { CreatePendingGame } from '../../ui/components/pending-games/create-pending-game.component';
@@ -10,15 +11,19 @@ const PendingGamesPage = () => {
     const pendingGames = usePendingGames();
 
     return (
-        <>
-            <CreatePendingGame></CreatePendingGame>
-            <PendingGamesComponent
-                pendingGames={pendingGames}
-            ></PendingGamesComponent>
-            <JoinedPendingGameContainer
-                pendingGames={pendingGames}
-            ></JoinedPendingGameContainer>
-        </>
+        <Grid>
+            <Grid.Col span={4}>
+                <CreatePendingGame></CreatePendingGame>
+            </Grid.Col>
+            <Grid.Col span={8}>
+                <PendingGamesComponent
+                    pendingGames={pendingGames}
+                ></PendingGamesComponent>
+                <JoinedPendingGameContainer
+                    pendingGames={pendingGames}
+                ></JoinedPendingGameContainer>
+            </Grid.Col>
+        </Grid>
     );
 };
 
