@@ -1,13 +1,13 @@
-import Link from 'next/link';
-import { Anchor, Group, Text } from '@mantine/core';
+import { Group, Text } from '@mantine/core';
 
 import { loginPageUrl } from '../../constants/urls';
+import { InlineLink } from './link.component';
+
+const loginPageLinkLabel = 'login page';
 
 export const LoginInfo = () => (
     <Group>
         <Text>Before to play please create an account at</Text>
-        <Anchor>
-            <Link href={loginPageUrl}>login page</Link>
-        </Anchor>
+        <InlineLink href={loginPageUrl} label={loginPageLinkLabel}></InlineLink>
     </Group>
 );
