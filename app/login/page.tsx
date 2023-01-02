@@ -1,9 +1,10 @@
 'use client';
 
-import { TextInput, Group, Card, LoadingOverlay } from '@mantine/core';
+import { TextInput, Group, Card } from '@mantine/core';
 import { useRouter } from 'next/navigation';
 
 import { Button } from '../../ui/components/button.component';
+import { OverlayLoader } from '../../ui/components/loader.component';
 
 import { useLogin } from '../../hooks/login.hook';
 import { useSetRecoilState } from 'recoil';
@@ -21,7 +22,7 @@ const Login = () => {
 
     return (
         <Card mx="auto" maw="300px">
-            <LoadingOverlay visible={visible} overlayBlur={2} />
+            <OverlayLoader visible={visible} />
             <form onSubmit={onSubmit}>
                 <TextInput
                     withAsterisk

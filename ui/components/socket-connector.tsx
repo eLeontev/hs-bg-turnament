@@ -3,6 +3,7 @@
 import { ReactElement } from 'react';
 
 import { useSocketInitialization } from '../../lib/socket.client';
+import { OverlayLoader } from './loader.component';
 
 export type SocketConnectorProps = {
     children: ReactElement;
@@ -10,5 +11,5 @@ export type SocketConnectorProps = {
 
 export const SocketConnector = ({ children }: SocketConnectorProps) => {
     const socket = useSocketInitialization();
-    return socket ? children : <>loading...</>;
+    return socket ? children : <OverlayLoader></OverlayLoader>;
 };
