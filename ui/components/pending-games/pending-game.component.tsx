@@ -1,3 +1,5 @@
+import { Flex } from '@mantine/core';
+
 import { DeletePendingGame } from './delete-pending-game.component';
 import { JoinPendingGame } from './join-pending-game.component';
 import { PendingGameDetails } from './pending-game.details.component';
@@ -13,12 +15,12 @@ export const PendingGameComponent = ({ pendingGame }: PendingGameProps) => {
     const isAuthor = authorId === getPlayerId();
 
     return (
-        <section>
+        <Flex align="center">
             {isAuthor && (
                 <DeletePendingGame gameId={gameId}></DeletePendingGame>
             )}
             {!isAuthor && <JoinPendingGame gameId={gameId}></JoinPendingGame>}
             <PendingGameDetails pendingGame={pendingGame}></PendingGameDetails>
-        </section>
+        </Flex>
     );
 };

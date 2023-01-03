@@ -12,5 +12,11 @@ export const LeavePendingGame = ({ gameId }: LeavePendingGameProps) => {
     const action = useLeavePendingGame();
     const onClick = () => action(gameId);
 
-    return <Button onClick={onClick} label={leavePendingGameLabel}></Button>;
+    return (
+        <Button
+            color="red"
+            onClick={onClick}
+            label={leavePendingGameLabel}
+        ></Button>
+    );
 };

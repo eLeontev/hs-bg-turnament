@@ -12,5 +12,11 @@ export const StartPendingGame = ({ gameId }: StartPendingGameProps) => {
     const action = useStartPendingGame();
     const onClick = () => action(gameId);
 
-    return <Button onClick={onClick} label={startPendingGameLabel}></Button>;
+    return (
+        <Button
+            color="green"
+            onClick={onClick}
+            label={startPendingGameLabel}
+        ></Button>
+    );
 };

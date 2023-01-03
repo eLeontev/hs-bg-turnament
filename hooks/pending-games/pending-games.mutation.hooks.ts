@@ -1,4 +1,7 @@
+import { useState } from 'react';
+
 import { DocumentNode, useMutation } from '@apollo/client';
+import { useForm } from '@mantine/form';
 
 import { retrievePrivatePlayerId } from '../../services/player-id.service';
 import {
@@ -7,6 +10,7 @@ import {
     deletePendingGame,
     startPendingGame,
     createPendingGame,
+    createPendingGameValidator,
 } from '../../services/pending-games.service';
 
 import {
@@ -17,20 +21,20 @@ import {
     createPendingGameMutation,
 } from '../../graphql/mutations';
 
+import { noGameName } from '../../constants/pending-games.constants';
+
 import { GameId } from '../../models/common.models';
 import { Message, MutationFn } from '../../models/graphql.models';
 
 const usePendingGameMutation = <R, B, C>(
     mutation: DocumentNode,
-    serviceAction: (mutationFn: MutationFn<Message, B>, config: C) => R,
-    successMessage: string
+    serviceAction: (mutationFn: MutationFn<Message, B>, config: C) => R
 ) => {
     const [pendingGameMutation] = useMutation<Message, B>(mutation);
 
     const action = async (config: C) => {
         try {
             await serviceAction(pendingGameMutation, config);
-            alert(successMessage);
         } catch (e) {
             alert((e as { message: string }).message);
         }
@@ -47,42 +51,40 @@ const withRetrievePlayerId =
     };
 
 export const useCreatePendingGame = () => {
+    const [visible, setVisible] = useState(false);
     const action = usePendingGameMutation(
         createPendingGameMutation,
-        createPendingGame,
-        'new game has been created'
+        createPendingGame
     );
+    const form = useForm({
+        initialValues: { gameName: noGameName },
+        validate: { gameName: createPendingGameValidator },
+    });
 
-    return withRetrievePlayerId<string>(action);
+    const onSubmit = form.onSubmit(({ gameName }: typeof form['values']) => {
+        setVisible(true);
+        withRetrievePlayerId(action)(gameName).finally(() => setVisible(false));
+    });
+
+    const inputProps = form.getInputProps('gameName');
+
+    return { inputProps, onSubmit, visible };
 };
 
 export const useJoinPendingGame = () => {
     const action = usePendingGameMutation(
         joinPendingGameMutation,
-        joinPendingGame,
-        'joined to the game'
+        joinPendingGame
     );
 
     return withRetrievePlayerId<GameId>(action);
 };
 
 export const useLeavePendingGame = () =>
-    usePendingGameMutation(
-        leavePendingGameMutation,
-        leavePendingGame,
-        'left the game'
-    );
+    usePendingGameMutation(leavePendingGameMutation, leavePendingGame);
 
-export const useDeletePendingGameRef = () =>
-    usePendingGameMutation(
-        deletePendingGameMutation,
-        deletePendingGame,
-        'new game has been deleted'
-    );
+export const useDeletePendingGame = () =>
+    usePendingGameMutation(deletePendingGameMutation, deletePendingGame);
 
 export const useStartPendingGame = () =>
-    usePendingGameMutation(
-        startPendingGameMutation,
-        startPendingGame,
-        'new game has been started'
-    );
+    usePendingGameMutation(startPendingGameMutation, startPendingGame);

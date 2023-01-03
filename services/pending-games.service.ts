@@ -6,6 +6,10 @@ import {
     startPendingGameBodyValidator,
 } from '../validators/pending-games.validators';
 
+import { pendingGameNameErrorMessage } from '../constants/pending-games.constants';
+
+import { gameNameSchema } from '../schemas/pending-games.schemas';
+
 import { MutationFn } from '../models/graphql.models';
 import {
     CreatePendingGameBody,
@@ -75,3 +79,8 @@ export const startPendingGame = (
             playerId: getPlayerId(),
         }),
     });
+
+export const createPendingGameValidator = (value: string) =>
+    gameNameSchema.safeParse(value.trim()).success
+        ? null
+        : pendingGameNameErrorMessage;

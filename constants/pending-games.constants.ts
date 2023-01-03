@@ -25,11 +25,16 @@ export const pendingGameStartMessage: Message = {
     message: 'the game has started',
 };
 
-export const pendingGameNameErrorMessage = `game name length should be between the range ${minGameNameLength} and ${maxGameNameLength}`;
+export const pendingGameNameErrorMessage = `Game name length should be between the range ${minGameNameLength} and ${maxGameNameLength}.`;
+
+export const noGameName = '';
+
+export const createPendingGameInputLabel =
+    'Please enter game name before to create it';
+export const createPendingGameInputPlaceholder = 'Game name';
+export const createGameButtonLabel = 'Create Game';
 
 export const createPendingGameLabel = 'Create pending game';
-export const deletePendingGameLabel = 'Delete pending game';
-export const joinPendingGameLabel = 'Join pending game';
 export const leavePendingGameLabel = 'Leave pending game';
 export const startPendingGameLabel = 'Start pending game';
 

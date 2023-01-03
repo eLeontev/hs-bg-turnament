@@ -1,16 +1,20 @@
-import { Button } from '../button.component';
+import { IconTrash } from '@tabler/icons';
 
-import { useDeletePendingGameRef } from '../../../hooks/pending-games/pending-games.mutation.hooks';
+import { useDeletePendingGame } from '../../../hooks/pending-games/pending-games.mutation.hooks';
 
-import { deletePendingGameLabel } from '../../../constants/pending-games.constants';
+import { IconButton } from '../button.component';
 
 import { GameId } from '../../../models/common.models';
 
 export type DeletePendingGameProps = { gameId: GameId };
 
 export const DeletePendingGame = ({ gameId }: DeletePendingGameProps) => {
-    const action = useDeletePendingGameRef();
+    const action = useDeletePendingGame();
     const onClick = () => action(gameId);
 
-    return <Button onClick={onClick} label={deletePendingGameLabel}></Button>;
+    return (
+        <IconButton color="red" onClick={onClick}>
+            <IconTrash></IconTrash>
+        </IconButton>
+    );
 };

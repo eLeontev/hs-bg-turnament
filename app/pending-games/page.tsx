@@ -8,21 +8,26 @@ import { JoinedPendingGameContainer } from '../../ui/components/pending-games/jo
 import { PendingGamesComponent } from '../../ui/components/pending-games/pending-games.component';
 
 const PendingGamesPage = () => {
-    const pendingGames = usePendingGames();
+    const { pendingGames, isInGame } = usePendingGames();
 
     return (
         <Grid>
-            <Grid.Col span={4}>
-                <CreatePendingGame></CreatePendingGame>
-            </Grid.Col>
             <Grid.Col span={8}>
                 <PendingGamesComponent
                     pendingGames={pendingGames}
                 ></PendingGamesComponent>
-                <JoinedPendingGameContainer
-                    pendingGames={pendingGames}
-                ></JoinedPendingGameContainer>
             </Grid.Col>
+            {isInGame ? (
+                <Grid.Col span={4}>
+                    <JoinedPendingGameContainer
+                        pendingGames={pendingGames}
+                    ></JoinedPendingGameContainer>
+                </Grid.Col>
+            ) : (
+                <Grid.Col span={4}>
+                    <CreatePendingGame></CreatePendingGame>
+                </Grid.Col>
+            )}
         </Grid>
     );
 };

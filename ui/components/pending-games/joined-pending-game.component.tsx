@@ -1,6 +1,9 @@
+import { Flex, Space } from '@mantine/core';
+
 import { JoinedPendingGamePlayers } from './joined-pending-game.players.component';
 import { LeavePendingGame } from './leave-pending-game.component';
 import { StartPendingGame } from './start-pending-game.component';
+import { PlayersCounter } from './players-counter.component';
 
 import {
     useOnlineGameSocketRoom,
@@ -14,6 +17,9 @@ import {
 import { Player } from '../../../models/player-id.models';
 
 import { getPlayerId } from '../../../utils.ts/storage.utils';
+import { DeletePendingGame } from './delete-pending-game.component';
+import { GameId } from '../../../models/common.models';
+import { ReactElement } from 'react';
 
 export type JoinedPendingGameContainerProps = { pendingGames: PendingGames };
 export type JoinedPendingGameProps = { pendingGame: PendingGame };
@@ -33,21 +39,46 @@ export const JoinedPendingGameContainer = ({
     ) : null;
 };
 
-export const JoinedPendingGame = ({ pendingGame }: JoinedPendingGameProps) => {
-    const onlinePlayerIds = useOnlinePlayerIds();
-    useOnlineGameSocketRoom(pendingGame.gameId);
+export type AuthorActionsProps = {
+    isAuthor: boolean;
+    gameId: GameId;
+    children: ReactElement;
+};
 
-    const { authorId, gameId } = pendingGame;
+export const AuthorActions = ({
+    isAuthor,
+    gameId,
+    children,
+}: AuthorActionsProps) => (
+    <>
+        {isAuthor && <DeletePendingGame gameId={gameId}></DeletePendingGame>}
+        {children}
+        {isAuthor && <StartPendingGame gameId={gameId}></StartPendingGame>}
+    </>
+);
+
+export const JoinedPendingGame = ({ pendingGame }: JoinedPendingGameProps) => {
+    useOnlineGameSocketRoom(pendingGame.gameId);
+    const onlinePlayerIds = useOnlinePlayerIds();
+
+    const { authorId, gameId, players } = pendingGame;
     const isAuthor = authorId === getPlayerId();
 
     return (
-        <>
-            {isAuthor && <StartPendingGame gameId={gameId}></StartPendingGame>}
-            {!isAuthor && <LeavePendingGame gameId={gameId}></LeavePendingGame>}
+        <Flex direction="column">
+            <Flex align="center" justify="space-between">
+                <AuthorActions isAuthor={isAuthor} gameId={gameId}>
+                    <PlayersCounter players={players}></PlayersCounter>
+                </AuthorActions>
+                {!isAuthor && (
+                    <LeavePendingGame gameId={gameId}></LeavePendingGame>
+                )}
+            </Flex>
+            <Space h="xl"></Space>
             <JoinedPendingGamePlayers
                 onlinePlayerIds={onlinePlayerIds}
                 players={pendingGame.players}
             ></JoinedPendingGamePlayers>
-        </>
+        </Flex>
     );
 };

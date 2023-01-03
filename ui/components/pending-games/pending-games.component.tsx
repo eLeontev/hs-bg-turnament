@@ -1,3 +1,5 @@
+import { Center, Group, Title } from '@mantine/core';
+
 import { PendingGameComponent } from './pending-game.component';
 
 import {
@@ -9,9 +11,11 @@ export type PendingGamesProps = { pendingGames: PendingGames };
 
 export const PendingGamesComponent = ({ pendingGames }: PendingGamesProps) =>
     pendingGames.length ? (
-        <section>{getPendingGames(pendingGames)}</section>
+        <Group>{getPendingGames(pendingGames)}</Group>
     ) : (
-        <h3>no games found</h3>
+        <Center>
+            <Title order={3}>No games found</Title>
+        </Center>
     );
 
 export const getPendingGames = (pendingGames: PendingGames) =>
