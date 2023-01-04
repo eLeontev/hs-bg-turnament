@@ -8,14 +8,18 @@ import { PendingGame } from '../../../models/pending-games.models';
 
 import { getPlayerId } from '../../../utils.ts/storage.utils';
 
+import { useStyles } from '../../styles/pending-games.styles';
+
 export type PendingGameProps = { key: string; pendingGame: PendingGame };
 
 export const PendingGameComponent = ({ pendingGame }: PendingGameProps) => {
+    const { classes } = useStyles();
+
     const { authorId, gameId } = pendingGame;
     const isAuthor = authorId === getPlayerId();
 
     return (
-        <Flex align="center">
+        <Flex className={classes.pendingGame}>
             {isAuthor && (
                 <DeletePendingGame gameId={gameId}></DeletePendingGame>
             )}

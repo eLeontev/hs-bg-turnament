@@ -1,4 +1,6 @@
-import { Card, Group, Badge, Text } from '@mantine/core';
+import { Card, Group, Badge } from '@mantine/core';
+
+import { PairComponent } from '../pair.component';
 
 import { OnlinePlayerIds } from '../../../models/online-game.models';
 import { Player } from '../../../models/player-id.models';
@@ -17,8 +19,10 @@ export const PlayerInfo = ({
     return (
         <Card>
             <Group position="apart">
-                <Text>Player:</Text>
-                <Text weight={500}>{playerLogin}</Text>
+                <PairComponent
+                    label="Player"
+                    value={playerLogin}
+                ></PairComponent>
                 <Badge color={color} variant="light">
                     {onlineLabel}
                 </Badge>
