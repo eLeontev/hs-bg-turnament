@@ -1,4 +1,4 @@
-import { Flex, Space } from '@mantine/core';
+import { Card, Flex, Space } from '@mantine/core';
 
 import { JoinedPendingGamePlayers } from './joined-pending-game.players.component';
 import { LeavePendingGame } from './leave-pending-game.component';
@@ -66,15 +66,17 @@ export const JoinedPendingGame = ({ pendingGame }: JoinedPendingGameProps) => {
 
     return (
         <Flex direction="column">
-            <Flex align="center" justify="space-between">
-                <AuthorActions isAuthor={isAuthor} gameId={gameId}>
-                    <PlayersCounter players={players}></PlayersCounter>
-                </AuthorActions>
-                {!isAuthor && (
-                    <LeavePendingGame gameId={gameId}></LeavePendingGame>
-                )}
-            </Flex>
-            <Space h="xl"></Space>
+            <Card>
+                <Flex align="center" justify="space-between">
+                    <AuthorActions isAuthor={isAuthor} gameId={gameId}>
+                        <PlayersCounter players={players}></PlayersCounter>
+                    </AuthorActions>
+                    {!isAuthor && (
+                        <LeavePendingGame gameId={gameId}></LeavePendingGame>
+                    )}
+                </Flex>
+            </Card>
+            <Space h="md"></Space>
             <JoinedPendingGamePlayers
                 onlinePlayerIds={onlinePlayerIds}
                 players={pendingGame.players}

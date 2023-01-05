@@ -17,7 +17,7 @@ export const PlayerInfo = ({
     const color = onlinePlayerIds.has(playerId) ? 'green' : 'red';
     const onlineLabel = onlinePlayerIds.has(playerId) ? 'Online' : 'Offline';
     return (
-        <Card>
+        <Card h="60px">
             <Group position="apart">
                 <PairComponent
                     label="Player"

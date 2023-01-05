@@ -35,8 +35,6 @@ export const createPendingGameInputPlaceholder = 'Game name';
 export const createGameButtonLabel = 'Create Game';
 
 export const createPendingGameLabel = 'Create pending game';
-export const leavePendingGameLabel = 'Leave pending game';
-export const startPendingGameLabel = 'Start pending game';
 
 const pendingGamesStore = {
     pendingGames: [] as PendingGames,

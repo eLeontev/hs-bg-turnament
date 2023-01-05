@@ -1,8 +1,8 @@
-import { Button } from '../button.component';
+import { IconArrowLeft } from '@tabler/icons';
+
+import { IconButton } from '../button.component';
 
 import { useLeavePendingGame } from '../../../hooks/pending-games/pending-games.mutation.hooks';
-
-import { leavePendingGameLabel } from '../../../constants/pending-games.constants';
 
 import { GameId } from '../../../models/common.models';
 
@@ -13,10 +13,8 @@ export const LeavePendingGame = ({ gameId }: LeavePendingGameProps) => {
     const onClick = () => action(gameId);
 
     return (
-        <Button
-            color="red"
-            onClick={onClick}
-            label={leavePendingGameLabel}
-        ></Button>
+        <IconButton color="red" onClick={onClick}>
+            <IconArrowLeft></IconArrowLeft>
+        </IconButton>
     );
 };
