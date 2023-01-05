@@ -41,7 +41,6 @@ export const PendingGameComponent = ({
                     label="Game name"
                     value={gameName}
                 ></PairComponent>
-                x
                 <PairComponent
                     label="Time created"
                     value={dateDistance}
