@@ -50,12 +50,13 @@ export const createPendingGameHandler = async (
     return pendingGameCreatedMessage;
 };
 
-export const deletePendingGameHandler = (
+export const deletePendingGameHandler = async (
     body: MutationDeletePendingGameRequestArgs,
     res: NextApiResponse
-): Message => {
+): Promise<Message> => {
     const deletePendingGameBody = deletePendingGameBodyValidator(body);
-    deletePendingGame(deletePendingGameBody);
+
+    await deletePendingGame(deletePendingGameBody);
 
     const socketServer = getSocket(res);
     notifyPendingGames(socketServer, getPendingGames());
@@ -63,13 +64,13 @@ export const deletePendingGameHandler = (
     return pendingGameDeletedMessage;
 };
 
-export const joinPendingGameHandler = (
+export const joinPendingGameHandler = async (
     body: MutationJoinPendingGameRequestArgs,
     res: NextApiResponse
-): Message => {
+): Promise<Message> => {
     const joinPendingGameBody = joinPendingGameBodyValidator(body);
 
-    joinPendingGame(joinPendingGameBody);
+    await joinPendingGame(joinPendingGameBody);
 
     const socketServer = getSocket(res);
     notifyPendingGames(socketServer, getPendingGames());
@@ -77,12 +78,12 @@ export const joinPendingGameHandler = (
     return pendingGameJoinMessage;
 };
 
-export const leavePendingGameHandler = (
+export const leavePendingGameHandler = async (
     body: MutationLeavePendingGameRequestArgs,
     res: NextApiResponse
-): Message => {
+): Promise<Message> => {
     const leavePendingGameBody = leavePendingGameBodyValidator(body);
-    leavePendingGame(leavePendingGameBody);
+    await leavePendingGame(leavePendingGameBody);
 
     const socketServer = getSocket(res);
     notifyPendingGames(socketServer, getPendingGames());
@@ -90,14 +91,14 @@ export const leavePendingGameHandler = (
     return pendingGameLeaveMessage;
 };
 
-export const startPendingGameHandler = (
+export const startPendingGameHandler = async (
     body: MutationStartPendingGameRequestArgs,
     res: NextApiResponse
 ) => {
     const startPendingGameBody = startPendingGameBodyValidator(body);
-    const { gameId, players } = startPendingGame(startPendingGameBody);
+    await startPendingGame(startPendingGameBody);
 
-    startPlayGame(gameId, players);
+    // startPlayGame();
 
     const socketServer = getSocket(res);
     notifyPendingGames(socketServer, getPendingGames());

@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model PendingGamePlayer {
+  playerId          String       @id @map("_id") 
+  playerLogin       String
+  PendingGame       PendingGame? @relation(fields: [pendingGameGameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
+  pendingGameGameId String? 
+}
+
+model PendingGame {
+  gameId      String   @id @map("_id")
+  gameName    String
+  authorId    String
+  authorLogin String
+  createdDate String
+  players     PendingGamePlayer[] 
+}

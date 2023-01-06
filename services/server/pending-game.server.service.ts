@@ -1,4 +1,4 @@
-import { isPlayerInGame } from '../pending-games.service';
+import { operations } from '../../prisma/operations/pending-games';
 
 import { maxCountOfPlayers } from '../../constants/game-config.constants';
 import pendingGamesStore from '../../constants/pending-games.constants';
@@ -8,20 +8,17 @@ import {
     DeletePendingGameBody,
     JoinPendingGameBody,
     LeavePendingGameBody,
-    PendingGame,
-    PendingGames,
     StartPendingGameBody,
 } from '../../models/pending-games.models';
+import { PlayerId } from '../../models/common.models';
 
 import { getHash } from '../../utils.ts/hash-server.utils';
 
-export const isPlayerInGameCheck = (
-    pendingGames: PendingGames,
-    playerId: string
-) => {
-    const isInGame = isPlayerInGame(pendingGames, playerId);
-    if (isInGame) {
-        throw new Error('only one game is avaialble at time');
+export const isPlayerInGameCheck = async (playerId: PlayerId) => {
+    const playerInPendingGame = await operations.isPlayerInGame(playerId);
+
+    if (playerInPendingGame) {
+        throw new Error('you are already in game');
     }
 };
 
@@ -30,162 +27,99 @@ export const createPendingGame = async ({
     playerLogin,
     gameName,
 }: CreatePendingGameBody) => {
-    if (pendingGamesStore.pendingGamesAuthorIds.has(playerId)) {
-        throw new Error('only one game can be created at time');
-    }
-
-    isPlayerInGameCheck(pendingGamesStore.pendingGames, playerId);
+    await isPlayerInGameCheck(playerId);
 
     const gameId = await getHash();
-    pendingGamesStore.pendingGamesAuthorIds.add(playerId);
-    pendingGamesStore.pendingGames = [
-        ...pendingGamesStore.pendingGames,
-        {
-            gameName,
-            gameId,
-            authorId: playerId,
-            authorLogin: playerLogin,
-            createdDate: new Date().toUTCString(),
-            players: [
-                {
-                    playerId,
-                    playerLogin,
-                },
-            ],
-        },
-    ];
+
+    const pendingGame = {
+        gameName,
+        gameId,
+        authorId: playerId,
+        authorLogin: playerLogin,
+        createdDate: new Date().toUTCString(),
+        players: [
+            {
+                playerId,
+                playerLogin,
+            },
+        ],
+    };
+
+    await operations.createPendingGame(pendingGame);
 
     console.log('create', pendingGamesStore.pendingGames);
 };
 
-export const deletePendingGame = ({
-    playerId,
+export const deletePendingGame = async ({
     gameId,
+    playerId,
 }: DeletePendingGameBody) => {
-    if (!pendingGamesStore.pendingGamesAuthorIds.has(playerId)) {
-        throw new Error('you are not an author of any game');
-    }
-
-    pendingGamesStore.pendingGamesAuthorIds.delete(playerId);
-    const pendingGame = pendingGamesStore.pendingGames.find(
-        (pendingGame: PendingGame) => pendingGame.gameId === gameId
+    const pendingGame = await operations.getAuthorCreatedPendingGame(
+        gameId,
+        playerId
     );
 
     if (!pendingGame) {
-        throw new Error('game to delete not found');
+        throw new Error('game to delete where you are an author is not found');
     }
 
-    pendingGamesStore.pendingGames = pendingGamesStore.pendingGames.filter(
-        (pendingGame: PendingGame) => pendingGame.gameId !== gameId
-    );
+    await operations.deletePendingGame(gameId);
 
     console.log('delete', pendingGame.gameId);
 };
 
-const updatePendingGame = (joinedPendingGame: PendingGame) => {
-    pendingGamesStore.pendingGames = pendingGamesStore.pendingGames.map(
-        (pendingGame) => {
-            if (pendingGame.gameId === joinedPendingGame.gameId) {
-                return joinedPendingGame;
-            }
-
-            return pendingGame;
-        }
-    );
-};
-
-export const joinPendingGame = ({
+export const joinPendingGame = async ({
     playerId,
     gameId,
     playerLogin,
 }: JoinPendingGameBody) => {
-    if (pendingGamesStore.pendingGamesAuthorIds.has(playerId)) {
-        throw new Error('please close your own game before to start a new one');
-    }
+    await isPlayerInGameCheck(playerId);
 
-    isPlayerInGameCheck(pendingGamesStore.pendingGames, playerId);
+    const pendingGame = await operations.getPendingGame(gameId);
 
-    const joinedPendingGame = pendingGamesStore.pendingGames.find(
-        (pendingGame) => pendingGame.gameId === gameId
-    );
-
-    if (!joinedPendingGame) {
+    if (!pendingGame) {
         throw new Error('selected game does not exist');
     }
 
-    const { players } = joinedPendingGame;
+    const { players } = pendingGame;
 
     if (players.length >= maxCountOfPlayers) {
         throw new Error('no place');
     }
 
-    const isPlayerInGame = players.some(
-        (player) => player.playerId === playerId
-    );
+    await operations.joinPendingGame(gameId, playerLogin, playerId);
 
-    if (isPlayerInGame) {
-        throw new Error('you are already in the game');
-    }
-
-    joinedPendingGame.players = [
-        ...joinedPendingGame.players,
-        {
-            playerId,
-            playerLogin,
-        },
-    ];
-
-    console.log('join', joinedPendingGame);
-    updatePendingGame(joinedPendingGame);
+    console.log('join', `player: ${playerId} joined to the game: ${gameId}`);
 };
 
-export const leavePendingGame = ({
+export const leavePendingGame = async ({
     gameId,
     playerId,
 }: LeavePendingGameBody) => {
-    const joinedPendingGame = pendingGamesStore.pendingGames.find(
-        (pendingGame) => pendingGame.gameId === gameId
-    );
-
-    if (!joinedPendingGame) {
-        return;
-    }
-
-    joinedPendingGame.players = joinedPendingGame.players.filter(
-        (player) => player.playerId !== playerId
-    );
-
-    console.log('leave', joinedPendingGame);
-    updatePendingGame(joinedPendingGame);
+    await operations.leavePendingGame(playerId);
+    console.log('leave', `player: ${playerId} left the game: ${gameId}`);
 };
 
-export const startPendingGame = ({
+export const startPendingGame = async ({
     playerId,
     gameId,
 }: StartPendingGameBody) => {
-    const pendingGameToStart = pendingGamesStore.pendingGames.find(
-        ({ authorId }) => authorId === playerId
+    const pendingGame = await operations.getAuthorCreatedPendingGame(
+        gameId,
+        playerId
     );
 
-    if (!pendingGameToStart) {
-        throw new Error(
-            'the game where you are an author is not found (only author of the game can start it)'
-        );
+    if (!pendingGame) {
+        throw new Error('game to delete where you are an author is not found');
     }
 
-    if (pendingGameToStart.gameId !== gameId) {
-        throw new Error(
-            'the selected game does not match to the game where you are an author'
-        );
-    }
-
+    await deletePendingGame({ playerId, gameId });
     console.log('start', gameId);
-    deletePendingGame({ playerId, gameId });
-
-    return pendingGameToStart;
 };
 
-export const getPendingGames = () => {
-    console.log('get', pendingGamesStore.pendingGames);
-    return pendingGamesStore.pendingGames;
+export const getPendingGames = async () => {
+    const pendingGames = await operations.getPendingGames();
+    console.log('get', pendingGames);
+
+    return pendingGames;
 };
