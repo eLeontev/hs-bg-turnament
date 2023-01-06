@@ -16,12 +16,14 @@ import {
     DeletePendingGameBody,
     JoinPendingGameBody,
     LeavePendingGameBody,
+    PendingGames,
     StartPendingGameBody,
 } from '../models/pending-games.models';
 
 import { getPlayerId, getLogin } from '../utils.ts/storage.utils';
 
 import { Message } from '../__generated__/resolvers-types';
+import { Player } from '../models/player-id.models';
 
 export const createPendingGame = (
     createPendingGameHandler: MutationFn<Message, CreatePendingGameBody>,
@@ -84,3 +86,8 @@ export const createPendingGameValidator = (value: string) =>
     gameNameSchema.safeParse(value.trim()).success
         ? null
         : pendingGameNameErrorMessage;
+
+export const isPlayerInGame = (pendingGames: PendingGames, playerId: string) =>
+    pendingGames.some(({ players }) =>
+        players.some((player: Player) => player.playerId === playerId)
+    );

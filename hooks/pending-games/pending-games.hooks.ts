@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { isPlayerInGame } from '../../services/pending-games.service';
+
 import { usePendingGamesFromQuery } from './pending-games.graphql.hooks';
 import { usePendingGamesFromSocket } from './pending-games.socket.hooks';
 
@@ -15,8 +17,6 @@ export const usePendingGames = () => {
     usePendingGamesFromQuery(setPendingGames);
     usePendingGamesFromSocket(setPendingGames);
 
-    const isInGame = pendingGames.some(({ players }) =>
-        players.some(({ playerId }) => playerId === getPlayerId())
-    );
+    const isInGame = isPlayerInGame(pendingGames, getPlayerId() || '');
     return { pendingGames, isInGame };
 };

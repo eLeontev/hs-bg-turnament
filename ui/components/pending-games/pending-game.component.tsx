@@ -12,7 +12,7 @@ import { getPlayerId } from '../../../utils.ts/storage.utils';
 import { DeletePendingGame } from './delete-pending-game.component';
 import { JoinPendingGame } from './join-pending-game.component';
 
-export type PendingGameProps = { pendingGame: PendingGame };
+export type PendingGameProps = { pendingGame: PendingGame; isInGame: boolean };
 
 export const PendingGameComponent = ({
     pendingGame: {
@@ -23,6 +23,7 @@ export const PendingGameComponent = ({
         gameName,
         players,
     },
+    isInGame,
 }: PendingGameProps) => {
     const dateDistance = useFormatDistance(createdDate);
     const { classes } = useStyles();
@@ -49,7 +50,10 @@ export const PendingGameComponent = ({
                     <DeletePendingGame gameId={gameId}></DeletePendingGame>
                 )}
                 {!isAuthor && (
-                    <JoinPendingGame gameId={gameId}></JoinPendingGame>
+                    <JoinPendingGame
+                        gameId={gameId}
+                        isInGame={isInGame}
+                    ></JoinPendingGame>
                 )}
             </Flex>
         </Card>

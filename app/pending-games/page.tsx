@@ -14,6 +14,7 @@ const PendingGamesPage = () => {
         <Grid>
             <Grid.Col span={8}>
                 <PendingGamesComponent
+                    isInGame={isInGame}
                     pendingGames={pendingGames}
                 ></PendingGamesComponent>
             </Grid.Col>

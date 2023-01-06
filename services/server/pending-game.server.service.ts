@@ -1,3 +1,5 @@
+import { isPlayerInGame } from '../pending-games.service';
+
 import { maxCountOfPlayers } from '../../constants/game-config.constants';
 import pendingGamesStore from '../../constants/pending-games.constants';
 
@@ -7,10 +9,21 @@ import {
     JoinPendingGameBody,
     LeavePendingGameBody,
     PendingGame,
+    PendingGames,
     StartPendingGameBody,
 } from '../../models/pending-games.models';
 
 import { getHash } from '../../utils.ts/hash-server.utils';
+
+export const isPlayerInGameCheck = (
+    pendingGames: PendingGames,
+    playerId: string
+) => {
+    const isInGame = isPlayerInGame(pendingGames, playerId);
+    if (isInGame) {
+        throw new Error('only one game is avaialble at time');
+    }
+};
 
 export const createPendingGame = async ({
     playerId,
@@ -20,6 +33,8 @@ export const createPendingGame = async ({
     if (pendingGamesStore.pendingGamesAuthorIds.has(playerId)) {
         throw new Error('only one game can be created at time');
     }
+
+    isPlayerInGameCheck(pendingGamesStore.pendingGames, playerId);
 
     const gameId = await getHash();
     pendingGamesStore.pendingGamesAuthorIds.add(playerId);
@@ -87,6 +102,8 @@ export const joinPendingGame = ({
     if (pendingGamesStore.pendingGamesAuthorIds.has(playerId)) {
         throw new Error('please close your own game before to start a new one');
     }
+
+    isPlayerInGameCheck(pendingGamesStore.pendingGames, playerId);
 
     const joinedPendingGame = pendingGamesStore.pendingGames.find(
         (pendingGame) => pendingGame.gameId === gameId
