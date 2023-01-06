@@ -1,7 +1,6 @@
 import { operations } from '../../prisma/operations/pending-games';
 
 import { maxCountOfPlayers } from '../../constants/game-config.constants';
-import pendingGamesStore from '../../constants/pending-games.constants';
 
 import {
     CreatePendingGameBody,
@@ -47,7 +46,7 @@ export const createPendingGame = async ({
 
     await operations.createPendingGame(pendingGame);
 
-    console.log('create', pendingGamesStore.pendingGames);
+    console.log('create', gameId);
 };
 
 export const deletePendingGame = async ({
@@ -65,7 +64,7 @@ export const deletePendingGame = async ({
 
     await operations.deletePendingGame(gameId);
 
-    console.log('delete', pendingGame.gameId);
+    console.log('delete', gameId);
 };
 
 export const joinPendingGame = async ({

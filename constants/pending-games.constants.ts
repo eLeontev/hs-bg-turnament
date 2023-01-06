@@ -2,8 +2,8 @@ import {
     maxGameNameLength,
     minGameNameLength,
 } from '../configs/pending-games.config';
-import { PendingGames } from '../models/pending-games.models';
-import { Message } from '../__generated__/resolvers-types';
+
+import { Message } from '../models/graphql.models';
 
 export const pendingGameCreatedMessage: Message = {
     message: 'pending game created',
@@ -35,10 +35,3 @@ export const createPendingGameInputPlaceholder = 'Game name';
 export const createGameButtonLabel = 'Create Game';
 
 export const createPendingGameLabel = 'Create pending game';
-
-const pendingGamesStore = {
-    pendingGames: [] as PendingGames,
-    pendingGamesAuthorIds: new Set<string>(),
-};
-
-export default pendingGamesStore;
