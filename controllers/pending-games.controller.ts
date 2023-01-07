@@ -35,7 +35,9 @@ import {
 import { NextApiResponse } from 'next';
 import { getSocket } from '../utils.ts/socket.utils';
 import { startPlayGame } from '../services/server/play-game.service';
+
 import { notifyPendingGames } from '../sockets/pending-games.notification.socket';
+import { notifyOnlinePlayersGameStarted } from '../sockets/play-game.notification.socket';
 
 export const createPendingGameHandler = async (
     body: MutationCreatePendingGameRequestArgs,
@@ -101,6 +103,7 @@ export const startPendingGameHandler = async (
     // startPlayGame();
 
     const socketServer = getSocket(res);
+    notifyOnlinePlayersGameStarted(socketServer, startPendingGameBody.gameId);
     notifyPendingGames(socketServer, getPendingGames());
 
     return pendingGameStartMessage;

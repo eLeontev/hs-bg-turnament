@@ -3,7 +3,7 @@
 import { useQuery } from '@apollo/client';
 import Link from 'next/link';
 import { ReactElement, useMemo } from 'react';
-import { gameSearchPageUrl } from '../../constants/urls';
+import { pendingGamesPageUrl } from '../../constants/urls';
 import { initPlayGameQuery } from '../../graphql/queries';
 import { Message } from '../../models/graphql.models';
 import { InitPlayGameVariables } from '../../models/init-play-game.models';
@@ -21,7 +21,7 @@ export type PlayGameLayoutProps = {
 const GameNotFound = () => (
     <>
         The game cannot be defined please{' '}
-        <Link href={gameSearchPageUrl}>search for a new game</Link>
+        <Link href={pendingGamesPageUrl}>search for a new game</Link>
     </>
 );
 const InitPlayGame = ({
