@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 
 import { getPendingGamesQuery } from '../../graphql/queries';
 
@@ -11,10 +11,17 @@ import {
 export const usePendingGamesFromQuery = (
     setPendingGames: (pendingGames: PendingGames) => void
 ) => {
-    const { data } = useQuery<PendingGamesQuery>(getPendingGamesQuery);
+    const [requestPendingGames] = useLazyQuery<PendingGamesQuery>(
+        getPendingGamesQuery,
+        { fetchPolicy: 'network-only' }
+    );
     useEffect(() => {
-        if (data?.pendingGames) {
-            setPendingGames(data.pendingGames);
-        }
-    }, [data, setPendingGames]);
+        requestPendingGames().then(({ data }) => {
+            console.log(data);
+
+            if (data?.pendingGames) {
+                setPendingGames(data.pendingGames);
+            }
+        });
+    }, [requestPendingGames, setPendingGames]);
 };
