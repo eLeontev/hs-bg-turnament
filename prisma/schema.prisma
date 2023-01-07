@@ -8,17 +8,29 @@ datasource db {
 }
 
 model PendingGamePlayer {
-  playerId          String       @id @map("_id") 
+  playerId          String       @id @map("_id")
   playerLogin       String
   PendingGame       PendingGame? @relation(fields: [pendingGameGameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
-  pendingGameGameId String? 
+  pendingGameGameId String?
 }
 
 model PendingGame {
-  gameId      String   @id @map("_id")
+  gameId      String              @id @map("_id")
   gameName    String
   authorId    String
   authorLogin String
   createdDate String
-  players     PendingGamePlayer[] 
+  players     PendingGamePlayer[]
+}
+
+model PlayGamePlayer {
+  playerId       String    @id @map("_id")
+  playerLogin    String
+  PlayGame       PlayGame? @relation(fields: [playGameGameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
+  playGameGameId String?
+}
+
+model PlayGame {
+  gameId  String           @id @map("_id")
+  players PlayGamePlayer[]
 }

@@ -98,9 +98,9 @@ export const startPendingGameHandler = async (
     res: NextApiResponse
 ) => {
     const startPendingGameBody = startPendingGameBodyValidator(body);
-    await startPendingGame(startPendingGameBody);
+    const { gameId, players } = await startPendingGame(startPendingGameBody);
 
-    // startPlayGame();
+    await startPlayGame(gameId, players);
 
     const socketServer = getSocket(res);
     notifyOnlinePlayersGameStarted(socketServer, startPendingGameBody.gameId);

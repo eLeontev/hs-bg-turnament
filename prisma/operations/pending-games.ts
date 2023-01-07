@@ -30,9 +30,14 @@ const getPendingGames = () =>
         include: { players: true },
     });
 
-const getAuthorCreatedPendingGame = (gameId: GameId, authorId: PlayerId) =>
+const getAuthorCreatedPendingGame = (
+    gameId: GameId,
+    authorId: PlayerId,
+    withPlayers: boolean = false
+) =>
     prisma.pendingGame.findFirst({
         where: { gameId, authorId },
+        include: { players: withPlayers },
     });
 
 const getPendingGame = (gameId: GameId) =>

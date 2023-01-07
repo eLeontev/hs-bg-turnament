@@ -17,8 +17,6 @@ export const usePendingGamesFromQuery = (
     );
     useEffect(() => {
         requestPendingGames().then(({ data }) => {
-            console.log(data);
-
             if (data?.pendingGames) {
                 setPendingGames(data.pendingGames);
             }

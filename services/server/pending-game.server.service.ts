@@ -105,7 +105,8 @@ export const startPendingGame = async ({
 }: StartPendingGameBody) => {
     const pendingGame = await operations.getAuthorCreatedPendingGame(
         gameId,
-        playerId
+        playerId,
+        true
     );
 
     if (!pendingGame) {
@@ -114,6 +115,8 @@ export const startPendingGame = async ({
 
     await deletePendingGame({ playerId, gameId });
     console.log('start', gameId);
+
+    return pendingGame;
 };
 
 export const getPendingGames = async () => {
