@@ -41,6 +41,12 @@ const getPendingGame = (gameId: GameId) =>
         include: { players: true },
     });
 
+const getPlayerInPendingGame = (gameId: GameId, playerId: PlayerId) =>
+    prisma.pendingGame.findFirst({
+        where: { gameId },
+        include: { players: { where: { playerId } } },
+    });
+
 const isPlayerInGame = (playerId: PlayerId) =>
     prisma.pendingGamePlayer.findFirst({ where: { playerId } });
 
@@ -53,4 +59,5 @@ export const operations = {
     getPendingGames,
     getPendingGame,
     isPlayerInGame,
+    getPlayerInPendingGame,
 };

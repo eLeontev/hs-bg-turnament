@@ -9,6 +9,7 @@ import {
 import { GameId } from '../models/common.models';
 
 import { JoinLeaveOnlineRoomPayload } from '../models/online-game.models';
+import { operations } from '../prisma/operations/pending-games';
 import {
     getListOfOnlinePlayerIds,
     joinPlayerIdToTheRoom,
@@ -48,8 +49,15 @@ export const initOnlineGameRoom = (io: Server, socket: Socket) => {
 
     socket.on(
         socketRoomChangesEventNames.joinOnlineGameRoom,
-        (payload: JoinLeaveOnlineRoomPayload) => {
-            const { gameId } = payload;
+        async (payload: JoinLeaveOnlineRoomPayload) => {
+            const { gameId, playerId } = payload;
+
+            if (!(await operations.getPlayerInPendingGame(gameId, playerId))) {
+                throw new Error(
+                    `palyer: ${playerId} cannot join to this game: ${gameId}`
+                );
+            }
+
             joinLeaveOnlineRoomPayload = payload;
 
             joinPlayerIdToTheRoom(payload);
