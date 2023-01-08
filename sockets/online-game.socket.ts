@@ -6,10 +6,11 @@ import {
     onlineGameRoomEventNames,
     socketRoomChangesEventNames,
 } from '../enums/socket.enums';
-import { GameId } from '../models/common.models';
+import { GameId, PlayerId } from '../models/common.models';
 
 import { JoinLeaveOnlineRoomPayload } from '../models/online-game.models';
 import { operations } from '../prisma/operations/pending-games';
+import { isPlayerInPlayGameOperation } from '../prisma/operations/play-game';
 import {
     getListOfOnlinePlayerIds,
     joinPlayerIdToTheRoom,
@@ -38,31 +39,45 @@ const leavePlayerFromOnlineRoom = (
     const { gameId } = payload;
     leavePlayerIdToTheRoom(payload);
 
-    const onlineRoomName = getOnlineGameRoom(gameId);
+    const onlineRoomName = getOnlineGameRoom(gameId, payload.isPlayGame);
     socket.leave(onlineRoomName);
 
     emitOnlinePlayers(io, onlineRoomName, gameId);
 };
 
+const isPlayerInGame = async (
+    gameId: GameId,
+    playerId: PlayerId,
+    isPlayGame?: boolean
+) => {
+    const isPLayerInGame = isPlayGame
+        ? isPlayerInPlayGameOperation
+        : operations.getPlayerInPendingGame;
+
+    if (!(await isPLayerInGame(gameId, playerId))) {
+        throw new Error(
+            `palyer: ${playerId} cannot join to this game: ${gameId}`
+        );
+    }
+};
 export const initOnlineGameRoom = (io: Server, socket: Socket) => {
     let joinLeaveOnlineRoomPayload: JoinLeaveOnlineRoomPayload | undefined;
 
     socket.on(
         socketRoomChangesEventNames.joinOnlineGameRoom,
         async (payload: JoinLeaveOnlineRoomPayload) => {
-            const { gameId, playerId } = payload;
+            const { gameId, playerId, isPlayGame } = payload;
 
-            if (!(await operations.getPlayerInPendingGame(gameId, playerId))) {
-                throw new Error(
-                    `palyer: ${playerId} cannot join to this game: ${gameId}`
-                );
-            }
+            await isPlayerInGame(gameId, playerId, isPlayGame);
 
             joinLeaveOnlineRoomPayload = payload;
 
             joinPlayerIdToTheRoom(payload);
 
-            const onlineRoomName = getOnlineGameRoom(gameId);
+            const onlineRoomName = getOnlineGameRoom(
+                gameId,
+                payload.isPlayGame
+            );
             socket.join(onlineRoomName);
 
             emitOnlinePlayers(io, onlineRoomName, gameId);

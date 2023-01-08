@@ -14,22 +14,27 @@ import {
 } from '../models/online-game.models';
 import { getPlayerId } from '../utils.ts/storage.utils';
 
-export const useOnlineGameSocketRoom = (gameId: GameId) => {
+export const useOnlineGameSocketRoom = (
+    gameId: GameId,
+    isPlayGame?: boolean
+) => {
     const socket = useSocket();
     useEffect(() => {
         const playerId = getPlayerId();
         socket.emit(socketRoomChangesEventNames.joinOnlineGameRoom, {
             gameId,
             playerId,
+            isPlayGame,
         });
 
         return () => {
             socket.emit(socketRoomChangesEventNames.leaveOnlineGameRoom, {
                 gameId,
                 playerId,
+                isPlayGame,
             });
         };
-    }, [socket, gameId]);
+    }, [socket, gameId, isPlayGame]);
 };
 
 export const useOnlinePlayerIds = () => {

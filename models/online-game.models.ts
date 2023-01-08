@@ -5,6 +5,7 @@ export type OnlinePlayerIds = Set<PlayerId>;
 export type JoinLeaveOnlineRoomPayload = {
     gameId: GameId;
     playerId: PlayerId;
+    isPlayGame?: boolean;
 };
 
 export type ListOfOnlinePlayerIds = Array<PlayerId>;
