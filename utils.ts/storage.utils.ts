@@ -1,15 +1,9 @@
 import { ResultOf } from '@graphql-typed-document-node/core';
-import {
-    GameId,
-    PlayerId,
-    PlayerLogin,
-    PrivatePlayerId,
-} from '../models/common.models';
+import { GameId, PlayerId, PlayerLogin } from '../models/common.models';
 
 enum localStorageKeys {
     login = 'HS_BG_login',
     playerId = 'HS_BG_player-id',
-    privatePlayerId = 'HS_BG_private_player-id',
     gameId = 'HS_BG_game-id',
 }
 
@@ -27,11 +21,6 @@ export const getLogin = () => getItem(localStorageKeys.login);
 export const setPlayerId = (playerId: PlayerId) =>
     setItem(localStorageKeys.playerId, playerId);
 export const getPlayerId = () => getItem(localStorageKeys.playerId);
-
-export const setPrivatePlayerId = (privatePlayerId: PrivatePlayerId) =>
-    setItem(localStorageKeys.privatePlayerId, privatePlayerId);
-export const getPrivatePlayerId = () =>
-    getItem(localStorageKeys.privatePlayerId);
 
 export const setGameId = (gameId: GameId) =>
     setItem(localStorageKeys.gameId, gameId);

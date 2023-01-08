@@ -4,19 +4,9 @@ import { useQuery } from '@apollo/client';
 import Link from 'next/link';
 import { ReactElement, useMemo } from 'react';
 import { pendingGamesPageUrl } from '../../constants/urls';
-import { initPlayGameQuery } from '../../graphql/queries';
+import { usePlayGameQuery } from '../../hooks/play-game/play-game.hooks';
 import { Message } from '../../models/graphql.models';
-import { InitPlayGameVariables } from '../../models/init-play-game.models';
-import { InitPlayGameBody } from '../../models/play-game.models';
-import { getInitPlayGameVariables } from '../../services/init-play-game.service';
 import { PrivateRouter } from '../../ui/routers/private-router';
-
-export type InitPlayGameProps = PlayGameLayoutProps & {
-    initPlayGameVariables: InitPlayGameVariables;
-};
-export type PlayGameLayoutProps = {
-    children: ReactElement;
-};
 
 const GameNotFound = () => (
     <>
@@ -24,30 +14,25 @@ const GameNotFound = () => (
         <Link href={pendingGamesPageUrl}>search for a new game</Link>
     </>
 );
-const InitPlayGame = ({
-    initPlayGameVariables,
-    children,
-}: InitPlayGameProps) => {
-    const { data } = useQuery<Message, InitPlayGameBody>(
-        initPlayGameQuery,
-        initPlayGameVariables
-    );
 
+export type PlayGameProps = {
+    children: ReactElement;
+};
+
+const PlayGame = ({ children }: PlayGameProps) => {
+    const data = usePlayGameQuery();
+    console.log(data);
     return data ? children : <GameNotFound></GameNotFound>;
 };
 
-const PlayGameLayout = ({ children }: PlayGameLayoutProps) => {
-    const initPlayGameVariables = useMemo(() => getInitPlayGameVariables(), []);
+export type PlayGameLayoutProps = {
+    children: ReactElement;
+};
 
+const PlayGameLayout = ({ children }: PlayGameLayoutProps) => {
     return (
         <PrivateRouter>
-            {initPlayGameVariables ? (
-                <InitPlayGame initPlayGameVariables={initPlayGameVariables}>
-                    {children}
-                </InitPlayGame>
-            ) : (
-                <GameNotFound></GameNotFound>
-            )}
+            <PlayGame>{children}</PlayGame>
         </PrivateRouter>
     );
 };

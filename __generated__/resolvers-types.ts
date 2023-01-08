@@ -70,6 +70,13 @@ export type PendingGame = {
   players: Array<Player>;
 };
 
+export type PlayGame = {
+  __typename?: 'PlayGame';
+  gameId: Scalars['String'];
+  phase?: Maybe<Scalars['String']>;
+  players: Array<Maybe<Player>>;
+};
+
 export type Player = {
   __typename?: 'Player';
   playerId: Scalars['String'];
@@ -78,15 +85,14 @@ export type Player = {
 
 export type Query = {
   __typename?: 'Query';
-  initPlayGameRequest?: Maybe<Message>;
   pendingGames: Array<Maybe<PendingGame>>;
+  playGame?: Maybe<PlayGame>;
 };
 
 
-export type QueryInitPlayGameRequestArgs = {
+export type QueryPlayGameArgs = {
   gameId: Scalars['String'];
-  playerId?: InputMaybe<Scalars['String']>;
-  privatePlayerId?: InputMaybe<Scalars['String']>;
+  playerId: Scalars['String'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -164,6 +170,7 @@ export type ResolversTypes = ResolversObject<{
   Message: ResolverTypeWrapper<Message>;
   Mutation: ResolverTypeWrapper<{}>;
   PendingGame: ResolverTypeWrapper<PendingGame>;
+  PlayGame: ResolverTypeWrapper<PlayGame>;
   Player: ResolverTypeWrapper<Player>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -176,6 +183,7 @@ export type ResolversParentTypes = ResolversObject<{
   Message: Message;
   Mutation: {};
   PendingGame: PendingGame;
+  PlayGame: PlayGame;
   Player: Player;
   Query: {};
   String: Scalars['String'];
@@ -204,6 +212,13 @@ export type PendingGameResolvers<ContextType = any, ParentType extends Resolvers
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type PlayGameResolvers<ContextType = any, ParentType extends ResolversParentTypes['PlayGame'] = ResolversParentTypes['PlayGame']> = ResolversObject<{
+  gameId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  phase?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  players?: Resolver<Array<Maybe<ResolversTypes['Player']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type PlayerResolvers<ContextType = any, ParentType extends ResolversParentTypes['Player'] = ResolversParentTypes['Player']> = ResolversObject<{
   playerId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   playerLogin?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -211,14 +226,15 @@ export type PlayerResolvers<ContextType = any, ParentType extends ResolversParen
 }>;
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  initPlayGameRequest?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<QueryInitPlayGameRequestArgs, 'gameId'>>;
   pendingGames?: Resolver<Array<Maybe<ResolversTypes['PendingGame']>>, ParentType, ContextType>;
+  playGame?: Resolver<Maybe<ResolversTypes['PlayGame']>, ParentType, ContextType, RequireFields<QueryPlayGameArgs, 'gameId' | 'playerId'>>;
 }>;
 
 export type Resolvers<ContextType = any> = ResolversObject<{
   Message?: MessageResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   PendingGame?: PendingGameResolvers<ContextType>;
+  PlayGame?: PlayGameResolvers<ContextType>;
   Player?: PlayerResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 }>;

@@ -32,5 +32,6 @@ model PlayGamePlayer {
 
 model PlayGame {
   gameId  String           @id @map("_id")
+  phase   String
   players PlayGamePlayer[]
 }

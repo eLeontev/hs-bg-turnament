@@ -16,18 +16,10 @@ export const getPendingGamesQuery = gql`
     }
 `;
 
-export const initPlayGameQuery = gql`
-    query initPlayGame(
-        $gameId: String!
-        $playerId: String
-        $privatePlayerId: String
-    ) {
-        initPlayGameRequest(
-            gameId: $gameId
-            playerId: $playerId
-            privatePlayerId: $privatePlayerId
-        ) {
-            message
+export const playGameQuery = gql`
+    query playGame($gameId: String!, $playerId: String!) {
+        playGame(gameId: $gameId, playerId: $playerId) {
+            phase
         }
     }
 `;

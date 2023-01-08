@@ -1,5 +1,6 @@
-import { initPlayGameBodySchema } from '../schemas/play-game.schemas';
-import { QueryInitPlayGameRequestArgs } from '../__generated__/resolvers-types';
+import { playGameBodySchema } from '../schemas/play-game.schemas';
 
-export const initPlayGameValidator = (body: QueryInitPlayGameRequestArgs) =>
-    initPlayGameBodySchema.parse(body);
+import { QueryPlayGamePhaseArgs } from '../__generated__/resolvers-types';
+
+export const playGameValidator = (body: QueryPlayGamePhaseArgs) =>
+    playGameBodySchema.parse(body);

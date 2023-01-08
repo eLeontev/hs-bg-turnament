@@ -12,13 +12,15 @@ type PendingGame {
     players: [Player!]!
 }
 
+type PlayGame {
+    gameId: String!
+    players: [Player]!
+    phase: String
+}
+
 type Query {
     pendingGames: [PendingGame]!
-    initPlayGameRequest(
-        gameId: String!
-        playerId: String
-        privatePlayerId: String
-    ): Message
+    playGame(gameId: String!, playerId: String!): PlayGame
 }
 
 type Message {

@@ -7,6 +7,7 @@ export enum socketRoomChangesEventNames {
 
 export enum playGameEventNames {
     startPlayGame = 'startPlayGame',
+    gameAction = 'gameAction',
 }
 
 export enum pendingGamesRoomEventNames {

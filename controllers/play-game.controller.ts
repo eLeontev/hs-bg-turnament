@@ -1,16 +1,16 @@
-import { initPlayGameMessage } from '../constants/play-game.constants';
-import { initPlayGame } from '../services/server/play-game.service';
+import { getPlayGame } from '../services/server/play-game.service';
+
+import { playGameValidator } from '../validators/play-game.validators';
+
 import { withoutParent, withErrorHandler } from '../utils.ts/resolver.utils';
-import { initPlayGameValidator } from '../validators/play-game.validators';
-import { QueryInitPlayGameRequestArgs } from '../__generated__/resolvers-types';
 
-const initPlayGameHandler = (body: QueryInitPlayGameRequestArgs) => {
-    const initPlayGameBody = initPlayGameValidator(body);
-    initPlayGame(initPlayGameBody);
+import { QueryPlayGamePhaseArgs } from '../__generated__/resolvers-types';
 
-    return initPlayGameMessage;
+const getPlayGameHandler = (playGameBody: QueryPlayGamePhaseArgs) => {
+    const body = playGameValidator(playGameBody);
+    return getPlayGame(body);
 };
 
-export const initPlayGameRequest = withoutParent(
-    withErrorHandler(initPlayGameHandler)
+export const getPlayGameRequest = withoutParent(
+    withErrorHandler(getPlayGameHandler)
 );
