@@ -13,3 +13,6 @@ export const getSocket = (res: NextApiResponse): Server =>
 
 export const getOnlineGameRoom = (gameId: GameId, isPlayGame?: boolean) =>
     `${socketRooms.onlineGame}: ${getOnlineGamePrefix(isPlayGame)} ${gameId}`;
+
+export const getPlayGameRoom = (gameId: GameId) =>
+    `${socketRooms.playGame}: ${gameId}`;
