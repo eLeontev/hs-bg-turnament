@@ -2,11 +2,11 @@ import prisma from '../../lib/prisma';
 
 import { GameId, PlayerId } from '../../models/common.models';
 import { PlayGameData } from '../../models/play-game.models';
-import { Players } from '../../models/player-id.models';
+import { PlayGamePlayers } from '../../models/player.models';
 
 export const startPlayGameOperation = (
     gameId: GameId,
-    players: Players,
+    players: PlayGamePlayers,
     playGameData: PlayGameData
 ) =>
     prisma.playGame.create({

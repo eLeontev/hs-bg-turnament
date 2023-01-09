@@ -1,36 +1,45 @@
 import prisma from '../../lib/prisma';
 
 import { GameId, PlayerId, PlayerLogin } from '../../models/common.models';
-import { PendingGame } from '../../models/pending-games.models';
+import { OperationPendingGame } from '../../models/pending-games.models';
 
-const createPendingGame = ({ players, ...pendingGame }: PendingGame) =>
+export const createPendingGameOperation = ({
+    players,
+    ...pendingGame
+}: OperationPendingGame) =>
     prisma.pendingGame.create({
         data: { ...pendingGame, players: { create: players } },
     });
 
-const deletePendingGame = (gameId: GameId) =>
+export const deletePendingGameOperation = (gameId: GameId) =>
     prisma.pendingGame.delete({ where: { gameId } });
 
-const joinPendingGame = (
+export const joinPendingGameOperation = (
     gameId: GameId,
     playerLogin: PlayerLogin,
-    playerId: PlayerId
+    playerId: PlayerId,
+    playerIdInGame: PlayerId
 ) =>
     prisma.pendingGamePlayer.create({
-        data: { playerId, playerLogin, PendingGame: { connect: { gameId } } },
+        data: {
+            playerId,
+            playerLogin,
+            playerIdInGame,
+            PendingGame: { connect: { gameId } },
+        },
     });
 
-const leavePendingGame = (playerId: PlayerId) =>
+export const leavePendingGameOperation = (playerId: PlayerId) =>
     prisma.pendingGamePlayer.delete({
         where: { playerId },
     });
 
-const getPendingGames = () =>
+export const getPendingGamesOperation = () =>
     prisma.pendingGame.findMany({
         include: { players: true },
     });
 
-const getAuthorCreatedPendingGame = (
+export const getAuthorCreatedPendingGameOperation = (
     gameId: GameId,
     authorId: PlayerId,
     withPlayers: boolean = false
@@ -40,29 +49,20 @@ const getAuthorCreatedPendingGame = (
         include: { players: withPlayers },
     });
 
-const getPendingGame = (gameId: GameId) =>
+export const getPendingGameOperation = (gameId: GameId) =>
     prisma.pendingGame.findFirst({
         where: { gameId },
         include: { players: true },
     });
 
-const getPlayerInPendingGame = (gameId: GameId, playerId: PlayerId) =>
+export const getPlayerInPendingGameOperation = (
+    gameId: GameId,
+    playerId: PlayerId
+) =>
     prisma.pendingGame.findFirst({
         where: { gameId },
         include: { players: { where: { playerId } } },
     });
 
-const isPlayerInGame = (playerId: PlayerId) =>
+export const isPlayerInGameOperation = (playerId: PlayerId) =>
     prisma.pendingGamePlayer.findFirst({ where: { playerId } });
-
-export const operations = {
-    createPendingGame,
-    deletePendingGame,
-    joinPendingGame,
-    leavePendingGame,
-    getAuthorCreatedPendingGame,
-    getPendingGames,
-    getPendingGame,
-    isPlayerInGame,
-    getPlayerInPendingGame,
-};

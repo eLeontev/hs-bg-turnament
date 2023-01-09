@@ -2,7 +2,7 @@ import { PairComponent } from '../pair.component';
 
 import { maxCountOfPlayers } from '../../../constants/game-config.constants';
 
-import { Players } from '../../../models/player-id.models';
+import { Players } from '../../../models/player.models';
 
 export type PlayersCounterProps = { players: Players };
 

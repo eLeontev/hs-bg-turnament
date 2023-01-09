@@ -9,6 +9,7 @@ datasource db {
 
 model PendingGamePlayer {
   playerId          String       @id @map("_id")
+  playerIdInGame    String
   playerLogin       String
   PendingGame       PendingGame? @relation(fields: [pendingGameGameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
   pendingGameGameId String?
@@ -23,6 +24,12 @@ model PendingGame {
   players     PendingGamePlayer[]
 }
 
+enum playGamePhases {
+  heroSelection
+  recruit
+  combat
+}
+
 model PlayGamePlayer {
   playerId       String    @id @map("_id")
   playerLogin    String
@@ -32,6 +39,6 @@ model PlayGamePlayer {
 
 model PlayGame {
   gameId  String           @id @map("_id")
-  phase   String
+  phase   playGamePhases
   players PlayGamePlayer[]
 }

@@ -9,7 +9,7 @@ import {
 import { GameId, PlayerId } from '../models/common.models';
 
 import { JoinLeaveOnlineRoomPayload } from '../models/online-game.models';
-import { operations } from '../prisma/operations/pending-games';
+import { getPlayerInPendingGameOperation } from '../prisma/operations/pending-games';
 import { isPlayerInPlayGameOperation } from '../prisma/operations/play-game';
 import {
     getListOfOnlinePlayerIds,
@@ -52,7 +52,7 @@ const isPlayerInGame = async (
 ) => {
     const isPLayerInGame = isPlayGame
         ? isPlayerInPlayGameOperation
-        : operations.getPlayerInPendingGame;
+        : getPlayerInPendingGameOperation;
 
     if (!(await isPLayerInGame(gameId, playerId))) {
         throw new Error(

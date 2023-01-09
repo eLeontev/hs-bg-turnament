@@ -27,18 +27,22 @@ type Message {
     message: String!
 }
 
+type PlayerIdInGameResponse {
+    playerIdInGame: String!
+}
+
 type Mutation {
     createPendingGameRequest(
         playerId: String
         playerLogin: String
         gameName: String
-    ): Message
+    ): PlayerIdInGameResponse
     deletePendingGameRequest(gameId: String!, playerId: String): Message
     joinPendingGameRequest(
         gameId: String!
         playerId: String
         playerLogin: String
-    ): Message
+    ): PlayerIdInGameResponse
     leavePendingGameRequest(gameId: String!, playerId: String): Message
     startPendingGameRequest(gameId: String!, playerId: String): Message
 }

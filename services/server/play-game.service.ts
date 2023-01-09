@@ -1,9 +1,9 @@
+import { playGamePhases } from '@prisma/client';
+
 import {
     getPlayGameOperation,
     startPlayGameOperation,
 } from '../../prisma/operations/play-game';
-
-import { playGamePhases } from '../../enums/play-game.enums';
 
 import { GameId } from '../../models/common.models';
 import { PlayGameBody } from '../../models/play-game.models';
@@ -15,7 +15,10 @@ export const startPlayGame = async (
     pendingGamePlayers: Array<PendingGamePlayer>
 ) => {
     const playGamePlayers = pendingGamePlayers.map(
-        ({ playerId, playerLogin }) => ({ playerId, playerLogin })
+        ({ playerLogin, playerIdInGame }) => ({
+            playerId: playerIdInGame,
+            playerLogin,
+        })
     );
 
     await startPlayGameOperation(gameId, playGamePlayers, {
@@ -23,5 +26,5 @@ export const startPlayGame = async (
     });
 };
 
-export const getPlayGame = async ({ gameId, playerId }: PlayGameBody) =>
+export const getPlayGame = ({ gameId, playerId }: PlayGameBody) =>
     getPlayGameOperation(gameId, playerId);

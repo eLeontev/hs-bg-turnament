@@ -14,7 +14,7 @@ export const withErrorHandler =
         try {
             return await requestHandler(...args);
         } catch ({ message }) {
-            return new GraphQLError(
+            throw new GraphQLError(
                 String(message) || unknownGrapgQLErrorMessage
             );
         }

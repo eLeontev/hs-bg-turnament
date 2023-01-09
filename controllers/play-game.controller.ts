@@ -4,9 +4,9 @@ import { playGameValidator } from '../validators/play-game.validators';
 
 import { withoutParent, withErrorHandler } from '../utils.ts/resolver.utils';
 
-import { QueryPlayGamePhaseArgs } from '../__generated__/resolvers-types';
+import { QueryPlayGameArgs } from '../__generated__/resolvers-types';
 
-const getPlayGameHandler = (playGameBody: QueryPlayGamePhaseArgs) => {
+const getPlayGameHandler = (playGameBody: QueryPlayGameArgs) => {
     const body = playGameValidator(playGameBody);
     return getPlayGame(body);
 };

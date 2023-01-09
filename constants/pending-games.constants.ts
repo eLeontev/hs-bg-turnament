@@ -5,16 +5,8 @@ import {
 
 import { Message } from '../models/graphql.models';
 
-export const pendingGameCreatedMessage: Message = {
-    message: 'pending game created',
-};
-
 export const pendingGameDeletedMessage: Message = {
     message: 'pending game deleted',
-};
-
-export const pendingGameJoinMessage: Message = {
-    message: 'you joined to the pending game',
 };
 
 export const pendingGameLeaveMessage: Message = {

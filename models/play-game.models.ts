@@ -1,17 +1,19 @@
 import { z } from 'zod';
-import { playGameActions, playGamePhases } from '../enums/play-game.enums';
+import { playGamePhases } from '@prisma/client';
 
 import { playGameBodySchema } from '../schemas/play-game.schemas';
 
-import { Players } from './player-id.models';
+import { playGameActions } from '../enums/play-game.enums';
+
+import { PlayGamePlayers } from './player.models';
 
 export type PlayGameData = {
     phase: playGamePhases;
 };
 
 export type PlayGame = {
-    gameID: string;
-    players: Players;
+    gameId: string;
+    players: PlayGamePlayers;
 } & PlayGameData;
 
 export type PlayGameBody = z.infer<typeof playGameBodySchema>;

@@ -4,6 +4,8 @@ import { Group, Tooltip } from '@mantine/core';
 
 import { IconButton } from '../button.component';
 
+import { joinPendingGameResponseHandler } from '../../../services/pending-games.service';
+
 import { useJoinPendingGame } from '../../../hooks/pending-games/pending-games.mutation.hooks';
 
 import { GameId } from '../../../models/common.models';
@@ -17,7 +19,7 @@ export type JoinPendingGameProps = { gameId: GameId; isInGame: boolean };
 export const JoinPendingGame = ({ gameId, isInGame }: JoinPendingGameProps) => {
     const action = useJoinPendingGame();
 
-    const onClick = () => action(gameId);
+    const onClick = () => action(gameId).then(joinPendingGameResponseHandler);
 
     return (
         <Tooltip

@@ -3,7 +3,7 @@ import { Group } from '@mantine/core';
 import { PlayerInfo } from './player-info';
 
 import { OnlinePlayerIds } from '../../../models/online-game.models';
-import { Player, Players } from '../../../models/player-id.models';
+import { Player, Players } from '../../../models/player.models';
 
 export type JoinedPendingGamePlayersProps = {
     players: Players;

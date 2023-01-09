@@ -14,7 +14,7 @@ import {
     PendingGame,
     PendingGames,
 } from '../../../models/pending-games.models';
-import { Player } from '../../../models/player-id.models';
+import { Player } from '../../../models/player.models';
 
 import { getPlayerId } from '../../../utils.ts/storage.utils';
 import { DeletePendingGame } from './delete-pending-game.component';

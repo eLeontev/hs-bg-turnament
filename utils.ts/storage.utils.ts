@@ -4,6 +4,7 @@ import { GameId, PlayerId, PlayerLogin } from '../models/common.models';
 enum localStorageKeys {
     login = 'HS_BG_login',
     playerId = 'HS_BG_player-id',
+    playerIdInGame = 'HS_BG_player-id-in-game',
     gameId = 'HS_BG_game-id',
 }
 
@@ -31,3 +32,8 @@ export const clearAllLocalStorageValues = () => {
         setItem(key, noValue)
     );
 };
+
+export const setPlayerIdInGame = (playerIdInGame: string) =>
+    setItem(localStorageKeys.playerIdInGame, playerIdInGame);
+
+export const getPlayerIdInGame = () => getItem(localStorageKeys.playerIdInGame);

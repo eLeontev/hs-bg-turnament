@@ -1,3 +1,5 @@
+import { NextApiResponse } from 'next';
+
 import {
     createPendingGame,
     deletePendingGame,
@@ -6,6 +8,7 @@ import {
     leavePendingGame,
     startPendingGame,
 } from '../services/server/pending-game.server.service';
+import { startPlayGame } from '../services/server/play-game.service';
 
 import {
     createPendingGameBodyValidator,
@@ -18,7 +21,6 @@ import {
 import { withErrorHandler, withoutParent } from '../utils.ts/resolver.utils';
 
 import {
-    Message,
     MutationCreatePendingGameRequestArgs,
     MutationDeletePendingGameRequestArgs,
     MutationJoinPendingGameRequestArgs,
@@ -26,30 +28,29 @@ import {
     MutationStartPendingGameRequestArgs,
 } from '../__generated__/resolvers-types';
 import {
-    pendingGameCreatedMessage,
     pendingGameDeletedMessage,
-    pendingGameJoinMessage,
     pendingGameLeaveMessage,
     pendingGameStartMessage,
 } from '../constants/pending-games.constants';
-import { NextApiResponse } from 'next';
-import { getSocket } from '../utils.ts/socket.utils';
-import { startPlayGame } from '../services/server/play-game.service';
 
 import { notifyPendingGames } from '../sockets/pending-games.notification.socket';
 import { notifyOnlinePlayersPlayGameStarted } from '../sockets/play-game.notification.socket';
 
+import { Message, PlayerIdInGameResponse } from '../models/graphql.models';
+
+import { getSocket } from '../utils.ts/socket.utils';
+
 export const createPendingGameHandler = async (
     body: MutationCreatePendingGameRequestArgs,
     res: NextApiResponse
-): Promise<Message> => {
+): Promise<PlayerIdInGameResponse> => {
     const createPendingGameBody = createPendingGameBodyValidator(body);
-    await createPendingGame(createPendingGameBody);
+    const playerIdInGame = await createPendingGame(createPendingGameBody);
 
     const socketServer = getSocket(res);
     notifyPendingGames(socketServer, getPendingGames());
 
-    return pendingGameCreatedMessage;
+    return { playerIdInGame };
 };
 
 export const deletePendingGameHandler = async (
@@ -69,15 +70,15 @@ export const deletePendingGameHandler = async (
 export const joinPendingGameHandler = async (
     body: MutationJoinPendingGameRequestArgs,
     res: NextApiResponse
-): Promise<Message> => {
+): Promise<PlayerIdInGameResponse> => {
     const joinPendingGameBody = joinPendingGameBodyValidator(body);
 
-    await joinPendingGame(joinPendingGameBody);
+    const playerIdInGame = await joinPendingGame(joinPendingGameBody);
 
     const socketServer = getSocket(res);
     notifyPendingGames(socketServer, getPendingGames());
 
-    return pendingGameJoinMessage;
+    return { playerIdInGame };
 };
 
 export const leavePendingGameHandler = async (

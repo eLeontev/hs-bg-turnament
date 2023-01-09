@@ -1,3 +1,5 @@
+import { FetchResult } from '@apollo/client';
+
 import {
     createPendingGameBodyValidator,
     deletePendingGameBodyValidator,
@@ -10,7 +12,12 @@ import { pendingGameNameErrorMessage } from '../constants/pending-games.constant
 
 import { gameNameSchema } from '../schemas/pending-games.schemas';
 
-import { MutationFn } from '../models/graphql.models';
+import {
+    CreatePendingGameMutationResponse,
+    JoinPendingGameMutationResponse,
+    MutationFn,
+    PlayerIdInGameResponse,
+} from '../models/graphql.models';
 import {
     CreatePendingGameBody,
     DeletePendingGameBody,
@@ -20,13 +27,21 @@ import {
     StartPendingGameBody,
 } from '../models/pending-games.models';
 
-import { getPlayerId, getLogin } from '../utils.ts/storage.utils';
+import {
+    getPlayerId,
+    getLogin,
+    setPlayerIdInGame,
+} from '../utils.ts/storage.utils';
 
 import { Message } from '../__generated__/resolvers-types';
-import { Player } from '../models/player-id.models';
+import { Player } from '../models/player.models';
+import { GameId, PlayerId } from '../models/common.models';
 
 export const createPendingGame = (
-    createPendingGameHandler: MutationFn<Message, CreatePendingGameBody>,
+    createPendingGameHandler: MutationFn<
+        CreatePendingGameMutationResponse,
+        CreatePendingGameBody
+    >,
     gameName: string
 ) =>
     createPendingGameHandler({
@@ -49,8 +64,11 @@ export const deletePendingGame = (
     });
 
 export const joinPendingGame = (
-    joinPendingGameHandler: MutationFn<Message, JoinPendingGameBody>,
-    gameId: string
+    joinPendingGameHandler: MutationFn<
+        JoinPendingGameMutationResponse,
+        JoinPendingGameBody
+    >,
+    gameId: GameId
 ) =>
     joinPendingGameHandler({
         variables: joinPendingGameBodyValidator({
@@ -62,7 +80,7 @@ export const joinPendingGame = (
 
 export const leavePendingGame = (
     leavePendingGameHandler: MutationFn<Message, LeavePendingGameBody>,
-    gameId: string
+    gameId: GameId
 ) =>
     leavePendingGameHandler({
         variables: leavePendingGameBodyValidator({
@@ -72,8 +90,11 @@ export const leavePendingGame = (
     });
 
 export const startPendingGame = (
-    startPendingGameHandler: MutationFn<Message, StartPendingGameBody>,
-    gameId: string
+    startPendingGameHandler: MutationFn<
+        PlayerIdInGameResponse,
+        StartPendingGameBody
+    >,
+    gameId: GameId
 ) =>
     startPendingGameHandler({
         variables: startPendingGameBodyValidator({
@@ -90,4 +111,21 @@ export const createPendingGameValidator = (value: string) =>
 export const isPlayerInGame = (pendingGames: PendingGames, playerId: string) =>
     pendingGames.some(({ players }) =>
         players.some((player: Player) => player.playerId === playerId)
+    );
+
+const setPlayerIdInGameHandler = (playerId: PlayerId | undefined) =>
+    playerId && setPlayerIdInGame(playerId);
+
+export const createPendingGameResponseHandler = (
+    value: FetchResult<CreatePendingGameMutationResponse> | undefined
+) =>
+    setPlayerIdInGameHandler(
+        value?.data?.createPendingGameRequest.playerIdInGame
+    );
+
+export const joinPendingGameResponseHandler = (
+    value: FetchResult<JoinPendingGameMutationResponse> | undefined
+) =>
+    setPlayerIdInGameHandler(
+        value?.data?.joinPendingGameRequest.playerIdInGame
     );

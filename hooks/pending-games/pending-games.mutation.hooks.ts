@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { DocumentNode, useMutation } from '@apollo/client';
+import { DocumentNode, FetchResult, useMutation } from '@apollo/client';
 import { useForm } from '@mantine/form';
 
 import {
@@ -10,6 +10,7 @@ import {
     startPendingGame,
     createPendingGame,
     createPendingGameValidator,
+    createPendingGameResponseHandler,
 } from '../../services/pending-games.service';
 
 import {
@@ -22,17 +23,20 @@ import {
 
 import { noGameName } from '../../constants/pending-games.constants';
 
-import { Message, MutationFn } from '../../models/graphql.models';
+import { MutationFn } from '../../models/graphql.models';
 
 const usePendingGameMutation = <R, B, C>(
     mutation: DocumentNode,
-    serviceAction: (mutationFn: MutationFn<Message, B>, config: C) => R
+    serviceAction: (
+        mutationFn: MutationFn<R, B>,
+        config: C
+    ) => Promise<FetchResult<R>>
 ) => {
-    const [pendingGameMutation] = useMutation<Message, B>(mutation);
+    const [pendingGameMutation] = useMutation<R, B>(mutation);
 
     const action = async (config: C) => {
         try {
-            await serviceAction(pendingGameMutation, config);
+            return serviceAction(pendingGameMutation, config);
         } catch (e) {
             alert((e as { message: string }).message);
         }
@@ -54,7 +58,9 @@ export const useCreatePendingGame = () => {
 
     const onSubmit = form.onSubmit(({ gameName }: typeof form['values']) => {
         setVisible(true);
-        action(gameName).finally(() => setVisible(false));
+        action(gameName)
+            .then(createPendingGameResponseHandler)
+            .finally(() => setVisible(false));
     });
 
     const inputProps = form.getInputProps('gameName');
