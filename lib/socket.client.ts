@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import io, { Socket } from 'socket.io-client';
 
+import { getBaseUrl } from '../utils.ts/url.utils';
+
 let _socket: Socket;
 
 const initSocketConnection = async (setConnected: (socket: Socket) => void) => {
-    await fetch('http://localhost:3000/api/socket');
+    await fetch(`${getBaseUrl()}/api/socket`);
 
     if (!_socket) {
         _socket = io();
