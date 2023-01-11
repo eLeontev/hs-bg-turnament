@@ -39,16 +39,23 @@ import { notifyOnlinePlayersPlayGameStarted } from '../sockets/play-game.notific
 import { Message, PlayerIdInGameResponse } from '../models/graphql.models';
 
 import { getSocket } from '../utils.ts/socket.utils';
+import {
+    cancelDeletePendingGame,
+    schedulePendingGameDelition,
+} from '../services/pending-games.scheduled.service';
 
 export const createPendingGameHandler = async (
     body: MutationCreatePendingGameRequestArgs,
     res: NextApiResponse
 ): Promise<PlayerIdInGameResponse> => {
     const createPendingGameBody = createPendingGameBodyValidator(body);
-    const playerIdInGame = await createPendingGame(createPendingGameBody);
+    const { playerIdInGame, gameId } = await createPendingGame(
+        createPendingGameBody
+    );
 
-    const socketServer = getSocket(res);
-    notifyPendingGames(socketServer, getPendingGames());
+    const io = getSocket(res);
+    notifyPendingGames(io, getPendingGames());
+    schedulePendingGameDelition(io, createPendingGameBody.playerId, gameId);
 
     return { playerIdInGame };
 };
@@ -61,8 +68,9 @@ export const deletePendingGameHandler = async (
 
     await deletePendingGame(deletePendingGameBody);
 
-    const socketServer = getSocket(res);
-    notifyPendingGames(socketServer, getPendingGames());
+    const io = getSocket(res);
+    notifyPendingGames(io, getPendingGames());
+    cancelDeletePendingGame(deletePendingGameBody.gameId);
 
     return pendingGameDeletedMessage;
 };
@@ -75,8 +83,8 @@ export const joinPendingGameHandler = async (
 
     const playerIdInGame = await joinPendingGame(joinPendingGameBody);
 
-    const socketServer = getSocket(res);
-    notifyPendingGames(socketServer, getPendingGames());
+    const io = getSocket(res);
+    notifyPendingGames(io, getPendingGames());
 
     return { playerIdInGame };
 };
@@ -88,8 +96,8 @@ export const leavePendingGameHandler = async (
     const leavePendingGameBody = leavePendingGameBodyValidator(body);
     await leavePendingGame(leavePendingGameBody);
 
-    const socketServer = getSocket(res);
-    notifyPendingGames(socketServer, getPendingGames());
+    const io = getSocket(res);
+    notifyPendingGames(io, getPendingGames());
 
     return pendingGameLeaveMessage;
 };
@@ -103,12 +111,10 @@ export const startPendingGameHandler = async (
 
     await startPlayGame(gameId, players);
 
-    const socketServer = getSocket(res);
-    notifyOnlinePlayersPlayGameStarted(
-        socketServer,
-        startPendingGameBody.gameId
-    );
-    notifyPendingGames(socketServer, getPendingGames());
+    const io = getSocket(res);
+    notifyOnlinePlayersPlayGameStarted(io, startPendingGameBody.gameId);
+    notifyPendingGames(io, getPendingGames());
+    cancelDeletePendingGame(gameId);
 
     return pendingGameStartMessage;
 };

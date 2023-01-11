@@ -27,3 +27,5 @@ export const createPendingGameInputPlaceholder = 'Game name';
 export const createGameButtonLabel = 'Create Game';
 
 export const createPendingGameLabel = 'Create pending game';
+
+export const pendginGameLiveDurationInMs = 900000; // 15min

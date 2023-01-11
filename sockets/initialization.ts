@@ -6,7 +6,7 @@ import { initPendingGamesRoom } from './pending-games.socket';
 
 import { builtInSocketEventNames } from '../enums/socket.enums';
 
-export const registeCommunication = (io: Server) => {
+export const registerCommunication = (io: Server) => {
     io.on(builtInSocketEventNames.connection, (socket: Socket) => {
         initPendingGamesRoom(socket);
         initOnlineGameRoom(io, socket);

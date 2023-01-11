@@ -58,7 +58,7 @@ export const createPendingGame = async ({
 
     console.log('create', gameId);
 
-    return playerIdInGame;
+    return { playerIdInGame, gameId };
 };
 
 export const deletePendingGame = async ({
