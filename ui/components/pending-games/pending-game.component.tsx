@@ -2,15 +2,19 @@ import { Card, Flex } from '@mantine/core';
 
 import { PairComponent } from '../pair.component';
 import { PlayersCounter } from './players-counter.component';
+import { Timer } from '../timer.component';
+import { DeletePendingGame } from './delete-pending-game.component';
+import { JoinPendingGame } from './join-pending-game.component';
 
 import { useFormatDistance } from '../../../hooks/pending-games/pending-games.time.hooks';
+
+import { pendginGameLiveDurationInMs } from '../../../constants/pending-games.constants';
 
 import { PendingGame } from '../../../models/pending-games.models';
 
 import { useStyles } from '../../styles/pending-games.styles';
+
 import { getPlayerId } from '../../../utils.ts/storage.utils';
-import { DeletePendingGame } from './delete-pending-game.component';
-import { JoinPendingGame } from './join-pending-game.component';
 
 export type PendingGameProps = { pendingGame: PendingGame; isInGame: boolean };
 
@@ -32,6 +36,11 @@ export const PendingGameComponent = ({
 
     return (
         <Card className={classes.pendingGame}>
+            <Timer
+                className={classes.timer}
+                timeLeftUTC={createdDate}
+                durationInMs={pendginGameLiveDurationInMs}
+            ></Timer>
             <Flex key={gameId} direction="row" justify="space-between">
                 <PlayersCounter players={players}></PlayersCounter>
                 <PairComponent
