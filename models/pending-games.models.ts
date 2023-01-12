@@ -5,7 +5,6 @@ import {
     deletePendingGameBodySchema,
     joinPendingGameBodySchema,
     leavePendingGameBodySchema,
-    startPendingGameBodySchema,
 } from '../schemas/pending-games.schemas';
 
 import { Players, PendingGamePlayers } from './player.models';
@@ -31,5 +30,3 @@ export type DeletePendingGameBody = z.infer<typeof deletePendingGameBodySchema>;
 
 export type JoinPendingGameBody = z.infer<typeof joinPendingGameBodySchema>;
 export type LeavePendingGameBody = z.infer<typeof leavePendingGameBodySchema>;
-
-export type StartPendingGameBody = z.infer<typeof startPendingGameBodySchema>;

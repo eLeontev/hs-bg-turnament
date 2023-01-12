@@ -7,17 +7,17 @@ import {
     joinPendingGame,
     leavePendingGame,
     deletePendingGame,
-    startPendingGame,
     createPendingGame,
     createPendingGameValidator,
     createPendingGameResponseHandler,
 } from '../../services/pending-games.service';
+import { startPlayGame } from '../../services/play-game.service';
 
 import {
     joinPendingGameMutation,
     leavePendingGameMutation,
     deletePendingGameMutation,
-    startPendingGameMutation,
+    startPlayGameMutation,
     createPendingGameMutation,
 } from '../../graphql/mutations';
 
@@ -77,5 +77,5 @@ export const useLeavePendingGame = () =>
 export const useDeletePendingGame = () =>
     usePendingGameMutation(deletePendingGameMutation, deletePendingGame);
 
-export const useStartPendingGame = () =>
-    usePendingGameMutation(startPendingGameMutation, startPendingGame);
+export const useStartPlayGame = () =>
+    usePendingGameMutation(startPlayGameMutation, startPlayGame);

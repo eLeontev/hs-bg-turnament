@@ -3,6 +3,8 @@ export enum socketRoomChangesEventNames {
     leavePendingGamesRoom = 'leavePendingGamesRoom',
     joinOnlineGameRoom = 'joinOnlineGameRoom',
     leaveOnlineGameRoom = 'leaveOnlineGameRoom',
+    joinPlayGameRoom = 'joinPlayGameRoom',
+    leavePlayGameRoom = 'leavePlayGameRoom',
 }
 
 export enum playGameEventNames {

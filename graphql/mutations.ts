@@ -48,9 +48,9 @@ export const leavePendingGameMutation = gql`
     }
 `;
 
-export const startPendingGameMutation = gql`
-    mutation startPendingGame($gameId: String!, $playerId: String) {
-        startPendingGameRequest(gameId: $gameId, playerId: $playerId) {
+export const startPlayGameMutation = gql`
+    mutation startPlayGame($gameId: String!, $playerId: String) {
+        startPlayGameRequest(gameId: $gameId, playerId: $playerId) {
             message
         }
     }

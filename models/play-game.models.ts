@@ -1,7 +1,10 @@
 import { z } from 'zod';
 import { playGamePhases } from '@prisma/client';
 
-import { playGameBodySchema } from '../schemas/play-game.schemas';
+import {
+    playGameBodySchema,
+    playGameJoinLeavePayloadSchema,
+} from '../schemas/play-game.schemas';
 
 import { playGameActions } from '../enums/play-game.enums';
 
@@ -17,6 +20,10 @@ export type PlayGame = {
 } & PlayGameData;
 
 export type PlayGameBody = z.infer<typeof playGameBodySchema>;
+
+export type PlayGameJoinLeavePayload = z.infer<
+    typeof playGameJoinLeavePayloadSchema
+>;
 
 export type DurationInMs = number;
 

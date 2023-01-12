@@ -61,16 +61,12 @@ const isPlayerInGame = async (
     }
 };
 export const initOnlineGameRoom = (io: Server, socket: Socket) => {
-    let joinLeaveOnlineRoomPayload: JoinLeaveOnlineRoomPayload | undefined;
-
     socket.on(
         socketRoomChangesEventNames.joinOnlineGameRoom,
         async (payload: JoinLeaveOnlineRoomPayload) => {
             const { gameId, playerId, isPlayGame } = payload;
 
             await isPlayerInGame(gameId, playerId, isPlayGame);
-
-            joinLeaveOnlineRoomPayload = payload;
 
             joinPlayerIdToTheRoom(payload);
 
@@ -81,20 +77,22 @@ export const initOnlineGameRoom = (io: Server, socket: Socket) => {
             socket.join(onlineRoomName);
 
             emitOnlinePlayers(io, onlineRoomName, gameId);
+
+            const leaveRoomCallback = (eventName: string) => () => {
+                socket.removeAllListeners(eventName);
+                leavePlayerFromOnlineRoom(socket, io, payload);
+            };
+            socket.once(
+                socketRoomChangesEventNames.leaveOnlineGameRoom,
+                leaveRoomCallback(builtInSocketEventNames.disconnect)
+            );
+
+            socket.once(
+                builtInSocketEventNames.disconnect,
+                leaveRoomCallback(
+                    socketRoomChangesEventNames.leaveOnlineGameRoom
+                )
+            );
         }
     );
-
-    socket.on(
-        socketRoomChangesEventNames.leaveOnlineGameRoom,
-        (payload: JoinLeaveOnlineRoomPayload) => {
-            joinLeaveOnlineRoomPayload = undefined;
-            leavePlayerFromOnlineRoom(socket, io, payload);
-        }
-    );
-
-    socket.on(builtInSocketEventNames.disconnect, () => {
-        if (joinLeaveOnlineRoomPayload) {
-            leavePlayerFromOnlineRoom(socket, io, joinLeaveOnlineRoomPayload);
-        }
-    });
 };

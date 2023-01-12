@@ -31,7 +31,7 @@ enum playGamePhases {
 }
 
 model PlayGamePlayer {
-  playerId       String    @id @map("_id")
+  playerIdInGame String    @id @map("_id")
   playerLogin    String
   PlayGame       PlayGame? @relation(fields: [playGameGameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
   playGameGameId String?

@@ -16,7 +16,7 @@ export const startPlayGame = async (
 ) => {
     const playGamePlayers = pendingGamePlayers.map(
         ({ playerLogin, playerIdInGame }) => ({
-            playerId: playerIdInGame,
+            playerIdInGame,
             playerLogin,
         })
     );
@@ -26,5 +26,5 @@ export const startPlayGame = async (
     });
 };
 
-export const getPlayGame = ({ gameId, playerId }: PlayGameBody) =>
-    getPlayGameOperation(gameId, playerId);
+export const getPlayGame = ({ gameId, playerIdInGame }: PlayGameBody) =>
+    getPlayGameOperation(gameId, playerIdInGame);

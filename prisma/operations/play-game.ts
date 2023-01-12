@@ -1,6 +1,6 @@
 import prisma from '../../lib/prisma';
 
-import { GameId, PlayerId } from '../../models/common.models';
+import { GameId, PlayerIdInGame } from '../../models/common.models';
 import { PlayGameData } from '../../models/play-game.models';
 import { PlayGamePlayers } from '../../models/player.models';
 
@@ -17,17 +17,20 @@ export const startPlayGameOperation = (
         },
     });
 
-export const getPlayGameOperation = (gameId: GameId, playerId: PlayerId) =>
+export const getPlayGameOperation = (
+    gameId: GameId,
+    playerIdInGame: PlayerIdInGame
+) =>
     prisma.playGame.findFirstOrThrow({
         where: { gameId },
-        include: { players: { where: { playerId } } },
+        include: { players: { where: { playerIdInGame } } },
     });
 
 export const isPlayerInPlayGameOperation = (
     gameId: GameId,
-    playerId: PlayerId
+    playerIdInGame: PlayerIdInGame
 ) =>
     prisma.playGame.findFirst({
         where: { gameId },
-        include: { players: { where: { playerId } } },
+        include: { players: { where: { playerIdInGame } } },
     });

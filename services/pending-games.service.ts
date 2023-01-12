@@ -5,7 +5,6 @@ import {
     deletePendingGameBodyValidator,
     joinPendingGameBodyValidator,
     leavePendingGameBodyValidator,
-    startPendingGameBodyValidator,
 } from '../validators/pending-games.validators';
 
 import { pendingGameNameErrorMessage } from '../constants/pending-games.constants';
@@ -16,7 +15,6 @@ import {
     CreatePendingGameMutationResponse,
     JoinPendingGameMutationResponse,
     MutationFn,
-    PlayerIdInGameResponse,
 } from '../models/graphql.models';
 import {
     CreatePendingGameBody,
@@ -24,7 +22,6 @@ import {
     JoinPendingGameBody,
     LeavePendingGameBody,
     PendingGames,
-    StartPendingGameBody,
 } from '../models/pending-games.models';
 
 import {
@@ -34,7 +31,7 @@ import {
 } from '../utils.ts/storage.utils';
 
 import { Message } from '../__generated__/resolvers-types';
-import { Player } from '../models/player.models';
+import { Player, StartPlayGameBody } from '../models/player.models';
 import { GameId, PlayerId } from '../models/common.models';
 
 export const createPendingGame = (
@@ -84,20 +81,6 @@ export const leavePendingGame = (
 ) =>
     leavePendingGameHandler({
         variables: leavePendingGameBodyValidator({
-            gameId,
-            playerId: getPlayerId(),
-        }),
-    });
-
-export const startPendingGame = (
-    startPendingGameHandler: MutationFn<
-        PlayerIdInGameResponse,
-        StartPendingGameBody
-    >,
-    gameId: GameId
-) =>
-    startPendingGameHandler({
-        variables: startPendingGameBodyValidator({
             gameId,
             playerId: getPlayerId(),
         }),

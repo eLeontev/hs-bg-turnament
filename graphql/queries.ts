@@ -17,8 +17,8 @@ export const getPendingGamesQuery = gql`
 `;
 
 export const playGameQuery = gql`
-    query playGame($gameId: String!, $playerId: String!) {
-        playGame(gameId: $gameId, playerId: $playerId) {
+    query playGame($gameId: String!, $playerIdInGame: String!) {
+        playGame(gameId: $gameId, playerIdInGame: $playerIdInGame) {
             phase
         }
     }

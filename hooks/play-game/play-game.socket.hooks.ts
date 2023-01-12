@@ -1,15 +1,20 @@
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useSocket } from '../../lib/socket.client';
 
+import { playGameJoinLeavePayloadSchema } from '../../schemas/play-game.schemas';
+
 import { playGamePageUrl } from '../../constants/urls';
 
-import { playGameEventNames } from '../../enums/socket.enums';
+import {
+    playGameEventNames,
+    socketRoomChangesEventNames,
+} from '../../enums/socket.enums';
 
 import { GameId } from '../../models/common.models';
 
-import { setGameId } from '../../utils.ts/storage.utils';
+import { getPlayerIdInGame, setGameId } from '../../utils.ts/storage.utils';
 
 export const useStartPlayGameFromSocket = () => {
     const socket = useSocket();
@@ -25,4 +30,33 @@ export const useStartPlayGameFromSocket = () => {
             socket.removeAllListeners(playGameEventNames.startPlayGame);
         };
     }, [socket, router]);
+};
+
+export const usePlayGame = (gameId: GameId) => {
+    const [data, setPlayGameData] = useState<Array<unknown>>([]);
+    const socket = useSocket();
+
+    useEffect(() => {
+        const playGameJoinLeavePayload = playGameJoinLeavePayloadSchema.parse({
+            gameId,
+            playerIdInGame: getPlayerIdInGame(),
+        });
+
+        socket.emit(
+            socketRoomChangesEventNames.joinPlayGameRoom,
+            playGameJoinLeavePayload
+        );
+
+        socket.on(playGameEventNames.gameAction, (step) => {
+            console.log('data received', step);
+            setPlayGameData((steps) => [...steps, step]);
+        });
+
+        return () => {
+            socket.emit(socketRoomChangesEventNames.leavePlayGameRoom);
+            socket.removeAllListeners(playGameEventNames.gameAction);
+        };
+    }, [socket, gameId]);
+
+    return data;
 };

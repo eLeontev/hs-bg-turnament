@@ -1,4 +1,8 @@
-import { PlayerId, PlayerLogin } from './common.models';
+import { z } from 'zod';
+
+import { startPlayGameBodySchema } from '../schemas/play-game.schemas';
+
+import { PlayerId, PlayerIdInGame, PlayerLogin } from './common.models';
 
 export type Player = {
     playerId: PlayerId;
@@ -10,10 +14,12 @@ export type PendingGamePlayer = PlayGamePlayer & {
 };
 
 export type PlayGamePlayer = {
-    playerId: PlayerId;
+    playerIdInGame: PlayerIdInGame;
     playerLogin: PlayerLogin;
 };
 
 export type Players = Array<Player>;
 export type PendingGamePlayers = Array<PendingGamePlayer>;
 export type PlayGamePlayers = Array<PlayGamePlayer>;
+
+export type StartPlayGameBody = z.infer<typeof startPlayGameBodySchema>;

@@ -6,10 +6,12 @@ import {
     getPendingGamesRequest,
     joinPendingGameRequest,
     leavePendingGameRequest,
-    startPendingGameRequest,
 } from '../controllers/pending-games.controller';
 
-import { getPlayGameRequest } from '../controllers/play-game.controller';
+import {
+    getPlayGameRequest,
+    startPlayGameRequest,
+} from '../controllers/play-game.controller';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -21,6 +23,6 @@ export const resolvers: Resolvers = {
         deletePendingGameRequest,
         joinPendingGameRequest,
         leavePendingGameRequest,
-        startPendingGameRequest,
+        startPlayGameRequest,
     },
 };

@@ -16,7 +16,6 @@ import {
     DeletePendingGameBody,
     JoinPendingGameBody,
     LeavePendingGameBody,
-    StartPendingGameBody,
 } from '../../models/pending-games.models';
 import { PlayerId } from '../../models/common.models';
 
@@ -67,7 +66,8 @@ export const deletePendingGame = async ({
 }: DeletePendingGameBody) => {
     const pendingGame = await getAuthorCreatedPendingGameOperation(
         gameId,
-        playerId
+        playerId,
+        true
     );
 
     if (!pendingGame) {
@@ -77,6 +77,8 @@ export const deletePendingGame = async ({
     await deletePendingGameOperation(gameId);
 
     console.log('delete', gameId);
+
+    return pendingGame;
 };
 
 export const joinPendingGame = async ({
@@ -117,26 +119,6 @@ export const leavePendingGame = async ({
 }: LeavePendingGameBody) => {
     await leavePendingGameOperation(playerId);
     console.log('leave', `player: ${playerId} left the game: ${gameId}`);
-};
-
-export const startPendingGame = async ({
-    playerId,
-    gameId,
-}: StartPendingGameBody) => {
-    const pendingGame = await getAuthorCreatedPendingGameOperation(
-        gameId,
-        playerId,
-        true
-    );
-
-    if (!pendingGame) {
-        throw new Error('game to delete where you are an author is not found');
-    }
-
-    await deletePendingGame({ playerId, gameId });
-    console.log('start', gameId);
-
-    return pendingGame;
 };
 
 export const getPendingGames = async () => {

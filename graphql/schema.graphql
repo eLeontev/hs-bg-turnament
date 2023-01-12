@@ -3,6 +3,11 @@ type Player {
     playerLogin: String!
 }
 
+type PlayerInPlayGame {
+    playerIdInGame: String!
+    playerLogin: String!
+}
+
 type PendingGame {
     gameId: ID
     gameName: String!
@@ -14,13 +19,13 @@ type PendingGame {
 
 type PlayGame {
     gameId: String!
-    players: [Player]!
+    players: [PlayerInPlayGame]!
     phase: String
 }
 
 type Query {
     pendingGames: [PendingGame]!
-    playGame(gameId: String!, playerId: String!): PlayGame
+    playGame(gameId: String!, playerIdInGame: String!): PlayGame
 }
 
 type Message {
@@ -44,5 +49,5 @@ type Mutation {
         playerLogin: String
     ): PlayerIdInGameResponse
     leavePendingGameRequest(gameId: String!, playerId: String): Message
-    startPendingGameRequest(gameId: String!, playerId: String): Message
+    startPlayGameRequest(gameId: String!, playerId: String): Message
 }
