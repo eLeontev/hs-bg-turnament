@@ -73,7 +73,7 @@ export const Timer = (props: TimerProps) => {
             color={color}
             label={label}
             value={value}
-            radius="lg"
+            radius="sm"
             size="xl"
             striped
             animate
