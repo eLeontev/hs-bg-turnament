@@ -7,7 +7,7 @@ import {
     socketRoomChangesEventNames,
 } from '../enums/socket.enums';
 
-import { PlayGameJoinLeavePayload } from '../models/play-game.models';
+import { PlayGameJoinLeavePayload } from '../models/play-game/play-game.models';
 
 import { getPlayGameRoom } from '../utils.ts/socket.utils';
 

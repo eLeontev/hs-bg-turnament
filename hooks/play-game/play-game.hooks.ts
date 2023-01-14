@@ -5,7 +5,7 @@ import { getPlayGameVariables } from '../../services/play-game.service';
 
 import { playGameQuery } from '../../graphql/queries';
 
-import { PlayGame } from '../../models/play-game.models';
+import { PlayGame } from '../../models/play-game/play-game.models';
 
 export const usePlayGameQuery = () => {
     const [playGame, setPlayGame] = useState<PlayGame | null>(null);

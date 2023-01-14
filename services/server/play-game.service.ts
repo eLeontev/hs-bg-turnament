@@ -6,7 +6,7 @@ import {
 } from '../../prisma/operations/play-game';
 
 import { GameId } from '../../models/common.models';
-import { PlayGameBody } from '../../models/play-game.models';
+import { PlayGameBody } from '../../models/play-game/play-game.models';
 
 import { PendingGamePlayer } from '@prisma/client';
 

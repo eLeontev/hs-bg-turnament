@@ -2,7 +2,7 @@ import { startPlayGameBodyValidator } from '../validators/play-game.validators';
 
 import { playGameBodySchema } from '../schemas/play-game.schemas';
 
-import { PlayGameBody } from '../models/play-game.models';
+import { PlayGameBody } from '../models/play-game/play-game.models';
 import { GameId } from '../models/common.models';
 import { MutationFn } from '../models/graphql.models';
 import { StartPlayGameBody } from '../models/player.models';

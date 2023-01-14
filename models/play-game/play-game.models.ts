@@ -4,11 +4,11 @@ import { playGamePhases } from '@prisma/client';
 import {
     playGameBodySchema,
     playGameJoinLeavePayloadSchema,
-} from '../schemas/play-game.schemas';
+} from '../../schemas/play-game.schemas';
 
-import { playGameActions } from '../enums/play-game.enums';
+import { playGameActions } from '../../enums/play-game.enums';
 
-import { PlayGamePlayers } from './player.models';
+import { PlayGamePlayers } from '../player.models';
 
 export type PlayGameData = {
     phase: playGamePhases;

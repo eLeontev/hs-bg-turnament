@@ -1,9 +1,9 @@
-import { initTRPC } from '@trpc/server';
+import { router } from './runtime-config';
 
-const { router, procedure } = initTRPC.create();
+import { playerProcedures } from './api/play-game.player-procedures';
 
 export const appRouter = router({
-    greeting: procedure.query(() => 'TODO'),
+    ...playerProcedures,
 });
 
 export type AppRouter = typeof appRouter;

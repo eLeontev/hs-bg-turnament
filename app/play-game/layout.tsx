@@ -1,12 +1,13 @@
 'use client';
 
-import { useQuery } from '@apollo/client';
+import { ReactElement } from 'react';
 import Link from 'next/link';
-import { ReactElement, useMemo } from 'react';
-import { pendingGamesPageUrl } from '../../constants/urls';
-import { usePlayGameQuery } from '../../hooks/play-game/play-game.hooks';
-import { Message } from '../../models/graphql.models';
+
 import { PrivateRouter } from '../../ui/routers/private-router';
+
+import { usePlayGameQuery } from '../../hooks/play-game/play-game.hooks';
+
+import { pendingGamesPageUrl } from '../../constants/urls';
 
 const GameNotFound = () => (
     <>
@@ -21,7 +22,6 @@ export type PlayGameProps = {
 
 const PlayGame = ({ children }: PlayGameProps) => {
     const data = usePlayGameQuery();
-    console.log(data);
     return data ? children : <GameNotFound></GameNotFound>;
 };
 

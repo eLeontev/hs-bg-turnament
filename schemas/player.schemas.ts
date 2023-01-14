@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { maxLoginLength, minLoginLength } from '../configs/login.config';
 
 export const playerIdSchema = z.string();
+export const playerIdInGameSchema = z.string();
 
 export const playerLoginSchema = z
     .string()

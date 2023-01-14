@@ -1,7 +1,7 @@
 import prisma from '../../lib/prisma';
 
 import { GameId, PlayerIdInGame } from '../../models/common.models';
-import { PlayGameData } from '../../models/play-game.models';
+import { PlayGameData } from '../../models/play-game/play-game.models';
 import { PlayGamePlayers } from '../../models/player.models';
 
 export const startPlayGameOperation = (

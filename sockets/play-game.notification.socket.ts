@@ -4,7 +4,7 @@ import { playGameActions } from '../enums/play-game.enums';
 import { playGameEventNames } from '../enums/socket.enums';
 
 import { GameId } from '../models/common.models';
-import { PlayGameAction } from '../models/play-game.models';
+import { PlayGameAction } from '../models/play-game/play-game.models';
 
 import { getOnlineGameRoom, getPlayGameRoom } from '../utils.ts/socket.utils';
 
