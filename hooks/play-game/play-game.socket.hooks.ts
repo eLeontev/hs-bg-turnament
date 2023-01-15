@@ -11,8 +11,13 @@ import {
     playGameEventNames,
     socketRoomChangesEventNames,
 } from '../../enums/socket.enums';
+import { playGameActions } from '../../enums/play-game.enums';
 
 import { GameId } from '../../models/common.models';
+import {
+    PlayGameAction,
+    PlayGameActions,
+} from '../../models/play-game/play-game.models';
 
 import { getPlayerIdInGame, setGameId } from '../../utils.ts/storage.utils';
 
@@ -32,8 +37,8 @@ export const useStartPlayGameFromSocket = () => {
     }, [socket, router]);
 };
 
-export const usePlayGame = (gameId: GameId) => {
-    const [data, setPlayGameData] = useState<Array<unknown>>([]);
+export const usePlayGameActions = (gameId: GameId) => {
+    const [gameActions, setPlayGameActions] = useState<PlayGameActions>([]);
     const socket = useSocket();
 
     useEffect(() => {
@@ -47,10 +52,14 @@ export const usePlayGame = (gameId: GameId) => {
             playGameJoinLeavePayload
         );
 
-        socket.on(playGameEventNames.gameAction, (step) => {
-            console.log('data received', step);
-            setPlayGameData((steps) => [...steps, step]);
-        });
+        socket.on(
+            playGameEventNames.gameAction,
+            (gameAction: PlayGameAction<playGameActions>) =>
+                setPlayGameActions((gameActions) => [
+                    ...gameActions,
+                    gameAction,
+                ])
+        );
 
         return () => {
             socket.emit(socketRoomChangesEventNames.leavePlayGameRoom);
@@ -58,5 +67,5 @@ export const usePlayGame = (gameId: GameId) => {
         };
     }, [socket, gameId]);
 
-    return data;
+    return gameActions;
 };

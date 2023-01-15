@@ -5,7 +5,7 @@ import {
     useOnlineGameSocketRoom,
     useOnlinePlayerIds,
 } from '../../hooks/online-game.socket.hooks';
-import { usePlayGame } from '../../hooks/play-game/play-game.socket.hooks';
+import { usePlayGameActions } from '../../hooks/play-game/play-game.socket.hooks';
 import { trpc } from '../../lib/client';
 
 import { getGameId } from '../../utils.ts/storage.utils';
@@ -26,10 +26,10 @@ const PlayGameScreen = () => {
     useOnlineGameSocketRoom(gameId, true);
     const onlinePlayerIds = useOnlinePlayerIds();
 
-    const playGameData = usePlayGame(gameId);
+    const playGameActions = usePlayGameActions(gameId);
 
     console.log(onlinePlayerIds);
-    console.log(playGameData);
+    console.log(playGameActions);
 
     return (
         <>

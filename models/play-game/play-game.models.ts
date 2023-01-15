@@ -40,3 +40,5 @@ export type PlayGameAction<T extends playGameActions> = {
     action: T;
     payload: PlayGameActionPayload[T];
 };
+
+export type PlayGameActions = Array<PlayGameAction<playGameActions>>;
