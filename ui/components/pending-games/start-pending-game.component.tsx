@@ -1,16 +1,22 @@
+import { ReactElement } from 'react';
 import { IconPlayerPlay } from '@tabler/icons';
+
+import { trpc } from '../../../lib/client';
 
 import { IconButton } from '../button.component';
 
-import { useStartPlayGame } from '../../../hooks/pending-games/pending-games.mutation.hooks';
-
 import { GameId } from '../../../models/common.models';
+
+import { getPlayerId } from '../../../utils.ts/storage.utils';
 
 export type StartPendingGameProps = { gameId: GameId };
 
-export const StartPendingGame = ({ gameId }: StartPendingGameProps) => {
-    const action = useStartPlayGame();
-    const onClick = () => action(gameId);
+export const StartPendingGameComponent = ({
+    gameId,
+}: StartPendingGameProps) => {
+    const mutation = trpc.startPlayGame.useMutation();
+    const onClick = () =>
+        mutation.mutate({ gameId, playerId: getPlayerId() || '' });
 
     return (
         <IconButton color="green" onClick={onClick}>
@@ -18,3 +24,19 @@ export const StartPendingGame = ({ gameId }: StartPendingGameProps) => {
         </IconButton>
     );
 };
+
+type NextAddDirPage = (
+    props: StartPendingGameProps & {
+        pageProps: Record<string, unknown>;
+    }
+) => ReactElement;
+
+const pageProps = {};
+
+export function StartPendingGame({ gameId }: StartPendingGameProps) {
+    // TODO: report error for appDir
+    const Component = trpc.withTRPC(
+        StartPendingGameComponent
+    ) as NextAddDirPage;
+    return <Component gameId={gameId} pageProps={pageProps}></Component>;
+}

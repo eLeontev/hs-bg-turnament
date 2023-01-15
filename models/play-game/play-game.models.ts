@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { playGamePhases } from '@prisma/client';
 
 import {
-    playGameBodySchema,
+    playGameBaseInputSchema,
     playGameJoinLeavePayloadSchema,
 } from '../../schemas/play-game.schemas';
 
@@ -19,7 +19,7 @@ export type PlayGame = {
     players: PlayGamePlayers;
 } & PlayGameData;
 
-export type PlayGameBody = z.infer<typeof playGameBodySchema>;
+export type PlayGameBaseInput = z.infer<typeof playGameBaseInputSchema>;
 
 export type PlayGameJoinLeavePayload = z.infer<
     typeof playGameJoinLeavePayloadSchema

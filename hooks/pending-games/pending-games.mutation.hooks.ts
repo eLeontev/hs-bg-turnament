@@ -11,13 +11,11 @@ import {
     createPendingGameValidator,
     createPendingGameResponseHandler,
 } from '../../services/pending-games.service';
-import { startPlayGame } from '../../services/play-game.service';
 
 import {
     joinPendingGameMutation,
     leavePendingGameMutation,
     deletePendingGameMutation,
-    startPlayGameMutation,
     createPendingGameMutation,
 } from '../../graphql/mutations';
 
@@ -76,6 +74,3 @@ export const useLeavePendingGame = () =>
 
 export const useDeletePendingGame = () =>
     usePendingGameMutation(deletePendingGameMutation, deletePendingGame);
-
-export const useStartPlayGame = () =>
-    usePendingGameMutation(startPlayGameMutation, startPlayGame);

@@ -1,11 +1,9 @@
-import { startPlayGameBodyValidator } from '../validators/play-game.validators';
+import { playGameBaseInputSchema } from '../schemas/play-game.schemas';
 
-import { playGameBodySchema } from '../schemas/play-game.schemas';
-
-import { PlayGameBody } from '../models/play-game/play-game.models';
+import { PlayGameBaseInput } from '../models/play-game/play-game.models';
 import { GameId } from '../models/common.models';
 import { MutationFn } from '../models/graphql.models';
-import { StartPlayGameBody } from '../models/player.models';
+import { StartPlayGameInput } from '../models/player.models';
 
 import { PlayerIdInGameResponse } from '../__generated__/resolvers-types';
 
@@ -15,19 +13,8 @@ import {
     getPlayerIdInGame,
 } from '../utils.ts/storage.utils';
 
-export const getPlayGameVariables = (): PlayGameBody =>
-    playGameBodySchema.parse({
+export const getPlayGameVariables = (): PlayGameBaseInput =>
+    playGameBaseInputSchema.parse({
         gameId: getGameId(),
         playerIdInGame: getPlayerIdInGame(),
-    });
-
-export const startPlayGame = (
-    startPlayGameHandler: MutationFn<PlayerIdInGameResponse, StartPlayGameBody>,
-    gameId: GameId
-) =>
-    startPlayGameHandler({
-        variables: startPlayGameBodyValidator({
-            gameId,
-            playerId: getPlayerId(),
-        }),
     });

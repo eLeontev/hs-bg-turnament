@@ -5,9 +5,9 @@ import Link from 'next/link';
 
 import { PrivateRouter } from '../../ui/routers/private-router';
 
-import { usePlayGameQuery } from '../../hooks/play-game/play-game.hooks';
-
 import { pendingGamesPageUrl } from '../../constants/urls';
+import { trpc } from '../../lib/client';
+import { getGameId, getPlayerIdInGame } from '../../utils.ts/storage.utils';
 
 const GameNotFound = () => (
     <>
@@ -21,7 +21,10 @@ export type PlayGameProps = {
 };
 
 const PlayGame = ({ children }: PlayGameProps) => {
-    const data = usePlayGameQuery();
+    const data = trpc.playGameDetails.useQuery({
+        playerIdInGame: getPlayerIdInGame() || '',
+        gameId: getGameId() || '',
+    });
     return data ? children : <GameNotFound></GameNotFound>;
 };
 
@@ -36,4 +39,18 @@ const PlayGameLayout = ({ children }: PlayGameLayoutProps) => {
         </PrivateRouter>
     );
 };
-export default PlayGameLayout;
+
+type NextAddDirPage = (props: {
+    children: ReactElement;
+    pageProps: Record<string, unknown>;
+}) => ReactElement;
+
+const pageProps = {};
+
+export default function PlayGameLayoutWithTRPCPage({
+    children,
+}: PlayGameLayoutProps) {
+    // TODO: report error for appDir
+    const Page = trpc.withTRPC(PlayGameLayout) as NextAddDirPage;
+    return <Page pageProps={pageProps}>{children}</Page>;
+}

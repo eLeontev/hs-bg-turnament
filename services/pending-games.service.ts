@@ -31,7 +31,7 @@ import {
 } from '../utils.ts/storage.utils';
 
 import { Message } from '../__generated__/resolvers-types';
-import { Player, StartPlayGameBody } from '../models/player.models';
+import { Player } from '../models/player.models';
 import { GameId, PlayerId } from '../models/common.models';
 
 export const createPendingGame = (

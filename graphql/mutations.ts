@@ -47,11 +47,3 @@ export const leavePendingGameMutation = gql`
         }
     }
 `;
-
-export const startPlayGameMutation = gql`
-    mutation startPlayGame($gameId: String!, $playerId: String) {
-        startPlayGameRequest(gameId: $gameId, playerId: $playerId) {
-            message
-        }
-    }
-`;

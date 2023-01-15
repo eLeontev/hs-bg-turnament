@@ -1,6 +1,5 @@
 'use client';
 
-import { ReactElement } from 'react';
 import {
     useOnlineGameSocketRoom,
     useOnlinePlayerIds,
@@ -12,14 +11,20 @@ import { getGameId } from '../../utils.ts/storage.utils';
 
 const Test = () => {
     const { data, mutate } = trpc.selectHero.useMutation();
-    const onClick = () => mutate({ playerIdInGame: 'asdasd', heroId: '321' });
+    const onClick = () =>
+        mutate({
+            playerIdInGame: 'asdasd',
+            gameId: getGameId() || '',
+            heroId: '321',
+        });
+    console.log(data);
     return (
         <>
-            {data}
             <button onClick={onClick}>mutate</button>
         </>
     );
 };
+
 const PlayGameScreen = () => {
     const gameId = getGameId() || '';
 
@@ -38,14 +43,4 @@ const PlayGameScreen = () => {
     );
 };
 
-type NextAddDirPage = (props: {
-    pageProps: Record<string, unknown>;
-}) => ReactElement;
-
-const pageProps = {};
-
-export default function PlayGameWithTRPCPage() {
-    // TODO: report error for appDir
-    const Page = trpc.withTRPC(PlayGameScreen) as NextAddDirPage;
-    return <Page pageProps={pageProps}></Page>;
-}
+export default PlayGameScreen;
