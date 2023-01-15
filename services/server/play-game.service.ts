@@ -20,10 +20,15 @@ export const startPlayGame = async (
     gameId: GameId,
     pendingGamePlayers: Array<PendingGamePlayer>
 ) => {
+    const hashesFromPlayerIdsInGame = await getHashesFromValues(
+        pendingGamePlayers.map(({ playerIdInGame }) => playerIdInGame)
+    );
+
     const playGamePlayers = pendingGamePlayers.map(
         ({ playerLogin, playerIdInGame }) => ({
             playerIdInGame,
             playerLogin,
+            playerKey: hashesFromPlayerIdsInGame.get(playerIdInGame),
             heroIds: [heroIds.afkay, heroIds.alexstrasza, heroIds.alkair], // TODO! add logic
         })
     );
@@ -42,19 +47,13 @@ export const getPlayGame = async ({
         playerIdInGame
     );
 
-    const hashesFromPlayerIdsInGame = await getHashesFromValues(
-        players.map(({ playerIdInGame }) => playerIdInGame)
-    );
-
     return {
         ...rest,
-        players: players.map(
-            ({ playerLogin, playerIdInGame, selectedHeroId }) => ({
-                playerLogin,
-                key: hashesFromPlayerIdsInGame.get(playerIdInGame) || '',
-                selectedHeroId,
-            })
-        ),
+        players: players.map(({ playerLogin, playerKey, selectedHeroId }) => ({
+            playerLogin,
+            playerKey,
+            selectedHeroId,
+        })),
     };
 };
 

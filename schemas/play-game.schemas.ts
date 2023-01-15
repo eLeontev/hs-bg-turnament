@@ -19,7 +19,7 @@ export const playGameJoinLeavePayloadSchema = playGameBaseInputSchema;
 
 const basePlayerDetailsSchema = z.object({
     playerLogin: playerLoginSchema,
-    key: z.string(),
+    playerKey: z.string(),
 });
 export const playGamePlayerDetailsSchema = basePlayerDetailsSchema.merge(
     z.object({ selectedHeroId: heroIdSchema.nullable() })
