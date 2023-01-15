@@ -48,10 +48,13 @@ export const getPlayGame = async ({
 
     return {
         ...rest,
-        players: players.map(({ playerLogin, playerIdInGame }) => ({
-            playerLogin,
-            key: hashesFromPlayerIdsInGame.get(playerIdInGame) || '',
-        })),
+        players: players.map(
+            ({ playerLogin, playerIdInGame, selectedHeroId }) => ({
+                playerLogin,
+                key: hashesFromPlayerIdsInGame.get(playerIdInGame) || '',
+                selectedHeroId,
+            })
+        ),
     };
 };
 
@@ -69,7 +72,7 @@ export const getPlayerHeroIds = async ({
     }
 
     const { selectedHeroId, heroIds } = players.find(
-        (player) => player.playGameGameId === playerIdInGame
+        (player) => player.playerIdInGame === playerIdInGame
     ) as PlayGamePlayer;
 
     if (selectedHeroId) {
@@ -93,8 +96,8 @@ export const selectPlayGamePlayerHero = async ({
         throw new Error('opeartion is not possible on this phase of game');
     }
 
-    const { selectedHeroId, heroIds } = players.find(
-        (player) => player.playGameGameId === playerIdInGame
+    const { selectedHeroId } = players.find(
+        (player) => player.playerIdInGame === playerIdInGame
     ) as PlayGamePlayer;
 
     if (selectedHeroId) {

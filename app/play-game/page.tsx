@@ -12,22 +12,6 @@ import { usePlayGameActions } from '../../hooks/play-game/play-game.socket.hooks
 
 import { getGameId } from '../../utils.ts/storage.utils';
 
-const Test = () => {
-    const { data, mutate } = trpc.selectHero.useMutation();
-    const onClick = () =>
-        mutate({
-            playerIdInGame: 'asdasd',
-            gameId: getGameId() || '',
-            heroId: '321',
-        });
-    console.log(data);
-    return (
-        <>
-            <button onClick={onClick}>mutate</button>
-        </>
-    );
-};
-
 const PlayGameScreen = () => {
     const gameId = getGameId() || '';
 
@@ -39,12 +23,7 @@ const PlayGameScreen = () => {
     console.log(onlinePlayerIds);
     console.log(playGameActions);
 
-    return (
-        <>
-            <PlayGameDesk></PlayGameDesk>
-            <Test></Test>the game has been started
-        </>
-    );
+    return <PlayGameDesk></PlayGameDesk>;
 };
 
 export default PlayGameScreen;

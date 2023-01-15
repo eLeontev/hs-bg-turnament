@@ -5,6 +5,8 @@ import {
     playGameBaseInputSchema,
     playGameDetailsOutputSchema,
     playGameJoinLeavePayloadSchema,
+    playGamePlayerDetailsSchema,
+    playGamePlayerDetailsWithSelectedHeroIdSchema,
     playGameSelectHeroSchema,
 } from '../../schemas/play-game.schemas';
 
@@ -55,3 +57,8 @@ export type PlayGameAction<T extends playGameActions> = {
 export type PlayGameActions = Array<PlayGameAction<playGameActions>>;
 
 export type PlayGameDetailsOutput = z.infer<typeof playGameDetailsOutputSchema>;
+export type PlayGameDetailsPlayers = PlayGameDetailsOutput['players'];
+
+export type PlayGamePlayerWithSelectedHeroId = Required<
+    z.infer<typeof playGamePlayerDetailsWithSelectedHeroIdSchema>
+>;

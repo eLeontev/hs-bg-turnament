@@ -17,10 +17,16 @@ export const playGameBaseInputSchema = z.object({
 
 export const playGameJoinLeavePayloadSchema = playGameBaseInputSchema;
 
-export const playGamePlayerDetailsSchema = z.object({
+const basePlayerDetailsSchema = z.object({
     playerLogin: playerLoginSchema,
     key: z.string(),
 });
+export const playGamePlayerDetailsSchema = basePlayerDetailsSchema.merge(
+    z.object({ selectedHeroId: heroIdSchema.nullable() })
+);
+
+export const playGamePlayerDetailsWithSelectedHeroIdSchema =
+    basePlayerDetailsSchema.merge(z.object({ selectedHeroId: heroIdSchema }));
 
 const playGamePhasesValues = [
     playGamePhases.heroSelection,
