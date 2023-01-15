@@ -1,19 +1,29 @@
 'use client';
 
-import { ReactElement } from 'react';
-import Link from 'next/link';
+import { ReactElement, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+
+import { Group } from '@mantine/core';
+
+import { trpc } from '../../lib/client';
+
+import { playGamePhaseState } from '../../ui/atoms/play-game.phases.atom';
 
 import { PrivateRouter } from '../../ui/routers/private-router';
+import { InlineLink } from '../../ui/components/link.component';
 
 import { pendingGamesPageUrl } from '../../constants/urls';
-import { trpc } from '../../lib/client';
+
 import { getGameId, getPlayerIdInGame } from '../../utils.ts/storage.utils';
 
 const GameNotFound = () => (
-    <>
-        The game cannot be defined please{' '}
-        <Link href={pendingGamesPageUrl}>search for a new game</Link>
-    </>
+    <Group>
+        The game cannot be defined please
+        <InlineLink
+            href={pendingGamesPageUrl}
+            label="search for a new game"
+        ></InlineLink>
+    </Group>
 );
 
 export type PlayGameProps = {
@@ -21,11 +31,19 @@ export type PlayGameProps = {
 };
 
 const PlayGame = ({ children }: PlayGameProps) => {
-    const data = trpc.playGameDetails.useQuery({
+    const { data } = trpc.playGameDetails.useQuery({
         playerIdInGame: getPlayerIdInGame() || '',
         gameId: getGameId() || '',
     });
-    return data ? children : <GameNotFound></GameNotFound>;
+    const [playGamePhase, setPlayGameState] =
+        useRecoilState(playGamePhaseState);
+
+    useEffect(
+        () => (data?.phase ? setPlayGameState(data.phase) : undefined),
+        [setPlayGameState, data]
+    );
+
+    return playGamePhase ? children : <GameNotFound></GameNotFound>;
 };
 
 export type PlayGameLayoutProps = {

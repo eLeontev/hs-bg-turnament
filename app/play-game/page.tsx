@@ -1,11 +1,14 @@
 'use client';
 
+import { trpc } from '../../lib/client';
+
+import { PlayGameDesk } from '../../ui/components/play-game/play-game.desk.component';
+
 import {
     useOnlineGameSocketRoom,
     useOnlinePlayerIds,
 } from '../../hooks/online-game.socket.hooks';
 import { usePlayGameActions } from '../../hooks/play-game/play-game.socket.hooks';
-import { trpc } from '../../lib/client';
 
 import { getGameId } from '../../utils.ts/storage.utils';
 
@@ -38,6 +41,7 @@ const PlayGameScreen = () => {
 
     return (
         <>
+            <PlayGameDesk></PlayGameDesk>
             <Test></Test>the game has been started
         </>
     );

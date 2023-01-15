@@ -3,6 +3,7 @@ import { playGamePhases } from '@prisma/client';
 
 import {
     playGameBaseInputSchema,
+    playGameDetailsOutputSchema,
     playGameJoinLeavePayloadSchema,
 } from '../../schemas/play-game.schemas';
 
@@ -42,3 +43,5 @@ export type PlayGameAction<T extends playGameActions> = {
 };
 
 export type PlayGameActions = Array<PlayGameAction<playGameActions>>;
+
+export type PlayGameDetailsOutput = z.infer<typeof playGameDetailsOutputSchema>;
