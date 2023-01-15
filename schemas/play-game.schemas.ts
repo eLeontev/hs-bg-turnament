@@ -2,6 +2,7 @@ import { playGamePhases } from '@prisma/client';
 import { z } from 'zod';
 
 import { gameIdSchema } from './pending-games.schemas';
+import { heroIdSchema } from './play-game.hero.schemas';
 import { playerIdSchema, playerLoginSchema } from './player.schemas';
 
 export const startPlayGameInputSchema = z.object({
@@ -14,10 +15,7 @@ export const playGameBaseInputSchema = z.object({
     playerIdInGame: playerIdSchema,
 });
 
-export const playGameJoinLeavePayloadSchema = z.object({
-    gameId: gameIdSchema,
-    playerIdInGame: playerIdSchema,
-});
+export const playGameJoinLeavePayloadSchema = playGameBaseInputSchema;
 
 export const playGamePlayerDetailsSchema = z.object({
     playerLogin: playerLoginSchema,
@@ -36,3 +34,9 @@ export const playGameDetailsOutputSchema = z.object({
     phase: playGameZodPhases,
     players: z.array(playGamePlayerDetailsSchema),
 });
+
+export const playGameSelectHeroSchema = playGameBaseInputSchema.merge(
+    z.object({
+        heroId: heroIdSchema,
+    })
+);

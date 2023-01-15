@@ -1,3 +1,4 @@
+import { heroIds } from '@prisma/client';
 import prisma from '../../lib/prisma';
 
 import { GameId, PlayerIdInGame } from '../../models/common.models';
@@ -33,4 +34,13 @@ export const isPlayerInPlayGameOperation = (
     prisma.playGame.findFirst({
         where: { gameId },
         include: { players: { where: { playerIdInGame } } },
+    });
+
+export const selectPlayGamePlayerHeroOperation = (
+    playerIdInGame: PlayerIdInGame,
+    selectedHeroId: heroIds
+) =>
+    prisma.playGamePlayer.update({
+        where: { playerIdInGame },
+        data: { selectedHeroId },
     });

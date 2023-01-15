@@ -30,9 +30,17 @@ enum playGamePhases {
   combat
 }
 
+enum heroIds {
+  afkay
+  alkair
+  alexstrasza
+}
+
 model PlayGamePlayer {
   playerIdInGame String    @id @map("_id")
   playerLogin    String
+  selectedHeroId heroIds?
+  heroIds        heroIds[]
   PlayGame       PlayGame? @relation(fields: [playGameGameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
   playGameGameId String?
 }

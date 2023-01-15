@@ -5,11 +5,13 @@ import {
     playGameBaseInputSchema,
     playGameDetailsOutputSchema,
     playGameJoinLeavePayloadSchema,
+    playGameSelectHeroSchema,
 } from '../../schemas/play-game.schemas';
 
 import { playGameActions } from '../../enums/play-game.enums';
 
 import { PlayGamePlayers } from '../player.models';
+import { HeroId } from './play-game.hero.models';
 
 export type PlayGameData = {
     phase: playGamePhases;
@@ -22,6 +24,8 @@ export type PlayGame = {
 
 export type PlayGameBaseInput = z.infer<typeof playGameBaseInputSchema>;
 
+export type PlayGameSelectHeroInput = z.infer<typeof playGameSelectHeroSchema>;
+
 export type PlayGameJoinLeavePayload = z.infer<
     typeof playGameJoinLeavePayloadSchema
 >;
@@ -33,8 +37,14 @@ export type PlayGamePhases = {
     duration: DurationInMs;
 };
 
+export type PlayGameHeroSelected = {
+    playerKey: string;
+    heroId: HeroId;
+};
+
 type PlayGameActionPayload = {
     [playGameActions.phaseChangedTo]: PlayGamePhases;
+    [playGameActions.heroSelected]: PlayGameHeroSelected;
 };
 
 export type PlayGameAction<T extends playGameActions> = {

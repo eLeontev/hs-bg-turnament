@@ -1,3 +1,4 @@
+import { heroIds } from '@prisma/client';
 import { z } from 'zod';
 
 import { startPlayGameInputSchema } from '../schemas/play-game.schemas';
@@ -9,13 +10,15 @@ export type Player = {
     playerLogin: PlayerLogin;
 };
 
-export type PendingGamePlayer = PlayGamePlayer & {
+export type PendingGamePlayer = Player & {
     playerIdInGame: PlayerId;
 };
 
 export type PlayGamePlayer = {
     playerIdInGame: PlayerIdInGame;
     playerLogin: PlayerLogin;
+    heroIds: Array<heroIds>;
+    selectedHeroId?: heroIds;
 };
 
 export type Players = Array<Player>;
