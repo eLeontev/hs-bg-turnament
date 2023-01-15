@@ -28,7 +28,7 @@ export const startPlayGame = async (
         ({ playerLogin, playerIdInGame }) => ({
             playerIdInGame,
             playerLogin,
-            playerKey: hashesFromPlayerIdsInGame.get(playerIdInGame),
+            playerKey: hashesFromPlayerIdsInGame.get(playerIdInGame) || '',
             heroIds: [heroIds.afkay, heroIds.alexstrasza, heroIds.alkair], // TODO! add logic
         })
     );

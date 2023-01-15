@@ -17,7 +17,7 @@ export enum pendingGamesRoomEventNames {
 }
 
 export enum onlineGameRoomEventNames {
-    onlinePlayerIds = 'onlinePlayerIds',
+    onlinePlayerKeys = 'onlinePlayerKeys',
 }
 
 export enum builtInSocketEventNames {

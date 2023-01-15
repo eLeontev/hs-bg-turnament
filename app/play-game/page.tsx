@@ -6,7 +6,7 @@ import { PlayGameDesk } from '../../ui/components/play-game/play-game.desk.compo
 
 import {
     useOnlineGameSocketRoom,
-    useOnlinePlayerIds,
+    useOnlinePlayerKeys,
 } from '../../hooks/online-game.socket.hooks';
 import { usePlayGameActions } from '../../hooks/play-game/play-game.socket.hooks';
 
@@ -16,7 +16,7 @@ const PlayGameScreen = () => {
     const gameId = getGameId() || '';
 
     useOnlineGameSocketRoom(gameId, true);
-    const onlinePlayerIds = useOnlinePlayerIds();
+    const onlinePlayerIds = useOnlinePlayerKeys();
 
     const playGameActions = usePlayGameActions(gameId);
 

@@ -9,7 +9,7 @@ export const getPendingGamesQuery = gql`
             authorLogin
             createdDate
             players {
-                playerId
+                playerKey
                 playerLogin
             }
         }

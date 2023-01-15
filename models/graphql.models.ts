@@ -1,6 +1,6 @@
 import { FetchResult, MutationFunctionOptions } from '@apollo/client';
 
-import { PlayerId } from './common.models';
+import { PlayerId, PlayerKey } from './common.models';
 
 export type UseGraphQLResponse<R> = Promise<{
     data: R;
@@ -17,6 +17,7 @@ export type Message = {
 
 export type PlayerIdInGameResponse = {
     playerIdInGame: PlayerId;
+    playerKey: PlayerKey;
 };
 
 export type CreatePendingGameMutationResponse = {

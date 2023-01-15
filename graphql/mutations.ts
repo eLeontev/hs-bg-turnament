@@ -12,6 +12,7 @@ export const createPendingGameMutation = gql`
             gameName: $gameName
         ) {
             playerIdInGame
+            playerKey
         }
     }
 `;
@@ -36,6 +37,7 @@ export const joinPendingGameMutation = gql`
             playerLogin: $playerLogin
         ) {
             playerIdInGame
+            playerKey
         }
     }
 `;

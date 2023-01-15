@@ -38,6 +38,7 @@ export const createPendingGame = async ({
 
     const gameId = await getHash();
     const playerIdInGame = await getHash();
+    const playerKey = await getHash();
     const pendingGame = {
         gameName,
         gameId,
@@ -48,6 +49,7 @@ export const createPendingGame = async ({
             {
                 playerId,
                 playerLogin,
+                playerKey,
                 playerIdInGame,
             },
         ],
@@ -57,7 +59,7 @@ export const createPendingGame = async ({
 
     console.log('create', gameId);
 
-    return { playerIdInGame, gameId };
+    return { playerIdInGame, gameId, playerKey };
 };
 
 export const deletePendingGame = async ({
@@ -101,16 +103,18 @@ export const joinPendingGame = async ({
     }
 
     const playerIdInGame = await getHash();
+    const playerKey = await getHash();
     await joinPendingGameOperation(
         gameId,
         playerLogin,
         playerId,
+        playerKey,
         playerIdInGame
     );
 
     console.log('join', `player: ${playerId} joined to the game: ${gameId}`);
 
-    return playerIdInGame;
+    return { playerIdInGame, playerKey };
 };
 
 export const leavePendingGame = async ({
@@ -128,7 +132,7 @@ export const getPendingGames = async () => {
     return pendingGames.map((pendingGame) => ({
         ...pendingGame,
         players: pendingGame.players.map((player) => ({
-            playerId: player.playerId,
+            playerKey: player.playerKey,
             playerLogin: player.playerLogin,
         })),
     }));

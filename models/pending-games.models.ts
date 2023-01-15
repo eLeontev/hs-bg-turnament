@@ -6,8 +6,9 @@ import {
     joinPendingGameBodySchema,
     leavePendingGameBodySchema,
 } from '../schemas/pending-games.schemas';
+import { PlayerKey, PlayerLogin } from './common.models';
 
-import { Players, PendingGamePlayers } from './player.models';
+import { PendingGamePlayers, PublicPlayer } from './player.models';
 
 export type PendingGame = {
     authorId: string;
@@ -15,7 +16,7 @@ export type PendingGame = {
     gameName: string;
     authorLogin: string;
     createdDate: string;
-    players: Players;
+    players: Array<PublicPlayer>;
 };
 export type OperationPendingGame = Exclude<PendingGame, 'players'> & {
     players: PendingGamePlayers;

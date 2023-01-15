@@ -1,52 +1,55 @@
 import { onlineRooms } from '../storages/online-game.storage';
 
-import { GameId, PlayerId } from '../models/common.models';
+import { GameId, PlayerKey } from '../models/common.models';
 import {
     JoinLeaveOnlineRoomPayload,
-    OnlinePlayerIds,
+    OnlinePlayerKeys,
 } from '../models/online-game.models';
 
-const registerPlayerIdOnline = (
-    onlinePlayerIds: OnlinePlayerIds,
-    playerId: PlayerId
-) => new Set(onlinePlayerIds.add(playerId));
+const registerPlayerKeyOnline = (
+    onlinePlayerKeys: OnlinePlayerKeys,
+    playerKey: PlayerKey
+) => new Set(onlinePlayerKeys.add(playerKey));
 
-const registerPlayerIdOffine = (
-    onlinePlayerIds: OnlinePlayerIds,
-    playerId: PlayerId
+const registerPlayerKeyOffine = (
+    onlinePlayerKeys: OnlinePlayerKeys,
+    playerKey: PlayerKey
 ) => {
-    onlinePlayerIds.delete(playerId);
-    return new Set(onlinePlayerIds);
+    onlinePlayerKeys.delete(playerKey);
+    return new Set(onlinePlayerKeys);
 };
 
-const getOnlinePlayersInTheRoom = (gameId: GameId) =>
+const getOnlinePlayerKeysInTheRoom = (gameId: GameId) =>
     onlineRooms.get(gameId) || new Set();
 
 export const getListOfOnlinePlayerIds = (gameId: GameId) =>
-    Array.from(getOnlinePlayersInTheRoom(gameId));
+    Array.from(getOnlinePlayerKeysInTheRoom(gameId));
 
 export const joinPlayerIdToTheRoom = ({
     gameId,
-    playerId,
+    playerKey,
 }: JoinLeaveOnlineRoomPayload) => {
-    const onlinePlayerIds = getOnlinePlayersInTheRoom(gameId);
-    onlineRooms.set(gameId, registerPlayerIdOnline(onlinePlayerIds, playerId));
+    const onlinePlayerKeys = getOnlinePlayerKeysInTheRoom(gameId);
+    onlineRooms.set(
+        gameId,
+        registerPlayerKeyOnline(onlinePlayerKeys, playerKey)
+    );
 };
 
-export const leavePlayerIdToTheRoom = ({
+export const leavePlayerKeyfromTheRoom = ({
     gameId,
-    playerId,
+    playerKey,
 }: JoinLeaveOnlineRoomPayload) => {
-    const onlinePlayerIds = getOnlinePlayersInTheRoom(gameId);
-    const restOnlinePlayerIds = registerPlayerIdOffine(
-        onlinePlayerIds,
-        playerId
+    const onlinePlayerKeys = getOnlinePlayerKeysInTheRoom(gameId);
+    const restOnlinePlayerKeys = registerPlayerKeyOffine(
+        onlinePlayerKeys,
+        playerKey
     );
 
-    if (restOnlinePlayerIds.size) {
+    if (restOnlinePlayerKeys.size) {
         onlineRooms.set(
             gameId,
-            registerPlayerIdOffine(onlinePlayerIds, playerId)
+            registerPlayerKeyOffine(onlinePlayerKeys, playerKey)
         );
     } else {
         onlineRooms.delete(gameId);

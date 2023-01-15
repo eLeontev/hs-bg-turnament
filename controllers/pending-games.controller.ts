@@ -43,7 +43,7 @@ export const createPendingGameHandler = async (
     res: NextApiResponse
 ): Promise<PlayerIdInGameResponse> => {
     const createPendingGameBody = createPendingGameBodyValidator(body);
-    const { playerIdInGame, gameId } = await createPendingGame(
+    const { playerIdInGame, gameId, playerKey } = await createPendingGame(
         createPendingGameBody
     );
 
@@ -51,7 +51,7 @@ export const createPendingGameHandler = async (
     notifyPendingGames(io, getPendingGames());
     schedulePendingGameDelition(io, createPendingGameBody.playerId, gameId);
 
-    return { playerIdInGame };
+    return { playerIdInGame, playerKey };
 };
 
 export const deletePendingGameHandler = async (
@@ -75,12 +75,14 @@ export const joinPendingGameHandler = async (
 ): Promise<PlayerIdInGameResponse> => {
     const joinPendingGameBody = joinPendingGameBodyValidator(body);
 
-    const playerIdInGame = await joinPendingGame(joinPendingGameBody);
+    const { playerIdInGame, playerKey } = await joinPendingGame(
+        joinPendingGameBody
+    );
 
     const io = getSocket(res);
     notifyPendingGames(io, getPendingGames());
 
-    return { playerIdInGame };
+    return { playerIdInGame, playerKey };
 };
 
 export const leavePendingGameHandler = async (

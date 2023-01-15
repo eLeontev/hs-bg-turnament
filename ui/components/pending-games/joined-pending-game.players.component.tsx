@@ -2,25 +2,25 @@ import { Group } from '@mantine/core';
 
 import { PlayerInfo } from './player-info';
 
-import { OnlinePlayerIds } from '../../../models/online-game.models';
-import { Player, Players } from '../../../models/player.models';
+import { OnlinePlayerKeys } from '../../../models/online-game.models';
+import { PublicPlayer, PublicPlayers } from '../../../models/player.models';
 
 export type JoinedPendingGamePlayersProps = {
-    players: Players;
-    onlinePlayerIds: OnlinePlayerIds;
+    players: PublicPlayers;
+    onlinePlayerKeys: OnlinePlayerKeys;
 };
 
 export const JoinedPendingGamePlayers = ({
     players,
-    onlinePlayerIds,
+    onlinePlayerKeys,
 }: JoinedPendingGamePlayersProps) => {
     return (
         <Group>
-            {players.map((player: Player) => (
+            {players.map((player: PublicPlayer) => (
                 <PlayerInfo
-                    key={player.playerId}
+                    key={player.playerKey}
                     player={player}
-                    onlinePlayerIds={onlinePlayerIds}
+                    onlinePlayerKeys={onlinePlayerKeys}
                 ></PlayerInfo>
             ))}
         </Group>

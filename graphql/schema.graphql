@@ -1,5 +1,5 @@
-type Player {
-    playerId: String!
+type PublicPlayer {
+    playerKey: String!
     playerLogin: String!
 }
 
@@ -9,7 +9,7 @@ type PendingGame {
     authorId: String!
     authorLogin: String!
     createdDate: String!
-    players: [Player!]!
+    players: [PublicPlayer!]!
 }
 
 type Query {
@@ -22,6 +22,7 @@ type Message {
 
 type PlayerIdInGameResponse {
     playerIdInGame: String!
+    playerKey: String!
 }
 
 type Mutation {

@@ -9,6 +9,7 @@ datasource db {
 
 model PendingGamePlayer {
   playerId          String       @id @map("_id")
+  playerKey         String
   playerIdInGame    String
   playerLogin       String
   PendingGame       PendingGame? @relation(fields: [pendingGameGameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)

@@ -9,10 +9,11 @@ import {
 
 import { GameId } from '../models/common.models';
 import {
-    ListOfOnlinePlayerIds,
-    OnlinePlayerIds,
+    ListOfOnlinePlayerKeys,
+    OnlinePlayerKeys,
 } from '../models/online-game.models';
-import { getPlayerId } from '../utils.ts/storage.utils';
+
+import { getPlayerId, getPlayerKey } from '../utils.ts/storage.utils';
 
 export const useOnlineGameSocketRoom = (
     gameId: GameId,
@@ -21,9 +22,11 @@ export const useOnlineGameSocketRoom = (
     const socket = useSocket();
     useEffect(() => {
         const playerId = getPlayerId();
+        const playerKey = getPlayerKey();
         socket.emit(socketRoomChangesEventNames.joinOnlineGameRoom, {
             gameId,
             playerId,
+            playerKey,
             isPlayGame,
         });
 
@@ -31,29 +34,32 @@ export const useOnlineGameSocketRoom = (
             socket.emit(socketRoomChangesEventNames.leaveOnlineGameRoom, {
                 gameId,
                 playerId,
+                playerKey,
                 isPlayGame,
             });
         };
     }, [socket, gameId, isPlayGame]);
 };
 
-export const useOnlinePlayerIds = () => {
+export const useOnlinePlayerKeys = () => {
     const socket = useSocket();
-    const [onlinePlayerIds, setOnlinePlayerIds] = useState<OnlinePlayerIds>(
+    const [onlinePlayerKeys, setOnlinePlayerKeys] = useState<OnlinePlayerKeys>(
         new Set()
     );
 
     useEffect(() => {
         socket.on(
-            onlineGameRoomEventNames.onlinePlayerIds,
-            (listOfOnlinePlayerIds: ListOfOnlinePlayerIds) =>
-                setOnlinePlayerIds(new Set(listOfOnlinePlayerIds))
+            onlineGameRoomEventNames.onlinePlayerKeys,
+            (listOfOnlinePlayerKeys: ListOfOnlinePlayerKeys) =>
+                setOnlinePlayerKeys(new Set(listOfOnlinePlayerKeys))
         );
 
         return () => {
-            socket.removeAllListeners(onlineGameRoomEventNames.onlinePlayerIds);
+            socket.removeAllListeners(
+                onlineGameRoomEventNames.onlinePlayerKeys
+            );
         };
-    }, [socket, setOnlinePlayerIds]);
+    }, [socket, setOnlinePlayerKeys]);
 
-    return onlinePlayerIds;
+    return onlinePlayerKeys;
 };

@@ -7,16 +7,16 @@ import { PlayersCounter } from './players-counter.component';
 
 import {
     useOnlineGameSocketRoom,
-    useOnlinePlayerIds,
+    useOnlinePlayerKeys,
 } from '../../../hooks/online-game.socket.hooks';
 
 import {
     PendingGame,
     PendingGames,
 } from '../../../models/pending-games.models';
-import { Player } from '../../../models/player.models';
+import { PublicPlayer } from '../../../models/player.models';
 
-import { getPlayerId } from '../../../utils.ts/storage.utils';
+import { getPlayerId, getPlayerKey } from '../../../utils.ts/storage.utils';
 import { DeletePendingGame } from './delete-pending-game.component';
 import { GameId } from '../../../models/common.models';
 import { ReactElement } from 'react';
@@ -26,7 +26,9 @@ export type JoinedPendingGameProps = { pendingGame: PendingGame };
 
 const getJoinedPendingGame = (pendingGames: PendingGames) =>
     pendingGames.find(({ players }: PendingGame) =>
-        players.some(({ playerId }: Player) => playerId === getPlayerId())
+        players.some(
+            ({ playerKey }: PublicPlayer) => playerKey === getPlayerKey()
+        )
     );
 
 export const JoinedPendingGameContainer = ({
@@ -59,7 +61,7 @@ export const AuthorActions = ({
 
 export const JoinedPendingGame = ({ pendingGame }: JoinedPendingGameProps) => {
     useOnlineGameSocketRoom(pendingGame.gameId);
-    const onlinePlayerIds = useOnlinePlayerIds();
+    const onlinePlayerKeys = useOnlinePlayerKeys();
 
     const { authorId, gameId, players } = pendingGame;
     const isAuthor = authorId === getPlayerId();
@@ -78,7 +80,7 @@ export const JoinedPendingGame = ({ pendingGame }: JoinedPendingGameProps) => {
             </Card>
             <Space h="md"></Space>
             <JoinedPendingGamePlayers
-                onlinePlayerIds={onlinePlayerIds}
+                onlinePlayerKeys={onlinePlayerKeys}
                 players={pendingGame.players}
             ></JoinedPendingGamePlayers>
         </Flex>

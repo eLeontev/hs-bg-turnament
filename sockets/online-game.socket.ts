@@ -14,7 +14,7 @@ import { isPlayerInPlayGameOperation } from '../prisma/operations/play-game';
 import {
     getListOfOnlinePlayerIds,
     joinPlayerIdToTheRoom,
-    leavePlayerIdToTheRoom,
+    leavePlayerKeyfromTheRoom,
 } from '../services/online-game.service';
 
 import { getOnlineGameRoom } from '../utils.ts/socket.utils';
@@ -26,7 +26,7 @@ const emitOnlinePlayers = (
 ) => {
     const listOfOnlinePlayerIds = getListOfOnlinePlayerIds(gameId);
     io.in(onlineRoomName).emit(
-        onlineGameRoomEventNames.onlinePlayerIds,
+        onlineGameRoomEventNames.onlinePlayerKeys,
         listOfOnlinePlayerIds
     );
 };
@@ -37,7 +37,7 @@ const leavePlayerFromOnlineRoom = (
     payload: JoinLeaveOnlineRoomPayload
 ) => {
     const { gameId } = payload;
-    leavePlayerIdToTheRoom(payload);
+    leavePlayerKeyfromTheRoom(payload);
 
     const onlineRoomName = getOnlineGameRoom(gameId, payload.isPlayGame);
     socket.leave(onlineRoomName);

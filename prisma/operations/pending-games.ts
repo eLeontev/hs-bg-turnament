@@ -1,6 +1,11 @@
 import prisma from '../../lib/prisma';
 
-import { GameId, PlayerId, PlayerLogin } from '../../models/common.models';
+import {
+    GameId,
+    PlayerId,
+    PlayerKey,
+    PlayerLogin,
+} from '../../models/common.models';
 import { OperationPendingGame } from '../../models/pending-games.models';
 
 export const createPendingGameOperation = ({
@@ -18,12 +23,14 @@ export const joinPendingGameOperation = (
     gameId: GameId,
     playerLogin: PlayerLogin,
     playerId: PlayerId,
+    playerKey: PlayerKey,
     playerIdInGame: PlayerId
 ) =>
     prisma.pendingGamePlayer.create({
         data: {
             playerId,
             playerLogin,
+            playerKey,
             playerIdInGame,
             PendingGame: { connect: { gameId } },
         },

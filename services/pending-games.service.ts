@@ -15,6 +15,7 @@ import {
     CreatePendingGameMutationResponse,
     JoinPendingGameMutationResponse,
     MutationFn,
+    PlayerIdInGameResponse,
 } from '../models/graphql.models';
 import {
     CreatePendingGameBody,
@@ -28,11 +29,11 @@ import {
     getPlayerId,
     getLogin,
     setPlayerIdInGame,
+    setPlayerKey,
 } from '../utils.ts/storage.utils';
 
 import { Message } from '../__generated__/resolvers-types';
-import { Player } from '../models/player.models';
-import { GameId, PlayerId } from '../models/common.models';
+import { GameId, PlayerId, PlayerKey } from '../models/common.models';
 
 export const createPendingGame = (
     createPendingGameHandler: MutationFn<
@@ -91,24 +92,27 @@ export const createPendingGameValidator = (value: string) =>
         ? null
         : pendingGameNameErrorMessage;
 
-export const isPlayerInGame = (pendingGames: PendingGames, playerId: string) =>
+export const isPlayerInGame = (
+    pendingGames: PendingGames,
+    playerKey: PlayerKey
+) =>
     pendingGames.some(({ players }) =>
-        players.some((player: Player) => player.playerId === playerId)
+        players.some((player) => player.playerKey === playerKey)
     );
 
-const setPlayerIdInGameHandler = (playerId: PlayerId | undefined) =>
-    playerId && setPlayerIdInGame(playerId);
+const playerIdInGameResponseHandler = (
+    response: PlayerIdInGameResponse | undefined
+) => {
+    if (response) {
+        setPlayerIdInGame(response.playerIdInGame);
+        setPlayerKey(response.playerKey);
+    }
+};
 
 export const createPendingGameResponseHandler = (
     value: FetchResult<CreatePendingGameMutationResponse> | undefined
-) =>
-    setPlayerIdInGameHandler(
-        value?.data?.createPendingGameRequest.playerIdInGame
-    );
+) => playerIdInGameResponseHandler(value?.data?.createPendingGameRequest);
 
 export const joinPendingGameResponseHandler = (
     value: FetchResult<JoinPendingGameMutationResponse> | undefined
-) =>
-    setPlayerIdInGameHandler(
-        value?.data?.joinPendingGameRequest.playerIdInGame
-    );
+) => playerIdInGameResponseHandler(value?.data?.joinPendingGameRequest);
