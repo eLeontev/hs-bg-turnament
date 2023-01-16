@@ -35,6 +35,9 @@ enum heroIds {
   afkay
   alkair
   alexstrasza
+  ambassadorFaelin
+  arannaStarseeker
+  archVillainRafaam
 }
 
 model PlayGamePlayer {
