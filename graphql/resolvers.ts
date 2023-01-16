@@ -6,7 +6,7 @@ import {
     getPendingGamesRequest,
     joinPendingGameRequest,
     leavePendingGameRequest,
-} from '../controllers/pending-games.controller';
+} from '../features/pending-games/pending-games.controller';
 
 export const resolvers: Resolvers = {
     Query: {

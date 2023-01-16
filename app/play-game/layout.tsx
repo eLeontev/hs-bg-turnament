@@ -7,10 +7,10 @@ import { Group } from '@mantine/core';
 
 import { trpc } from '../../lib/client';
 
-import { playGamePhaseState } from '../../ui/atoms/play-game.phases.atom';
+import { playGamePhaseState } from '../../features/play-game/components/atoms/play-game.phases.atom';
 
-import { PrivateRouter } from '../../ui/routers/private-router';
-import { InlineLink } from '../../ui/components/link.component';
+import { PrivateRouter } from '../../features/common/components/routers/private-router';
+import { InlineLink } from '../../features/common/components/link.component';
 
 import { pendingGamesPageUrl } from '../../constants/urls';
 

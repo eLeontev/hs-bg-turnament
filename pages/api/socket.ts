@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Server } from 'Socket.IO';
 
-import { registerCommunication } from '../../sockets/initialization';
+import { registerCommunication } from '../../features/common/sockets/initialization';
 
 import { getSocket } from '../../utils.ts/socket.utils';
 

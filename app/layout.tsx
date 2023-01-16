@@ -4,15 +4,15 @@ import { ReactElement, useEffect, useState } from 'react';
 import { ApolloProvider } from '@apollo/client';
 import { AppShell, MantineProvider } from '@mantine/core';
 
-import { Navigation } from '../ui/components/navigation';
+import { Navigation } from '../features/common/components/navigation';
 
 import { useApollo } from '../lib/graphql.client';
 
 import '../styles/globals.css';
 import { RecoilRoot, useSetRecoilState } from 'recoil';
-import { playerLoginState } from '../ui/atoms/player-login.atom';
+import { playerLoginState } from '../features/login/components/atoms/player-login.atom';
 import { getLogin } from '../utils.ts/storage.utils';
-import { noLogin } from '../constants/login.constants';
+import { noLogin } from '../features/login/login.constants';
 
 export type LayoutProps = {
     children: ReactElement;

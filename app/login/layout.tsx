@@ -6,7 +6,7 @@ import { useRecoilValue } from 'recoil';
 
 import { rootPageUrl } from '../../constants/urls';
 
-import { playerLoginState } from '../../ui/atoms/player-login.atom';
+import { playerLoginState } from '../../features/login/components/atoms/player-login.atom';
 
 export type LoginlayoutProps = {
     children: ReactElement;

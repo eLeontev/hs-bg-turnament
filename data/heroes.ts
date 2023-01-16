@@ -1,4 +1,7 @@
-import { Hero, Heroes } from '../models/play-game/play-game.hero.models';
+import {
+    Hero,
+    Heroes,
+} from '../features/play-game/models/play-game.hero.models';
 
 const afkayHero: Hero = {
     heroId: 'afkay',

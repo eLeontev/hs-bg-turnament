@@ -1,7 +1,7 @@
 import { NextApiResponse } from 'next';
 import { Server } from 'Socket.IO';
 
-import { socketRooms } from '../enums/socket.enums';
+import { socketRooms } from '../features/common/sockets/socket.enums';
 
 import { GameId } from '../models/common.models';
 

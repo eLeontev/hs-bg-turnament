@@ -1,6 +1,6 @@
 'use client';
 
-import { WelcomeScreen } from '../ui/components/welcome';
+import { WelcomeScreen } from '../features/common/components/welcome';
 
 const WelcomePage = () => <WelcomeScreen></WelcomeScreen>;
 

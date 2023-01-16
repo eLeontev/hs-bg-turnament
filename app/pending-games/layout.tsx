@@ -2,10 +2,10 @@
 
 import { ReactElement } from 'react';
 
-import { usePendingGamesSocketRoom } from '../../hooks/pending-games/pending-games.socket.hooks';
-import { useStartPlayGameFromSocket } from '../../hooks/play-game/play-game.socket.hooks';
+import { usePendingGamesSocketRoom } from '../../features/pending-games/hooks/pending-games.socket.hooks';
+import { useStartPlayGameFromSocket } from '../../features/play-game/hooks/play-game.socket.hooks';
 
-import { PrivateRouter } from '../../ui/routers/private-router';
+import { PrivateRouter } from '../../features/common/components/routers/private-router';
 
 export type PendingGamesLayoutProps = {
     children: ReactElement;

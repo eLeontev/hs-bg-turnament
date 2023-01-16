@@ -1,11 +1,11 @@
 'use client';
 
 import { Grid } from '@mantine/core';
-import { usePendingGames } from '../../hooks/pending-games/pending-games.hooks';
+import { usePendingGames } from '../../features/pending-games/hooks/pending-games.hooks';
 
-import { CreatePendingGame } from '../../ui/components/pending-games/create-pending-game.component';
-import { JoinedPendingGameContainer } from '../../ui/components/pending-games/joined-pending-game.component';
-import { PendingGamesComponent } from '../../ui/components/pending-games/pending-games.component';
+import { CreatePendingGame } from '../../features/pending-games/components/create-pending-game.component';
+import { JoinedPendingGameContainer } from '../../features/pending-games/components/joined-pending-game.component';
+import { PendingGamesComponent } from '../../features/pending-games/components/pending-games.component';
 
 const PendingGamesPage = () => {
     const { pendingGames, isInGame } = usePendingGames();

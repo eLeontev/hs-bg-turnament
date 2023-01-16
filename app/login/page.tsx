@@ -3,13 +3,13 @@
 import { TextInput, Group, Card } from '@mantine/core';
 import { useRouter } from 'next/navigation';
 
-import { Button } from '../../ui/components/button.component';
-import { OverlayLoader } from '../../ui/components/loader.component';
+import { Button } from '../../features/common/components/button.component';
+import { OverlayLoader } from '../../features/common/components/loader.component';
 
-import { useLogin } from '../../hooks/login.hook';
+import { useLogin } from '../../features/login/login.hook';
 import { useSetRecoilState } from 'recoil';
 
-import { playerLoginState } from '../../ui/atoms/player-login.atom';
+import { playerLoginState } from '../../features/login/components/atoms/player-login.atom';
 
 const inputLabel = 'Login';
 const inputPlaceholder = 'Your Login';
