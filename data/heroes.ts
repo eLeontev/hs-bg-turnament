@@ -48,6 +48,27 @@ const archVillainRafaamHero: Hero = {
     powerDescription: `Next combat, add a plain copy of the first minion you kill to your hand.`,
 };
 
+const brukanHeor: Hero = {
+    heroId: heroIds.brukan,
+    name: `Bru'kan`,
+    avatarUrl: './hero-avatars/brukan.avatar.png',
+    powerDescription: `Choose an Element. Start of Combat: Call upon that Element.`,
+};
+
+const cthunHeor: Hero = {
+    heroId: heroIds.cthun,
+    name: `C'Thun`,
+    avatarUrl: './hero-avatars/cthun.avatar.png',
+    powerDescription: `At end of turn, give a friendly minion +1/+1. Repeat (time, times). (Upgrades each turn!)`,
+};
+
+const captainHeor: Hero = {
+    heroId: heroIds.cthun,
+    name: 'Captain Eudora',
+    avatarUrl: './hero-avatars/captain.avatar.png',
+    powerDescription: `Dig for a Golden minion! ( (Dig, Digs) left.)`,
+};
+
 export const heroes: Heroes = new Map([
     [afkayHero.heroId, afkayHero],
     [alkairHero.heroId, alkairHero],
@@ -55,4 +76,7 @@ export const heroes: Heroes = new Map([
     [ambassadorHero.heroId, ambassadorHero],
     [arannaHero.heroId, arannaHero],
     [archVillainRafaamHero.heroId, archVillainRafaamHero],
+    [brukanHeor.heroId, brukanHeor],
+    [cthunHeor.heroId, cthunHeor],
+    [captainHeor.heroId, captainHeor],
 ]);

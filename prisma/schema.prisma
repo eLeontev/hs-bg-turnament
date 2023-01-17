@@ -38,6 +38,9 @@ enum heroIds {
   ambassadorFaelin
   arannaStarseeker
   archVillainRafaam
+  brukan
+  cthun
+  captain
 }
 
 model PlayGamePlayer {
