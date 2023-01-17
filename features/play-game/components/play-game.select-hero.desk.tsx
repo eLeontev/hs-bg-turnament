@@ -15,6 +15,6 @@ export const SelectHeroDesk = () => {
             return;
         }
     }, [selectedHeroIds]);
-    console.log(selectedHeroIds);
+    console.log(selectedHeroIds, data);
     return <>please select hero</>;
 };

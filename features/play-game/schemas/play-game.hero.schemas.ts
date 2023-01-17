@@ -1,7 +1,7 @@
 import { heroIds } from '@prisma/client';
 import { z } from 'zod';
 
-const herIdsValues = [
+export const herIdsValues = [
     heroIds.afkay,
     heroIds.alkair,
     heroIds.alexstrasza,

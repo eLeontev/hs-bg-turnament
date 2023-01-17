@@ -1,4 +1,6 @@
-import { heroIds, playGamePhases, PendingGamePlayer } from '@prisma/client';
+import { playGamePhases, PendingGamePlayer } from '@prisma/client';
+
+import { getPlayerHeroIdsMap } from './play-game.hero.service';
 
 import {
     getPlayGameOperation,
@@ -6,6 +8,10 @@ import {
     startPlayGameOperation,
 } from '../operations/play-game.operations';
 
+import { playerKeySchema } from '../../player/player.schemas';
+import { heroIdsSchema } from '../schemas/play-game.hero.schemas';
+
+import { PlayGamePlayer } from '../../player/player.models';
 import { GameId } from '../../../models/common.models';
 import {
     PlayGameBaseInput,
@@ -13,22 +19,28 @@ import {
 } from '../models/play-game.models';
 
 import { getHashesFromValues } from '../../../utils.ts/hash-server.utils';
-import { PlayGamePlayer } from '../../player/player.models';
 
 export const startPlayGame = async (
     gameId: GameId,
     pendingGamePlayers: Array<PendingGamePlayer>
 ) => {
-    const hashesFromPlayerIdsInGame = await getHashesFromValues(
-        pendingGamePlayers.map(({ playerIdInGame }) => playerIdInGame)
+    const playerIdsInGame = pendingGamePlayers.map(
+        ({ playerIdInGame }) => playerIdInGame
     );
+
+    const hashesFromPlayerIdsInGame = await getHashesFromValues(
+        playerIdsInGame
+    );
+    const playerHeroIdsMap = getPlayerHeroIdsMap(playerIdsInGame);
 
     const playGamePlayers = pendingGamePlayers.map(
         ({ playerLogin, playerIdInGame }) => ({
             playerIdInGame,
             playerLogin,
-            playerKey: hashesFromPlayerIdsInGame.get(playerIdInGame) || '',
-            heroIds: [heroIds.afkay, heroIds.alexstrasza, heroIds.alkair], // TODO! add logic
+            playerKey: playerKeySchema.parse(
+                hashesFromPlayerIdsInGame.get(playerIdInGame)
+            ),
+            heroIds: heroIdsSchema.parse(playerHeroIdsMap.get(playerIdInGame)),
         })
     );
 
