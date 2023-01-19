@@ -9,6 +9,7 @@ import {
     useOnlinePlayerKeys,
 } from '../../features/common/sockets/online-game.socket.hooks';
 import { usePlayGameActions } from '../../features/play-game/hooks/play-game.socket.hooks';
+import { usePlayGameInitialization } from '../../features/play-game/hooks/play-game.hooks';
 
 import { getGameId } from '../../utils.ts/storage.utils';
 
@@ -19,6 +20,7 @@ const PlayGameScreen = () => {
     const onlinePlayerIds = useOnlinePlayerKeys();
 
     const playGameActions = usePlayGameActions(gameId);
+    usePlayGameInitialization();
 
     console.log(onlinePlayerIds);
     console.log(playGameActions);

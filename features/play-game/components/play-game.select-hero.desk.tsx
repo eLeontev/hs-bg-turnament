@@ -1,6 +1,6 @@
 import { Flex } from '@mantine/core';
 import { heroIds } from '@prisma/client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { trpc } from '../../../lib/client';
 import {
@@ -28,12 +28,7 @@ export const SelectHeroDesk = () => {
             heroId,
         });
     };
-    useEffect(() => {
-        if (selectedHeroIds.has(getPlayerIdInGame() || '')) {
-            return;
-        }
-    }, [selectedHeroIds]);
-    console.log(selectedHeroIds, data);
+    console.log(selectedHeroIds, getPlayerKey());
 
     if (selectedHeroIds.has(getPlayerKey() || '')) {
         return <b>your hero is selected</b>;

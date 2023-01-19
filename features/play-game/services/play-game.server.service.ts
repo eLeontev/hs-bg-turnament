@@ -68,6 +68,19 @@ export const getPlayGame = async ({
     };
 };
 
+export const getPlayGamePlayerKey = async ({
+    gameId,
+    playerIdInGame,
+}: PlayGameBaseInput) => {
+    const { players } = await getPlayGameOperation(gameId, playerIdInGame);
+
+    const playerKey = players.find(
+        (player) => player.playerIdInGame === playerIdInGame
+    )?.playerKey;
+
+    return playerKeySchema.parse(playerKey);
+};
+
 export const getPlayerHeroIds = async ({
     gameId,
     playerIdInGame,

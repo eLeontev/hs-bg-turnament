@@ -11,13 +11,20 @@ import { gameIdSchema } from '../../pending-games/pending-games.schemas';
 import { playGamePhaseState } from '../components/atoms/play-game.phases.atom';
 import { playsGameSelectedHeroIdsState } from '../components/atoms/play-game.selected-hero-id.atom';
 
-import { getPlayerIdInGame, getGameId } from '../../../utils.ts/storage.utils';
+import {
+    getPlayerIdInGame,
+    getGameId,
+    setPlayerKey,
+} from '../../../utils.ts/storage.utils';
 
 export const usePlayGameInitialization = () => {
-    const { data } = trpc.playGameDetails.useQuery({
+    const playGameBaseInput = {
         playerIdInGame: playerIdInGameSchema.parse(getPlayerIdInGame()),
         gameId: gameIdSchema.parse(getGameId()),
-    });
+    };
+    const playerKeyResponse =
+        trpc.getPlayGamePlayerKey.useQuery(playGameBaseInput);
+    const { data } = trpc.playGameDetails.useQuery(playGameBaseInput);
 
     const [playGamePhase, setPlayGameState] =
         useRecoilState(playGamePhaseState);
@@ -25,6 +32,12 @@ export const usePlayGameInitialization = () => {
         playsGameSelectedHeroIdsState
     );
 
+    useEffect(() => {
+        const playerKey = playerKeyResponse.data;
+        if (playerKey) {
+            setPlayerKey(playerKey);
+        }
+    }, [playerKeyResponse]);
     useEffect(() => {
         if (data) {
             const { phase, players } = data;
