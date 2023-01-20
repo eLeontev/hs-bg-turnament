@@ -5,11 +5,12 @@ import { herIdsValues } from '../schemas/play-game.hero.schemas';
 import { countOfHeroIds } from '../../../constants/game-config.constants';
 
 import { PlayerIdInGame } from '../../../models/common.models';
+import { HeroIds } from '../models/play-game.hero.models';
 
 import { getExcludedRandom } from '../../../utils.ts/random.utils';
 
 export const getPlayerHeroIdsMap = (playerIdsInGame: Array<PlayerIdInGame>) => {
-    const playerHeroIdsMap = new Map<PlayerIdInGame, Array<heroIds>>();
+    const playerHeroIdsMap = new Map<PlayerIdInGame, HeroIds>();
 
     let randomHeroId: heroIds;
     let heroIdsToSelected = [...herIdsValues];

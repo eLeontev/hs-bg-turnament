@@ -1,4 +1,8 @@
-import { playGamePhases, PendingGamePlayer } from '@prisma/client';
+import {
+    playGamePhases,
+    PendingGamePlayer,
+    PlayGamePlayer,
+} from '@prisma/client';
 
 import { getPlayerHeroIdsMap } from './play-game.hero.service';
 
@@ -11,8 +15,8 @@ import {
 import { playerKeySchema } from '../../player/player.schemas';
 import { heroIdsSchema } from '../schemas/play-game.hero.schemas';
 
-import { PlayGamePlayer } from '../../player/player.models';
-import { GameId } from '../../../models/common.models';
+import { PlayGamePlayers } from '../../player/player.models';
+import { GameId, PlayerIdInGame } from '../../../models/common.models';
 import {
     PlayGameBaseInput,
     PlayGameSelectHeroInput,
@@ -41,6 +45,8 @@ export const startPlayGame = async (
                 hashesFromPlayerIdsInGame.get(playerIdInGame)
             ),
             heroIds: heroIdsSchema.parse(playerHeroIdsMap.get(playerIdInGame)),
+            playGameGameId: gameId,
+            selectedHeroId: null,
         })
     );
 
@@ -81,6 +87,32 @@ export const getPlayGamePlayerKey = async ({
     return playerKeySchema.parse(playerKey);
 };
 
+export const isSelectHeroPhaseValidator = (phase: playGamePhases) => {
+    if (phase !== playGamePhases.heroSelection) {
+        throw new Error('operation is not possible on this phase of game');
+    }
+};
+
+export const getPlayGamePlayer = (
+    players: PlayGamePlayers,
+    playerIdInGame: PlayerIdInGame
+) => {
+    const playGamePlayer = players.find(
+        (player) => player.playerIdInGame === playerIdInGame
+    );
+
+    if (!playGamePlayer) {
+        throw new Error('the player not found');
+    }
+
+    return playGamePlayer;
+};
+export const isPlayerSelectedValidator = (playGamePlayer: PlayGamePlayer) => {
+    if (playGamePlayer.selectedHeroId) {
+        throw new Error('the hero already selected');
+    }
+};
+
 export const getPlayerHeroIds = async ({
     gameId,
     playerIdInGame,
@@ -90,19 +122,12 @@ export const getPlayerHeroIds = async ({
         playerIdInGame
     );
 
-    if (phase !== playGamePhases.heroSelection) {
-        throw new Error('opeartion is not possible on this phase of game');
-    }
+    const playGamePlayer = getPlayGamePlayer(players, playerIdInGame);
 
-    const { selectedHeroId, heroIds } = players.find(
-        (player) => player.playerIdInGame === playerIdInGame
-    ) as PlayGamePlayer;
+    isSelectHeroPhaseValidator(phase);
+    isPlayerSelectedValidator(playGamePlayer);
 
-    if (selectedHeroId) {
-        throw new Error('the hero already selected');
-    }
-
-    return heroIds;
+    return playGamePlayer.heroIds;
 };
 
 export const selectPlayGamePlayerHero = async ({
@@ -115,17 +140,10 @@ export const selectPlayGamePlayerHero = async ({
         playerIdInGame
     );
 
-    if (phase !== playGamePhases.heroSelection) {
-        throw new Error('opeartion is not possible on this phase of game');
-    }
+    const playGamePlayer = getPlayGamePlayer(players, playerIdInGame);
 
-    const { selectedHeroId } = players.find(
-        (player) => player.playerIdInGame === playerIdInGame
-    ) as PlayGamePlayer;
-
-    if (selectedHeroId) {
-        throw new Error('the hero already selected');
-    }
+    isSelectHeroPhaseValidator(phase);
+    isPlayerSelectedValidator(playGamePlayer);
 
     await selectPlayGamePlayerHeroOperation(playerIdInGame, heroId);
 };
