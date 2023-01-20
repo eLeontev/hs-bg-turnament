@@ -1,5 +1,5 @@
-import { heroIds } from '@prisma/client';
 import { z } from 'zod';
+import { PlayGamePlayer } from '@prisma/client';
 
 import { startPlayGameInputSchema } from '../play-game/schemas/play-game.schemas';
 
@@ -21,12 +21,6 @@ export type Player = PublicPlayer & {
 
 export type PendingGamePlayer = Player & {
     playerIdInGame: PlayerIdInGame;
-};
-
-export type PlayGamePlayer = Player & {
-    playerIdInGame: PlayerIdInGame;
-    heroIds: Array<heroIds>;
-    selectedHeroId?: heroIds;
 };
 
 export type PublicPlayers = Array<PublicPlayer>;

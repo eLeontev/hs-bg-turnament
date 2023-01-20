@@ -1,6 +1,6 @@
 'use client';
 
-import { trpc } from '../../lib/client';
+import { useRecoilValue } from 'recoil';
 
 import { PlayGameDesk } from '../../features/play-game/components/play-game.desk.component';
 
@@ -11,16 +11,17 @@ import {
 import { usePlayGameActions } from '../../features/play-game/hooks/play-game.socket.hooks';
 import { usePlayGameInitialization } from '../../features/play-game/hooks/play-game.hooks';
 
-import { getGameId } from '../../utils.ts/storage.utils';
+import { playGameBaseInputState } from '../../features/play-game/components/atoms/play-game.base-input.atom';
 
 const PlayGameScreen = () => {
-    const gameId = getGameId() || '';
+    usePlayGameInitialization();
+
+    const { gameId } = useRecoilValue(playGameBaseInputState);
 
     useOnlineGameSocketRoom(gameId, true);
-    const onlinePlayerIds = useOnlinePlayerKeys();
 
+    const onlinePlayerIds = useOnlinePlayerKeys();
     const playGameActions = usePlayGameActions(gameId);
-    usePlayGameInitialization();
 
     console.log(onlinePlayerIds);
     console.log(playGameActions);

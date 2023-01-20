@@ -7,7 +7,7 @@ import { IconButton } from '../../common/components/button.component';
 
 import { GameId } from '../../../models/common.models';
 
-import { getPlayerId } from '../../../utils.ts/storage.utils';
+import { getSavePlayerId } from '../../../utils.ts/storage.utils';
 
 export type StartPendingGameProps = { gameId: GameId };
 
@@ -16,7 +16,7 @@ export const StartPendingGameComponent = ({
 }: StartPendingGameProps) => {
     const mutation = trpc.startPlayGame.useMutation();
     const onClick = () =>
-        mutation.mutate({ gameId, playerId: getPlayerId() || '' });
+        mutation.mutate({ gameId, playerId: getSavePlayerId() });
 
     return (
         <IconButton color="green" onClick={onClick}>

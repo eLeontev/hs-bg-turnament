@@ -52,7 +52,7 @@ const RootContent = ({ children }: LayoutProps) => {
         <AppShell
             padding="md"
             header={<Navigation></Navigation>}
-            className={classes.backroundConainer}
+            className={classes.backgroundContainer}
         >
             <ApolloProvider client={client}>{children}</ApolloProvider>
         </AppShell>

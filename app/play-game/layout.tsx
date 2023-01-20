@@ -7,10 +7,12 @@ import { Group } from '@mantine/core';
 
 import { trpc } from '../../lib/client';
 
-import { playGamePhaseState } from '../../features/play-game/components/atoms/play-game.phases.atom';
-
 import { PrivateRouter } from '../../features/common/components/routers/private-router';
 import { InlineLink } from '../../features/common/components/link.component';
+
+import { playGamePhaseState } from '../../features/play-game/components/atoms/play-game.phases.atom';
+
+import { useSetPlayGameBaseInput } from '../../features/play-game/hooks/play-game.hooks';
 
 import { pendingGamesPageUrl } from '../../constants/urls';
 
@@ -68,6 +70,8 @@ const pageProps = {};
 export default function PlayGameLayoutWithTRPCPage({
     children,
 }: PlayGameLayoutProps) {
+    useSetPlayGameBaseInput();
+
     // TODO: report error for appDir
     const Page = trpc.withTRPC(PlayGameLayout) as NextAddDirPage;
     return <Page pageProps={pageProps}>{children}</Page>;

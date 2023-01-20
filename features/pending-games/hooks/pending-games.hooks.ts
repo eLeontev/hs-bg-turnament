@@ -6,7 +6,8 @@ import { usePendingGamesFromQuery } from './pending-games.graphql.hooks';
 import { usePendingGamesFromSocket } from './pending-games.socket.hooks';
 
 import { PendingGames } from '../pending-games.models';
-import { getPlayerKey } from '../../../utils.ts/storage.utils';
+
+import { getSavePlayerKey } from '../../../utils.ts/storage.utils';
 
 const noPendingGames: PendingGames = [];
 
@@ -17,6 +18,6 @@ export const usePendingGames = () => {
     usePendingGamesFromQuery(setPendingGames);
     usePendingGamesFromSocket(setPendingGames);
 
-    const isInGame = isPlayerInGame(pendingGames, getPlayerKey() || '');
+    const isInGame = isPlayerInGame(pendingGames, getSavePlayerKey());
     return { pendingGames, isInGame };
 };

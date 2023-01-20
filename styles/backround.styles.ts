@@ -7,7 +7,7 @@ export const useBackgroundStyles = createStyles<
     string,
     { isPlayGamePage: boolean }
 >((theme, { isPlayGamePage }) => ({
-    backroundConainer: {
+    backgroundContainer: {
         backgroundImage: `url(${
             isPlayGamePage ? playGameBackground.src : rootBackground.src
         })`,
