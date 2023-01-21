@@ -15,17 +15,17 @@ export const getPlayerHeroIdsMap = (playerIdsInGame: Array<PlayerIdInGame>) => {
     let randomHeroId: heroIds;
     let heroIdsToSelected = [...herIdsValues];
 
-    new Array(countOfHeroIds).fill('').forEach(() => {
-        [randomHeroId, heroIdsToSelected] =
-            getExcludedRandom(heroIdsToSelected);
-
+    new Array(countOfHeroIds).fill('').forEach(() =>
         playerIdsInGame.forEach((playerIdInGame: PlayerIdInGame) => {
+            [randomHeroId, heroIdsToSelected] =
+                getExcludedRandom(heroIdsToSelected);
+
             playerHeroIdsMap.set(playerIdInGame, [
                 ...(playerHeroIdsMap.get(playerIdInGame) || []),
                 randomHeroId,
             ]);
-        });
-    });
+        })
+    );
 
     return playerHeroIdsMap;
 };

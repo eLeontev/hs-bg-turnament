@@ -10,7 +10,11 @@ import {
 import { GameId } from '../../../models/common.models';
 import { ListOfOnlinePlayerKeys } from './online-game.models';
 
-import { getPlayerId, getPlayerKey } from '../../../utils.ts/storage.utils';
+import {
+    getPlayerId,
+    getPlayerIdInGame,
+    getPlayerKey,
+} from '../../../utils.ts/storage.utils';
 import {
     setOnlinePlayersSelector,
     usePlayersStore,
@@ -22,8 +26,9 @@ export const useOnlineGameSocketRoom = (
 ) => {
     const socket = useSocket();
     useEffect(() => {
-        const playerId = getPlayerId();
+        const playerId = isPlayGame ? getPlayerIdInGame() : getPlayerId();
         const playerKey = getPlayerKey();
+
         socket.emit(socketRoomChangesEventNames.joinOnlineGameRoom, {
             gameId,
             playerId,

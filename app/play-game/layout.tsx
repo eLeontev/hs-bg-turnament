@@ -34,6 +34,8 @@ export type PlayGameProps = {
 const PlayGame = ({ children }: PlayGameProps) => {
     const { data, isLoading, isError } = usePlayGameInitialization();
 
+    console.log(data, isLoading, isError);
+
     if (isLoading) {
         return <OverlayLoader visible></OverlayLoader>;
     }

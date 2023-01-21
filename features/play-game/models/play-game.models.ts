@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { playGamePhases } from '@prisma/client';
+import { heroIds, playGamePhases } from '@prisma/client';
 
 import {
     playGameBaseInputSchema,
@@ -34,13 +34,13 @@ export type PlayGameJoinLeavePayload = z.infer<
 export type DurationInMs = number;
 
 export type PlayGamePhases = {
-    type: playGamePhases;
-    duration: DurationInMs;
+    phase: playGamePhases;
+    phaseDurationInMs: DurationInMs;
 };
 
 export type PlayGameHeroSelected = {
     playerKey: string;
-    heroId: HeroId;
+    selectedHeroId: heroIds;
 };
 
 type PlayGameActionPayload = {

@@ -58,7 +58,7 @@ export const AuthorActions = ({
 
 export const JoinedPendingGame = ({ pendingGame }: JoinedPendingGameProps) => {
     useOnlineGameSocketRoom(pendingGame.gameId);
-    const onlinePlayerKeys = useOnlinePlayerKeys();
+    useOnlinePlayerKeys();
 
     const { authorId, gameId, players } = pendingGame;
     const isAuthor = authorId === getPlayerId();
@@ -77,7 +77,6 @@ export const JoinedPendingGame = ({ pendingGame }: JoinedPendingGameProps) => {
             </Card>
             <Space h="md"></Space>
             <JoinedPendingGamePlayers
-                onlinePlayerKeys={onlinePlayerKeys}
                 players={pendingGame.players}
             ></JoinedPendingGamePlayers>
         </Flex>

@@ -1,24 +1,30 @@
 import { create } from 'zustand';
 import { heroIds, playGamePhases } from '@prisma/client';
 
-import { PlayGameBaseInput } from '../../models/play-game.models';
+import {
+    DurationInMs,
+    PlayGameBaseInput,
+    PlayGamePhases,
+} from '../../models/play-game.models';
 
 export type PlayGameState = {
     baseInput: PlayGameBaseInput;
     phase: playGamePhases;
+    phaseDurationInMs: DurationInMs;
     selectedHeroId: heroIds | undefined;
     selectedHeroIds: Map<string, heroIds>;
 };
 
 export type PlayGameStoreApi = {
     initState: (playGameState: PlayGameState) => void;
-    setPhase: (phase: playGamePhases) => void;
+    setPhase: (phase: PlayGamePhases) => void;
     setSelectedHeroId: (selectedHeroId: heroIds) => void;
 };
 
 const initialState: PlayGameState = {
     baseInput: { gameId: '', playerIdInGame: '' },
     phase: playGamePhases.initialisation,
+    phaseDurationInMs: 100000000000,
     selectedHeroId: undefined,
     selectedHeroIds: new Map<string, heroIds>(),
 };
@@ -28,7 +34,7 @@ export const usePlayGameStore = create<PlayGameState & PlayGameStoreApi>(
         ...initialState,
 
         initState: (playGameState: PlayGameState) => set(playGameState),
-        setPhase: (phase: playGamePhases) => set({ phase }),
+        setPhase: (playGamePhases: PlayGamePhases) => set(playGamePhases),
         setSelectedHeroId: (selectedHeroId: heroIds) => set({ selectedHeroId }),
     })
 );

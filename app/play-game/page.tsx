@@ -17,10 +17,8 @@ const PlayGameScreen = () => {
     const { gameId } = usePlayGameStore(baseInputSelector);
 
     useOnlineGameSocketRoom(gameId, true);
-    const playGameActions = usePlayGameActions(gameId);
+    usePlayGameActions(gameId);
     useOnlinePlayerKeys();
-
-    console.log(playGameActions);
 
     return <PlayGameDesk></PlayGameDesk>;
 };

@@ -33,6 +33,7 @@ export const playGamePlayerDetailsWithSelectedHeroIdSchema =
     basePlayerDetailsSchema.merge(z.object({ selectedHeroId: heroIdSchema }));
 
 const playGamePhasesValues = [
+    playGamePhases.initialisation,
     playGamePhases.heroSelection,
     playGamePhases.recruit,
     playGamePhases.combat,

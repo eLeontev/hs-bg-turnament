@@ -7,8 +7,9 @@ import { PlayerKey } from '../../../../models/common.models';
 
 export type PlayGamePlayerDetails = z.infer<typeof playGamePlayerDetailsSchema>;
 
+export type PlayGameStorePlayers = Map<PlayerKey, PlayGamePlayerDetails>;
 export type PlayGamePlayersState = {
-    players: Map<PlayerKey, PlayGamePlayerDetails>;
+    players: PlayGameStorePlayers;
     onlinePlayers: Set<PlayerKey>;
 };
 
@@ -22,7 +23,7 @@ export const usePlayersStore = create<
 >((set) => ({
     players: new Map<PlayerKey, PlayGamePlayerDetails>(),
     onlinePlayers: new Set(),
-    setPlayers: (players: PlayGamePlayersState['players']) => set({ players }),
+    setPlayers: (players: PlayGameStorePlayers) => set({ players }),
     setOnlinePlayers: (onlinePlayers: PlayGamePlayersState['onlinePlayers']) =>
         set({ onlinePlayers }),
 }));
@@ -33,4 +34,7 @@ export const setOnlinePlayersSelector = ({
 export const setPlayersSelector = ({ setPlayers }: PlayGamePlayersStoreApi) =>
     setPlayers;
 
+export const onlinePlayersSelector = ({
+    onlinePlayers,
+}: PlayGamePlayersState) => onlinePlayers;
 export const playersSelector = ({ players }: PlayGamePlayersState) => players;

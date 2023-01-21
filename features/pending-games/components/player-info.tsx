@@ -2,18 +2,20 @@ import { Card, Group, Badge } from '@mantine/core';
 
 import { PairComponent } from '../../common/components/pair.component';
 
-import { OnlinePlayerKeys } from '../../common/sockets/online-game.models';
+import {
+    onlinePlayersSelector,
+    usePlayersStore,
+} from '../../play-game/components/store/play-game.players.store';
 import { PublicPlayer } from '../../player/player.models';
 
 export type PlayerInfoProps = {
     player: PublicPlayer;
-    onlinePlayerKeys: OnlinePlayerKeys;
 };
 
 export const PlayerInfo = ({
     player: { playerLogin, playerKey },
-    onlinePlayerKeys,
 }: PlayerInfoProps) => {
+    const onlinePlayerKeys = usePlayersStore(onlinePlayersSelector);
     const color = onlinePlayerKeys.has(playerKey) ? 'green' : 'red';
     const onlineLabel = onlinePlayerKeys.has(playerKey) ? 'Online' : 'Offline';
 

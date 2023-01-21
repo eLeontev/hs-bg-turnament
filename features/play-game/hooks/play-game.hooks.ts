@@ -50,6 +50,7 @@ export const usePlayGameInitialization = () => {
 
             initState({
                 phase,
+                phaseDurationInMs: 1000000000000,
                 selectedHeroId,
                 selectedHeroIds,
                 baseInput,

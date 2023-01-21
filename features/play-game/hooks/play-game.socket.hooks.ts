@@ -17,6 +17,7 @@ import { GameId } from '../../../models/common.models';
 import { PlayGameAction, PlayGameActions } from '../models/play-game.models';
 
 import { getPlayerIdInGame, setGameId } from '../../../utils.ts/storage.utils';
+import { playGameactionsHandler } from '../services/play-game.actions.service';
 
 export const useStartPlayGameFromSocket = () => {
     const socket = useSocket();
@@ -35,7 +36,6 @@ export const useStartPlayGameFromSocket = () => {
 };
 
 export const usePlayGameActions = (gameId: GameId) => {
-    const [gameActions, setPlayGameActions] = useState<PlayGameActions>([]);
     const socket = useSocket();
 
     useEffect(() => {
@@ -49,20 +49,11 @@ export const usePlayGameActions = (gameId: GameId) => {
             playGameJoinLeavePayload
         );
 
-        socket.on(
-            playGameEventNames.gameAction,
-            (gameAction: PlayGameAction<playGameActions>) =>
-                setPlayGameActions((gameActions) => [
-                    ...gameActions,
-                    gameAction,
-                ])
-        );
+        socket.on(playGameEventNames.gameAction, playGameactionsHandler);
 
         return () => {
             socket.emit(socketRoomChangesEventNames.leavePlayGameRoom);
             socket.removeAllListeners(playGameEventNames.gameAction);
         };
     }, [socket, gameId]);
-
-    return gameActions;
 };

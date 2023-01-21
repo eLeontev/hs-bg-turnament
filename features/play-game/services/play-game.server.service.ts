@@ -1,8 +1,4 @@
-import {
-    playGamePhases,
-    PendingGamePlayer,
-    PlayGamePlayer,
-} from '@prisma/client';
+import { playGamePhases, PendingGamePlayer } from '@prisma/client';
 
 import { getPlayerHeroIdsMap } from './play-game.hero.service';
 
@@ -15,7 +11,7 @@ import {
 import { playerKeySchema } from '../../player/player.schemas';
 import { heroIdsSchema } from '../schemas/play-game.hero.schemas';
 
-import { PlayGamePlayers } from '../../player/player.models';
+import { PlayGamePlayer, PlayGamePlayers } from '../../player/player.models';
 import { GameId, PlayerIdInGame } from '../../../models/common.models';
 import {
     PlayGameBaseInput,
@@ -45,7 +41,6 @@ export const startPlayGame = async (
                 hashesFromPlayerIdsInGame.get(playerIdInGame)
             ),
             heroIds: heroIdsSchema.parse(playerHeroIdsMap.get(playerIdInGame)),
-            playGameGameId: gameId,
             selectedHeroId: null,
         })
     );

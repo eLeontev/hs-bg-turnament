@@ -62,7 +62,7 @@ export const selectPlayGamePlayerHeroMutation = async ({
 
     notifyPlayersInPlayGame(ctx.io, input.gameId, {
         action: playGameActions.heroSelected,
-        payload: { playerKey, heroId },
+        payload: { playerKey, selectedHeroId: heroId },
     });
 
     return { message: 'hero selected' };

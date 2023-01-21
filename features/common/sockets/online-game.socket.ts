@@ -58,7 +58,7 @@ const isPlayerInGame = async (
 
     if (!(await isPLayerInGame(gameId, playerId))) {
         throw new Error(
-            `palyer: ${playerId} cannot join to this game: ${gameId}`
+            `player: ${playerId} cannot join to this game: ${gameId}`
         );
     }
 };
