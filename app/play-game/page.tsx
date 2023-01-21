@@ -12,9 +12,10 @@ import { usePlayGameActions } from '../../features/play-game/hooks/play-game.soc
 import { usePlayGameInitialization } from '../../features/play-game/hooks/play-game.hooks';
 
 import { playGameBaseInputState } from '../../features/play-game/components/atoms/play-game.base-input.atom';
+import { OverlayLoader } from '../../features/common/components/loader.component';
 
 const PlayGameScreen = () => {
-    usePlayGameInitialization();
+    const { isLoading, isError, data } = usePlayGameInitialization();
 
     const { gameId } = useRecoilValue(playGameBaseInputState);
 
@@ -26,7 +27,19 @@ const PlayGameScreen = () => {
     console.log(onlinePlayerIds);
     console.log(playGameActions);
 
-    return <PlayGameDesk></PlayGameDesk>;
+    if (isLoading) {
+        return <OverlayLoader visible></OverlayLoader>;
+    }
+
+    if (isError) {
+        return <b>Something went wrong</b>;
+    }
+
+    if (data) {
+        return <PlayGameDesk></PlayGameDesk>;
+    }
+
+    return null;
 };
 
 export default PlayGameScreen;

@@ -3,7 +3,11 @@ import { z } from 'zod';
 
 import { gameIdSchema } from '../../pending-games/pending-games.schemas';
 import { heroIdSchema } from './play-game.hero.schemas';
-import { playerIdSchema, playerLoginSchema } from '../../player/player.schemas';
+import {
+    playerIdSchema,
+    playerKeySchema,
+    playerLoginSchema,
+} from '../../player/player.schemas';
 
 export const startPlayGameInputSchema = z.object({
     playerId: playerIdSchema,
@@ -38,6 +42,7 @@ export const playGameZodPhases = z.enum(playGamePhasesValues);
 export const playGameDetailsOutputSchema = z.object({
     gameId: gameIdSchema,
     phase: playGameZodPhases,
+    playerKey: playerKeySchema,
     players: z.array(playGamePlayerDetailsSchema),
 });
 

@@ -1,7 +1,6 @@
 import {
     getPlayerHeroIds,
     getPlayGame,
-    getPlayGamePlayerKey,
     selectPlayGamePlayerHero,
     startPlayGame,
 } from './services/play-game.server.service';
@@ -32,10 +31,6 @@ import { getHash } from '../../utils.ts/hash-server.utils';
 
 export const playGameQuery = ({ input }: TRCPProps<PlayGameBaseInput>) =>
     getPlayGame(input);
-
-export const playGamePlayerKeyQuery = ({
-    input,
-}: TRCPProps<PlayGameBaseInput>) => getPlayGamePlayerKey(input);
 
 export const startPlayGameMutation = async ({
     input,

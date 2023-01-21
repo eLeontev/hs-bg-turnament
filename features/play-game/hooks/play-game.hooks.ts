@@ -6,7 +6,10 @@ import { trpc } from '../../../lib/client';
 import { formSelectedHeroIds } from '../services/play-game.client.service';
 
 import { playGamePhaseState } from '../components/atoms/play-game.phases.atom';
-import { playsGameSelectedHeroIdsState } from '../components/atoms/play-game.selected-hero-id.atom';
+import {
+    playsGameSelectedHeroIdsState,
+    playsGameSelectedHeroIdState,
+} from '../components/atoms/play-game.selected-hero-id.atom';
 import { playGameBaseInputState } from '../components/atoms/play-game.base-input.atom';
 
 import { PlayGameBaseInput } from '../models/play-game.models';
@@ -29,47 +32,40 @@ export const useSetPlayGameBaseInput = () => {
     );
 };
 
-export const useSetPlayGamePlayerKey = (
-    playGameBaseInput: PlayGameBaseInput
-) => {
-    const playerKeyResponse =
-        trpc.getPlayGamePlayerKey.useQuery(playGameBaseInput);
-
-    useEffect(() => {
-        const playerKey = playerKeyResponse.data;
-        if (playerKey) {
-            setPlayerKey(playerKey);
-        }
-    }, [playerKeyResponse]);
-};
-
 export const useSetPlayGameDetails = (playGameBaseInput: PlayGameBaseInput) => {
     const setPlayGamePhase = useSetRecoilState(playGamePhaseState);
-    const setPlaysGameSelectedHeroIdsState = useSetRecoilState(
+    const setPlayGameSelectedHeroId = useSetRecoilState(
+        playsGameSelectedHeroIdState
+    );
+    const setPlaysGameSelectedHeroIds = useSetRecoilState(
         playsGameSelectedHeroIdsState
     );
 
-    const playGameDetailsResponse =
+    const playGameDetailsQuery =
         trpc.playGameDetails.useQuery(playGameBaseInput);
 
     useEffect(() => {
-        const playGameDetails = playGameDetailsResponse.data;
+        const playGameDetails = playGameDetailsQuery.data;
 
         if (playGameDetails) {
-            const { phase, players } = playGameDetails;
+            const { phase, players, playerKey } = playGameDetails;
 
+            setPlayerKey(playerKey);
             setPlayGamePhase(phase);
-            setPlaysGameSelectedHeroIdsState(formSelectedHeroIds(players));
+
+            const selectedHeroIds = formSelectedHeroIds(players);
+
+            setPlayGameSelectedHeroId(selectedHeroIds.get(playerKey));
+            setPlaysGameSelectedHeroIds(selectedHeroIds);
         }
-    }, [
-        setPlayGamePhase,
-        setPlaysGameSelectedHeroIdsState,
-        playGameDetailsResponse,
-    ]);
+    }, [setPlayGamePhase, setPlaysGameSelectedHeroIds, playGameDetailsQuery]);
+
+    return playGameDetailsQuery;
 };
+
 export const usePlayGameInitialization = () => {
     const playGameBaseInput = useRecoilValue(playGameBaseInputState);
+    const playGameDetailsQuery = useSetPlayGameDetails(playGameBaseInput);
 
-    useSetPlayGamePlayerKey(playGameBaseInput);
-    useSetPlayGameDetails(playGameBaseInput);
+    return playGameDetailsQuery;
 };

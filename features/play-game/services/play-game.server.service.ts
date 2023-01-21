@@ -66,6 +66,7 @@ export const getPlayGame = async ({
 
     return {
         ...rest,
+        playerKey: getPlayGamePlayerKey(players, playerIdInGame),
         players: players.map(({ playerLogin, playerKey, selectedHeroId }) => ({
             playerLogin,
             playerKey,
@@ -74,12 +75,10 @@ export const getPlayGame = async ({
     };
 };
 
-export const getPlayGamePlayerKey = async ({
-    gameId,
-    playerIdInGame,
-}: PlayGameBaseInput) => {
-    const { players } = await getPlayGameOperation(gameId, playerIdInGame);
-
+const getPlayGamePlayerKey = (
+    players: PlayGamePlayers,
+    playerIdInGame: PlayerIdInGame
+) => {
     const playerKey = players.find(
         (player) => player.playerIdInGame === playerIdInGame
     )?.playerKey;

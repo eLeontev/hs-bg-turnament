@@ -6,7 +6,7 @@ export const playsGameSelectedHeroIdsState = atom<Map<string, heroIds>>({
     default: new Map(),
 });
 
-export const playsGameSelectedHeroIdState = atom<heroIds>({
+export const playsGameSelectedHeroIdState = atom<heroIds | undefined>({
     key: 'selectedHeroId',
     default: undefined,
 });
