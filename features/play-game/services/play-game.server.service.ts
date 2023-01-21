@@ -54,10 +54,9 @@ export const getPlayGame = async ({
     gameId,
     playerIdInGame,
 }: PlayGameBaseInput) => {
-    const { players, ...rest } = await getPlayGameOperation(
-        gameId,
-        playerIdInGame
-    );
+    const { players, ...rest } = await getPlayGameOperation(gameId);
+
+    isPlayerInGameValidator(players, playerIdInGame);
 
     return {
         ...rest,
@@ -87,7 +86,7 @@ export const isSelectHeroPhaseValidator = (phase: playGamePhases) => {
     }
 };
 
-export const getPlayGamePlayer = (
+export const isPlayerInGameValidator = (
     players: PlayGamePlayers,
     playerIdInGame: PlayerIdInGame
 ) => {
@@ -101,7 +100,8 @@ export const getPlayGamePlayer = (
 
     return playGamePlayer;
 };
-export const isPlayerSelectedValidator = (playGamePlayer: PlayGamePlayer) => {
+
+export const isHeroSelectedValidator = (playGamePlayer: PlayGamePlayer) => {
     if (playGamePlayer.selectedHeroId) {
         throw new Error('the hero already selected');
     }
@@ -111,15 +111,12 @@ export const getPlayerHeroIds = async ({
     gameId,
     playerIdInGame,
 }: PlayGameBaseInput) => {
-    const { phase, players } = await getPlayGameOperation(
-        gameId,
-        playerIdInGame
-    );
+    const { phase, players } = await getPlayGameOperation(gameId);
 
-    const playGamePlayer = getPlayGamePlayer(players, playerIdInGame);
+    const playGamePlayer = isPlayerInGameValidator(players, playerIdInGame);
 
     isSelectHeroPhaseValidator(phase);
-    isPlayerSelectedValidator(playGamePlayer);
+    isHeroSelectedValidator(playGamePlayer);
 
     return playGamePlayer.heroIds;
 };
@@ -129,15 +126,12 @@ export const selectPlayGamePlayerHero = async ({
     playerIdInGame,
     heroId,
 }: PlayGameSelectHeroInput) => {
-    const { phase, players } = await getPlayGameOperation(
-        gameId,
-        playerIdInGame
-    );
+    const { phase, players } = await getPlayGameOperation(gameId);
 
-    const playGamePlayer = getPlayGamePlayer(players, playerIdInGame);
+    const playGamePlayer = isPlayerInGameValidator(players, playerIdInGame);
 
     isSelectHeroPhaseValidator(phase);
-    isPlayerSelectedValidator(playGamePlayer);
+    isHeroSelectedValidator(playGamePlayer);
 
     await selectPlayGamePlayerHeroOperation(playerIdInGame, heroId);
 };

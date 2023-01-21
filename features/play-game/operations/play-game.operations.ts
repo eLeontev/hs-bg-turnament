@@ -18,13 +18,10 @@ export const startPlayGameOperation = (
         },
     });
 
-export const getPlayGameOperation = (
-    gameId: GameId,
-    playerIdInGame: PlayerIdInGame
-) =>
+export const getPlayGameOperation = (gameId: GameId) =>
     prisma.playGame.findFirstOrThrow({
         where: { gameId },
-        include: { players: { where: { playerIdInGame } } },
+        include: { players: true },
     });
 
 export const isPlayerInPlayGameOperation = (
