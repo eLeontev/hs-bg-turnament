@@ -2,7 +2,6 @@
 
 import { Group, Text } from '@mantine/core';
 import { useRouter } from 'next/navigation';
-import { useRecoilState } from 'recoil';
 
 import { Button } from '../../common/components/button.component';
 import {
@@ -12,7 +11,11 @@ import {
 
 import { logoutHandler, redirectToLoginPageHandler } from '../login.service';
 
-import { playerLoginState } from './atoms/player-login.atom';
+import {
+    loginSelector,
+    setLoginSelector,
+    useLoginStore,
+} from './store/login.store';
 
 export const logoutlabels = {
     title: 'Please confirm logout action',
@@ -21,9 +24,11 @@ export const logoutlabels = {
 };
 export const Login = () => {
     const router = useRouter();
-    const [login, setRecoilLogin] = useRecoilState(playerLoginState);
 
-    const props = useModal(() => logoutHandler(router, setRecoilLogin));
+    const setLogin = useLoginStore(setLoginSelector);
+    const login = useLoginStore(loginSelector);
+
+    const props = useModal(() => logoutHandler(router, setLogin));
 
     return login ? (
         <Group spacing="xs">

@@ -1,12 +1,13 @@
-import { useRecoilValue } from 'recoil';
-
 import { SelectedHero } from './play-game.selected-hero.component';
 import { SelectHero } from './play-game.select-hero.component';
 
-import { playsGameSelectedHeroIdState } from './atoms/play-game.selected-hero-id.atom';
+import {
+    selectedHeroIdSelector,
+    usePlayGameStore,
+} from './store/play-game.store';
 
 export const SelectHeroDesk = () => {
-    const selectedHeroId = useRecoilValue(playsGameSelectedHeroIdState);
+    const selectedHeroId = usePlayGameStore(selectedHeroIdSelector);
 
     if (selectedHeroId) {
         return <SelectedHero></SelectedHero>;

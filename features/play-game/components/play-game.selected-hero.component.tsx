@@ -1,9 +1,10 @@
-import { useRecoilValue } from 'recoil';
-
-import { playsGameSelectedHeroIdState } from './atoms/play-game.selected-hero-id.atom';
+import {
+    selectedHeroIdSelector,
+    usePlayGameStore,
+} from './store/play-game.store';
 
 export const SelectedHero = () => {
-    const selectedHeroId = useRecoilValue(playsGameSelectedHeroIdState);
+    const selectedHeroId = usePlayGameStore(selectedHeroIdSelector);
 
     return <b>{selectedHeroId}</b>;
 };

@@ -1,48 +1,41 @@
-import { useEffect } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useEffect, useMemo } from 'react';
 
 import { trpc } from '../../../lib/client';
 
 import { formSelectedHeroIds } from '../services/play-game.client.service';
 
-import { playGamePhaseState } from '../components/atoms/play-game.phases.atom';
 import {
-    playsGameSelectedHeroIdsState,
-    playsGameSelectedHeroIdState,
-} from '../components/atoms/play-game.selected-hero-id.atom';
-import { playGameBaseInputState } from '../components/atoms/play-game.base-input.atom';
-
-import { PlayGameBaseInput } from '../models/play-game.models';
+    initStateSelector,
+    usePlayGameStore,
+} from '../components/store/play-game.store';
+import {
+    usePlayersStore,
+    setPlayersSelector,
+} from '../components/store/play-game.players.store';
 
 import {
     getSaveGameId,
     getSavePlayerIdInGame,
     setPlayerKey,
 } from '../../../utils.ts/storage.utils';
+import { formPlayGamePlayers } from '../services/play-game.player.service';
 
-export const useSetPlayGameBaseInput = () => {
-    const setPlayGameBaseInput = useSetRecoilState(playGameBaseInputState);
-    useEffect(
-        () =>
-            setPlayGameBaseInput({
-                playerIdInGame: getSavePlayerIdInGame(),
-                gameId: getSaveGameId(),
-            }),
-        [setPlayGameBaseInput]
-    );
-};
-
-export const useSetPlayGameDetails = (playGameBaseInput: PlayGameBaseInput) => {
-    const setPlayGamePhase = useSetRecoilState(playGamePhaseState);
-    const setPlayGameSelectedHeroId = useSetRecoilState(
-        playsGameSelectedHeroIdState
-    );
-    const setPlaysGameSelectedHeroIds = useSetRecoilState(
-        playsGameSelectedHeroIdsState
+export const useSetPlayGameBaseInput = () =>
+    useMemo(
+        () => ({
+            playerIdInGame: getSavePlayerIdInGame(),
+            gameId: getSaveGameId(),
+        }),
+        []
     );
 
-    const playGameDetailsQuery =
-        trpc.playGameDetails.useQuery(playGameBaseInput);
+export const usePlayGameInitialization = () => {
+    const baseInput = useSetPlayGameBaseInput();
+
+    const initState = usePlayGameStore(initStateSelector);
+    const setPlayers = usePlayersStore(setPlayersSelector);
+
+    const playGameDetailsQuery = trpc.playGameDetails.useQuery(baseInput);
 
     useEffect(() => {
         const playGameDetails = playGameDetailsQuery.data;
@@ -51,21 +44,20 @@ export const useSetPlayGameDetails = (playGameBaseInput: PlayGameBaseInput) => {
             const { phase, players, playerKey } = playGameDetails;
 
             setPlayerKey(playerKey);
-            setPlayGamePhase(phase);
 
             const selectedHeroIds = formSelectedHeroIds(players);
+            const selectedHeroId = selectedHeroIds.get(playerKey);
 
-            setPlayGameSelectedHeroId(selectedHeroIds.get(playerKey));
-            setPlaysGameSelectedHeroIds(selectedHeroIds);
+            initState({
+                phase,
+                selectedHeroId,
+                selectedHeroIds,
+                baseInput,
+            });
+
+            setPlayers(formPlayGamePlayers(players));
         }
-    }, [setPlayGamePhase, setPlaysGameSelectedHeroIds, playGameDetailsQuery]);
-
-    return playGameDetailsQuery;
-};
-
-export const usePlayGameInitialization = () => {
-    const playGameBaseInput = useRecoilValue(playGameBaseInputState);
-    const playGameDetailsQuery = useSetPlayGameDetails(playGameBaseInput);
+    }, [playGameDetailsQuery, initState, setPlayers, baseInput]);
 
     return playGameDetailsQuery;
 };

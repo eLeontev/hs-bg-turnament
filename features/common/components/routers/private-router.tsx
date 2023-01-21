@@ -1,7 +1,6 @@
 'use client';
 
 import { ReactElement } from 'react';
-import { useRecoilValue } from 'recoil';
 
 import { PrivateContentInfo } from '../private-content-info';
 import { SocketConnector } from '../socket-connector';
@@ -10,7 +9,10 @@ import { useSetPlayerId } from '../../../player/player-id.hook';
 
 import { getPlayerId } from '../../../../utils.ts/storage.utils';
 
-import { playerLoginState } from '../../../login/components/atoms/player-login.atom';
+import {
+    isLoggedInSelector,
+    useLoginStore,
+} from '../../../login/components/store/login.store';
 
 export type PrivateRouterProps = {
     children: ReactElement;
@@ -19,7 +21,7 @@ export type PrivateRouterProps = {
 export const PrivateRouter = ({ children }: PrivateRouterProps) => {
     useSetPlayerId();
 
-    const isLoggedIn = useRecoilValue(playerLoginState);
+    const isLoggedIn = useLoginStore(isLoggedInSelector);
     const hasPlayerId = getPlayerId();
 
     if (isLoggedIn && hasPlayerId) {

@@ -1,20 +1,20 @@
-import { useRecoilValue } from 'recoil';
 import { Container } from '@mantine/core';
 
 import { playGamePhases } from '@prisma/client';
 
 import { SelectHeroDesk } from './play-game.select-hero.desk';
 
-import { playGamePhaseState } from './atoms/play-game.phases.atom';
+import { phaseSelector, usePlayGameStore } from './store/play-game.store';
 
 const playGamePhaseDesks = {
     [playGamePhases.heroSelection]: SelectHeroDesk,
     [playGamePhases.recruit]: SelectHeroDesk,
     [playGamePhases.combat]: SelectHeroDesk,
+    [playGamePhases.initialisation]: () => null,
 };
 
 export const PlayGameDesk = () => {
-    const playGamePhase = useRecoilValue(playGamePhaseState);
+    const playGamePhase = usePlayGameStore(phaseSelector);
 
     const PlayGamePhaseDesk = playGamePhaseDesks[playGamePhase];
 

@@ -5,7 +5,6 @@ import {
     playGameBaseInputSchema,
     playGameDetailsOutputSchema,
     playGameJoinLeavePayloadSchema,
-    playGamePlayerDetailsSchema,
     playGamePlayerDetailsWithSelectedHeroIdSchema,
     playGameSelectHeroSchema,
 } from '../schemas/play-game.schemas';

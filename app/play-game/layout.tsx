@@ -1,7 +1,6 @@
 'use client';
 
-import { ReactElement, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { ReactElement } from 'react';
 
 import { Group } from '@mantine/core';
 
@@ -9,14 +8,14 @@ import { trpc } from '../../lib/client';
 
 import { PrivateRouter } from '../../features/common/components/routers/private-router';
 import { InlineLink } from '../../features/common/components/link.component';
+import { OverlayLoader } from '../../features/common/components/loader.component';
 
-import { playGamePhaseState } from '../../features/play-game/components/atoms/play-game.phases.atom';
-
-import { useSetPlayGameBaseInput } from '../../features/play-game/hooks/play-game.hooks';
+import {
+    usePlayGameInitialization,
+    useSetPlayGameBaseInput,
+} from '../../features/play-game/hooks/play-game.hooks';
 
 import { pendingGamesPageUrl } from '../../constants/urls';
-
-import { getGameId, getPlayerIdInGame } from '../../utils.ts/storage.utils';
 
 const GameNotFound = () => (
     <Group>
@@ -33,32 +32,32 @@ export type PlayGameProps = {
 };
 
 const PlayGame = ({ children }: PlayGameProps) => {
-    const { data } = trpc.playGameDetails.useQuery({
-        playerIdInGame: getPlayerIdInGame() || '',
-        gameId: getGameId() || '',
-    });
-    const [playGamePhase, setPlayGameState] =
-        useRecoilState(playGamePhaseState);
+    const { data, isLoading, isError } = usePlayGameInitialization();
 
-    useEffect(
-        () => (data?.phase ? setPlayGameState(data.phase) : undefined),
-        [setPlayGameState, data]
-    );
+    if (isLoading) {
+        return <OverlayLoader visible></OverlayLoader>;
+    }
 
-    return playGamePhase ? children : <GameNotFound></GameNotFound>;
+    if (isError) {
+        return <GameNotFound></GameNotFound>;
+    }
+
+    if (data) {
+        return children;
+    }
+
+    return null;
 };
 
 export type PlayGameLayoutProps = {
     children: ReactElement;
 };
 
-const PlayGameLayout = ({ children }: PlayGameLayoutProps) => {
-    return (
-        <PrivateRouter>
-            <PlayGame>{children}</PlayGame>
-        </PrivateRouter>
-    );
-};
+const PlayGameLayout = ({ children }: PlayGameLayoutProps) => (
+    <PrivateRouter>
+        <PlayGame>{children}</PlayGame>
+    </PrivateRouter>
+);
 
 type NextAddDirPage = (props: {
     children: ReactElement;

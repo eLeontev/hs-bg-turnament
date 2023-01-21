@@ -2,18 +2,20 @@
 
 import { ReactElement, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useRecoilValue } from 'recoil';
 
 import { rootPageUrl } from '../../constants/urls';
 
-import { playerLoginState } from '../../features/login/components/atoms/player-login.atom';
+import {
+    isLoggedInSelector,
+    useLoginStore,
+} from '../../features/login/components/store/login.store';
 
 export type LoginlayoutProps = {
     children: ReactElement;
 };
 
 const Loginlayout = ({ children }: LoginlayoutProps) => {
-    const isLoggedIn = useRecoilValue(playerLoginState);
+    const isLoggedIn = useLoginStore(isLoggedInSelector);
     const router = useRouter();
 
     useEffect(() => {

@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
 
 import { heroIds } from '@prisma/client';
 import { trpc } from '../../../lib/client';
 
 import { selectHeroPlayerInputSchema } from '../schemas/play-game.player-actions.schemas';
 
-import { playGameBaseInputState } from '../components/atoms/play-game.base-input.atom';
+import {
+    baseInputSelector,
+    usePlayGameStore,
+} from '../components/store/play-game.store';
 
 import { PlayGameBaseInput } from '../models/play-game.models';
 import { HeroIds } from '../models/play-game.hero.models';
@@ -38,10 +40,10 @@ export const useSelectHero = (playGameBaseInput: PlayGameBaseInput) => {
 };
 
 export const useHero = () => {
-    const playGameBaseInput = useRecoilValue(playGameBaseInputState);
+    const baseInput = usePlayGameStore(baseInputSelector);
 
-    const heroIds = useQueryHero(playGameBaseInput);
-    const selectHeroIdAction = useSelectHero(playGameBaseInput);
+    const heroIds = useQueryHero(baseInput);
+    const selectHeroIdAction = useSelectHero(baseInput);
 
     return { heroIds, selectHeroIdAction };
 };

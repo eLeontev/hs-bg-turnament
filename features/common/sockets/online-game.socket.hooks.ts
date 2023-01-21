@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { useSocket } from '../../../lib/socket.client';
 
@@ -8,9 +8,13 @@ import {
 } from './socket.enums';
 
 import { GameId } from '../../../models/common.models';
-import { ListOfOnlinePlayerKeys, OnlinePlayerKeys } from './online-game.models';
+import { ListOfOnlinePlayerKeys } from './online-game.models';
 
 import { getPlayerId, getPlayerKey } from '../../../utils.ts/storage.utils';
+import {
+    setOnlinePlayersSelector,
+    usePlayersStore,
+} from '../../play-game/components/store/play-game.players.store';
 
 export const useOnlineGameSocketRoom = (
     gameId: GameId,
@@ -40,15 +44,13 @@ export const useOnlineGameSocketRoom = (
 
 export const useOnlinePlayerKeys = () => {
     const socket = useSocket();
-    const [onlinePlayerKeys, setOnlinePlayerKeys] = useState<OnlinePlayerKeys>(
-        new Set()
-    );
+    const setOnlinePlayers = usePlayersStore(setOnlinePlayersSelector);
 
     useEffect(() => {
         socket.on(
             onlineGameRoomEventNames.onlinePlayerKeys,
             (listOfOnlinePlayerKeys: ListOfOnlinePlayerKeys) =>
-                setOnlinePlayerKeys(new Set(listOfOnlinePlayerKeys))
+                setOnlinePlayers(new Set(listOfOnlinePlayerKeys))
         );
 
         return () => {
@@ -56,7 +58,5 @@ export const useOnlinePlayerKeys = () => {
                 onlineGameRoomEventNames.onlinePlayerKeys
             );
         };
-    }, [socket, setOnlinePlayerKeys]);
-
-    return onlinePlayerKeys;
+    }, [socket, setOnlinePlayers]);
 };
