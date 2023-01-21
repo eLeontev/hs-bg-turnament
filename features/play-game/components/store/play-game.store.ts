@@ -51,3 +51,5 @@ export const selectedHeroIdSelector = ({ selectedHeroId }: PlayGameState) =>
     selectedHeroId;
 export const selectedHeroIdsSelector = ({ selectedHeroIds }: PlayGameState) =>
     selectedHeroIds;
+export const isReadySelector = ({ phase }: PlayGameState) =>
+    phase !== playGamePhases.initialisation;

@@ -15,6 +15,11 @@ import {
     useSetPlayGameBaseInput,
 } from '../../features/play-game/hooks/play-game.hooks';
 
+import {
+    isReadySelector,
+    usePlayGameStore,
+} from '../../features/play-game/components/store/play-game.store';
+
 import { pendingGamesPageUrl } from '../../constants/urls';
 
 const GameNotFound = () => (
@@ -32,9 +37,8 @@ export type PlayGameProps = {
 };
 
 const PlayGame = ({ children }: PlayGameProps) => {
-    const { data, isLoading, isError } = usePlayGameInitialization();
-
-    console.log(data, isLoading, isError);
+    const { isLoading, isError } = usePlayGameInitialization();
+    const isReady = usePlayGameStore(isReadySelector);
 
     if (isLoading) {
         return <OverlayLoader visible></OverlayLoader>;
@@ -44,7 +48,7 @@ const PlayGame = ({ children }: PlayGameProps) => {
         return <GameNotFound></GameNotFound>;
     }
 
-    if (data) {
+    if (isReady) {
         return children;
     }
 
