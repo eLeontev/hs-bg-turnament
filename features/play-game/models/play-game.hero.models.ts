@@ -8,7 +8,7 @@ export type HeroIds = Array<HeroId>;
 export type Hero = {
     heroId: HeroId;
     name: string;
-    avatarUrl: string;
+    avatarSrc: string;
     powerDescription: string;
 };
 

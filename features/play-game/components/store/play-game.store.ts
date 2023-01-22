@@ -6,8 +6,10 @@ import {
     PlayGameBaseInput,
     PlayGamePhases,
 } from '../../models/play-game.models';
+import { PlayerKey } from '../../../../models/common.models';
 
 export type PlayGameState = {
+    playerKey: PlayerKey;
     baseInput: PlayGameBaseInput;
     phase: playGamePhases;
     phaseDurationInMs: DurationInMs;
@@ -22,6 +24,7 @@ export type PlayGameStoreApi = {
 };
 
 const initialState: PlayGameState = {
+    playerKey: '',
     baseInput: { gameId: '', playerIdInGame: '' },
     phase: playGamePhases.initialisation,
     phaseDurationInMs: 100000000000,
@@ -45,6 +48,7 @@ export const setSelectedHeroIdSelector = ({
     setSelectedHeroId,
 }: PlayGameStoreApi) => setSelectedHeroId;
 
+export const playerKeySelector = ({ playerKey }: PlayGameState) => playerKey;
 export const baseInputSelector = ({ baseInput }: PlayGameState) => baseInput;
 export const phaseSelector = ({ phase }: PlayGameState) => phase;
 export const selectedHeroIdSelector = ({ selectedHeroId }: PlayGameState) =>
@@ -53,3 +57,6 @@ export const selectedHeroIdsSelector = ({ selectedHeroIds }: PlayGameState) =>
     selectedHeroIds;
 export const isReadySelector = ({ phase }: PlayGameState) =>
     phase !== playGamePhases.initialisation;
+export const phaseDurationInMsSelector = ({
+    phaseDurationInMs,
+}: PlayGameState) => phaseDurationInMs;

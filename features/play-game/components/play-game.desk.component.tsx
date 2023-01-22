@@ -2,7 +2,7 @@ import { Container } from '@mantine/core';
 
 import { playGamePhases } from '@prisma/client';
 
-import { SelectHeroDesk } from './play-game.select-hero.desk';
+import { SelectHeroDesk } from './hero-selection/play-game.select-hero.desk';
 
 import { phaseSelector, usePlayGameStore } from './store/play-game.store';
 

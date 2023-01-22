@@ -5,9 +5,11 @@ import { herIdsValues } from '../schemas/play-game.hero.schemas';
 import { countOfHeroIds } from '../../../constants/game-config.constants';
 
 import { PlayerIdInGame } from '../../../models/common.models';
-import { HeroIds } from '../models/play-game.hero.models';
+import { Hero, HeroIds } from '../models/play-game.hero.models';
 
 import { getExcludedRandom } from '../../../utils.ts/random.utils';
+
+import { heroes } from '../../../data/heroes';
 
 export const getPlayerHeroIdsMap = (playerIdsInGame: Array<PlayerIdInGame>) => {
     const playerHeroIdsMap = new Map<PlayerIdInGame, HeroIds>();
@@ -29,3 +31,8 @@ export const getPlayerHeroIdsMap = (playerIdsInGame: Array<PlayerIdInGame>) => {
 
     return playerHeroIdsMap;
 };
+
+export const getHeroesFromId = (heroIds: Array<heroIds>) =>
+    heroIds
+        .map((heroId: heroIds) => heroes.get(heroId))
+        .filter((hero: Hero | undefined): hero is Hero => Boolean(hero));

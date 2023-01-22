@@ -28,7 +28,7 @@ const gameActionHandlers = {
     [playGameActions.heroSelected]: heroSelectedHandler,
 };
 
-export const playGameactionsHandler = ({
+export const playGameActionsHandler = ({
     action,
     payload,
 }: PlayGameAction<playGameActions>) => gameActionHandlers[action](payload); // TODO: fix types

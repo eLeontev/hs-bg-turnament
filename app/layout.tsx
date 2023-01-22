@@ -11,17 +11,19 @@ import { Navigation } from '../features/common/components/navigation';
 
 import { useApollo } from '../lib/graphql.client';
 
-import { noLogin } from '../features/login/login.constants';
-
-import { getLogin } from '../utils.ts/storage.utils';
-
-import '../styles/globals.css';
-import { useBackgroundStyles } from '../styles/backround.styles';
-import { playGamePageUrl } from '../constants/urls';
 import {
     setLoginSelector,
     useLoginStore,
 } from '../features/login/components/store/login.store';
+
+import { noLogin } from '../features/login/login.constants';
+import { playGamePageUrl } from '../constants/urls';
+
+import { getLogin } from '../utils.ts/storage.utils';
+
+import { useBackgroundStyles } from '../styles/backround.styles';
+import { theme } from '../styles/global';
+import '../styles/globals.css';
 
 export type LayoutProps = {
     children: ReactElement;
@@ -63,11 +65,7 @@ const RootContent = ({ children }: LayoutProps) => {
 const RootLayout = ({ children }: LayoutProps) => (
     <html lang="en">
         <body>
-            <MantineProvider
-                withGlobalStyles
-                withNormalizeCSS
-                theme={{ colorScheme: 'dark', loader: 'dots' }}
-            >
+            <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
                 <BrowserProvider>
                     <RootContent>{children}</RootContent>
                 </BrowserProvider>

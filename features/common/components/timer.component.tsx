@@ -1,5 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import { DefaultMantineColor, Progress } from '@mantine/core';
+import {
+    DefaultMantineColor,
+    MantineNumberSize,
+    Progress,
+} from '@mantine/core';
 import { differenceInMilliseconds, formatDuration } from 'date-fns';
 
 const colorsGradations: Array<DefaultMantineColor> = [
@@ -23,7 +27,8 @@ export const timerSections = [
 export type TimerProps = {
     timeLeftUTC: string;
     durationInMs: number;
-    className: string;
+    className?: string;
+    size?: MantineNumberSize;
 };
 export type TimerParams = {
     value: number;
@@ -34,7 +39,7 @@ export type TimerParams = {
 const getColorIndex = (value: number) =>
     Math.floor(value * colorsGradations.length);
 
-const getTimerParams = ({ timeLeftUTC, durationInMs }: TimerProps) => {
+const getTimerParams = ({ timeLeftUTC, durationInMs, size }: TimerProps) => {
     const diffInMs = differenceInMilliseconds(
         new Date(),
         new Date(timeLeftUTC)
@@ -74,7 +79,7 @@ export const Timer = (props: TimerProps) => {
             label={label}
             value={value}
             radius="sm"
-            size="xl"
+            size={props.size || 'xl'}
             striped
             animate
         ></Progress>

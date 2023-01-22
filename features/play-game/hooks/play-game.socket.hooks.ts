@@ -11,13 +11,11 @@ import {
     playGameEventNames,
     socketRoomChangesEventNames,
 } from '../../common/sockets/socket.enums';
-import { playGameActions } from '../play-game.enums';
 
 import { GameId } from '../../../models/common.models';
-import { PlayGameAction, PlayGameActions } from '../models/play-game.models';
 
 import { getPlayerIdInGame, setGameId } from '../../../utils.ts/storage.utils';
-import { playGameactionsHandler } from '../services/play-game.actions.service';
+import { playGameActionsHandler } from '../services/play-game.actions.service';
 
 export const useStartPlayGameFromSocket = () => {
     const socket = useSocket();
@@ -49,7 +47,7 @@ export const usePlayGameActions = (gameId: GameId) => {
             playGameJoinLeavePayload
         );
 
-        socket.on(playGameEventNames.gameAction, playGameactionsHandler);
+        socket.on(playGameEventNames.gameAction, playGameActionsHandler);
 
         return () => {
             socket.emit(socketRoomChangesEventNames.leavePlayGameRoom);

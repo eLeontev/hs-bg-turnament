@@ -8,24 +8,28 @@ import { PlayerKey } from '../../../../models/common.models';
 export type PlayGamePlayerDetails = z.infer<typeof playGamePlayerDetailsSchema>;
 
 export type PlayGameStorePlayers = Map<PlayerKey, PlayGamePlayerDetails>;
-export type PlayGamePlayersState = {
+export type PlayGamePlayersDataState = {
     players: PlayGameStorePlayers;
     onlinePlayers: Set<PlayerKey>;
 };
 
 export type PlayGamePlayersStoreApi = {
-    setPlayers: (players: PlayGamePlayersState['players']) => void;
-    setOnlinePlayers: (players: PlayGamePlayersState['onlinePlayers']) => void;
+    setPlayers: (players: PlayGamePlayersDataState['players']) => void;
+    setOnlinePlayers: (
+        players: PlayGamePlayersDataState['onlinePlayers']
+    ) => void;
 };
 
+export type PlayGameState = PlayGamePlayersDataState & PlayGamePlayersStoreApi;
 export const usePlayersStore = create<
-    PlayGamePlayersState & PlayGamePlayersStoreApi
+    PlayGamePlayersDataState & PlayGamePlayersStoreApi
 >((set) => ({
     players: new Map<PlayerKey, PlayGamePlayerDetails>(),
     onlinePlayers: new Set(),
     setPlayers: (players: PlayGameStorePlayers) => set({ players }),
-    setOnlinePlayers: (onlinePlayers: PlayGamePlayersState['onlinePlayers']) =>
-        set({ onlinePlayers }),
+    setOnlinePlayers: (
+        onlinePlayers: PlayGamePlayersDataState['onlinePlayers']
+    ) => set({ onlinePlayers }),
 }));
 
 export const setOnlinePlayersSelector = ({
@@ -36,5 +40,6 @@ export const setPlayersSelector = ({ setPlayers }: PlayGamePlayersStoreApi) =>
 
 export const onlinePlayersSelector = ({
     onlinePlayers,
-}: PlayGamePlayersState) => onlinePlayers;
-export const playersSelector = ({ players }: PlayGamePlayersState) => players;
+}: PlayGamePlayersDataState) => onlinePlayers;
+export const playersSelector = ({ players }: PlayGamePlayersDataState) =>
+    players;

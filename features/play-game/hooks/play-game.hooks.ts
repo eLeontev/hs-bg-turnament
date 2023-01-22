@@ -49,6 +49,7 @@ export const usePlayGameInitialization = () => {
             const selectedHeroId = selectedHeroIds.get(playerKey);
 
             initState({
+                playerKey,
                 phase,
                 phaseDurationInMs: 1000000000000,
                 selectedHeroId,
