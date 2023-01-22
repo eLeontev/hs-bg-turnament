@@ -41,7 +41,8 @@ export const usePlayGameInitialization = () => {
         const playGameDetails = playGameDetailsQuery.data;
 
         if (playGameDetails) {
-            const { phase, players, playerKey } = playGameDetails;
+            const { players, playerKey, ...restPlayGameDetails } =
+                playGameDetails;
 
             setPlayerKey(playerKey);
 
@@ -49,9 +50,8 @@ export const usePlayGameInitialization = () => {
             const selectedHeroId = selectedHeroIds.get(playerKey);
 
             initState({
+                ...restPlayGameDetails,
                 playerKey,
-                phase,
-                phaseDurationInMs: 1000000000000,
                 selectedHeroId,
                 selectedHeroIds,
                 baseInput,

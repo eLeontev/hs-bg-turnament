@@ -12,11 +12,14 @@ import {
 import { playGameActions } from '../play-game.enums';
 
 import { PlayGamePlayers } from '../../player/player.models';
-import { HeroId } from './play-game.hero.models';
 
-export type PlayGameData = {
+export type PlayGamePhaseData = {
     phase: playGamePhases;
+    phaseDurationInMs: number;
+    round: number;
 };
+
+export type PlayGameData = PlayGamePhaseData & {};
 
 export type PlayGame = {
     gameId: string;

@@ -38,11 +38,16 @@ const playGamePhasesValues = [
     playGamePhases.recruit,
     playGamePhases.combat,
 ] as const; // TODO: no automatic way to generate zod enums fron objects (casting or manual)
-export const playGameZodPhases = z.enum(playGamePhasesValues);
+export const playGameZodPhasesSchema = z.enum(playGamePhasesValues);
+
+export const playGamePhaseDurationInMsSchema = z.number().min(1000);
+export const playGameRoundSchema = z.number().min(0);
 
 export const playGameDetailsOutputSchema = z.object({
     gameId: gameIdSchema,
-    phase: playGameZodPhases,
+    phase: playGameZodPhasesSchema,
+    phaseDurationInMs: playGamePhaseDurationInMsSchema,
+    round: playGameRoundSchema,
     playerKey: playerKeySchema,
     players: z.array(playGamePlayerDetailsSchema),
 });

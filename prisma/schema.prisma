@@ -55,7 +55,9 @@ model PlayGamePlayer {
 }
 
 model PlayGame {
-  gameId  String           @id @map("_id")
-  phase   playGamePhases
-  players PlayGamePlayer[]
+  gameId            String           @id @map("_id")
+  phase             playGamePhases
+  phaseDurationInMs Int
+  round             Int
+  players           PlayGamePlayer[]
 }

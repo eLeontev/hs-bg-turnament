@@ -19,6 +19,7 @@ import {
 } from '../models/play-game.models';
 
 import { getHashesFromValues } from '../../../utils.ts/hash-server.utils';
+import { getPhaseData } from './play-game.phase.service';
 
 export const startPlayGame = async (
     gameId: GameId,
@@ -46,7 +47,7 @@ export const startPlayGame = async (
     );
 
     await startPlayGameOperation(gameId, playGamePlayers, {
-        phase: playGamePhases.heroSelection,
+        ...getPhaseData(playGamePhases.heroSelection),
     });
 };
 

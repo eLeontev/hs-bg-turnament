@@ -7,12 +7,15 @@ import {
     PlayGamePhases,
 } from '../../models/play-game.models';
 import { PlayerKey } from '../../../../models/common.models';
+import { z } from 'zod';
+import { playGameRoundSchema } from '../../schemas/play-game.schemas';
 
 export type PlayGameState = {
     playerKey: PlayerKey;
     baseInput: PlayGameBaseInput;
     phase: playGamePhases;
     phaseDurationInMs: DurationInMs;
+    round: z.infer<typeof playGameRoundSchema>;
     selectedHeroId: heroIds | undefined;
     selectedHeroIds: Map<string, heroIds>;
 };
@@ -28,6 +31,7 @@ const initialState: PlayGameState = {
     baseInput: { gameId: '', playerIdInGame: '' },
     phase: playGamePhases.initialisation,
     phaseDurationInMs: 100000000000,
+    round: 0,
     selectedHeroId: undefined,
     selectedHeroIds: new Map<string, heroIds>(),
 };
@@ -60,3 +64,4 @@ export const isReadySelector = ({ phase }: PlayGameState) =>
 export const phaseDurationInMsSelector = ({
     phaseDurationInMs,
 }: PlayGameState) => phaseDurationInMs;
+export const roundSelector = ({ round }: PlayGameState) => round;

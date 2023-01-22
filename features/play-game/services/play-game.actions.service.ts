@@ -14,14 +14,13 @@ import {
 const phaseChangeHandler = ({ phase, phaseDurationInMs }: PlayGamePhases) =>
     usePlayGameStore.setState({ phase, phaseDurationInMs });
 
-const heroSelectedHandler = (playGameHeroSelected: PlayGameHeroSelected) => {
+const heroSelectedHandler = (playGameHeroSelected: PlayGameHeroSelected) =>
     usePlayersStore.setState({
         players: setPlayerHeroIdReducer(
             usePlayersStore.getState().players,
             playGameHeroSelected
         ),
     });
-};
 
 const gameActionHandlers = {
     [playGameActions.phaseChangedTo]: phaseChangeHandler,
