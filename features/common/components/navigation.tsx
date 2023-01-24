@@ -1,6 +1,7 @@
-import { Header, Container, Title } from '@mantine/core';
+import { Header, Container, Flex } from '@mantine/core';
 import styled from '@emotion/styled';
 
+import { I18nToggler } from '../../../i18n/i18n.toggle.component';
 import { Login } from '../../login/components/login';
 import { Logo } from './logo';
 
@@ -17,7 +18,10 @@ export const Navigation = () => (
     <Header height={headerHeight}>
         <StyledContainer fluid>
             <Logo></Logo>
-            <Login></Login>
+            <Flex align="center">
+                <I18nToggler></I18nToggler>
+                <Login></Login>
+            </Flex>
         </StyledContainer>
     </Header>
 );

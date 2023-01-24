@@ -11,6 +11,8 @@ import { Navigation } from '../features/common/components/navigation';
 
 import { useApollo } from '../lib/graphql.client';
 
+import { useInitLocale } from '../i18n/i18n.hooks';
+
 import {
     setLoginSelector,
     useLoginStore,
@@ -50,6 +52,8 @@ const RootContent = ({ children }: LayoutProps) => {
 
     const isPlayGamePage = usePathname() === playGamePageUrl;
     const { classes } = useBackgroundStyles({ isPlayGamePage });
+
+    useInitLocale();
 
     return (
         <AppShell

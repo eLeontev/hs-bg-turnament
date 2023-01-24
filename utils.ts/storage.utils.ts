@@ -5,6 +5,8 @@ import {
 } from '../features/player/player.schemas';
 import { gameIdSchema } from '../features/pending-games/pending-games.schemas';
 
+import { locales } from '../i18n/i18n.enums';
+
 import {
     GameId,
     PlayerId,
@@ -18,6 +20,7 @@ enum localStorageKeys {
     playerIdInGame = 'HS_BG_player-id-in-game',
     playerKey = 'HS_BG_player-key',
     gameId = 'HS_BG_game-id',
+    i18nLocale = 'HS_BG_i18n-locale',
 }
 
 const noValue = '';
@@ -59,3 +62,9 @@ export const setPlayerKey = (playerKey: PlayerKey) =>
 
 export const getPlayerKey = () => getItem(localStorageKeys.playerKey);
 export const getSavePlayerKey = () => playerKeySchema.parse(getPlayerKey());
+
+export const setI18nLocale = (locale: locales) =>
+    setItem(localStorageKeys.i18nLocale, locale);
+
+export const getI18nLocale = () =>
+    getItem(localStorageKeys.i18nLocale) as locales;
