@@ -17,8 +17,13 @@ export const useInitLocale = () => {
 };
 
 export const useLocale = () => {
-    const setLocale = useI18nStore(setLocaleSelector);
+    const setLocaleToStore = useI18nStore(setLocaleSelector);
     const selectedLocale = useI18nStore(localeSelector);
+
+    const setLocale = (locale: locales) => {
+        setLocaleToStore(locale);
+        setI18nLocale(locale);
+    };
 
     return { setLocale, selectedLocale };
 };
