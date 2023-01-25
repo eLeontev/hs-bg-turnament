@@ -14,23 +14,30 @@ import {
     usePlayGameInitialization,
     useSetPlayGameBaseInput,
 } from '../../features/play-game/hooks/play-game.hooks';
+import { useI18nTranslate } from '../../i18n/i18n.hooks';
 
 import {
     isReadySelector,
     usePlayGameStore,
 } from '../../features/play-game/components/store/play-game.store';
 
+import { labelI18nKeys } from '../../i18n/i18n.enums';
+
 import { pendingGamesPageUrl } from '../../constants/urls';
 
-const GameNotFound = () => (
-    <Group>
-        The game cannot be defined please
-        <InlineLink
-            href={pendingGamesPageUrl}
-            label="search for a new game"
-        ></InlineLink>
-    </Group>
-);
+const GameNotFound = () => {
+    const t = useI18nTranslate();
+
+    return (
+        <Group>
+            {t(labelI18nKeys.pendingGameSearchNewGamePrefix)}
+            <InlineLink
+                href={pendingGamesPageUrl}
+                label={t(labelI18nKeys.pendingGameSearchNewGamePostfix)}
+            ></InlineLink>
+        </Group>
+    );
+};
 
 export type PlayGameProps = {
     children: ReactElement;
