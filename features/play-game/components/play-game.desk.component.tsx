@@ -1,10 +1,17 @@
-import { Container } from '@mantine/core';
-
 import { playGamePhases } from '@prisma/client';
+import { GridComponent } from '../../common/components/table.grid.component';
+import {
+    durationFormats,
+    Timer,
+} from '../../common/components/timer.component';
 
 import { SelectHeroDesk } from './hero-selection/play-game.select-hero.desk';
 
-import { phaseSelector, usePlayGameStore } from './store/play-game.store';
+import {
+    phaseDurationInMsSelector,
+    phaseSelector,
+    usePlayGameStore,
+} from './store/play-game.store';
 
 const playGamePhaseDesks = {
     [playGamePhases.heroSelection]: SelectHeroDesk,
@@ -17,10 +24,18 @@ export const PlayGameDesk = () => {
     const playGamePhase = usePlayGameStore(phaseSelector);
 
     const PlayGamePhaseDesk = playGamePhaseDesks[playGamePhase];
+    const phaseDurationInMs = usePlayGameStore(phaseDurationInMsSelector);
 
     return (
-        <Container>
+        <GridComponent>
+            <Timer
+                timeLeftUTC={new Date().toUTCString()}
+                durationInMs={phaseDurationInMs}
+                durationFormat={durationFormats.seconds}
+                labelFontSize={12}
+                size="xl"
+            ></Timer>
             <PlayGamePhaseDesk></PlayGamePhaseDesk>
-        </Container>
+        </GridComponent>
     );
 };

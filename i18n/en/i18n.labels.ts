@@ -11,4 +11,5 @@ export const enLabelMessages: I18nTransMessages<namespaces.labels> = {
     loginButtonLabel: 'Login',
     pendingGameSearchNewGamePrefix: 'The game cannot be defined please',
     pendingGameSearchNewGamePostfix: 'search for a new game',
+    timerPendingLabel: 'waiting',
 };

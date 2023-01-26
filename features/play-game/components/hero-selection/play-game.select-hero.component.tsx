@@ -25,7 +25,7 @@ export const SelectHero = () => {
     return (
         <GridComponent>
             <OverlayLoader visible={!heroes.length || visible}></OverlayLoader>
-            <Flex>
+            <Flex justify="center">
                 {heroes.map((hero: Hero) => (
                     <HeroCard
                         key={hero.heroId}

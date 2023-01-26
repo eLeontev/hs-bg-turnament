@@ -12,4 +12,5 @@ export const ruLabelMessages: I18nTransMessages<namespaces.labels> = {
     pendingGameSearchNewGamePrefix:
         'Игра не найдена, пожалуйста, попробуйте найти',
     pendingGameSearchNewGamePostfix: 'другую игру',
+    timerPendingLabel: 'ждемс',
 };

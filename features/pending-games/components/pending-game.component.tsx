@@ -2,7 +2,10 @@ import { Card, Flex } from '@mantine/core';
 
 import { PairComponent } from '../../common/components/pair.component';
 import { PlayersCounter } from './players-counter.component';
-import { Timer } from '../../common/components/timer.component';
+import {
+    durationFormats,
+    Timer,
+} from '../../common/components/timer.component';
 import { DeletePendingGame } from './delete-pending-game.component';
 import { JoinPendingGame } from './join-pending-game.component';
 
@@ -40,6 +43,7 @@ export const PendingGameComponent = ({
                 className={classes.timer}
                 timeLeftUTC={createdDate}
                 durationInMs={pendginGameLiveDurationInMs}
+                durationFormat={durationFormats.minutes}
             ></Timer>
             <Flex key={gameId} direction="row" justify="space-between">
                 <PlayersCounter players={players}></PlayersCounter>
