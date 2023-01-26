@@ -19,6 +19,10 @@ export enum labelI18nKeys {
     pendingGameSearchNewGamePrefix = 'pendingGameSearchNewGamePrefix',
     pendingGameSearchNewGamePostfix = 'pendingGameSearchNewGamePostfix',
     timerPendingLabel = 'timerPendingLabel',
+    logoutConfiramtionTitle = 'logoutConfiramtionTitle',
+    cancelButtonLabel = 'cancelButtonLabel',
+    logoutLabel = 'logoutLabel',
+    welcomeLoginLabel = 'welcomeLoginLabel',
 }
 
 export enum heroI18nKeys {

@@ -13,4 +13,8 @@ export const ruLabelMessages: I18nTransMessages<namespaces.labels> = {
         'Игра не найдена, пожалуйста, попробуйте найти',
     pendingGameSearchNewGamePostfix: 'другую игру',
     timerPendingLabel: 'ждемс',
+    logoutConfiramtionTitle: 'Пожалуйста, подтвердите выход',
+    cancelButtonLabel: 'Отмена',
+    logoutLabel: 'Выход',
+    welcomeLoginLabel: 'Хей,',
 };

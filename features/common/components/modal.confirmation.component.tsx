@@ -3,6 +3,10 @@ import { Modal, Group } from '@mantine/core';
 
 import { Button } from './button.component';
 
+import { useI18nTranslate } from '../../../i18n/i18n.hooks';
+
+import { labelI18nKeys } from '../../../i18n/i18n.enums';
+
 export const useModal = (action: () => void) => {
     const [opened, setOpened] = useState(false);
 
@@ -20,9 +24,9 @@ export type ConfirmationModalProps = {
     closeModal: () => void;
     confirmAction: () => void;
     opened: boolean;
-    title: string;
-    cancelLabel: string;
-    confirmLabel: string;
+    title: labelI18nKeys;
+    cancelLabel: labelI18nKeys;
+    confirmLabel: labelI18nKeys;
 };
 export const ConfirmationModal = ({
     closeModal,
@@ -31,15 +35,19 @@ export const ConfirmationModal = ({
     title,
     cancelLabel,
     confirmLabel,
-}: ConfirmationModalProps) => (
-    <Modal opened={opened} onClose={closeModal} title={title}>
-        <Group position="apart">
-            <Button onClick={closeModal} label={cancelLabel}></Button>
-            <Button
-                color="red"
-                onClick={confirmAction}
-                label={confirmLabel}
-            ></Button>
-        </Group>
-    </Modal>
-);
+}: ConfirmationModalProps) => {
+    const t = useI18nTranslate();
+
+    return (
+        <Modal opened={opened} onClose={closeModal} title={t(title)}>
+            <Group position="apart">
+                <Button onClick={closeModal} label={t(cancelLabel)}></Button>
+                <Button
+                    color="red"
+                    onClick={confirmAction}
+                    label={t(confirmLabel)}
+                ></Button>
+            </Group>
+        </Modal>
+    );
+};

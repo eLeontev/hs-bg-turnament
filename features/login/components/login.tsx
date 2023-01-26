@@ -17,11 +17,16 @@ import {
     useLoginStore,
 } from './store/login.store';
 
+import { useI18nTranslate } from '../../../i18n/i18n.hooks';
+
+import { labelI18nKeys } from '../../../i18n/i18n.enums';
+
 export const logoutlabels = {
-    title: 'Please confirm logout action',
-    cancelLabel: 'Cancel',
-    confirmLabel: 'Logout',
+    title: labelI18nKeys.logoutConfiramtionTitle,
+    cancelLabel: labelI18nKeys.cancelButtonLabel,
+    confirmLabel: labelI18nKeys.logoutLabel,
 };
+
 export const Login = () => {
     const router = useRouter();
 
@@ -30,17 +35,22 @@ export const Login = () => {
 
     const props = useModal(() => logoutHandler(router, setLogin));
 
+    const t = useI18nTranslate();
+
     return login ? (
         <Group spacing="xs">
             <ConfirmationModal {...props} {...logoutlabels}></ConfirmationModal>
-            <Text>Welcome,</Text>
+            <Text>{t(labelI18nKeys.welcomeLoginLabel)}</Text>
             <Text fw={700}>{login}</Text>
-            <Button onClick={props.openModal} label={'Logout'}></Button>
+            <Button
+                onClick={props.openModal}
+                label={t(labelI18nKeys.logoutLabel)}
+            ></Button>
         </Group>
     ) : (
         <Button
             onClick={() => redirectToLoginPageHandler(router)}
-            label={'Login'}
+            label={t(labelI18nKeys.loginButtonLabel)}
         ></Button>
     );
 };
