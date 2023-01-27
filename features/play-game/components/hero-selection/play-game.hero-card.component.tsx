@@ -19,8 +19,9 @@ export const HeroCard = ({
     avatarSrc,
     powerDescription,
 }: HeroCardProps) => {
+    const { classes } = useStyles();
+
     const isHeroSelected = selectedHeroId === heroId;
-    const { classes } = useStyles(isHeroSelected);
     const heroCardClassName = `${classes.heroCard} ${
         isHeroSelected ? classes.heroCardSelected : ''
     }`;

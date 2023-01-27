@@ -5,7 +5,7 @@ import {
 } from '../features/player/player.schemas';
 import { gameIdSchema } from '../features/pending-games/pending-games.schemas';
 
-import { locales } from '../i18n/i18n.enums';
+import { locales } from '../i18n/enums/i18n.enums';
 
 import {
     GameId,

@@ -1,4 +1,5 @@
-import { locales, labelI18nKeys } from './i18n.enums';
+import { labelI18nKeys } from './enums/i18n.label.enums';
+import { locales } from './enums/i18n.enums';
 
 export const i18nLocales = {
     [locales.en]: labelI18nKeys.en,

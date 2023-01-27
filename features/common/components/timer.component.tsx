@@ -10,11 +10,14 @@ import {
 import { differenceInMilliseconds, formatDuration } from 'date-fns';
 import { enUS, ru } from 'date-fns/locale';
 
-import { labelI18nKeys, locales } from '../../../i18n/i18n.enums';
+import { labelTranslate } from '../../../i18n/i18n.service';
+
+import { localeSelector, useI18nStore } from '../../../i18n/i18n.store';
+
+import { locales } from '../../../i18n/enums/i18n.enums';
+import { labelI18nKeys } from '../../../i18n/enums/i18n.label.enums';
 
 import { useCommonStyles } from '../../../styles/common.styles';
-import { localeSelector, useI18nStore } from '../../../i18n/i18n.store';
-import { labelTranslate } from '../../../i18n/i18n.service';
 
 const localesMap = {
     [locales.en]: enUS,

@@ -6,6 +6,7 @@ import { usePlayGameStore } from '../components/store/play-game.store';
 import { usePlayersStore } from '../components/store/play-game.players.store';
 
 import {
+    GameActionHandlers,
     PlayGameAction,
     PlayGameHeroSelected,
     PlayGamePhases,
@@ -22,12 +23,12 @@ const heroSelectedHandler = (playGameHeroSelected: PlayGameHeroSelected) =>
         ),
     });
 
-const gameActionHandlers = {
+const gameActionHandlers: GameActionHandlers = {
     [playGameActions.phaseChangedTo]: phaseChangeHandler,
     [playGameActions.heroSelected]: heroSelectedHandler,
 };
 
-export const playGameActionsHandler = ({
+export const playGameActionsHandler = <T extends playGameActions>({
     action,
     payload,
-}: PlayGameAction<playGameActions>) => gameActionHandlers[action](payload); // TODO: fix types
+}: PlayGameAction<T>) => gameActionHandlers[action](payload);

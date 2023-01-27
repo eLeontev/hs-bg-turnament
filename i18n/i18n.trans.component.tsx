@@ -2,7 +2,7 @@ import { translate } from './i18n.service';
 
 import { useI18nStore, localeSelector } from './i18n.store';
 
-import { namespaces } from './i18n.enums';
+import { namespaces } from './enums/i18n.enums';
 
 import { TransProps, NsTransProps } from './i18n.models';
 

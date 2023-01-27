@@ -5,7 +5,7 @@ import { Button } from './button.component';
 
 import { useI18nTranslate } from '../../../i18n/i18n.hooks';
 
-import { labelI18nKeys } from '../../../i18n/i18n.enums';
+import { labelI18nKeys } from '../../../i18n/enums/i18n.label.enums';
 
 export const useModal = (action: () => void) => {
     const [opened, setOpened] = useState(false);

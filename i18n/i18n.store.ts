@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { locales } from './i18n.enums';
+import { locales } from './enums/i18n.enums';
 
 export type I18nPropsState = {
     locale: locales;

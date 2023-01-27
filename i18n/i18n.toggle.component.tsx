@@ -8,7 +8,8 @@ import { useLocale } from './i18n.hooks';
 
 import { i18nLocales, localesArray } from './i18n.constants';
 
-import { labelI18nKeys, locales } from './i18n.enums';
+import { locales } from './enums/i18n.enums';
+import { labelI18nKeys } from './enums/i18n.label.enums';
 
 type I18nMenuItemProps = {
     locale: locales;

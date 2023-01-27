@@ -6,8 +6,6 @@ import { useRouter } from 'next/navigation';
 import { Button } from '../../features/common/components/button.component';
 import { OverlayLoader } from '../../features/common/components/loader.component';
 
-import { labelTranslate } from '../../i18n/i18n.service';
-
 import { useLogin } from '../../features/login/login.hook';
 import { useI18nTranslate } from '../../i18n/i18n.hooks';
 
@@ -16,7 +14,7 @@ import {
     useLoginStore,
 } from '../../features/login/components/store/login.store';
 
-import { labelI18nKeys } from '../../i18n/i18n.enums';
+import { labelI18nKeys } from '../../i18n/enums/i18n.label.enums';
 
 const Login = () => {
     const router = useRouter();
@@ -31,7 +29,7 @@ const Login = () => {
             <form onSubmit={onSubmit}>
                 <TextInput
                     withAsterisk
-                    label={t(labelI18nKeys.loginInputlabel)}
+                    label={t(labelI18nKeys.loginInputLabel)}
                     placeholder={t(labelI18nKeys.loginInputPlaceholder)}
                     {...inputProps}
                 />

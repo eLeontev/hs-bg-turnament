@@ -1,6 +1,7 @@
 import { i18nMessages } from './i18n.messages';
 
-import { labelI18nKeys, locales, namespaces } from './i18n.enums';
+import { locales, namespaces } from './enums/i18n.enums';
+import { labelI18nKeys } from './enums/i18n.label.enums';
 
 import { namespacesMap } from './i18n.models';
 

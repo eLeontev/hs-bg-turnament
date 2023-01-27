@@ -3,80 +3,79 @@ import {
     Hero,
     Heroes,
 } from '../features/play-game/models/play-game.hero.models';
+import { heroI18nKeys } from '../i18n/enums/i18n.hero.enums';
 
 const afkayHero: Hero = {
     heroId: heroIds.afkay,
-    name: 'A. F. Kay',
     avatarSrc: '/hero-avatars/afkay.avatar.png',
-    powerDescription:
-        'Passive Skip your first two turns. Start with two minions from Tavern Tier 3.',
+    name: heroI18nKeys.heroNameAfkay,
+    powerDescription: heroI18nKeys.heroPowerDescriptionAfkay,
 };
 
 const alkairHero: Hero = {
     heroId: heroIds.alkair,
-    name: `Al'Akir`,
     avatarSrc: '/hero-avatars/alkair.avatar.png',
-    powerDescription:
-        'Passive Start of Combat: Give your left-most minion Windfury, Divine Shield, and Taunt.',
+    name: heroI18nKeys.heroNameAlkair,
+    powerDescription: heroI18nKeys.heroPowerDescriptionAlkair,
 };
 
 const alexstraszaHero: Hero = {
     heroId: heroIds.alexstrasza,
-    name: 'Alexstrasza',
     avatarSrc: '/hero-avatars/alexstrasza.avatar.png',
-    powerDescription: `Passive After you upgrade Bob's Tavern to Tavern Tier 5, Discover two Dragons.`,
+    name: heroI18nKeys.heroNameAlexstrasza,
+    powerDescription: heroI18nKeys.heroPowerDescriptionAlexstrasza,
 };
 
-const ambassadorHero: Hero = {
+const ambassadorFaelinHero: Hero = {
     heroId: heroIds.ambassadorFaelin,
-    name: 'Ambassador Faelin',
     avatarSrc: '/hero-avatars/ambassador.avatar.png',
-    powerDescription: `Passive. Skip your first turn. Discover a Tier 2, 4, and 6 minion to get at those Tiers.`,
+    name: heroI18nKeys.heroNameAmbassadorFaelin,
+    powerDescription: heroI18nKeys.heroPowerDescriptionAmbassadorFaelin,
 };
 
-const arannaHero: Hero = {
+const arannaStarseekerHero: Hero = {
     heroId: heroIds.arannaStarseeker,
-    name: 'Aranna Starseeker',
     avatarSrc: '/hero-avatars/aranna.avatar.png',
-    powerDescription: `Passive After you Refresh 5 times, Bob always has 7 minions. ( left!)`,
+    name: heroI18nKeys.heroNameArannaStarseeker,
+    powerDescription: heroI18nKeys.heroPowerDescriptionArannaStarseeker,
 };
 
 const archVillainRafaamHero: Hero = {
     heroId: heroIds.archVillainRafaam,
-    name: 'Arch-Villain Rafaam',
     avatarSrc: '/hero-avatars/arch.avatar.png',
-    powerDescription: `Next combat, add a plain copy of the first minion you kill to your hand.`,
+    name: heroI18nKeys.heroNameArchVillainRafaam,
+    powerDescription: heroI18nKeys.heroPowerDescriptionArchVillainRafaam,
 };
 
-const brukanHeor: Hero = {
+const brukanHero: Hero = {
     heroId: heroIds.brukan,
-    name: `Bru'kan`,
     avatarSrc: '/hero-avatars/brukan.avatar.png',
-    powerDescription: `Choose an Element. Start of Combat: Call upon that Element.`,
+    name: heroI18nKeys.heroNameBrukan,
+    powerDescription: heroI18nKeys.heroPowerDescriptionBrukan,
 };
 
-const cthunHeor: Hero = {
+const cthunHero: Hero = {
     heroId: heroIds.cthun,
-    name: `C'Thun`,
     avatarSrc: '/hero-avatars/cthun.avatar.png',
-    powerDescription: `At end of turn, give a friendly minion +1/+1. Repeat (time, times). (Upgrades each turn!)`,
+    name: heroI18nKeys.heroNameCthun,
+    powerDescription: heroI18nKeys.heroPowerDescriptionCthun,
 };
 
-const captainHeor: Hero = {
+const captainHero: Hero = {
     heroId: heroIds.captain,
-    name: 'Captain Eudora',
     avatarSrc: '/hero-avatars/captain.avatar.png',
-    powerDescription: `Dig for a Golden minion! ( (Dig, Digs) left.)`,
+    name: heroI18nKeys.heroNameCaptain,
+    powerDescription: heroI18nKeys.heroPowerDescriptionCaptain,
 };
 
 export const heroes: Heroes = new Map([
     [afkayHero.heroId, afkayHero],
     [alkairHero.heroId, alkairHero],
     [alexstraszaHero.heroId, alexstraszaHero],
-    [ambassadorHero.heroId, ambassadorHero],
-    [arannaHero.heroId, arannaHero],
+    [ambassadorFaelinHero.heroId, ambassadorFaelinHero],
+    [arannaStarseekerHero.heroId, arannaStarseekerHero],
     [archVillainRafaamHero.heroId, archVillainRafaamHero],
-    [brukanHeor.heroId, brukanHeor],
-    [cthunHeor.heroId, cthunHeor],
-    [captainHeor.heroId, captainHeor],
+    [brukanHero.heroId, brukanHero],
+    [cthunHero.heroId, cthunHero],
+    [captainHero.heroId, captainHero],
 ]);

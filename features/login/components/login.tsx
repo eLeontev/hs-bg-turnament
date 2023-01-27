@@ -19,10 +19,10 @@ import {
 
 import { useI18nTranslate } from '../../../i18n/i18n.hooks';
 
-import { labelI18nKeys } from '../../../i18n/i18n.enums';
+import { labelI18nKeys } from '../../../i18n/enums/i18n.label.enums';
 
 export const logoutlabels = {
-    title: labelI18nKeys.logoutConfiramtionTitle,
+    title: labelI18nKeys.logoutConfirmationTitle,
     cancelLabel: labelI18nKeys.cancelButtonLabel,
     confirmLabel: labelI18nKeys.logoutLabel,
 };

@@ -7,7 +7,7 @@ import { ruLabelMessages } from './ru/i18n.labels';
 import { enMinionMessages } from './en/i18n.minions';
 import { ruMinionMessages } from './ru/i18n.minions';
 
-import { locales, namespaces } from './i18n.enums';
+import { locales, namespaces } from './enums/i18n.enums';
 
 import { I18nMessages } from './i18n.models';
 

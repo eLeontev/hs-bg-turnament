@@ -1,10 +1,7 @@
-import {
-    namespaces,
-    labelI18nKeys,
-    heroI18nKeys,
-    minionI18nKeys,
-    locales,
-} from './i18n.enums';
+import { namespaces, locales } from './enums/i18n.enums';
+import { heroI18nKeys } from './enums/i18n.hero.enums';
+import { labelI18nKeys } from './enums/i18n.label.enums';
+import { minionI18nKeys } from './enums/i18n.minion.enums';
 
 export type namespacesMap = {
     [namespaces.labels]: labelI18nKeys;

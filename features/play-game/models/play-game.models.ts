@@ -56,7 +56,9 @@ export type PlayGameAction<T extends playGameActions> = {
     payload: PlayGameActionPayload[T];
 };
 
-export type PlayGameActions = Array<PlayGameAction<playGameActions>>;
+export type GameActionHandlers = {
+    [A in playGameActions]: (payload: PlayGameActionPayload[A]) => void;
+};
 
 export type PlayGameDetailsOutput = z.infer<typeof playGameDetailsOutputSchema>;
 export type PlayGameDetailsPlayers = PlayGameDetailsOutput['players'];

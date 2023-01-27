@@ -21,7 +21,7 @@ import {
     usePlayGameStore,
 } from '../../features/play-game/components/store/play-game.store';
 
-import { labelI18nKeys } from '../../i18n/i18n.enums';
+import { labelI18nKeys } from '../../i18n/enums/i18n.label.enums';
 
 import { pendingGamesPageUrl } from '../../constants/urls';
 

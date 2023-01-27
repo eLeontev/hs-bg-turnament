@@ -1,4 +1,4 @@
-import { namespaces } from '../i18n.enums';
+import { namespaces } from '../enums/i18n.enums';
 
 import { I18nTransMessages } from '../i18n.models';
 
