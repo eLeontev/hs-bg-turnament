@@ -1,13 +1,22 @@
 import { Group, Text } from '@mantine/core';
 
-import { loginPageUrl } from '../../../constants/urls';
 import { InlineLink } from '../../common/components/link.component';
 
-const loginPageLinkLabel = 'login page';
+import { useI18nTranslate } from '../../../i18n/i18n.hooks';
 
-export const LoginInfo = () => (
-    <Group>
-        <Text>Before to play please create an account at</Text>
-        <InlineLink href={loginPageUrl} label={loginPageLinkLabel}></InlineLink>
-    </Group>
-);
+import { loginPageUrl } from '../../../constants/urls';
+
+import { labelI18nKeys } from '../../../i18n/enums/i18n.label.enums';
+
+export const LoginInfo = () => {
+    const t = useI18nTranslate();
+    return (
+        <Group>
+            <Text>{t(labelI18nKeys.loginInfoText)}</Text>
+            <InlineLink
+                href={loginPageUrl}
+                label={t(labelI18nKeys.loginPageLink)}
+            ></InlineLink>
+        </Group>
+    );
+};

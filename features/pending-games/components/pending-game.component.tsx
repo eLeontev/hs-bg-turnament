@@ -13,6 +13,10 @@ import { useFormatDistance } from '../hooks/pending-games.time.hooks';
 
 import { pendginGameLiveDurationInMs } from '../pending-games.constants';
 
+import { useI18nTranslate } from '../../../i18n/i18n.hooks';
+
+import { labelI18nKeys } from '../../../i18n/enums/i18n.label.enums';
+
 import { PendingGame } from '../pending-games.models';
 
 import { useStyles } from './styles/pending-games.styles';
@@ -32,6 +36,8 @@ export const PendingGameComponent = ({
     },
     isInGame,
 }: PendingGameProps) => {
+    const t = useI18nTranslate();
+
     const dateDistance = useFormatDistance(createdDate);
     const { classes } = useStyles();
 
@@ -48,15 +54,15 @@ export const PendingGameComponent = ({
             <Flex key={gameId} direction="row" justify="space-between">
                 <PlayersCounter players={players}></PlayersCounter>
                 <PairComponent
-                    label="Author"
+                    label={t(labelI18nKeys.pendingGameAuthor)}
                     value={authorLogin}
                 ></PairComponent>
                 <PairComponent
-                    label="Game name"
+                    label={t(labelI18nKeys.pendingGameGameName)}
                     value={gameName}
                 ></PairComponent>
                 <PairComponent
-                    label="Time created"
+                    label={t(labelI18nKeys.pendingGameCreactionTime)}
                     value={dateDistance}
                 ></PairComponent>
                 {isAuthor && (

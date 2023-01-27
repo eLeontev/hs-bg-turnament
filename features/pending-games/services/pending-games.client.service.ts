@@ -7,9 +7,9 @@ import {
     leavePendingGameBodyValidator,
 } from '../pending-games.validators';
 
-import { pendingGameNameErrorMessage } from '../pending-games.constants';
-
 import { gameNameSchema } from '../pending-games.schemas';
+
+import { labelI18nKeys } from '../../../i18n/enums/i18n.label.enums';
 
 import {
     CreatePendingGameMutationResponse,
@@ -24,6 +24,7 @@ import {
     LeavePendingGameBody,
     PendingGames,
 } from '../pending-games.models';
+import { GameId, PlayerKey } from '../../../models/common.models';
 
 import {
     getPlayerId,
@@ -33,7 +34,6 @@ import {
 } from '../../../utils.ts/storage.utils';
 
 import { Message } from '../../../__generated__/resolvers-types';
-import { GameId, PlayerId, PlayerKey } from '../../../models/common.models';
 
 export const createPendingGame = (
     createPendingGameHandler: MutationFn<
@@ -87,10 +87,11 @@ export const leavePendingGame = (
         }),
     });
 
-export const createPendingGameValidator = (value: string) =>
-    gameNameSchema.safeParse(value.trim()).success
-        ? null
-        : pendingGameNameErrorMessage;
+export const createPendingGameValidator =
+    (t: (i18nKey: labelI18nKeys) => string) => (value: string) =>
+        gameNameSchema.safeParse(value.trim()).success
+            ? null
+            : t(labelI18nKeys.pendingGameNameErrorMessage);
 
 export const isPlayerInGame = (
     pendingGames: PendingGames,

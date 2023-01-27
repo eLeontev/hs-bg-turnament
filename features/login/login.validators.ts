@@ -1,7 +1,8 @@
 import { RefObject } from 'react';
+
 import { playerLoginSchema } from '../player/player.schemas';
 
-const noLogin = ''; // TODO:improve valdiation flow
+import { noLogin } from './login.constants';
 
 export const loginValidator = (
     loginRef: RefObject<HTMLInputElement>

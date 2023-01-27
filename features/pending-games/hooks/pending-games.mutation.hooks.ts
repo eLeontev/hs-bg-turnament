@@ -22,6 +22,7 @@ import {
 import { noGameName } from '../pending-games.constants';
 
 import { MutationFn } from '../../../models/graphql.models';
+import { useI18nTranslate } from '../../../i18n/i18n.hooks';
 
 const usePendingGameMutation = <R, B, C>(
     mutation: DocumentNode,
@@ -44,6 +45,8 @@ const usePendingGameMutation = <R, B, C>(
 };
 
 export const useCreatePendingGame = () => {
+    const t = useI18nTranslate();
+
     const [visible, setVisible] = useState(false);
     const action = usePendingGameMutation(
         createPendingGameMutation,
@@ -51,7 +54,7 @@ export const useCreatePendingGame = () => {
     );
     const form = useForm({
         initialValues: { gameName: noGameName },
-        validate: { gameName: createPendingGameValidator },
+        validate: { gameName: createPendingGameValidator(t) },
     });
 
     const onSubmit = form.onSubmit(({ gameName }: typeof form['values']) => {

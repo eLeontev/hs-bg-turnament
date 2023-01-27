@@ -4,14 +4,12 @@ import { Button } from '../../common/components/button.component';
 import { OverlayLoader } from '../../common/components/loader.component';
 
 import { useCreatePendingGame } from '../hooks/pending-games.mutation.hooks';
+import { useI18nTranslate } from '../../../i18n/i18n.hooks';
 
-import {
-    createGameButtonLabel,
-    createPendingGameInputLabel,
-    createPendingGameInputPlaceholder,
-} from '../pending-games.constants';
+import { labelI18nKeys } from '../../../i18n/enums/i18n.label.enums';
 
 export const CreatePendingGame = () => {
+    const t = useI18nTranslate();
     const { inputProps, onSubmit, visible } = useCreatePendingGame();
 
     return (
@@ -20,8 +18,10 @@ export const CreatePendingGame = () => {
             <form onSubmit={onSubmit}>
                 <TextInput
                     withAsterisk
-                    label={createPendingGameInputLabel}
-                    placeholder={createPendingGameInputPlaceholder}
+                    label={t(labelI18nKeys.createPendingGameInputLabel)}
+                    placeholder={t(
+                        labelI18nKeys.createPendingGameInputPlaceholder
+                    )}
                     {...inputProps}
                 />
 
@@ -29,7 +29,7 @@ export const CreatePendingGame = () => {
                     <Button
                         fullWidth
                         type="submit"
-                        label={createGameButtonLabel}
+                        label={t(labelI18nKeys.createGameButtonLabel)}
                     ></Button>
                 </Group>
             </form>
