@@ -8,7 +8,7 @@ import {
     usePlayersStore,
 } from '../../play-game/components/store/play-game.players.store';
 
-import { useI18nTranslate } from '../../../i18n/i18n.hooks';
+import { useI18nLabelTranslate } from '../../../i18n/i18n.hooks';
 
 import { labelI18nKeys } from '../../../i18n/enums/i18n.label.enums';
 
@@ -21,7 +21,7 @@ export type PlayerInfoProps = {
 export const PlayerInfo = ({
     player: { playerLogin, playerKey },
 }: PlayerInfoProps) => {
-    const t = useI18nTranslate();
+    const t = useI18nLabelTranslate();
 
     const onlinePlayerKeys = usePlayersStore(onlinePlayersSelector);
     const color = onlinePlayerKeys.has(playerKey) ? 'green' : 'red';

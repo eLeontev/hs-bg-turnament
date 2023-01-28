@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { Box, Text, Title } from '@mantine/core';
 import { heroIds } from '@prisma/client';
 
+import { useI18nHeroTranslate } from '../../../../i18n/i18n.hooks';
+
 import { Hero } from '../../models/play-game.hero.models';
 
 import { useStyles } from '../styles/play-game.hero-selection.styles';
@@ -20,6 +22,7 @@ export const HeroCard = ({
     powerDescription,
 }: HeroCardProps) => {
     const { classes } = useStyles();
+    const t = useI18nHeroTranslate();
 
     const isHeroSelected = selectedHeroId === heroId;
     const heroCardClassName = `${classes.heroCard} ${
@@ -33,11 +36,11 @@ export const HeroCard = ({
                 width={200}
                 height={276}
                 src={avatarSrc}
-                alt={name}
+                alt={t(name)}
             ></Image>
-            <Title order={4}>{name}</Title>
+            <Title order={4}>{t(name)}</Title>
             <Text component="p" className={classes.powerDescription}>
-                {powerDescription}
+                {t(powerDescription)}
             </Text>
         </Box>
     );

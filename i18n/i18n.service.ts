@@ -4,6 +4,7 @@ import { locales, namespaces } from './enums/i18n.enums';
 import { labelI18nKeys } from './enums/i18n.label.enums';
 
 import { namespacesMap } from './i18n.models';
+import { heroI18nKeys } from './enums/i18n.hero.enums';
 
 export const translate = <T extends namespaces>(
     locale: locales,
@@ -13,3 +14,6 @@ export const translate = <T extends namespaces>(
 
 export const labelTranslate = (locale: locales) => (i18Key: labelI18nKeys) =>
     translate(locale, namespaces.labels, i18Key);
+
+export const heroTranslate = (locale: locales) => (i18Key: heroI18nKeys) =>
+    translate(locale, namespaces.heroes, i18Key);

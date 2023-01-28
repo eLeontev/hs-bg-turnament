@@ -1,5 +1,8 @@
+import { z } from 'zod';
 import { create } from 'zustand';
 import { heroIds, playGamePhases } from '@prisma/client';
+
+import { playGameRoundSchema } from '../../schemas/play-game.schemas';
 
 import {
     DurationInMs,
@@ -7,8 +10,6 @@ import {
     PlayGamePhases,
 } from '../../models/play-game.models';
 import { PlayerKey } from '../../../../models/common.models';
-import { z } from 'zod';
-import { playGameRoundSchema } from '../../schemas/play-game.schemas';
 
 export type PlayGameState = {
     playerKey: PlayerKey;

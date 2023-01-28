@@ -34,4 +34,6 @@ export enum labelI18nKeys {
     online = 'online',
     offline = 'offline',
     player = 'player',
+
+    selectHeroLabel = 'selectHeroLabel',
 }

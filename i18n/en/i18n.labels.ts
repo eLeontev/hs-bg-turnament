@@ -45,4 +45,6 @@ export const enLabelMessages: I18nTransMessages<namespaces.labels> = {
     online: 'Online',
     offline: 'Offline',
     player: 'Player',
+
+    selectHeroLabel: 'Select hero',
 };

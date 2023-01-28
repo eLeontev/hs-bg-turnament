@@ -13,7 +13,7 @@ import { useFormatDistance } from '../hooks/pending-games.time.hooks';
 
 import { pendginGameLiveDurationInMs } from '../pending-games.constants';
 
-import { useI18nTranslate } from '../../../i18n/i18n.hooks';
+import { useI18nLabelTranslate } from '../../../i18n/i18n.hooks';
 
 import { labelI18nKeys } from '../../../i18n/enums/i18n.label.enums';
 
@@ -36,7 +36,7 @@ export const PendingGameComponent = ({
     },
     isInGame,
 }: PendingGameProps) => {
-    const t = useI18nTranslate();
+    const t = useI18nLabelTranslate();
 
     const dateDistance = useFormatDistance(createdDate);
     const { classes } = useStyles();

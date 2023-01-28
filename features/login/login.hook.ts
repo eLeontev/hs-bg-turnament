@@ -5,7 +5,7 @@ import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 
 import { loginValidator } from './login.service';
 
-import { useI18nTranslate } from '../../i18n/i18n.hooks';
+import { useI18nLabelTranslate } from '../../i18n/i18n.hooks';
 
 import { pendingGamesPageUrl } from '../../constants/urls';
 import { noLogin } from './login.constants';
@@ -18,7 +18,7 @@ export const useLogin = (
     router: AppRouterInstance,
     setRecoilLogin: SetRecoilLogin
 ) => {
-    const t = useI18nTranslate();
+    const t = useI18nLabelTranslate();
     const [visible, setVisible] = useState(false);
     const form = useForm({
         initialValues: { login: noLogin },

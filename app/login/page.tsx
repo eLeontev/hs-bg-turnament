@@ -7,7 +7,7 @@ import { Button } from '../../features/common/components/button.component';
 import { OverlayLoader } from '../../features/common/components/loader.component';
 
 import { useLogin } from '../../features/login/login.hook';
-import { useI18nTranslate } from '../../i18n/i18n.hooks';
+import { useI18nLabelTranslate } from '../../i18n/i18n.hooks';
 
 import {
     setLoginSelector,
@@ -21,7 +21,7 @@ const Login = () => {
     const setLogin = useLoginStore(setLoginSelector);
     const { inputProps, onSubmit, visible } = useLogin(router, setLogin);
 
-    const t = useI18nTranslate();
+    const t = useI18nLabelTranslate();
 
     return (
         <Card mx="auto" maw="300px">

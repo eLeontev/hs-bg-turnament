@@ -9,10 +9,15 @@ import { OverlayLoader } from '../../../common/components/loader.component';
 import { HeroCard } from './play-game.hero-card.component';
 
 import { useHero } from '../../hooks/play-game.select-hero.hooks';
+import { useI18nLabelTranslate } from '../../../../i18n/i18n.hooks';
+
+import { labelI18nKeys } from '../../../../i18n/enums/i18n.label.enums';
 
 import { Hero } from '../../models/play-game.hero.models';
 
 export const SelectHero = () => {
+    const t = useI18nLabelTranslate();
+
     const { heroes, selectHeroIdAction } = useHero();
     const [selectedHeroId, setHeroId] = useState<heroIds>();
 
@@ -39,7 +44,7 @@ export const SelectHero = () => {
                 <Button
                     onClick={onClick}
                     disabled={!selectedHeroId}
-                    label="Select Hero"
+                    label={t(labelI18nKeys.selectHeroLabel)}
                 ></Button>
             </Flex>
         </GridComponent>

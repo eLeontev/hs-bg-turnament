@@ -4,12 +4,12 @@ import { Button } from '../../common/components/button.component';
 import { OverlayLoader } from '../../common/components/loader.component';
 
 import { useCreatePendingGame } from '../hooks/pending-games.mutation.hooks';
-import { useI18nTranslate } from '../../../i18n/i18n.hooks';
+import { useI18nLabelTranslate } from '../../../i18n/i18n.hooks';
 
 import { labelI18nKeys } from '../../../i18n/enums/i18n.label.enums';
 
 export const CreatePendingGame = () => {
-    const t = useI18nTranslate();
+    const t = useI18nLabelTranslate();
     const { inputProps, onSubmit, visible } = useCreatePendingGame();
 
     return (

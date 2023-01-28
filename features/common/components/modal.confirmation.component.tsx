@@ -3,7 +3,7 @@ import { Modal, Group } from '@mantine/core';
 
 import { Button } from './button.component';
 
-import { useI18nTranslate } from '../../../i18n/i18n.hooks';
+import { useI18nLabelTranslate } from '../../../i18n/i18n.hooks';
 
 import { labelI18nKeys } from '../../../i18n/enums/i18n.label.enums';
 
@@ -36,7 +36,7 @@ export const ConfirmationModal = ({
     cancelLabel,
     confirmLabel,
 }: ConfirmationModalProps) => {
-    const t = useI18nTranslate();
+    const t = useI18nLabelTranslate();
 
     return (
         <Modal opened={opened} onClose={closeModal} title={t(title)}>

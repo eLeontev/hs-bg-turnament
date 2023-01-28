@@ -2,14 +2,14 @@ import { Group, Text } from '@mantine/core';
 
 import { InlineLink } from '../../common/components/link.component';
 
-import { useI18nTranslate } from '../../../i18n/i18n.hooks';
+import { useI18nLabelTranslate } from '../../../i18n/i18n.hooks';
 
 import { loginPageUrl } from '../../../constants/urls';
 
 import { labelI18nKeys } from '../../../i18n/enums/i18n.label.enums';
 
 export const LoginInfo = () => {
-    const t = useI18nTranslate();
+    const t = useI18nLabelTranslate();
     return (
         <Group>
             <Text>{t(labelI18nKeys.loginInfoText)}</Text>

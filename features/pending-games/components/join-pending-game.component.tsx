@@ -7,7 +7,7 @@ import { IconButton } from '../../common/components/button.component';
 import { joinPendingGameResponseHandler } from '../services/pending-games.client.service';
 
 import { useJoinPendingGame } from '../hooks/pending-games.mutation.hooks';
-import { useI18nTranslate } from '../../../i18n/i18n.hooks';
+import { useI18nLabelTranslate } from '../../../i18n/i18n.hooks';
 
 import { labelI18nKeys } from '../../../i18n/enums/i18n.label.enums';
 
@@ -18,7 +18,7 @@ import { shouldDisplayTooltip } from '../../../utils.ts/tooltip.utils';
 export type JoinPendingGameProps = { gameId: GameId; isInGame: boolean };
 
 export const JoinPendingGame = ({ gameId, isInGame }: JoinPendingGameProps) => {
-    const t = useI18nTranslate();
+    const t = useI18nLabelTranslate();
 
     const action = useJoinPendingGame();
     const onClick = () => action(gameId).then(joinPendingGameResponseHandler);

@@ -3,6 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { trpc } from '../../../lib/client';
 
 import { formSelectedHeroIds } from '../services/play-game.client.service';
+import { formPlayGamePlayers } from '../services/play-game.player.service';
 
 import {
     initStateSelector,
@@ -18,7 +19,6 @@ import {
     getSavePlayerIdInGame,
     setPlayerKey,
 } from '../../../utils.ts/storage.utils';
-import { formPlayGamePlayers } from '../services/play-game.player.service';
 
 export const useSetPlayGameBaseInput = () =>
     useMemo(

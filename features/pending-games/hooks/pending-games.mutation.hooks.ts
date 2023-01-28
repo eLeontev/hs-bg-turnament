@@ -22,7 +22,7 @@ import {
 import { noGameName } from '../pending-games.constants';
 
 import { MutationFn } from '../../../models/graphql.models';
-import { useI18nTranslate } from '../../../i18n/i18n.hooks';
+import { useI18nLabelTranslate } from '../../../i18n/i18n.hooks';
 
 const usePendingGameMutation = <R, B, C>(
     mutation: DocumentNode,
@@ -45,7 +45,7 @@ const usePendingGameMutation = <R, B, C>(
 };
 
 export const useCreatePendingGame = () => {
-    const t = useI18nTranslate();
+    const t = useI18nLabelTranslate();
 
     const [visible, setVisible] = useState(false);
     const action = usePendingGameMutation(

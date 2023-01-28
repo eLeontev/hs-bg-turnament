@@ -14,7 +14,7 @@ import {
     usePlayGameInitialization,
     useSetPlayGameBaseInput,
 } from '../../features/play-game/hooks/play-game.hooks';
-import { useI18nTranslate } from '../../i18n/i18n.hooks';
+import { useI18nLabelTranslate } from '../../i18n/i18n.hooks';
 
 import {
     isReadySelector,
@@ -26,7 +26,7 @@ import { labelI18nKeys } from '../../i18n/enums/i18n.label.enums';
 import { pendingGamesPageUrl } from '../../constants/urls';
 
 const GameNotFound = () => {
-    const t = useI18nTranslate();
+    const t = useI18nLabelTranslate();
 
     return (
         <Group>

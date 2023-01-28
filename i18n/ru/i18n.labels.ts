@@ -48,4 +48,6 @@ export const ruLabelMessages: I18nTransMessages<namespaces.labels> = {
     online: 'Онлайн',
     offline: 'Оффлайн',
     player: 'Игрок',
+
+    selectHeroLabel: 'Выбрать героя',
 };

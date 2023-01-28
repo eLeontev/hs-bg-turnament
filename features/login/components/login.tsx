@@ -17,7 +17,7 @@ import {
     useLoginStore,
 } from './store/login.store';
 
-import { useI18nTranslate } from '../../../i18n/i18n.hooks';
+import { useI18nLabelTranslate } from '../../../i18n/i18n.hooks';
 
 import { labelI18nKeys } from '../../../i18n/enums/i18n.label.enums';
 
@@ -35,7 +35,7 @@ export const Login = () => {
 
     const props = useModal(() => logoutHandler(router, setLogin));
 
-    const t = useI18nTranslate();
+    const t = useI18nLabelTranslate();
 
     return login ? (
         <Group spacing="xs">
