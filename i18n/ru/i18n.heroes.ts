@@ -2,32 +2,31 @@ import { namespaces } from '../enums/i18n.enums';
 
 import { I18nTransMessages } from '../i18n.models';
 
-// TODO: add ru lang
 export const ruHeroMessages: I18nTransMessages<namespaces.heroes> = {
-    heroNameAfkay: `A. F. Kay`,
-    heroPowerDescriptionAfkay: `Passive Skip your first two turns. Start with two minions from Tavern Tier 3.`,
+    heroNameAfkay: `А.Ф.Ка`,
+    heroPowerDescriptionAfkay: `Пассивный эффект: вы пропускаете первые два хода и начинаете сражение с двумя существами из таверны 3-го уровня.`,
 
-    heroNameAlkair: `Al'Akir`,
-    heroPowerDescriptionAlkair: `Passive Start of Combat: Give your left-most minion Windfury, Divine Shield, and Taunt.`,
+    heroNameAlkair: `Ал'акир`,
+    heroPowerDescriptionAlkair: `Пассивный эффект. Начало боя: ваше крайнее левое существо получает «Неистовство ветра», «Божественный щит» и «Провокацию».`,
 
-    heroNameAlexstrasza: `Alexstrasza`,
-    heroPowerDescriptionAlexstrasza: `Passive After you upgrade Bob's Tavern to Tavern Tier 5, Discover two Dragons.`,
+    heroNameAlexstrasza: `Алекстраза`,
+    heroPowerDescriptionAlexstrasza: `Пассивный эффект: после того как вы улучшаете таверну Боба до 5-го уровня, вы раскапываете двух драконов.`,
 
-    heroNameAmbassadorFaelin: `Ambassador Faelin`,
-    heroPowerDescriptionAmbassadorFaelin: `Passive. Skip your first turn. Discover a Tier 2, 4, and 6 minion to get at those Tiers.`,
+    heroNameAmbassadorFaelin: `Посол Фаэлин`,
+    heroPowerDescriptionAmbassadorFaelin: `Пассивный эффект. Вы пропускаете первый ход и раскапываете существ, которых получите на 2, 4 и 6 уровнях таверны.`,
 
-    heroNameArannaStarseeker: `Aranna Starseeker`,
-    heroPowerDescriptionArannaStarseeker: `Passive After you Refresh 5 times, Bob always has 7 minions. ( left!)`,
+    heroNameArannaStarseeker: `Аранна Звездочет`,
+    heroPowerDescriptionArannaStarseeker: `Пассивный эффект: после 5 обновлений в таверне Боба всегда будет по 7 существ. (Еще !)`,
 
-    heroNameArchVillainRafaam: `Arch-Villain Rafaam`,
-    heroPowerDescriptionArchVillainRafaam: `Next combat, add a plain copy of the first minion you kill to your hand.`,
+    heroNameArchVillainRafaam: `Суперзлодей Рафаам`,
+    heroPowerDescriptionArchVillainRafaam: `В следующем бою вы кладете в руку простую копию первого убитого вами существа.`,
 
-    heroNameBrukan: `Bru'kan`,
-    heroPowerDescriptionBrukan: `Choose an Element. Start of Combat: Call upon that Element.`,
+    heroNameBrukan: `Бру'кан`,
+    heroPowerDescriptionBrukan: `Выберите стихию. Начало боя: взывает к этой стихии.`,
 
-    heroNameCthun: `C'Thun`,
-    heroPowerDescriptionCthun: `At end of turn, give a friendly minion +1/+1. Repeat (time, times). (Upgrades each turn!)`,
+    heroNameCthun: `К'Тун`,
+    heroPowerDescriptionCthun: `В конце хода ваше существо получает +1/+1. Повторяется (раз,раза,раз). (Улучшается каждый ход!)`,
 
-    heroNameCaptain: `Captain Eudora`,
-    heroPowerDescriptionCaptain: `Dig for a Golden minion! ( (Dig, Digs) left.)`,
+    heroNameCaptain: `Капитан Юдора`,
+    heroPowerDescriptionCaptain: `Вы выкапываете золотое существо! (Осталось копать: )`,
 };
