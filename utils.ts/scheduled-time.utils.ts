@@ -2,6 +2,7 @@ export type ActionId = `${actionTypes}: ${string}`;
 
 export enum actionTypes {
     deletePendingGame = 'deletePendingGame',
+    togglePhaseInPlayGame = 'togglePhaseInPlayGame',
 }
 
 export const timers = new Map<string, NodeJS.Timeout>();

@@ -58,6 +58,7 @@ model PlayGame {
   gameId            String           @id @map("_id")
   phase             playGamePhases
   phaseDurationInMs Int
+  phaseStartDate    String
   round             Int
   players           PlayGamePlayer[]
 }

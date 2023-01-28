@@ -16,6 +16,7 @@ import { PlayGamePlayers } from '../../player/player.models';
 export type PlayGamePhaseData = {
     phase: playGamePhases;
     phaseDurationInMs: number;
+    phaseStartDate: string;
     round: number;
 };
 

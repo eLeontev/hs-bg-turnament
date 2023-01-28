@@ -46,9 +46,16 @@ export const startPlayGame = async (
         })
     );
 
+    const phaseData = getPhaseData(
+        playGamePhases.heroSelection,
+        new Date().toUTCString()
+    );
+
     await startPlayGameOperation(gameId, playGamePlayers, {
-        ...getPhaseData(playGamePhases.heroSelection),
+        ...phaseData,
     });
+
+    return phaseData;
 };
 
 export const getPlayGame = async ({

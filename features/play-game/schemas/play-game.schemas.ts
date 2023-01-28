@@ -47,6 +47,7 @@ export const playGameDetailsOutputSchema = z.object({
     gameId: gameIdSchema,
     phase: playGameZodPhasesSchema,
     phaseDurationInMs: playGamePhaseDurationInMsSchema,
+    phaseStartDate: z.string(),
     round: playGameRoundSchema,
     playerKey: playerKeySchema,
     players: z.array(playGamePlayerDetailsSchema),

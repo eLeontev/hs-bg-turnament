@@ -24,12 +24,17 @@ const getRoundModificator = (phase: playGamePhases, round: number) => {
 
     return 0;
 };
+
+export const getPhaseDuration = (phase: playGamePhases, round?: number) =>
+    pahsesDuration[phase] + (round ? getRoundModificator(phase, round) : 0);
+
 export const getPhaseData = (
     phase: playGamePhases,
+    phaseStartDate: string,
     round?: number
 ): PlayGamePhaseData => ({
     phase,
+    phaseStartDate,
     round: round || 0,
-    phaseDurationInMs:
-        pahsesDuration[phase] + (round ? getRoundModificator(phase, round) : 0),
+    phaseDurationInMs: getPhaseDuration(phase, round),
 });

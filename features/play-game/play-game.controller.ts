@@ -28,6 +28,7 @@ import {
 } from './models/play-game.models';
 
 import { getHash } from '../../utils.ts/hash-server.utils';
+import { togglePlayGameEngine } from './engine/play-game.engine';
 
 export const playGameQuery = ({ input }: TRCPProps<PlayGameBaseInput>) =>
     getPlayGame(input);
@@ -38,11 +39,13 @@ export const startPlayGameMutation = async ({
 }: TRCPProps<StartPlayGameInput>) => {
     const { gameId, players } = await deletePendingGame(input);
 
-    await startPlayGame(gameId, players);
+    const { phase, round } = await startPlayGame(gameId, players);
 
     notifyOnlinePlayersPlayGameStarted(io, input.gameId);
     notifyPendingGames(io, getPendingGames());
     cancelDeletePendingGame(gameId);
+
+    togglePlayGameEngine(io, gameId, phase, round);
 
     return pendingGameStartMessage;
 };

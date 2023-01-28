@@ -16,6 +16,7 @@ export type PlayGameState = {
     baseInput: PlayGameBaseInput;
     phase: playGamePhases;
     phaseDurationInMs: DurationInMs;
+    phaseStartDate: string;
     round: z.infer<typeof playGameRoundSchema>;
     selectedHeroId: heroIds | undefined;
     selectedHeroIds: Map<string, heroIds>;
@@ -31,6 +32,7 @@ const initialState: PlayGameState = {
     playerKey: '',
     baseInput: { gameId: '', playerIdInGame: '' },
     phase: playGamePhases.initialisation,
+    phaseStartDate: '',
     phaseDurationInMs: 100000000000,
     round: 0,
     selectedHeroId: undefined,
