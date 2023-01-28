@@ -2,19 +2,25 @@ export type ActionId = `${actionTypes}: ${string}`;
 
 export enum actionTypes {
     deletePendingGame = 'deletePendingGame',
-    togglePhaseInPlayGame = 'togglePhaseInPlayGame',
 }
 
 export const timers = new Map<string, NodeJS.Timeout>();
 
 export const scheduleTask = <T>(
     action: () => any,
-    actionId: ActionId,
+    actionId: ActionId | null,
     delayInMs: number
 ) => {
     const timeout = setTimeout(action, delayInMs);
-    timers.set(actionId, timeout);
+    if (actionId) {
+        timers.set(actionId, timeout);
+    }
 };
+
+export const scheduleTaskWithoutCanceletion = <T>(
+    action: () => any,
+    delayInMs: number
+) => scheduleTask(action, null, delayInMs);
 
 export const cancelTask = (actionId: ActionId) => {
     if (timers.has(actionId)) {

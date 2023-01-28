@@ -5,10 +5,7 @@ import { getPhaseDuration } from '../services/play-game.phase.service';
 
 import { GameId } from '../../../models/common.models';
 
-import {
-    actionTypes,
-    scheduleTask,
-} from '../../../utils.ts/scheduled-time.utils';
+import { scheduleTaskWithoutCanceletion } from '../../../utils.ts/scheduled-time.utils';
 
 const phaseSiquence = {
     [playGamePhases.initialisation]: playGamePhases.heroSelection,
@@ -19,10 +16,13 @@ const phaseSiquence = {
 };
 
 export const isPlayGameOver = (gameId: GameId) => {
+    // check if at least 2 players alive
     return true;
 };
 
-export const finishPlayGame = (io: Server, gameId: GameId) => {};
+export const finishPlayGame = (io: Server, gameId: GameId) => {
+    // if has one player alive, notify that player is winner
+};
 
 export const changePlayGamePhase = async (
     io: Server,
@@ -35,21 +35,26 @@ export const changePlayGamePhase = async (
     return round;
 };
 
-export const performEndPhaseActivity = async (
-    gameId: GameId,
-    phase: playGamePhases
+export const performEndPreviousPhaseActivity = async (
+    io: Server,
+    gameId: GameId
 ) => {
-    // recruit phase
     // -> calculate/check all players activities per phase
-    // combat phase
     // build all batte results
-    // -> build new player pairs
+    // notify players to get battle results
+};
+
+export const performStartPhaseActivity = async (io: Server, gameId: GameId) => {
+    // build new player pairs
+    // notify phase is ready
 };
 
 export const togglePhase =
     (io: Server, gameId: string, phase: playGamePhases) => async () => {
-        // perform end phase activity
-        await performEndPhaseActivity(gameId, phase);
+        // perform start phase activity
+        await performEndPreviousPhaseActivity(io, gameId);
+
+        await performStartPhaseActivity(io, gameId);
 
         // change phase to another phase
         const round = await changePlayGamePhase(
@@ -67,26 +72,14 @@ export const togglePhase =
         togglePlayGameEngine(io, gameId, phase, round);
     };
 
-export const recruitPhaseInitialization = async (
-    io: Server,
-    gameId: GameId
-) => {
-    // build new player pairs
-    // notify phase is ready
-};
-
 export const togglePlayGameEngine = (
     io: Server,
     gameId: GameId,
     phase: playGamePhases,
     round: number
 ) => {
-    // perform start phase activities
-    recruitPhaseInitialization(io, gameId);
-
-    scheduleTask(
+    scheduleTaskWithoutCanceletion(
         togglePhase(io, gameId, phaseSiquence[phase]),
-        `${actionTypes.togglePhaseInPlayGame}: toggle phase`,
         getPhaseDuration(phase, round)
     );
 };
