@@ -3,6 +3,10 @@ export enum labelI18nKeys {
     en = 'en',
     ru = 'ru',
 
+    welcomePageText = 'welcomePageText',
+    welcomeHelperText = 'welcomeHelperText',
+    welcomeRedirectLink = 'welcomeRedirectLink',
+
     loginInputLabel = 'loginInputLabel',
     loginInputPlaceholder = 'loginInputPlaceholder',
     loginButtonLabel = 'loginButtonLabel',
@@ -16,6 +20,7 @@ export enum labelI18nKeys {
 
     pendingGameSearchNewGamePrefix = 'pendingGameSearchNewGamePrefix',
     pendingGameSearchNewGamePostfix = 'pendingGameSearchNewGamePostfix',
+    pendingGameTimeAgoPostfix = 'pendingGameTimeAgoPostfix',
 
     cancelButtonLabel = 'cancelButtonLabel',
 

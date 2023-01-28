@@ -95,7 +95,7 @@ export const createPendingGameValidator =
 
 export const isPlayerInGame = (
     pendingGames: PendingGames,
-    playerKey: PlayerKey
+    playerKey: PlayerKey | null
 ) =>
     pendingGames.some(({ players }) =>
         players.some((player) => player.playerKey === playerKey)

@@ -8,7 +8,6 @@ import {
 } from '@mantine/core';
 
 import { differenceInMilliseconds, formatDuration } from 'date-fns';
-import { enUS, ru } from 'date-fns/locale';
 
 import { labelTranslate } from '../../../i18n/i18n.service';
 
@@ -19,10 +18,7 @@ import { labelI18nKeys } from '../../../i18n/enums/i18n.label.enums';
 
 import { useCommonStyles } from '../../../styles/common.styles';
 
-const localesMap = {
-    [locales.en]: enUS,
-    [locales.ru]: ru,
-};
+import { localesMap } from '../../../utils.ts/date.utils';
 
 const colorsGradations: Array<DefaultMantineColor> = [
     'red',

@@ -15,6 +15,11 @@ export const enLabelMessages: I18nTransMessages<namespaces.labels> = {
     selectLanguage: 'Select a Language',
     en: 'English',
     ru: 'Russian',
+
+    welcomePageText: 'Welcome to Hearthstone Battlegrounds Competition',
+    welcomeHelperText: 'To start to search games please visit',
+    welcomeRedirectLink: 'pending-games page',
+
     loginInputLabel: 'Login',
     loginInputPlaceholder: 'Your Login',
     loginButtonLabel: 'Login',
@@ -41,6 +46,7 @@ export const enLabelMessages: I18nTransMessages<namespaces.labels> = {
     createGameButtonLabel: 'Create Game',
     createPendingGameLabel: 'Create pending game',
     pendingGameNameErrorMessage: `Game name length should be between the range ${minGameNameLength} and ${maxGameNameLength}.`,
+    pendingGameTimeAgoPostfix: 'ago',
 
     online: 'Online',
     offline: 'Offline',

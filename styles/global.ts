@@ -4,6 +4,10 @@ const components = {
     Title: {
         styles: (theme: MantineTheme) => ({
             root: {
+                '&:is(h1)': {
+                    textShadow: `0px 0px 2px ${theme.colors.teal[9]}`,
+                    color: theme.colors.orange[0],
+                },
                 '&:is(h4)': {
                     textShadow: `0px 0px 2px ${theme.colors.teal[9]}`,
                     color: theme.colors.orange[0],

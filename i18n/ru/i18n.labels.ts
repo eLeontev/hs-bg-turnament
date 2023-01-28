@@ -15,6 +15,12 @@ export const ruLabelMessages: I18nTransMessages<namespaces.labels> = {
     selectLanguage: 'Выберите язык',
     en: 'Английский',
     ru: 'Русский',
+
+    welcomePageText:
+        'Добро пожаловать в Hearthstone Battlegrounds Соревнование',
+    welcomeHelperText: 'Чтобы начать игру перейдите на',
+    welcomeRedirectLink: 'страницу подбора игр',
+
     loginInputLabel: 'Логин',
     loginInputPlaceholder: 'Введите логин',
     loginButtonLabel: 'Логин',
@@ -44,6 +50,7 @@ export const ruLabelMessages: I18nTransMessages<namespaces.labels> = {
     createGameButtonLabel: 'Создать',
     createPendingGameLabel: 'Создать игру',
     pendingGameNameErrorMessage: `Длина названия игры должна быть в диапазоне от ${minGameNameLength} до ${maxGameNameLength} символов.`,
+    pendingGameTimeAgoPostfix: 'назад',
 
     online: 'Онлайн',
     offline: 'Оффлайн',

@@ -7,7 +7,7 @@ import { usePendingGamesFromSocket } from './pending-games.socket.hooks';
 
 import { PendingGames } from '../pending-games.models';
 
-import { getSavePlayerKey } from '../../../utils.ts/storage.utils';
+import { getPlayerKey } from '../../../utils.ts/storage.utils';
 
 const noPendingGames: PendingGames = [];
 
@@ -18,6 +18,6 @@ export const usePendingGames = () => {
     usePendingGamesFromQuery(setPendingGames);
     usePendingGamesFromSocket(setPendingGames);
 
-    const isInGame = isPlayerInGame(pendingGames, getSavePlayerKey());
+    const isInGame = isPlayerInGame(pendingGames, getPlayerKey());
     return { pendingGames, isInGame };
 };
