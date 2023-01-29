@@ -64,6 +64,9 @@ export const setSelectedHeroIdSelector = ({
 export const playerKeySelector = ({ playerKey }: PlayGameState) => playerKey;
 export const baseInputSelector = ({ baseInput }: PlayGameState) => baseInput;
 export const phaseSelector = ({ phase }: PlayGameState) => phase;
+export const phaseStartDateSelector = ({ phaseStartDate }: PlayGameState) =>
+    phaseStartDate;
+
 export const selectedHeroIdSelector = ({ selectedHeroId }: PlayGameState) =>
     selectedHeroId;
 export const selectedHeroIdsSelector = ({ selectedHeroIds }: PlayGameState) =>
