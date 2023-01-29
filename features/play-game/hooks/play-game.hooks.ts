@@ -55,6 +55,7 @@ export const usePlayGameInitialization = () => {
                 selectedHeroId,
                 selectedHeroIds,
                 baseInput,
+                isReady: true,
             });
 
             setPlayers(formPlayGamePlayers(players));

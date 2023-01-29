@@ -6,7 +6,6 @@ export const recruitPhaseDurationInMs = 20000; // 20s
 export const combatPhaseDurationInMs = 10000; // 10s
 
 export const pahsesDuration = {
-    [playGamePhases.initialisation]: 100000000000,
     [playGamePhases.heroSelection]: heroSelectionPhaseDurationInMs,
     [playGamePhases.recruit]: recruitPhaseDurationInMs,
     [playGamePhases.combat]: combatPhaseDurationInMs,

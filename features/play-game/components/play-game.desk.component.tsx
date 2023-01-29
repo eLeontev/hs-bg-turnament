@@ -17,7 +17,6 @@ const playGamePhaseDesks = {
     [playGamePhases.heroSelection]: SelectHeroDesk,
     [playGamePhases.recruit]: SelectHeroDesk,
     [playGamePhases.combat]: SelectHeroDesk,
-    [playGamePhases.initialisation]: () => null,
 };
 
 export const PlayGameDesk = () => {

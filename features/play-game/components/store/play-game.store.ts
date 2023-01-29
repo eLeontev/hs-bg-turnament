@@ -4,6 +4,8 @@ import { heroIds, playGamePhases } from '@prisma/client';
 
 import { playGameRoundSchema } from '../../schemas/play-game.schemas';
 
+import { getPhaseDuration } from '../../services/play-game.phase.service';
+
 import {
     DurationInMs,
     PlayGameBaseInput,
@@ -12,6 +14,7 @@ import {
 import { PlayerKey } from '../../../../models/common.models';
 
 export type PlayGameState = {
+    isReady: boolean;
     playerKey: PlayerKey;
     baseInput: PlayGameBaseInput;
     phase: playGamePhases;
@@ -28,12 +31,14 @@ export type PlayGameStoreApi = {
     setSelectedHeroId: (selectedHeroId: heroIds) => void;
 };
 
+const initialPhase = playGamePhases.heroSelection;
 const initialState: PlayGameState = {
+    isReady: false,
     playerKey: '',
     baseInput: { gameId: '', playerIdInGame: '' },
-    phase: playGamePhases.initialisation,
+    phase: initialPhase,
     phaseStartDate: '',
-    phaseDurationInMs: 100000000000,
+    phaseDurationInMs: getPhaseDuration(initialPhase),
     round: 0,
     selectedHeroId: undefined,
     selectedHeroIds: new Map<string, heroIds>(),
@@ -62,8 +67,7 @@ export const selectedHeroIdSelector = ({ selectedHeroId }: PlayGameState) =>
     selectedHeroId;
 export const selectedHeroIdsSelector = ({ selectedHeroIds }: PlayGameState) =>
     selectedHeroIds;
-export const isReadySelector = ({ phase }: PlayGameState) =>
-    phase !== playGamePhases.initialisation;
+export const isReadySelector = ({ isReady }: PlayGameState) => isReady;
 export const phaseDurationInMsSelector = ({
     phaseDurationInMs,
 }: PlayGameState) => phaseDurationInMs;

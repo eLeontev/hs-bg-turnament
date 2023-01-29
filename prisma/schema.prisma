@@ -26,7 +26,6 @@ model PendingGame {
 }
 
 enum playGamePhases {
-  initialisation
   heroSelection
   recruit
   combat

@@ -8,10 +8,8 @@ import { GameId } from '../../../models/common.models';
 import { scheduleTaskWithoutCanceletion } from '../../../utils.ts/scheduled-time.utils';
 
 const phaseSiquence = {
-    [playGamePhases.initialisation]: playGamePhases.heroSelection,
-    [playGamePhases.combat]: playGamePhases.recruit,
-
     [playGamePhases.heroSelection]: playGamePhases.recruit,
+    [playGamePhases.combat]: playGamePhases.recruit,
     [playGamePhases.recruit]: playGamePhases.recruit,
 };
 
