@@ -22,16 +22,16 @@ export const finishHeroSelection = async (io: Server, gameId: GameId) => {
     const serverPlayerWithSelectedHeros: PlayGamePlayerWithSelectedHeros = [];
     const clientPlayerWithSelectedHeros: PlayGameHeroesSelected = [];
 
-    players.forEach(
-        ({ playerIdInGame, playerKey, heroIds }: PlayGamePlayer) => {
+    players
+        .filter(({ selectedHeroId }: PlayGamePlayer) => Boolean(selectedHeroId))
+        .forEach(({ playerIdInGame, playerKey, heroIds }: PlayGamePlayer) => {
             const selectedHeroId = getRandom(heroIds);
             serverPlayerWithSelectedHeros.push({
                 playerIdInGame,
                 selectedHeroId,
             });
             clientPlayerWithSelectedHeros.push({ playerKey, selectedHeroId });
-        }
-    );
+        });
 
     await setHeroToPlayers(serverPlayerWithSelectedHeros);
 
