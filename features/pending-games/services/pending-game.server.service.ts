@@ -20,6 +20,7 @@ import {
 import { PlayerId } from '../../../models/common.models';
 
 import { getHash } from '../../../utils.ts/hash-server.utils';
+import { dateInUtcString } from '../../../utils.ts/date.utils';
 
 export const isPlayerInGameCheck = async (playerId: PlayerId) => {
     const playerInPendingGame = await isPlayerInGameOperation(playerId);
@@ -44,7 +45,7 @@ export const createPendingGame = async ({
         gameId,
         authorId: playerId,
         authorLogin: playerLogin,
-        createdDate: new Date().toUTCString(),
+        createdDate: dateInUtcString(),
         players: [
             {
                 playerId,

@@ -20,6 +20,7 @@ import {
 
 import { getHashesFromValues } from '../../../utils.ts/hash-server.utils';
 import { getPhaseData } from './play-game.phase.service';
+import { dateInUtcString } from '../../../utils.ts/date.utils';
 
 export const startPlayGame = async (
     gameId: GameId,
@@ -46,13 +47,16 @@ export const startPlayGame = async (
         })
     );
 
+    const initialRound = 0;
     const phaseData = getPhaseData(
         playGamePhases.heroSelection,
-        new Date().toUTCString()
+        dateInUtcString(),
+        initialRound
     );
 
     await startPlayGameOperation(gameId, playGamePlayers, {
         ...phaseData,
+        round: initialRound,
     });
 
     return phaseData;

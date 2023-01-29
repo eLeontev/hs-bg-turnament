@@ -11,6 +11,8 @@ export const localesMap = {
     [locales.ru]: ru,
 };
 
+export const dateInUtcString = () => new Date().toUTCString();
+
 export const formatToUI = (date: string) =>
     format(new Date(date), UIdateFormat);
 

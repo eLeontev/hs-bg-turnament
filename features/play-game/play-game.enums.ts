@@ -1,6 +1,7 @@
 export enum playGameActions {
     phaseChangedTo = 'phaseChangedTo',
     heroSelected = 'heroSelected',
+    heroesSelected = 'heroesSelected',
 }
 
 export enum playGamePlayerActions {

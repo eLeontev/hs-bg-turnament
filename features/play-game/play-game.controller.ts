@@ -1,3 +1,5 @@
+import { togglePlayGameEngine } from './engine/play-game.engine';
+
 import {
     getPlayerHeroIds,
     getPlayGame,
@@ -28,7 +30,6 @@ import {
 } from './models/play-game.models';
 
 import { getHash } from '../../utils.ts/hash-server.utils';
-import { togglePlayGameEngine } from './engine/play-game.engine';
 
 export const playGameQuery = ({ input }: TRCPProps<PlayGameBaseInput>) =>
     getPlayGame(input);
@@ -45,7 +46,7 @@ export const startPlayGameMutation = async ({
     notifyPendingGames(io, getPendingGames());
     cancelDeletePendingGame(gameId);
 
-    togglePlayGameEngine(io, gameId, phase, round);
+    togglePlayGameEngine(io, gameId, phase, round, true);
 
     return pendingGameStartMessage;
 };

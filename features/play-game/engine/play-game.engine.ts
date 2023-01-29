@@ -3,34 +3,22 @@ import { playGamePhases } from '@prisma/client';
 
 import { getPhaseDuration } from '../services/play-game.phase.service';
 
+import { finishHeroSelection } from './play-game.finish-hero-selection';
+import { changePlayGamePhase } from './play-game.change-phase';
+
 import { GameId } from '../../../models/common.models';
+
+import { phaseSiquence } from './play-game.engine.constants';
 
 import { scheduleTaskWithoutCanceletion } from '../../../utils.ts/scheduled-time.utils';
 
-const phaseSiquence = {
-    [playGamePhases.heroSelection]: playGamePhases.recruit,
-    [playGamePhases.combat]: playGamePhases.recruit,
-    [playGamePhases.recruit]: playGamePhases.recruit,
-};
-
 export const isPlayGameOver = (gameId: GameId) => {
     // check if at least 2 players alive
-    return true;
+    return false;
 };
 
 export const finishPlayGame = (io: Server, gameId: GameId) => {
     // if has one player alive, notify that player is winner
-};
-
-export const changePlayGamePhase = async (
-    io: Server,
-    gameId: GameId,
-    phase: playGamePhases
-) => {
-    // changePhaseOperation
-    // notifyPhaseChanged -> only if recruit phase completed
-    const round = 123; //
-    return round;
 };
 
 export const performEndPreviousPhaseActivity = async (
@@ -48,18 +36,22 @@ export const performStartPhaseActivity = async (io: Server, gameId: GameId) => {
 };
 
 export const togglePhase =
-    (io: Server, gameId: string, phase: playGamePhases) => async () => {
-        // perform start phase activity
-        await performEndPreviousPhaseActivity(io, gameId);
+    (
+        io: Server,
+        gameId: string,
+        phase: playGamePhases,
+        shouldFinishHeroSelection?: boolean
+    ) =>
+    async () => {
+        if (shouldFinishHeroSelection) {
+            await finishHeroSelection(io, gameId);
+        } else {
+            await performEndPreviousPhaseActivity(io, gameId);
+        }
 
         await performStartPhaseActivity(io, gameId);
 
-        // change phase to another phase
-        const round = await changePlayGamePhase(
-            io,
-            gameId,
-            phaseSiquence[phase]
-        );
+        const round = await changePlayGamePhase(io, gameId);
 
         // check if game not over
         if (await isPlayGameOver(gameId)) {
@@ -74,10 +66,16 @@ export const togglePlayGameEngine = (
     io: Server,
     gameId: GameId,
     phase: playGamePhases,
-    round: number
+    round: number,
+    shouldFinishHeroSelection?: boolean
 ) => {
     scheduleTaskWithoutCanceletion(
-        togglePhase(io, gameId, phaseSiquence[phase]),
+        togglePhase(
+            io,
+            gameId,
+            phaseSiquence[phase],
+            shouldFinishHeroSelection
+        ),
         getPhaseDuration(phase, round)
     );
 };

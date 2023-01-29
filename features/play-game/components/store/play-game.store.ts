@@ -9,7 +9,7 @@ import { getPhaseDuration } from '../../services/play-game.phase.service';
 import {
     DurationInMs,
     PlayGameBaseInput,
-    PlayGamePhases,
+    PlayGamePhaseData,
 } from '../../models/play-game.models';
 import { PlayerKey } from '../../../../models/common.models';
 
@@ -27,7 +27,7 @@ export type PlayGameState = {
 
 export type PlayGameStoreApi = {
     initState: (playGameState: PlayGameState) => void;
-    setPhase: (phase: PlayGamePhases) => void;
+    setPhase: (playGamePhaseData: PlayGamePhaseData) => void;
     setSelectedHeroId: (selectedHeroId: heroIds) => void;
 };
 
@@ -49,7 +49,8 @@ export const usePlayGameStore = create<PlayGameState & PlayGameStoreApi>(
         ...initialState,
 
         initState: (playGameState: PlayGameState) => set(playGameState),
-        setPhase: (playGamePhases: PlayGamePhases) => set(playGamePhases),
+        setPhase: (playGamePhaseData: PlayGamePhaseData) =>
+            set(playGamePhaseData),
         setSelectedHeroId: (selectedHeroId: heroIds) => set({ selectedHeroId }),
     })
 );

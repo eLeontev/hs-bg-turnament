@@ -1,4 +1,5 @@
 import { playGamePhases } from '@prisma/client';
+import { dateInUtcString } from '../../../utils.ts/date.utils';
 import { GridComponent } from '../../common/components/table.grid.component';
 import {
     durationFormats,
@@ -28,7 +29,7 @@ export const PlayGameDesk = () => {
     return (
         <GridComponent>
             <Timer
-                timeLeftUTC={new Date().toUTCString()}
+                timeLeftUTC={dateInUtcString()}
                 durationInMs={phaseDurationInMs}
                 durationFormat={durationFormats.seconds}
                 labelFontSize={12}

@@ -8,12 +8,13 @@ import { usePlayersStore } from '../components/store/play-game.players.store';
 import {
     GameActionHandlers,
     PlayGameAction,
+    PlayGameHeroesSelected,
     PlayGameHeroSelected,
-    PlayGamePhases,
+    PlayGamePhaseData,
 } from '../models/play-game.models';
 
-const phaseChangeHandler = ({ phase, phaseDurationInMs }: PlayGamePhases) =>
-    usePlayGameStore.setState({ phase, phaseDurationInMs });
+const phaseChangeHandler = (playGamePhaseData: PlayGamePhaseData) =>
+    usePlayGameStore.setState(playGamePhaseData);
 
 const heroSelectedHandler = (playGameHeroSelected: PlayGameHeroSelected) =>
     usePlayersStore.setState({
@@ -23,9 +24,14 @@ const heroSelectedHandler = (playGameHeroSelected: PlayGameHeroSelected) =>
         ),
     });
 
+const heroesSelectedHandler = (
+    playGameHeroesSelected: PlayGameHeroesSelected
+) => playGameHeroesSelected.forEach(heroSelectedHandler);
+
 const gameActionHandlers: GameActionHandlers = {
     [playGameActions.phaseChangedTo]: phaseChangeHandler,
     [playGameActions.heroSelected]: heroSelectedHandler,
+    [playGameActions.heroesSelected]: heroesSelectedHandler,
 };
 
 export const playGameActionsHandler = <T extends playGameActions>({

@@ -2,7 +2,7 @@ import { heroIds } from '@prisma/client';
 import prisma from '../../../lib/prisma';
 
 import { GameId, PlayerIdInGame } from '../../../models/common.models';
-import { PlayGameData } from '../models/play-game.models';
+import { PlayGameData, PlayGamePhaseData } from '../models/play-game.models';
 import { PlayGamePlayers } from '../../player/player.models';
 
 export const startPlayGameOperation = (
@@ -22,6 +22,20 @@ export const getPlayGameOperation = (gameId: GameId) =>
     prisma.playGame.findFirstOrThrow({
         where: { gameId },
         include: { players: true },
+    });
+
+export const getPlayGameWithoutPlayerOperation = (gameId: GameId) =>
+    prisma.playGame.findFirstOrThrow({
+        where: { gameId },
+    });
+
+export const changePlayGamePhaseOperation = (
+    gameId: GameId,
+    playGameData: PlayGamePhaseData
+) =>
+    prisma.playGame.update({
+        where: { gameId },
+        data: playGameData,
     });
 
 export const isPlayerInPlayGameOperation = (

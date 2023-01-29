@@ -13,9 +13,11 @@ import { playGameActions } from '../play-game.enums';
 
 import { PlayGamePlayers } from '../../player/player.models';
 
+export type DurationInMs = number;
+
 export type PlayGamePhaseData = {
     phase: playGamePhases;
-    phaseDurationInMs: number;
+    phaseDurationInMs: DurationInMs;
     phaseStartDate: string;
     round: number;
 };
@@ -35,21 +37,17 @@ export type PlayGameJoinLeavePayload = z.infer<
     typeof playGameJoinLeavePayloadSchema
 >;
 
-export type DurationInMs = number;
-
-export type PlayGamePhases = {
-    phase: playGamePhases;
-    phaseDurationInMs: DurationInMs;
-};
-
 export type PlayGameHeroSelected = {
     playerKey: string;
     selectedHeroId: heroIds;
 };
 
+export type PlayGameHeroesSelected = Array<PlayGameHeroSelected>;
+
 type PlayGameActionPayload = {
-    [playGameActions.phaseChangedTo]: PlayGamePhases;
+    [playGameActions.phaseChangedTo]: PlayGamePhaseData;
     [playGameActions.heroSelected]: PlayGameHeroSelected;
+    [playGameActions.heroesSelected]: PlayGameHeroesSelected;
 };
 
 export type PlayGameAction<T extends playGameActions> = {
