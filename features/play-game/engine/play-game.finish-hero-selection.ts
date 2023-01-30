@@ -6,26 +6,18 @@ import {
     PlayGamePlayer,
     PlayGamePlayerWithSelectedHeros,
 } from '../../player/player.models';
-import { PlayGameHeroesSelected } from '../models/play-game.models';
 
 import { getRandom } from '../../../utils.ts/random.utils';
 
 export const finishHeroSelection = async (gameId: GameId) => {
     const { players } = await getPlayGameOperation(gameId);
 
-    const serverPlayerWithSelectedHeros: PlayGamePlayerWithSelectedHeros = [];
-    const clientPlayerWithSelectedHeros: PlayGameHeroesSelected = [];
+    const playerWithSelectedHeroes: PlayGamePlayerWithSelectedHeros = players
+        .filter(({ selectedHeroId }: PlayGamePlayer) => !selectedHeroId)
+        .map(({ playerIdInGame, heroIds }: PlayGamePlayer) => ({
+            playerIdInGame,
+            selectedHeroId: getRandom(heroIds),
+        }));
 
-    players
-        .filter(({ selectedHeroId }: PlayGamePlayer) => Boolean(selectedHeroId))
-        .forEach(({ playerIdInGame, playerKey, heroIds }: PlayGamePlayer) => {
-            const selectedHeroId = getRandom(heroIds);
-            serverPlayerWithSelectedHeros.push({
-                playerIdInGame,
-                selectedHeroId,
-            });
-            clientPlayerWithSelectedHeros.push({ playerKey, selectedHeroId });
-        });
-
-    await setHeroToPlayers(serverPlayerWithSelectedHeros);
+    await setHeroToPlayers(playerWithSelectedHeroes);
 };
