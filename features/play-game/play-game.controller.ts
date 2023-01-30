@@ -3,6 +3,7 @@ import { togglePlayGameEngine } from './engine/play-game.engine';
 import {
     getPlayerHeroIds,
     getPlayGame,
+    getPlayGameRecruitPhaseInitialData,
     selectPlayGamePlayerHero,
     startPlayGame,
 } from './services/play-game.server.service';
@@ -71,3 +72,7 @@ export const selectPlayGamePlayerHeroMutation = async ({
 
     return { message: 'hero selected' };
 };
+
+export const getPlayGameRecruitPhaseInitialDataQuery = ({
+    input,
+}: TRCPProps<PlayGameBaseInput>) => getPlayGameRecruitPhaseInitialData(input);

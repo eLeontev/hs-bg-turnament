@@ -5,6 +5,7 @@ import {
     playGameBaseInputSchema,
     playGameDetailsOutputSchema,
     playGameJoinLeavePayloadSchema,
+    playGamePhaseDataSchema,
     playGamePlayerDetailsWithSelectedHeroIdSchema,
     playGameSelectHeroSchema,
 } from '../schemas/play-game.schemas';
@@ -15,12 +16,7 @@ import { PlayGamePlayers } from '../../player/player.models';
 
 export type DurationInMs = number;
 
-export type PlayGamePhaseData = {
-    phase: playGamePhases;
-    phaseDurationInMs: DurationInMs;
-    phaseStartDate: string;
-    round: number;
-};
+export type PlayGamePhaseData = z.infer<typeof playGamePhaseDataSchema>;
 
 export type PlayGameData = PlayGamePhaseData & {};
 

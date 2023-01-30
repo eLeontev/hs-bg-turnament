@@ -11,6 +11,7 @@ import { GameId } from '../../../models/common.models';
 import { phaseSiquence } from './play-game.engine.constants';
 
 import { scheduleTaskWithoutCanceletion } from '../../../utils.ts/scheduled-time.utils';
+import { performEndPhaseActivity } from './play-game.end-phase';
 
 export const isPlayGameOver = (gameId: GameId) => {
     // check if at least 2 players alive
@@ -19,15 +20,6 @@ export const isPlayGameOver = (gameId: GameId) => {
 
 export const finishPlayGame = (io: Server, gameId: GameId) => {
     // if has one player alive, notify that player is winner
-};
-
-export const performEndPreviousPhaseActivity = async (
-    io: Server,
-    gameId: GameId
-) => {
-    // -> calculate/check all players activities per phase
-    // build all batte results
-    // notify players to get battle results
 };
 
 export const performStartPhaseActivity = async (io: Server, gameId: GameId) => {
@@ -44,10 +36,9 @@ export const togglePhase =
     ) =>
     async () => {
         if (shouldFinishHeroSelection) {
-            await finishHeroSelection(io, gameId);
-        } else {
-            await performEndPreviousPhaseActivity(io, gameId);
+            await finishHeroSelection(gameId);
         }
+        await performEndPhaseActivity(io, gameId, shouldFinishHeroSelection);
 
         await performStartPhaseActivity(io, gameId);
 

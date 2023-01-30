@@ -7,6 +7,7 @@ import { formPlayGamePlayers } from '../services/play-game.player.service';
 
 import {
     initStateSelector,
+    setRecruitPhaseDataSelector,
     usePlayGameStore,
 } from '../components/store/play-game.store';
 import {
@@ -63,4 +64,18 @@ export const usePlayGameInitialization = () => {
     }, [playGameDetailsQuery, initState, setPlayers, baseInput]);
 
     return playGameDetailsQuery;
+};
+
+export const useInitialRecruitPhaseData = () => {
+    const setRecruitPhaseData = usePlayGameStore(setRecruitPhaseDataSelector);
+
+    const baseInput = useSetPlayGameBaseInput();
+    const phaseDataQuery = trpc.recruitPhaseInitialData.useQuery(baseInput);
+
+    useEffect(() => {
+        const phaseData = phaseDataQuery.data;
+        if (phaseData) {
+            setRecruitPhaseData(phaseData);
+        }
+    }, [phaseDataQuery, setRecruitPhaseData]);
 };

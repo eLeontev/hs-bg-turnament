@@ -147,3 +147,11 @@ export const selectPlayGamePlayerHero = async ({
 
     await selectPlayGamePlayerHeroOperation(playerIdInGame, heroId);
 };
+
+export const getPlayGameRecruitPhaseInitialData = async (
+    playGameBaseInput: PlayGameBaseInput
+) => {
+    const { phase, phaseDurationInMs, phaseStartDate, round } =
+        await getPlayGame(playGameBaseInput);
+    return { phase, phaseDurationInMs, phaseStartDate, round };
+};

@@ -42,15 +42,20 @@ export const playGameZodPhasesSchema = z.enum(playGamePhasesValues);
 export const playGamePhaseDurationInMsSchema = z.number().min(1000);
 export const playGameRoundSchema = z.number().min(0);
 
-export const playGameDetailsOutputSchema = z.object({
-    gameId: gameIdSchema,
+export const playGamePhaseDataSchema = z.object({
     phase: playGameZodPhasesSchema,
     phaseDurationInMs: playGamePhaseDurationInMsSchema,
     phaseStartDate: z.string(),
     round: playGameRoundSchema,
-    playerKey: playerKeySchema,
-    players: z.array(playGamePlayerDetailsSchema),
 });
+
+export const playGameDetailsOutputSchema = playGamePhaseDataSchema.merge(
+    z.object({
+        gameId: gameIdSchema,
+        playerKey: playerKeySchema,
+        players: z.array(playGamePlayerDetailsSchema),
+    })
+);
 
 export const playGameSelectHeroSchema = playGameBaseInputSchema.merge(
     z.object({

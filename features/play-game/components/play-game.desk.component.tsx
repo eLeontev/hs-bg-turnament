@@ -1,11 +1,11 @@
 import { playGamePhases } from '@prisma/client';
-import { dateInUtcString } from '../../../utils.ts/date.utils';
+
 import { GridComponent } from '../../common/components/table.grid.component';
 import {
     durationFormats,
     Timer,
 } from '../../common/components/timer.component';
-
+import { CombatDesk } from './combat/play-game.combat.desk';
 import { SelectHeroDesk } from './hero-selection/play-game.select-hero.desk';
 import { RecruitDesk } from './recruit/play-game.recruit.desk';
 
@@ -19,7 +19,7 @@ import {
 const playGamePhaseDesks = {
     [playGamePhases.heroSelection]: SelectHeroDesk,
     [playGamePhases.recruit]: RecruitDesk,
-    [playGamePhases.combat]: SelectHeroDesk,
+    [playGamePhases.combat]: CombatDesk,
 };
 
 export const PlayGameDesk = () => {

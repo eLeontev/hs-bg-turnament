@@ -1,9 +1,5 @@
-import { Server } from 'Socket.IO';
-
 import { getPlayGameOperation } from '../operations/play-game.operations';
 import { setHeroToPlayers } from '../operations/play-game.player.operations';
-
-import { notifyPlayersInPlayGame } from '../sockets/play-game.notification.socket';
 
 import { GameId } from '../../../models/common.models';
 import {
@@ -14,9 +10,7 @@ import { PlayGameHeroesSelected } from '../models/play-game.models';
 
 import { getRandom } from '../../../utils.ts/random.utils';
 
-import { playGameActions } from '../play-game.enums';
-
-export const finishHeroSelection = async (io: Server, gameId: GameId) => {
+export const finishHeroSelection = async (gameId: GameId) => {
     const { players } = await getPlayGameOperation(gameId);
 
     const serverPlayerWithSelectedHeros: PlayGamePlayerWithSelectedHeros = [];
@@ -34,9 +28,4 @@ export const finishHeroSelection = async (io: Server, gameId: GameId) => {
         });
 
     await setHeroToPlayers(serverPlayerWithSelectedHeros);
-
-    notifyPlayersInPlayGame(io, gameId, {
-        action: playGameActions.heroesSelected,
-        payload: clientPlayerWithSelectedHeros,
-    });
 };

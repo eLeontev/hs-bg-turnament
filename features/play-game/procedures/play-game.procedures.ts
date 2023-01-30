@@ -2,6 +2,7 @@ import { procedure } from '../../../trpc/runtime-config';
 
 import {
     getPlayerHeroIdsQuery,
+    getPlayGameRecruitPhaseInitialDataQuery,
     playGameQuery,
     selectPlayGamePlayerHeroMutation,
     startPlayGameMutation,
@@ -10,6 +11,7 @@ import {
 import {
     playGameBaseInputSchema,
     playGameDetailsOutputSchema,
+    playGamePhaseDataSchema,
     playGameSelectHeroSchema,
     startPlayGameInputSchema,
 } from '../schemas/play-game.schemas';
@@ -31,5 +33,11 @@ export const playGameProcedures = {
         .input(playGameSelectHeroSchema)
         .mutation(({ input, ctx }) =>
             selectPlayGamePlayerHeroMutation({ input, ctx })
+        ),
+    recruitPhaseInitialData: procedure
+        .input(playGameBaseInputSchema)
+        .output(playGamePhaseDataSchema)
+        .query(({ input, ctx }) =>
+            getPlayGameRecruitPhaseInitialDataQuery({ input, ctx })
         ),
 };

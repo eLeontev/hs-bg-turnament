@@ -28,7 +28,9 @@ export type PlayGameState = {
 export type PlayGameStoreApi = {
     initState: (playGameState: PlayGameState) => void;
     setPhase: (playGamePhaseData: PlayGamePhaseData) => void;
+    switchToRecrutPhase: () => void;
     setSelectedHeroId: (selectedHeroId: heroIds) => void;
+    setRecruitPhaseData: (recruitPhaseData: PlayGamePhaseData) => void;
 };
 
 const initialPhase = playGamePhases.heroSelection;
@@ -51,7 +53,10 @@ export const usePlayGameStore = create<PlayGameState & PlayGameStoreApi>(
         initState: (playGameState: PlayGameState) => set(playGameState),
         setPhase: (playGamePhaseData: PlayGamePhaseData) =>
             set(playGamePhaseData),
+        switchToRecrutPhase: () => set({ phase: playGamePhases.recruit }),
         setSelectedHeroId: (selectedHeroId: heroIds) => set({ selectedHeroId }),
+        setRecruitPhaseData: (recruitPhaseData: PlayGamePhaseData) =>
+            set(recruitPhaseData),
     })
 );
 
@@ -60,6 +65,9 @@ export const setPhaseSelector = ({ setPhase }: PlayGameStoreApi) => setPhase;
 export const setSelectedHeroIdSelector = ({
     setSelectedHeroId,
 }: PlayGameStoreApi) => setSelectedHeroId;
+export const setRecruitPhaseDataSelector = ({
+    setRecruitPhaseData,
+}: PlayGameStoreApi) => setRecruitPhaseData;
 
 export const playerKeySelector = ({ playerKey }: PlayGameState) => playerKey;
 export const baseInputSelector = ({ baseInput }: PlayGameState) => baseInput;

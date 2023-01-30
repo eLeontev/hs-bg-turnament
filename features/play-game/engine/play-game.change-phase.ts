@@ -28,10 +28,10 @@ export const changePlayGamePhase = async (io: Server, gameId: GameId) => {
     );
     await changePlayGamePhaseOperation(gameId, playGameData);
 
-    notifyPlayersInPlayGame(io, gameId, {
-        action: playGameActions.phaseChangedTo,
-        payload: playGameData,
-    });
+    // notifyPlayersInPlayGame(io, gameId, {
+    //     action: playGameActions.phaseChangedTo,
+    //     payload: playGameData,
+    // });
 
     return round;
 };
