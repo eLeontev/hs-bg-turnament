@@ -3,11 +3,13 @@ import prisma from '../../../lib/prisma';
 
 import { PlayerIdInGame } from '../../../models/common.models';
 import {
+    PlayGamePlayer,
+    PlayGamePlayers,
     PlayGamePlayerWithSelectedHero,
     PlayGamePlayerWithSelectedHeros,
 } from '../../player/player.models';
 
-export const setHeroToPlayer = (
+export const setHeroToPlayerOperation = (
     playerIdInGame: PlayerIdInGame,
     selectedHeroId: heroIds
 ) =>
@@ -16,7 +18,7 @@ export const setHeroToPlayer = (
         data: { selectedHeroId },
     });
 
-export const setHeroToPlayers = (
+export const setHeroToPlayersOperation = (
     playGamePlayers: PlayGamePlayerWithSelectedHeros
 ) =>
     Promise.all(
@@ -25,6 +27,23 @@ export const setHeroToPlayers = (
                 playerIdInGame,
                 selectedHeroId,
             }: PlayGamePlayerWithSelectedHero) =>
-                setHeroToPlayer(playerIdInGame, selectedHeroId)
+                setHeroToPlayerOperation(playerIdInGame, selectedHeroId)
         )
+    );
+
+const setPlayerOpponentOperation = ({
+    playerIdInGame,
+    opponentId,
+    opponentKey,
+}: PlayGamePlayer) =>
+    prisma.playGamePlayer.update({
+        where: { playerIdInGame },
+        data: { opponentId, opponentKey },
+    });
+
+export const setPlayersOpponentsOperation = (
+    playGamePlayers: PlayGamePlayers
+) =>
+    Promise.all(
+        playGamePlayers.map((player) => setPlayerOpponentOperation(player))
     );

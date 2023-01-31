@@ -1,6 +1,7 @@
 import { playGamePhases, PendingGamePlayer } from '@prisma/client';
 
 import { getPlayerHeroIdsMap } from './play-game.hero.service';
+import { getPhaseData } from './play-game.phase.service';
 
 import {
     getPlayGameOperation,
@@ -11,6 +12,11 @@ import {
 import { playerKeySchema } from '../../player/player.schemas';
 import { heroIdsSchema } from '../schemas/play-game.hero.schemas';
 
+import {
+    defaultCountOfHitPoints,
+    initialTavernLevel,
+} from '../../../constants/play-game.config.constants';
+
 import { PlayGamePlayer, PlayGamePlayers } from '../../player/player.models';
 import { GameId, PlayerIdInGame } from '../../../models/common.models';
 import {
@@ -19,7 +25,6 @@ import {
 } from '../models/play-game.models';
 
 import { getHashesFromValues } from '../../../utils.ts/hash-server.utils';
-import { getPhaseData } from './play-game.phase.service';
 import { dateInUtcString } from '../../../utils.ts/date.utils';
 
 export const startPlayGame = async (
@@ -36,7 +41,7 @@ export const startPlayGame = async (
     const playerHeroIdsMap = getPlayerHeroIdsMap(playerIdsInGame);
 
     const playGamePlayers = pendingGamePlayers.map(
-        ({ playerLogin, playerIdInGame }) => ({
+        ({ playerLogin, playerIdInGame }): PlayGamePlayer => ({
             playerIdInGame,
             playerLogin,
             playerKey: playerKeySchema.parse(
@@ -44,6 +49,12 @@ export const startPlayGame = async (
             ),
             heroIds: heroIdsSchema.parse(playerHeroIdsMap.get(playerIdInGame)),
             selectedHeroId: null,
+            countOfArmor: 0,
+            countOfHitPoints: defaultCountOfHitPoints,
+            tavernLevel: initialTavernLevel,
+            isWonLastTime: null,
+            opponentId: null,
+            opponentKey: null,
         })
     );
 
@@ -73,11 +84,27 @@ export const getPlayGame = async ({
     return {
         ...rest,
         playerKey: getPlayGamePlayerKey(players, playerIdInGame),
-        players: players.map(({ playerLogin, playerKey, selectedHeroId }) => ({
-            playerLogin,
-            playerKey,
-            selectedHeroId,
-        })),
+        players: players.map(
+            ({
+                playerLogin,
+                playerKey,
+                selectedHeroId,
+                isWonLastTime,
+                opponentKey,
+                countOfArmor,
+                countOfHitPoints,
+                tavernLevel,
+            }) => ({
+                playerLogin,
+                playerKey,
+                selectedHeroId,
+                countOfArmor,
+                countOfHitPoints,
+                isWonLastTime,
+                opponentKey,
+                tavernLevel,
+            })
+        ),
     };
 };
 

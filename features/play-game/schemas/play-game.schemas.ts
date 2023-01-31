@@ -25,8 +25,18 @@ const basePlayerDetailsSchema = z.object({
     playerLogin: playerLoginSchema,
     playerKey: z.string(),
 });
+
+export const countOfHitPointsSchema = z.number().min(0);
+export const isWonLastTimeSchema = z.boolean().nullable();
+export const opponentKeySchema = z.string().nullable();
+
 export const playGamePlayerDetailsSchema = basePlayerDetailsSchema.merge(
-    z.object({ selectedHeroId: heroIdSchema.nullable() })
+    z.object({
+        selectedHeroId: heroIdSchema.nullable(),
+        countOfArmor: countOfHitPointsSchema,
+        isWonLastTime: isWonLastTimeSchema,
+        opponentKey: opponentKeySchema,
+    })
 );
 
 export const playGamePlayerDetailsWithSelectedHeroIdSchema =

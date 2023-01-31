@@ -12,6 +12,7 @@ import { phaseSiquence } from './play-game.engine.constants';
 
 import { scheduleTaskWithoutCanceletion } from '../../../utils.ts/scheduled-time.utils';
 import { performEndPhaseActivity } from './play-game.end-phase';
+import { performStartPhaseActivity } from './play-game.start-phase';
 
 export const isPlayGameOver = (gameId: GameId) => {
     // check if at least 2 players alive
@@ -20,11 +21,6 @@ export const isPlayGameOver = (gameId: GameId) => {
 
 export const finishPlayGame = (io: Server, gameId: GameId) => {
     // if has one player alive, notify that player is winner
-};
-
-export const performStartPhaseActivity = async (io: Server, gameId: GameId) => {
-    // build new player pairs
-    // notify phase is ready
 };
 
 export const togglePhase =

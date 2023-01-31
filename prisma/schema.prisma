@@ -44,13 +44,19 @@ enum heroIds {
 }
 
 model PlayGamePlayer {
-  playerIdInGame String    @id @map("_id")
-  playerLogin    String
-  playerKey      String
-  selectedHeroId heroIds?
-  heroIds        heroIds[]
-  PlayGame       PlayGame? @relation(fields: [playGameGameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
-  playGameGameId String?
+  playerIdInGame   String    @id @map("_id")
+  playerLogin      String
+  playerKey        String
+  selectedHeroId   heroIds?
+  heroIds          heroIds[]
+  countOfHitPoints Int
+  countOfArmor     Int
+  isWonLastTime    Boolean?
+  opponentId       String?
+  opponentKey      String?
+  tavernLevel      Int
+  PlayGame         PlayGame? @relation(fields: [playGameGameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
+  playGameGameId   String?
 }
 
 model PlayGame {
