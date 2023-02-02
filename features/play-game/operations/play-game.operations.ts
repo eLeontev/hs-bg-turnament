@@ -38,6 +38,9 @@ export const changePlayGamePhaseOperation = (
         data: playGameData,
     });
 
+export const deletePlayGameOperation = (gameId: GameId) =>
+    prisma.playGame.delete({ where: { gameId } });
+
 export const isPlayerInPlayGameOperation = (
     gameId: GameId,
     playerIdInGame: PlayerIdInGame

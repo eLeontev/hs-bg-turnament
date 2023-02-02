@@ -8,6 +8,7 @@ import { usePlayersStore } from '../components/store/play-game.players.store';
 import {
     GameActionHandlers,
     PlayGameAction,
+    PlayGameGameOver,
     PlayGameHeroesSelected,
     PlayGameHeroSelected,
     PlayGamePhaseData,
@@ -28,10 +29,19 @@ const heroesSelectedHandler = (
     playGameHeroesSelected: PlayGameHeroesSelected
 ) => playGameHeroesSelected.forEach(heroSelectedHandler);
 
+const gameOverHandler = ({ playerKey }: PlayGameGameOver) => {
+    if (playerKey !== usePlayGameStore.getState().playerKey) {
+        return;
+    }
+
+    // TODO:notify to redirect to game over/ win game
+};
+
 const gameActionHandlers: GameActionHandlers = {
     [playGameActions.phaseChangedTo]: phaseChangeHandler,
     [playGameActions.heroSelected]: heroSelectedHandler,
     [playGameActions.heroesSelected]: heroesSelectedHandler,
+    [playGameActions.gameOver]: gameOverHandler,
 };
 
 export const playGameActionsHandler = <T extends playGameActions>({

@@ -7,3 +7,4 @@ export const phaseSiquence = {
 };
 
 export const roundIncrement = 1;
+export const minimumCountOfAlivePlayersToContinuePlayGame = 2;

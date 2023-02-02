@@ -5,23 +5,16 @@ import { getPhaseDuration } from '../services/play-game.phase.service';
 
 import { finishHeroSelection } from './play-game.finish-hero-selection';
 import { changePlayGamePhase } from './play-game.change-phase';
-
+import { finishPlayGame } from './play-game.finish-game';
 import { GameId } from '../../../models/common.models';
+import { performEndPhaseActivity } from './play-game.end-phase';
+import { performStartPhaseActivity } from './play-game.start-phase';
+
+import { isPlayGameOver } from './play-game.game-over.validation';
 
 import { phaseSiquence } from './play-game.engine.constants';
 
 import { scheduleTaskWithoutCanceletion } from '../../../utils.ts/scheduled-time.utils';
-import { performEndPhaseActivity } from './play-game.end-phase';
-import { performStartPhaseActivity } from './play-game.start-phase';
-
-export const isPlayGameOver = (gameId: GameId) => {
-    // check if at least 2 players alive
-    return false;
-};
-
-export const finishPlayGame = (io: Server, gameId: GameId) => {
-    // if has one player alive, notify that player is winner
-};
 
 export const togglePhase =
     (
@@ -40,12 +33,11 @@ export const togglePhase =
 
         const round = await changePlayGamePhase(io, gameId);
 
-        // check if game not over
-        if (await isPlayGameOver(gameId)) {
-            return finishPlayGame(io, gameId);
+        const { isGameOver, winner } = await isPlayGameOver(gameId);
+        if (isGameOver) {
+            return finishPlayGame(io, gameId, winner);
         }
 
-        // schedule new phase event
         togglePlayGameEngine(io, gameId, phase, round);
     };
 

@@ -13,6 +13,7 @@ import {
 import { playGameActions } from '../play-game.enums';
 
 import { PlayGamePlayers } from '../../player/player.models';
+import { PlayerKey } from '../../../models/common.models';
 
 export type DurationInMs = number;
 
@@ -40,10 +41,16 @@ export type PlayGameHeroSelected = {
 
 export type PlayGameHeroesSelected = Array<PlayGameHeroSelected>;
 
+export type PlayGameGameOver = {
+    playerKey: PlayerKey;
+    cards: Array<unknown>;
+};
+
 type PlayGameActionPayload = {
     [playGameActions.phaseChangedTo]: PlayGamePhaseData;
     [playGameActions.heroSelected]: PlayGameHeroSelected;
     [playGameActions.heroesSelected]: PlayGameHeroesSelected;
+    [playGameActions.gameOver]: PlayGameGameOver;
 };
 
 export type PlayGameAction<T extends playGameActions> = {

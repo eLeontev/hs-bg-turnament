@@ -2,6 +2,7 @@ export enum playGameActions {
     phaseChangedTo = 'phaseChangedTo',
     heroSelected = 'heroSelected',
     heroesSelected = 'heroesSelected',
+    gameOver = 'gameOver',
 }
 
 export enum playGamePlayerActions {
