@@ -14,7 +14,7 @@ import { heroIdsSchema } from '../schemas/play-game.hero.schemas';
 
 import {
     defaultCountOfHitPoints,
-    initialTavernLevel,
+    initialTavernTier,
 } from '../../../constants/play-game.config.constants';
 
 import { PlayGamePlayer, PlayGamePlayers } from '../../player/player.models';
@@ -51,10 +51,12 @@ export const startPlayGame = async (
             selectedHeroId: null,
             countOfArmor: 0,
             countOfHitPoints: defaultCountOfHitPoints,
-            tavernLevel: initialTavernLevel,
+            tavernTier: initialTavernTier,
             isWonLastTime: null,
             opponentId: null,
             opponentKey: null,
+            deskMinionIds: [],
+            handMinionIds: [],
         })
     );
 
@@ -93,7 +95,9 @@ export const getPlayGame = async ({
                 opponentKey,
                 countOfArmor,
                 countOfHitPoints,
-                tavernLevel,
+                tavernTier,
+                deskMinionIds,
+                handMinionIds,
             }) => ({
                 playerLogin,
                 playerKey,
@@ -102,7 +106,9 @@ export const getPlayGame = async ({
                 countOfHitPoints,
                 isWonLastTime,
                 opponentKey,
-                tavernLevel,
+                tavernTier,
+                deskMinionIds,
+                handMinionIds,
             })
         ),
     };

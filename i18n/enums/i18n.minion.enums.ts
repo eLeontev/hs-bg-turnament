@@ -1,3 +1,11 @@
 export enum minionI18nKeys {
-    test = 'test',
+    alleycatName = 'alleycatName',
+    alleycatDescription = 'alleycatDescription',
+    alleycatPowerDescription = 'alleycatPowerDescription',
+    alleycatTripleCardPowerDescription = 'alleycatTripleCardPowerDescription',
+
+    scavengingHyenaName = 'scavengingHyenaName',
+    scavengingHyenaDescription = 'scavengingHyenaDescription',
+    scavengingHyenaPowerDescription = 'scavengingHyenaPowerDescription',
+    scavengingHyenaTripleCardPowerDescription = 'scavengingHyenaTripleCardPowerDescription',
 }

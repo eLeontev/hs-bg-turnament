@@ -1,6 +1,6 @@
 import { heroIds } from '@prisma/client';
 
-import { herIdsValues } from '../schemas/play-game.hero.schemas';
+import { heroIdsValues } from '../schemas/play-game.hero.schemas';
 
 import { countOfHeroIds } from '../../../constants/game-config.constants';
 
@@ -15,7 +15,7 @@ export const getPlayerHeroIdsMap = (playerIdsInGame: Array<PlayerIdInGame>) => {
     const playerHeroIdsMap = new Map<PlayerIdInGame, HeroIds>();
 
     let randomHeroId: heroIds;
-    let heroIdsToSelected = [...herIdsValues];
+    let heroIdsToSelected = [...heroIdsValues];
 
     new Array(countOfHeroIds).fill('').forEach(() =>
         playerIdsInGame.forEach((playerIdInGame: PlayerIdInGame) => {

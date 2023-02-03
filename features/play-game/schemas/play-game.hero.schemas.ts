@@ -1,7 +1,7 @@
 import { heroIds } from '@prisma/client';
 import { z } from 'zod';
 
-export const herIdsValues = [
+export const heroIdsValues = [
     heroIds.afkay,
     heroIds.alkair,
     heroIds.alexstrasza,
@@ -12,5 +12,5 @@ export const herIdsValues = [
     heroIds.cthun,
     heroIds.captain,
 ] as const; // TODO: no automatic way to generate zod enums fron objects (casting or manual)
-export const heroIdSchema = z.enum(herIdsValues);
+export const heroIdSchema = z.enum(heroIdsValues);
 export const heroIdsSchema = z.array(heroIdSchema);

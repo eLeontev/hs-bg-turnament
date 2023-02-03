@@ -43,8 +43,17 @@ enum heroIds {
   captain
 }
 
+enum minionIds {
+  alleycat
+  scavengingHyena
+}
+
+enum minionTypes {
+  beast
+}
+
 model PlayGamePlayer {
-  playerIdInGame   String    @id @map("_id")
+  playerIdInGame   String      @id @map("_id")
   playerLogin      String
   playerKey        String
   selectedHeroId   heroIds?
@@ -54,8 +63,10 @@ model PlayGamePlayer {
   isWonLastTime    Boolean?
   opponentId       String?
   opponentKey      String?
-  tavernLevel      Int
-  PlayGame         PlayGame? @relation(fields: [playGameGameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
+  tavernTier       Int
+  deskMinionIds    minionIds[]
+  handMinionIds    minionIds[]
+  PlayGame         PlayGame?   @relation(fields: [playGameGameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
   playGameGameId   String?
 }
 
@@ -65,5 +76,6 @@ model PlayGame {
   phaseDurationInMs Int
   phaseStartDate    String
   round             Int
+  minionTypes       minionTypes[]
   players           PlayGamePlayer[]
 }
