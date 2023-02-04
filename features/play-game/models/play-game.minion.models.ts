@@ -10,6 +10,8 @@ import { tavernTiers } from './play-game.tavern.models';
 export type MinionId = z.infer<typeof minionIdSchema>;
 export type MinionIds = Array<MinionId>;
 
+export enum minionUniqueBehaviorIds {}
+
 export type Minion = {
     countOfHitPoints: number;
     attackPower: number;
@@ -17,6 +19,7 @@ export type Minion = {
     hasWindFury: boolean;
     hasReborn: boolean;
     hasDivineShield: boolean;
+    hasDeathRattle: boolean;
     types: Array<minionTypes>;
     minionId: MinionId;
     avatarSrc: string;
@@ -24,6 +27,7 @@ export type Minion = {
     name: minionI18nKeys;
     powerDescription: minionI18nKeys;
     tripleCardPowerDescription: minionI18nKeys;
+    uniqueBehaviorId?: minionUniqueBehaviorIds;
 };
 
 export type Minions = {
