@@ -12,6 +12,7 @@ import {
     PlayGamePhaseData,
 } from '../../models/play-game.models';
 import { PlayerKey } from '../../../../models/common.models';
+import { minionTypesSchema } from '../../schemas/play-game.minion.schemas';
 
 export type PlayGameState = {
     isReady: boolean;
@@ -21,6 +22,7 @@ export type PlayGameState = {
     phaseDurationInMs: DurationInMs;
     phaseStartDate: string;
     round: z.infer<typeof playGameRoundSchema>;
+    minionTypes: z.infer<typeof minionTypesSchema>;
     selectedHeroId: heroIds | undefined;
     selectedHeroIds: Map<string, heroIds>;
 };
@@ -41,6 +43,7 @@ const initialState: PlayGameState = {
     phase: initialPhase,
     phaseStartDate: '',
     phaseDurationInMs: getPhaseDuration(initialPhase),
+    minionTypes: [],
     round: 0,
     selectedHeroId: undefined,
     selectedHeroIds: new Map<string, heroIds>(),

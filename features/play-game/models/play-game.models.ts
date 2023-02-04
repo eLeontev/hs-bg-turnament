@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { heroIds, playGamePhases } from '@prisma/client';
+import { heroIds, minionTypes, playGamePhases } from '@prisma/client';
 
 import {
     playGameBaseInputSchema,
@@ -19,7 +19,9 @@ export type DurationInMs = number;
 
 export type PlayGamePhaseData = z.infer<typeof playGamePhaseDataSchema>;
 
-export type PlayGameData = PlayGamePhaseData & {};
+export type PlayGameData = PlayGamePhaseData & {
+    minionTypes: Array<minionTypes>;
+};
 
 export type PlayGame = {
     gameId: string;
@@ -63,7 +65,9 @@ export type GameActionHandlers = {
 };
 
 export type PlayGameDetailsOutput = z.infer<typeof playGameDetailsOutputSchema>;
-export type PlayGameDetailsPlayers = PlayGameDetailsOutput['players'];
+export type PlayGameDetailsPlayer =
+    PlayGameDetailsOutput['players'] extends Array<infer R> ? R : never;
+export type PlayGameDetailsPlayers = Array<PlayGameDetailsPlayer>;
 
 export type PlayGamePlayerWithSelectedHeroId = Required<
     z.infer<typeof playGamePlayerDetailsWithSelectedHeroIdSchema>

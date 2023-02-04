@@ -8,6 +8,7 @@ import {
     playerKeySchema,
     playerLoginSchema,
 } from '../../player/player.schemas';
+import { minionTypesSchema } from './play-game.minion.schemas';
 
 export const startPlayGameInputSchema = z.object({
     playerId: playerIdSchema,
@@ -63,6 +64,7 @@ export const playGameDetailsOutputSchema = playGamePhaseDataSchema.merge(
     z.object({
         gameId: gameIdSchema,
         playerKey: playerKeySchema,
+        minionTypes: minionTypesSchema,
         players: z.array(playGamePlayerDetailsSchema),
     })
 );
