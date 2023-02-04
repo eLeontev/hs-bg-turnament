@@ -46,6 +46,20 @@ enum heroIds {
 enum minionIds {
   alleycat
   scavengingHyena
+  leapfrogger
+  rabidSaurolisk
+  sewerRat
+  monstrousMacaw
+  ratPack
+  caveHydra
+  reanimatingRattler
+  savannahHighmane
+  agamaggan
+  mamaBear
+  ghastcoiler
+  goldrinn
+
+  ballOfMinions
 }
 
 enum minionTypes {
