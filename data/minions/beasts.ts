@@ -3,6 +3,7 @@ import { minionIds, minionTypes } from '@prisma/client';
 import { minionI18nKeys } from '../../i18n/enums/i18n.minion.enums';
 
 import { Minion } from '../../features/play-game/models/play-game.minion.models';
+import { min } from 'date-fns';
 
 const alleycatMinion: Minion = {
     countOfHitPoints: 1,
@@ -19,6 +20,7 @@ const alleycatMinion: Minion = {
     avatarTripleSrc: '/minion-avatars/beasts/alleycat-triple.avatar.png',
     minionId: minionIds.alleycat,
     name: minionI18nKeys.alleycatName,
+    description: minionI18nKeys.alleycatDescription,
     powerDescription: minionI18nKeys.alleycatPowerDescription,
     tripleCardPowerDescription:
         minionI18nKeys.alleycatTripleCardPowerDescription,
@@ -39,6 +41,7 @@ const scavengingHyenaMinion: Minion = {
     avatarSrc: '/minion-avatars/beasts/scavenginghyena-avatar.png',
     avatarTripleSrc: '/minion-avatars/beasts/scavenginghyena-triple.avatar.png',
     name: minionI18nKeys.scavengingHyenaName,
+    description: minionI18nKeys.scavengingHyenaDescription,
     powerDescription: minionI18nKeys.scavengingHyenaPowerDescription,
     tripleCardPowerDescription:
         minionI18nKeys.scavengingHyenaTripleCardPowerDescription,
@@ -139,6 +142,7 @@ const ratPackMinion: Minion = {
     avatarSrc: '/minion-avatars/beasts/ratPack-avatar.png',
     avatarTripleSrc: '/minion-avatars/beasts/ratPack-triple.avatar.png',
     name: minionI18nKeys.ratPackName,
+    description: minionI18nKeys.ratPackDescription,
     powerDescription: minionI18nKeys.ratPackPowerDescription,
     tripleCardPowerDescription:
         minionI18nKeys.ratPackTripleCardPowerDescription,
@@ -159,6 +163,7 @@ const caveHydraMinion: Minion = {
     avatarSrc: '/minion-avatars/beasts/caveHydra-avatar.png',
     avatarTripleSrc: '/minion-avatars/beasts/caveHydra-triple.avatar.png',
     name: minionI18nKeys.caveHydraName,
+    description: minionI18nKeys.caveHydraDescription,
     powerDescription: minionI18nKeys.caveHydraPowerDescription,
     tripleCardPowerDescription:
         minionI18nKeys.caveHydraTripleCardPowerDescription,
@@ -201,6 +206,7 @@ const savannahHighmaneMinion: Minion = {
     avatarTripleSrc:
         '/minion-avatars/beasts/savannahHighmane-triple.avatar.png',
     name: minionI18nKeys.savannahHighmaneName,
+    description: minionI18nKeys.savannahHighmaneDescription,
     powerDescription: minionI18nKeys.savannahHighmanePowerDescription,
     tripleCardPowerDescription:
         minionI18nKeys.savannahHighmaneTripleCardPowerDescription,
