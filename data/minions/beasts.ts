@@ -3,7 +3,6 @@ import { minionIds, minionTypes } from '@prisma/client';
 import { minionI18nKeys } from '../../i18n/enums/i18n.minion.enums';
 
 import { Minion } from '../../features/play-game/models/play-game.minion.models';
-import { min } from 'date-fns';
 
 const alleycatMinion: Minion = {
     countOfHitPoints: 1,
