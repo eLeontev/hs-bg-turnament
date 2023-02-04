@@ -50,6 +50,8 @@ enum minionIds {
 
 enum minionTypes {
   beast
+  all
+  noType
 }
 
 model PlayGamePlayer {
