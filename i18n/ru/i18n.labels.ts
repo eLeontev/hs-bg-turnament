@@ -57,4 +57,7 @@ export const ruLabelMessages: I18nTransMessages<namespaces.labels> = {
     player: 'Игрок',
 
     selectHeroLabel: 'Выбрать героя',
+
+    gameConfigTitle:
+        'Добро пожаловать в настройки игры. Здесь вы сможете кастомизировать свою игру.',
 };

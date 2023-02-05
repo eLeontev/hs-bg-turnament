@@ -41,4 +41,6 @@ export enum labelI18nKeys {
     player = 'player',
 
     selectHeroLabel = 'selectHeroLabel',
+
+    gameConfigTitle = 'gameConfigTitle',
 }

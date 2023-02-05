@@ -53,4 +53,6 @@ export const enLabelMessages: I18nTransMessages<namespaces.labels> = {
     player: 'Player',
 
     selectHeroLabel: 'Select hero',
+
+    gameConfigTitle: 'Welcome to config. Here you can customize your game.',
 };

@@ -316,9 +316,9 @@ export const beast4StartTavern = new Map<minionIds, Minion>([
 export const beast5StartTavern = new Map<minionIds, Minion>([
     [minionIds.agamaggan, agamagganMinion],
     [minionIds.mamaBear, mamaBearMinion],
-    [minionIds.goldrinn, goldrinnMinion],
 ]);
 
 export const beast6StartTavern = new Map<minionIds, Minion>([
     [minionIds.ghastcoiler, ghastcoilerMinion],
+    [minionIds.goldrinn, goldrinnMinion],
 ]);
