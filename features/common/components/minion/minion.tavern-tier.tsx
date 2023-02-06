@@ -2,7 +2,7 @@ import { createStyles, MantineTheme } from '@mantine/core';
 import { tavernTiers } from '../../../play-game/models/play-game.tavern.models';
 
 const useMinionTavernTierStyles = createStyles<string, number>(
-    (theme: MantineTheme, tavernTier: number) => ({
+    (theme: MantineTheme) => ({
         minionTavernTierContainer: {
             position: 'absolute',
             width: 50,
