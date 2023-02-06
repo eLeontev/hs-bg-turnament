@@ -7,7 +7,7 @@ import { Flex } from '@mantine/core';
 import { GridComponent } from '../../features/common/components/table.grid.component';
 import { GameConfigTitle } from '../../features/game-config/components/config.title.component';
 
-import { MinionCard } from '../../features/common/components/minion-card';
+import { MinionCard } from '../../features/common/components/minion/minion-card';
 
 import { tavernTiers } from '../../features/play-game/models/play-game.tavern.models';
 
