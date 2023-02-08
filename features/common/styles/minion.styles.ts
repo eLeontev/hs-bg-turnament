@@ -1,6 +1,9 @@
 import { createStyles, CSSObject, MantineTheme } from '@mantine/core';
 
-const textStyles = (theme: MantineTheme, countOf: number): CSSObject => ({
+export const textStyles = (
+    theme: MantineTheme,
+    countOf: number
+): CSSObject => ({
     position: 'absolute',
     transform: 'translate(-50%, -50%)',
     color: theme.colors.gray[0],
