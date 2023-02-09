@@ -3,6 +3,10 @@ import { namespaces } from '../enums/i18n.enums';
 import { I18nTransMessages } from '../i18n.models';
 
 export const ruMinionMessages: I18nTransMessages<namespaces.minions> = {
+    minionTypeBeasts: 'звери',
+    minionTypeAll: 'все',
+    minionTypeNoType: '',
+
     // beasts
     alleycatName: 'Бродячий кот',
     alleycatDescription:

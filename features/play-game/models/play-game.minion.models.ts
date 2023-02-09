@@ -31,6 +31,7 @@ export type Minion = {
     name: minionI18nKeys;
     description?: minionI18nKeys;
     powerDescription: minionI18nKeys;
+    isTriple: boolean;
     tripleCardPowerDescription: minionI18nKeys;
     uniqueBehaviorId?: minionUniqueBehaviorIds;
 };

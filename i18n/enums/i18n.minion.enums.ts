@@ -1,4 +1,8 @@
 export enum minionI18nKeys {
+    minionTypeBeasts = 'minionTypeBeasts',
+    minionTypeAll = 'minionTypeAll',
+    minionTypeNoType = 'minionTypeNoType',
+
     // beasts
     alleycatName = 'alleycatName',
     alleycatDescription = 'alleycatDescription',

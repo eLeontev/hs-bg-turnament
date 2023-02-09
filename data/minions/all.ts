@@ -14,6 +14,7 @@ const ballOfMinionsMinion: Minion = {
     hasDeathRattle: false,
     hasBattleCry: false,
     hasUniqueBehavior: true,
+    isTriple: false,
     types: [minionTypes.all],
     avatarSrc: '/minion-avatars/all/ballOfMinions-avatar.png',
     avatarTripleSrc: '/minion-avatars/all/ballOfMinions-triple.avatar.png',

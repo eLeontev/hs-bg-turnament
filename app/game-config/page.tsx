@@ -33,6 +33,7 @@ const TavernTierMinions = ({
             <MinionCard
                 key={minion.minionId}
                 minion={minion}
+                minionType={minionType}
                 tavernTier={tavernTier}
             ></MinionCard>
         ))}

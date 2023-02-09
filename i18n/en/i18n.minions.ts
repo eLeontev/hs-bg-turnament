@@ -3,6 +3,10 @@ import { namespaces } from '../enums/i18n.enums';
 import { I18nTransMessages } from '../i18n.models';
 
 export const enMinionMessages: I18nTransMessages<namespaces.minions> = {
+    minionTypeBeasts: 'beasts',
+    minionTypeAll: 'all',
+    minionTypeNoType: '',
+
     // beasts
     alleycatName: 'Alleycat',
     alleycatDescription: 'To be a cool cat in Gadgetzan, you gotta have bling.',

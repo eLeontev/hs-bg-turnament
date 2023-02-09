@@ -11,6 +11,8 @@ import { Minion } from '../../../play-game/models/play-game.minion.models';
 import { tavernTiers } from '../../../play-game/models/play-game.tavern.models';
 import { MinionAttackPower } from './minion.attack-power';
 import { MinionTavernTier } from './minion.tavern-tier';
+import { MinionDescription } from './minion.description';
+import { minionTypes } from '@prisma/client';
 
 const useMinionCardStyles = createStyles<string>((theme: MantineTheme) => ({
     minionCard: {
@@ -26,15 +28,27 @@ const useMinionCardStyles = createStyles<string>((theme: MantineTheme) => ({
 export type MinionCardProps = {
     minion: Minion;
     tavernTier: tavernTiers;
+    minionType: minionTypes;
 };
 
-export const MinionCard = ({ minion, tavernTier }: MinionCardProps) => {
+export const MinionCard = ({
+    minion,
+    tavernTier,
+    minionType,
+}: MinionCardProps) => {
     const { classes } = useMinionCardStyles();
     const t = useI18nMinionTranslate();
     return (
         <Box className={classes.minionCard}>
             <MinionTavernTier tavernTier={tavernTier}></MinionTavernTier>
-            <MinionName name={t(minion.name)}></MinionName>
+            <MinionName
+                name={t(minion.name)}
+                isTriple={minion.isTriple}
+            ></MinionName>
+            <MinionDescription
+                minion={minion}
+                minionType={minionType}
+            ></MinionDescription>
             <MinionAttackPower
                 attackPower={minion.attackPower}
             ></MinionAttackPower>
