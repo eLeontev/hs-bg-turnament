@@ -60,4 +60,7 @@ export const ruLabelMessages: I18nTransMessages<namespaces.labels> = {
 
     gameConfigTitle:
         'Добро пожаловать в настройки игры. Здесь вы сможете кастомизировать свою игру.',
+
+    switchToTriple: 'Триплет',
+    switchToRegular: 'Обычный',
 };

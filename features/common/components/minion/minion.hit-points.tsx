@@ -4,11 +4,18 @@ import { Flex, Text } from '@mantine/core';
 
 import { useMinionHitpointsStyles } from '../../styles/minion.styles';
 
-export type MinionCountOfHitpointsProps = { countOfHitpoints: number };
+export type MinionCountOfHitpointsProps = {
+    countOfHitpoints: number;
+    isTriple: boolean;
+};
 export const MinionCountOfHitpoints = ({
     countOfHitpoints,
+    isTriple,
 }: MinionCountOfHitpointsProps) => {
-    const { classes } = useMinionHitpointsStyles(countOfHitpoints);
+    const { classes } = useMinionHitpointsStyles({
+        countOfHitpoints,
+        isTriple,
+    });
 
     return (
         <Flex className={classes.countOfHitpointsContainer}>

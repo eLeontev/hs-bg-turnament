@@ -38,6 +38,10 @@ export const MinionCard = ({
 }: MinionCardProps) => {
     const { classes } = useMinionCardStyles();
     const t = useI18nMinionTranslate();
+
+    const { isTriple, avatarSrc, avatarTripleSrc, name } = minion;
+    const src = isTriple ? avatarTripleSrc : avatarSrc;
+
     return (
         <Box className={classes.minionCard}>
             <MinionTavernTier tavernTier={tavernTier}></MinionTavernTier>
@@ -51,16 +55,18 @@ export const MinionCard = ({
             ></MinionDescription>
             <MinionAttackPower
                 attackPower={minion.attackPower}
+                isTriple={isTriple}
             ></MinionAttackPower>
             <MinionCountOfHitpoints
                 countOfHitpoints={minion.countOfHitPoints}
+                isTriple={isTriple}
             ></MinionCountOfHitpoints>
             <Image
                 priority
                 width={200}
                 height={276}
-                src={minion.avatarSrc}
-                alt={minion.name}
+                src={src}
+                alt={name}
             ></Image>
         </Box>
     );

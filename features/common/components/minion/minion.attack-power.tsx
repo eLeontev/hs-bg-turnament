@@ -4,9 +4,12 @@ import { Flex, Text } from '@mantine/core';
 
 import { useMinionAttackPowerStyles } from '../../styles/minion.styles';
 
-export type MinionAttackPowerProps = { attackPower: number };
-export const MinionAttackPower = ({ attackPower }: MinionAttackPowerProps) => {
-    const { classes } = useMinionAttackPowerStyles(attackPower);
+export type MinionAttackPowerProps = { attackPower: number; isTriple: boolean };
+export const MinionAttackPower = ({
+    attackPower,
+    isTriple,
+}: MinionAttackPowerProps) => {
+    const { classes } = useMinionAttackPowerStyles({ attackPower, isTriple });
 
     return (
         <Flex className={classes.attackPowerContainer}>

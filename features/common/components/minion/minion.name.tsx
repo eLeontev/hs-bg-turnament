@@ -2,13 +2,13 @@ import Image from 'next/image';
 
 import { Box, createStyles, MantineTheme } from '@mantine/core';
 
-const useMinionNameStyles = createStyles<string, string>(
-    (theme: MantineTheme, name: string) => ({
+const useMinionNameStyles = createStyles<string, MinionNameProps>(
+    (theme: MantineTheme, { name, isTriple }: MinionNameProps) => ({
         minionNameContainer: {
             position: 'absolute',
             width: 180,
             height: 30,
-            left: 26,
+            left: isTriple ? 22 : 26,
             top: 146,
         },
         minionNameImage: {
@@ -32,7 +32,7 @@ const useMinionNameStyles = createStyles<string, string>(
 
 export type MinionNameProps = { name: string; isTriple: boolean };
 export const MinionName = ({ name, isTriple }: MinionNameProps) => {
-    const { classes } = useMinionNameStyles(name);
+    const { classes } = useMinionNameStyles({ name, isTriple });
     const nameBackgroundImageUrl = isTriple
         ? '/minion-name.triple.png'
         : '/minion-name.regular.png';
