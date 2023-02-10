@@ -2,28 +2,35 @@ import { Box, createStyles, MantineTheme } from '@mantine/core';
 
 import Image from 'next/image';
 
+import { minionTypes } from '@prisma/client';
+
 import { useI18nMinionTranslate } from '../../../../i18n/i18n.hooks';
 
 import { MinionCountOfHitpoints } from './minion.hit-points';
 import { MinionName } from './minion.name';
-
-import { Minion } from '../../../play-game/models/play-game.minion.models';
-import { tavernTiers } from '../../../play-game/models/play-game.tavern.models';
 import { MinionAttackPower } from './minion.attack-power';
 import { MinionTavernTier } from './minion.tavern-tier';
 import { MinionDescription } from './minion.description';
-import { minionTypes } from '@prisma/client';
 
-const useMinionCardStyles = createStyles<string>((theme: MantineTheme) => ({
-    minionCard: {
-        cursor: 'pointer',
-        padding: 8,
-        margin: 8,
-        width: 232,
-        borderRadius: 8,
-        backdropFilter: 'blur(1px)',
-    },
-}));
+import { Minion } from '../../../play-game/models/play-game.minion.models';
+import { tavernTiers } from '../../../play-game/models/play-game.tavern.models';
+
+const useMinionCardStyles = createStyles<string, boolean>(
+    (theme: MantineTheme, isTriple: boolean) => ({
+        minionCard: {
+            cursor: 'pointer',
+            padding: 8,
+            margin: 8,
+            width: 232,
+            borderRadius: 8,
+            backdropFilter: 'blur(1px)',
+        },
+        tripleOverride: {
+            position: 'relative',
+            left: isTriple ? 4 : 0,
+        },
+    })
+);
 
 export type MinionCardProps = {
     minion: Minion;
@@ -36,15 +43,28 @@ export const MinionCard = ({
     tavernTier,
     minionType,
 }: MinionCardProps) => {
-    const { classes } = useMinionCardStyles();
+    const { isTriple, avatarSrc, avatarTripleSrc, name } = minion;
+
+    const { classes } = useMinionCardStyles(isTriple);
     const t = useI18nMinionTranslate();
 
-    const { isTriple, avatarSrc, avatarTripleSrc, name } = minion;
     const src = isTriple ? avatarTripleSrc : avatarSrc;
 
     return (
         <Box className={classes.minionCard}>
-            <MinionTavernTier tavernTier={tavernTier}></MinionTavernTier>
+            <Box className={classes.tripleOverride}>
+                <Image
+                    priority
+                    width={isTriple ? 198 : 200}
+                    height={276}
+                    src={src}
+                    alt={name}
+                ></Image>
+            </Box>
+            <MinionTavernTier
+                tavernTier={tavernTier}
+                isTriple={isTriple}
+            ></MinionTavernTier>
             <MinionName
                 name={t(minion.name)}
                 isTriple={minion.isTriple}
@@ -55,19 +75,10 @@ export const MinionCard = ({
             ></MinionDescription>
             <MinionAttackPower
                 attackPower={minion.attackPower}
-                isTriple={isTriple}
             ></MinionAttackPower>
             <MinionCountOfHitpoints
                 countOfHitpoints={minion.countOfHitPoints}
-                isTriple={isTriple}
             ></MinionCountOfHitpoints>
-            <Image
-                priority
-                width={200}
-                height={276}
-                src={src}
-                alt={name}
-            ></Image>
         </Box>
     );
 };

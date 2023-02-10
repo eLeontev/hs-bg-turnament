@@ -10,13 +10,13 @@ import { minionTypesI18nKeys } from '../../../../i18n/i18n.constants';
 
 import { Minion } from '../../../play-game/models/play-game.minion.models';
 
-const useMinionPowerDescriptionStyles = createStyles<string, boolean>(
-    (theme: MantineTheme, isTriple: boolean) => ({
+const useMinionPowerDescriptionStyles = createStyles<string>(
+    (theme: MantineTheme) => ({
         minionPowerDescriptionContainer: {
             position: 'absolute',
             width: 147,
             height: 91,
-            left: isTriple ? 26 : 30,
+            left: 30,
             top: 182,
         },
         minionPowerDescriptionImage: {
@@ -63,7 +63,7 @@ export const MinionDescription = ({
     minionType,
     minion: { powerDescription, tripleCardPowerDescription, isTriple },
 }: MinionDescriptionProps) => {
-    const { classes } = useMinionPowerDescriptionStyles(isTriple);
+    const { classes } = useMinionPowerDescriptionStyles();
     const nameBackgroundImageUrl = isTriple
         ? '/minion-power-description.triple.png'
         : '/minion-power-description.regular.png';

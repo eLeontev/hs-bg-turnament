@@ -6,16 +6,11 @@ import { useMinionHitpointsStyles } from '../../styles/minion.styles';
 
 export type MinionCountOfHitpointsProps = {
     countOfHitpoints: number;
-    isTriple: boolean;
 };
 export const MinionCountOfHitpoints = ({
     countOfHitpoints,
-    isTriple,
 }: MinionCountOfHitpointsProps) => {
-    const { classes } = useMinionHitpointsStyles({
-        countOfHitpoints,
-        isTriple,
-    });
+    const { classes } = useMinionHitpointsStyles(countOfHitpoints);
 
     return (
         <Flex className={classes.countOfHitpointsContainer}>

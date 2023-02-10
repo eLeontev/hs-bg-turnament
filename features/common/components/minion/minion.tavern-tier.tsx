@@ -3,13 +3,13 @@ import Image from 'next/image';
 import { Box, createStyles, MantineTheme } from '@mantine/core';
 import { tavernTiers } from '../../../play-game/models/play-game.tavern.models';
 
-const useMinionTavernTierStyles = createStyles<string, number>(
-    (theme: MantineTheme) => ({
+const useMinionTavernTierStyles = createStyles<string, boolean>(
+    (theme: MantineTheme, isTriple) => ({
         minionTavernTierContainer: {
             position: 'absolute',
             width: 53,
             height: 55,
-            left: 12,
+            left: isTriple ? 15 : 12,
             top: 30,
         },
         minionTavernTierStarsContainer: {
@@ -23,9 +23,15 @@ const useMinionTavernTierStyles = createStyles<string, number>(
     })
 );
 
-export type MinionTavernTierProps = { tavernTier: tavernTiers };
-export const MinionTavernTier = ({ tavernTier }: MinionTavernTierProps) => {
-    const { classes } = useMinionTavernTierStyles(tavernTier);
+export type MinionTavernTierProps = {
+    tavernTier: tavernTiers;
+    isTriple: boolean;
+};
+export const MinionTavernTier = ({
+    tavernTier,
+    isTriple,
+}: MinionTavernTierProps) => {
+    const { classes } = useMinionTavernTierStyles(isTriple);
 
     return (
         <Box className={classes.minionTavernTierContainer}>
