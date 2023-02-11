@@ -62,7 +62,9 @@ export const MinionName = ({ name, isTriple, isSummoned }: MinionNameProps) => {
                     id="MinionName"
                     fill="none"
                     stroke="none"
-                    d="m 4 28 c 18 3 28 -3 52 -6 c 63 -10 77 -4 94 3"
+                    d={`m ${isSummoned ? 6 : 4} ${
+                        isSummoned ? 30 : 28
+                    } c 18 3 28 -3 52 -6 c 63 -10 77 -4 94 3`}
                 />
                 <text>
                     <textPath

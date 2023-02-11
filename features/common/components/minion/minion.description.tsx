@@ -39,7 +39,7 @@ const useMinionPowerDescriptionStyles = createStyles<
             lineHeight: 1,
             position: 'absolute',
             top: '40%',
-            left: '50%',
+            left: isSummoned ? '44%' : '50%',
             transform: 'translate(-50%, -50%)',
             width: '85%',
             textAlign: 'center',
