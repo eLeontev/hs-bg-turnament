@@ -14,13 +14,13 @@ export const textStyles = (
 });
 
 export const useMinionHitpointsStyles = createStyles<string, number>(
-    (theme: MantineTheme, countOfHitpoint) => ({
+    (theme: MantineTheme, countOfHitpoints: number) => ({
         countOfHitpointsContainer: {
             position: 'absolute',
-            width: 50,
-            height: 50,
-            left: 149,
-            top: 230,
+            width: 55,
+            height: 58,
+            left: 148,
+            top: 225,
             stroke: theme.colors.dark[9],
             strokeWidth: 4,
             paintOrder: 'stroke',
@@ -28,7 +28,7 @@ export const useMinionHitpointsStyles = createStyles<string, number>(
         countOfHitpoints: {
             top: '60%',
             left: '50%',
-            ...textStyles(theme, countOfHitpoint),
+            ...textStyles(theme, countOfHitpoints),
         },
     })
 );

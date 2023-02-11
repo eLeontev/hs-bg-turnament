@@ -94,6 +94,27 @@ export const enMinionMessages: I18nTransMessages<namespaces.minions> = {
     goldrinnPowerDescription: 'Give your Beasts +5/+5.',
     goldrinnTripleCardPowerDescription: 'Give your Beasts +10/+10.',
 
+    // beasts-summoned
+    tabbycatName: 'Tabbycat',
+    tabbycatDescription: '',
+    tabbycatPowerDescription: '',
+    tabbycatTripleCardPowerDescription: '',
+
+    turtleName: 'Turtle',
+    turtleDescription: '',
+    turtlePowerDescription: 'Taunt',
+    turtleTripleCardPowerDescription: 'Taunt',
+
+    ratName: 'Rat',
+    ratDescription: '',
+    ratPowerDescription: '',
+    ratTripleCardPowerDescription: '',
+
+    hyenaName: 'Hyena',
+    hyenaDescription: '',
+    hyenaPowerDescription: '',
+    hyenaTripleCardPowerDescription: '',
+
     // all
     ballOfMinionsName: 'Ball of Minions',
     ballOfMinionsDescription: '',

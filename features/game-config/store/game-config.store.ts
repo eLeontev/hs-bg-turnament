@@ -6,6 +6,7 @@ export type GameConfigState = {
     selectedMinionTypes: Array<minionTypes>;
     selectedTavernTiers: Array<tavernTiers>;
     tripleMinionIds: Set<minionIds>;
+    shouldDisplaySummonedMinions: boolean;
 };
 
 export type GameConfigApi = {
@@ -14,12 +15,16 @@ export type GameConfigApi = {
     removeSelectedTavernTier: (tavernTier: tavernTiers) => void;
     setTripleMinionIds: (minionId: minionIds) => void;
     removeTripleMinionIds: (minionId: minionIds) => void;
+    toggleTavernSummonMinionVisibility: (
+        shouldDisplaySummonedMinions: boolean
+    ) => void;
 };
 
 const initialState: GameConfigState = {
     selectedMinionTypes: [],
     selectedTavernTiers: [],
     tripleMinionIds: new Set(),
+    shouldDisplaySummonedMinions: false,
 };
 
 const setSelectedEntry = <T>(entries: Array<T>, entry: T): Array<T> => [
@@ -61,6 +66,9 @@ export const useGameConfigStore = create<GameConfigState & GameConfigApi>(
             tripleMinionIds.delete(minionId);
             set({ tripleMinionIds: new Set(tripleMinionIds) });
         },
+        toggleTavernSummonMinionVisibility: (
+            shouldDisplaySummonedMinions: boolean
+        ) => set({ shouldDisplaySummonedMinions }),
     })
 );
 
@@ -79,6 +87,9 @@ export const setTripleMinionIdsSelector = ({
 export const removeTripleMinionIdsSelector = ({
     removeTripleMinionIds,
 }: GameConfigApi) => removeTripleMinionIds;
+export const toggleTavernSummonMinionVisibilitySelector = ({
+    toggleTavernSummonMinionVisibility,
+}: GameConfigApi) => toggleTavernSummonMinionVisibility;
 
 export const selectedMinionTypesSelector = ({
     selectedMinionTypes,
@@ -91,3 +102,6 @@ export const selectedTavernTiersSelector = ({
 }: GameConfigState) => new Set(selectedTavernTiers);
 export const tripleMinionIdsSelector = ({ tripleMinionIds }: GameConfigState) =>
     new Set(tripleMinionIds);
+export const shouldDisplaySummonedMinionsSelector = ({
+    shouldDisplaySummonedMinions,
+}: GameConfigState) => shouldDisplaySummonedMinions;

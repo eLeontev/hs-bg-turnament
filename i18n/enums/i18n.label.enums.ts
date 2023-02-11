@@ -46,4 +46,6 @@ export enum labelI18nKeys {
 
     switchToTriple = 'switchToTriple',
     switchToRegular = 'switchToRegular',
+    switchToTavernMinions = 'switchToTavernMinions',
+    switchToSummonedMinions = 'switchToSummonedMinions',
 }

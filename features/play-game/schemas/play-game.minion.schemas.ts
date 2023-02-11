@@ -20,6 +20,12 @@ export const minionIdsValues = [
 
     // all
     minionIds.ballOfMinions,
+
+    // summon
+    minionIds.tabbycat,
+    minionIds.turtle,
+    minionIds.rat,
+    minionIds.hyena,
 ] as const; // TODO: no automatic way to generate zod enums fron objects (casting or manual)
 export const minionIdSchema = z.enum(minionIdsValues);
 export const minionIdsSchema = z.array(minionIdSchema);

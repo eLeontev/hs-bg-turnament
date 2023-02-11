@@ -58,4 +58,6 @@ export const enLabelMessages: I18nTransMessages<namespaces.labels> = {
 
     switchToTriple: 'Triple',
     switchToRegular: 'Regular',
+    switchToTavernMinions: `tavern's minions`,
+    switchToSummonedMinions: 'summoned minions',
 };

@@ -104,6 +104,27 @@ export const ruMinionMessages: I18nTransMessages<namespaces.minions> = {
     goldrinnPowerDescription: 'ваши звери получают +5/+5.',
     goldrinnTripleCardPowerDescription: 'ваши звери получают +10/+10.',
 
+    // beasts-summoned
+    tabbycatName: 'Домашняя кошка',
+    tabbycatDescription: '',
+    tabbycatPowerDescription: '',
+    tabbycatTripleCardPowerDescription: '',
+
+    turtleName: 'Черепашонок',
+    turtleDescription: '',
+    turtlePowerDescription: 'Taunt',
+    turtleTripleCardPowerDescription: 'Taunt',
+
+    ratName: 'Крысы',
+    ratDescription: '',
+    ratPowerDescription: '',
+    ratTripleCardPowerDescription: '',
+
+    hyenaName: 'Гиена',
+    hyenaDescription: '',
+    hyenaPowerDescription: '',
+    hyenaTripleCardPowerDescription: '',
+
     // all
     ballOfMinionsName: 'Ворох существ',
     ballOfMinionsDescription: '',

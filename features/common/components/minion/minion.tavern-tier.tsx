@@ -2,15 +2,23 @@ import Image from 'next/image';
 
 import { Box, createStyles, MantineTheme } from '@mantine/core';
 import { tavernTiers } from '../../../play-game/models/play-game.tavern.models';
+import { minionIds } from '@prisma/client';
+import { summonedMinionsSet } from '../../../../data/summoned-minions';
 
-const useMinionTavernTierStyles = createStyles<string, boolean>(
-    (theme: MantineTheme, isTriple) => ({
+const useMinionTavernTierStyles = createStyles<
+    string,
+    MinionTavernTierStyleProps
+>(
+    (
+        theme: MantineTheme,
+        { isTriple, isSummoned }: MinionTavernTierStyleProps
+    ) => ({
         minionTavernTierContainer: {
             position: 'absolute',
             width: 53,
             height: 55,
-            left: isTriple ? 15 : 12,
-            top: 30,
+            left: isSummoned ? (isTriple ? 28 : 25) : isTriple ? 15 : 12,
+            top: isSummoned ? 31 : 30,
         },
         minionTavernTierStarsContainer: {
             position: 'absolute',
@@ -22,16 +30,22 @@ const useMinionTavernTierStyles = createStyles<string, boolean>(
         },
     })
 );
-
+type MinionTavernTierStyleProps = {
+    isSummoned: boolean;
+    isTriple: boolean;
+};
 export type MinionTavernTierProps = {
+    minionId: minionIds;
     tavernTier: tavernTiers;
     isTriple: boolean;
 };
 export const MinionTavernTier = ({
+    minionId,
     tavernTier,
     isTriple,
 }: MinionTavernTierProps) => {
-    const { classes } = useMinionTavernTierStyles(isTriple);
+    const isSummoned = summonedMinionsSet.has(minionId);
+    const { classes } = useMinionTavernTierStyles({ isTriple, isSummoned });
 
     return (
         <Box className={classes.minionTavernTierContainer}>

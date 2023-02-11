@@ -78,6 +78,27 @@ export enum minionI18nKeys {
     goldrinnPowerDescription = 'goldrinnPowerDescription',
     goldrinnTripleCardPowerDescription = 'goldrinnTripleCardPowerDescription',
 
+    // beasts-summoned
+    tabbycatName = 'tabbycatName',
+    tabbycatDescription = 'tabbycatDescription',
+    tabbycatPowerDescription = 'tabbycatPowerDescription',
+    tabbycatTripleCardPowerDescription = 'tabbycatTripleCardPowerDescription',
+
+    turtleName = 'turtleName',
+    turtleDescription = 'turtleDescription',
+    turtlePowerDescription = 'turtlePowerDescription',
+    turtleTripleCardPowerDescription = 'turtleTripleCardPowerDescription',
+
+    ratName = 'ratName',
+    ratDescription = 'ratDescription',
+    ratPowerDescription = 'ratPowerDescription',
+    ratTripleCardPowerDescription = 'ratTripleCardPowerDescription',
+
+    hyenaName = 'hyenaName',
+    hyenaDescription = 'hyenaDescription',
+    hyenaPowerDescription = 'hyenaPowerDescription',
+    hyenaTripleCardPowerDescription = 'hyenaTripleCardPowerDescription',
+
     // all
     ballOfMinionsName = 'ballOfMinionsName',
     ballOfMinionsDescription = 'ballOfMinionsDescription',

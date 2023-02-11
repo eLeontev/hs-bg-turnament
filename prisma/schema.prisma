@@ -60,6 +60,11 @@ enum minionIds {
   goldrinn
 
   ballOfMinions
+
+  tabbycat 
+  turtle
+  rat 
+  hyena
 }
 
 enum minionTypes {

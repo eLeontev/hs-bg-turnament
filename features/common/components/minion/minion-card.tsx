@@ -62,6 +62,7 @@ export const MinionCard = ({
                 ></Image>
             </Box>
             <MinionTavernTier
+                minionId={minion.minionId}
                 tavernTier={tavernTier}
                 isTriple={isTriple}
             ></MinionTavernTier>

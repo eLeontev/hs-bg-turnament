@@ -38,6 +38,14 @@ export type Minion = {
     uniqueBehaviorId?: minionUniqueBehaviorIds;
 };
 
+export type SummonedMinionDetails = {
+    tavernTier: tavernTiers;
+    minionType: minionTypes;
+    minionId: minionIds;
+};
+
+export type SummonedMinionsMap = Map<minionIds, SummonedMinionDetails>;
+
 export type Minions = {
     [level in tavernTiers]: {
         [type in minionTypes]: Map<minionIds, Minion>;

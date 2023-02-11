@@ -63,4 +63,6 @@ export const ruLabelMessages: I18nTransMessages<namespaces.labels> = {
 
     switchToTriple: 'Триплет',
     switchToRegular: 'Обычный',
+    switchToTavernMinions: `миньоны из таверны`,
+    switchToSummonedMinions: 'призванные миньоны',
 };

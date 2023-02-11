@@ -17,6 +17,7 @@ import { GameConfigTitle } from '../../features/game-config/components/config.ti
 
 import { TavernTierMinions } from '../../features/game-config/components/game-config.tavern-tier.minions';
 
+import { SummonedMinionsToggle } from '../../features/game-config/components/game-config.summoned-minions.toggle';
 import { TavernTierFilter } from '../../features/game-config/components/game-config.taver-tier.filter';
 import { MinionTypeFilter } from '../../features/game-config/components/game-config.minion-type.filter';
 
@@ -49,6 +50,8 @@ const ConfigPage = () => {
                 <TavernTierFilter></TavernTierFilter>
                 <Space w="xl"></Space>
                 <MinionTypeFilter></MinionTypeFilter>
+                <Space w="xl"></Space>
+                <SummonedMinionsToggle></SummonedMinionsToggle>
             </Flex>
 
             <Box>
