@@ -13,14 +13,24 @@ export const textStyles = (
     textShadow: `rgb(0 0 0) 2px 0px 0px, rgb(0 0 0) 1.75517px 0.95885px 0px, rgb(0 0 0) 1.0806px 1.68294px 0px, rgb(0 0 0) 0.14147px 1.99499px 0px, rgb(0 0 0) -0.83229px 1.81859px 0px, rgb(0 0 0) -1.60229px 1.19694px 0px, rgb(0 0 0) -1.97998px 0.28224px 0px, rgb(0 0 0) -1.87291px -0.70157px 0px, rgb(0 0 0) -1.30729px -1.5136px 0px, rgb(0 0 0) -0.42159px -1.95506px 0px, rgb(0 0 0) 0.56732px -1.91785px 0px, rgb(0 0 0) 1.41734px -1.41108px 0px, rgb(0 0 0) 1.92034px -0.55883px 0px`,
 });
 
-export const useMinionHitpointsStyles = createStyles<string, number>(
-    (theme: MantineTheme, countOfHitpoints: number) => ({
+export type MinionHitpointsStyleProps = {
+    countOfHitpoints: number;
+    isSummoned: boolean;
+};
+export const useMinionHitpointsStyles = createStyles<
+    string,
+    MinionHitpointsStyleProps
+>(
+    (
+        theme: MantineTheme,
+        { countOfHitpoints, isSummoned }: MinionHitpointsStyleProps
+    ) => ({
         countOfHitpointsContainer: {
             position: 'absolute',
             width: 55,
             height: 58,
-            left: 148,
-            top: 225,
+            left: isSummoned ? 148 : 148,
+            top: isSummoned ? 222 : 225,
             stroke: theme.colors.dark[9],
             strokeWidth: 4,
             paintOrder: 'stroke',
@@ -33,14 +43,24 @@ export const useMinionHitpointsStyles = createStyles<string, number>(
     })
 );
 
-export const useMinionAttackPowerStyles = createStyles<string, number>(
-    (theme: MantineTheme, attackPower: number) => ({
+export type MinionAttackPowerStyleProps = {
+    attackPower: number;
+    isSummoned: boolean;
+};
+export const useMinionAttackPowerStyles = createStyles<
+    string,
+    MinionAttackPowerStyleProps
+>(
+    (
+        theme: MantineTheme,
+        { attackPower, isSummoned }: MinionAttackPowerStyleProps
+    ) => ({
         attackPowerContainer: {
             position: 'absolute',
-            width: 55,
-            height: 55,
-            left: 5,
-            top: 227,
+            width: isSummoned ? 60 : 55,
+            height: isSummoned ? 60 : 55,
+            left: isSummoned ? 20 : 5,
+            top: isSummoned ? 219 : 227,
         },
         attackPower: {
             top: '60%',

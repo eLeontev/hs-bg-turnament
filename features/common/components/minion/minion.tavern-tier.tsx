@@ -2,8 +2,6 @@ import Image from 'next/image';
 
 import { Box, createStyles, MantineTheme } from '@mantine/core';
 import { tavernTiers } from '../../../play-game/models/play-game.tavern.models';
-import { minionIds } from '@prisma/client';
-import { summonedMinionsSet } from '../../../../data/summoned-minions';
 
 const useMinionTavernTierStyles = createStyles<
     string,
@@ -34,17 +32,14 @@ type MinionTavernTierStyleProps = {
     isSummoned: boolean;
     isTriple: boolean;
 };
-export type MinionTavernTierProps = {
-    minionId: minionIds;
+export type MinionTavernTierProps = MinionTavernTierStyleProps & {
     tavernTier: tavernTiers;
-    isTriple: boolean;
 };
 export const MinionTavernTier = ({
-    minionId,
+    isSummoned,
     tavernTier,
     isTriple,
 }: MinionTavernTierProps) => {
-    const isSummoned = summonedMinionsSet.has(minionId);
     const { classes } = useMinionTavernTierStyles({ isTriple, isSummoned });
 
     return (

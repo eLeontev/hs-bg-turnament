@@ -14,6 +14,7 @@ import { MinionDescription } from './minion.description';
 
 import { Minion } from '../../../play-game/models/play-game.minion.models';
 import { tavernTiers } from '../../../play-game/models/play-game.tavern.models';
+import { summonedMinionsSet } from '../../../../data/summoned-minions';
 
 const useMinionCardStyles = createStyles<string, boolean>(
     (theme: MantineTheme, isTriple: boolean) => ({
@@ -43,13 +44,13 @@ export const MinionCard = ({
     tavernTier,
     minionType,
 }: MinionCardProps) => {
-    const { isTriple, avatarSrc, avatarTripleSrc, name } = minion;
+    const { isTriple, avatarSrc, avatarTripleSrc, name, minionId } = minion;
 
     const { classes } = useMinionCardStyles(isTriple);
     const t = useI18nMinionTranslate();
 
     const src = isTriple ? avatarTripleSrc : avatarSrc;
-
+    const isSummoned = summonedMinionsSet.has(minionId);
     return (
         <Box className={classes.minionCard}>
             <Box className={classes.tripleOverride}>
@@ -62,22 +63,26 @@ export const MinionCard = ({
                 ></Image>
             </Box>
             <MinionTavernTier
-                minionId={minion.minionId}
+                isSummoned={isSummoned}
                 tavernTier={tavernTier}
                 isTriple={isTriple}
             ></MinionTavernTier>
             <MinionName
+                isSummoned={isSummoned}
                 name={t(minion.name)}
                 isTriple={minion.isTriple}
             ></MinionName>
             <MinionDescription
+                isSummoned={isSummoned}
+                isTriple={minion.isTriple}
                 minion={minion}
-                minionType={minionType}
             ></MinionDescription>
             <MinionAttackPower
+                isSummoned={isSummoned}
                 attackPower={minion.attackPower}
             ></MinionAttackPower>
             <MinionCountOfHitpoints
+                isSummoned={isSummoned}
                 countOfHitpoints={minion.countOfHitPoints}
             ></MinionCountOfHitpoints>
         </Box>

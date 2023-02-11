@@ -11,14 +11,20 @@ import { minionTypesI18nKeys } from '../../../../i18n/i18n.constants';
 import { Minion } from '../../../play-game/models/play-game.minion.models';
 import { minionI18nKeys } from '../../../../i18n/enums/i18n.minion.enums';
 
-const useMinionPowerDescriptionStyles = createStyles<string, boolean>(
-    (theme: MantineTheme, isTriple: boolean) => ({
+const useMinionPowerDescriptionStyles = createStyles<
+    string,
+    MinionDescriptionStyleProps
+>(
+    (
+        theme: MantineTheme,
+        { isTriple, isSummoned }: MinionDescriptionStyleProps
+    ) => ({
         minionPowerDescriptionContainer: {
             position: 'absolute',
             width: 147,
             height: 91,
-            left: 30,
-            top: 182,
+            left: isSummoned ? 45 : 30,
+            top: isSummoned ? 178 : 182,
         },
         minionPowerDescriptionImage: {
             position: 'absolute',
@@ -46,8 +52,8 @@ const useMinionPowerDescriptionStyles = createStyles<string, boolean>(
             fontSize: 13,
             lineHeight: 1,
             position: 'absolute',
-            bottom: '0',
-            left: '50%',
+            bottom: isSummoned ? '3%' : '0',
+            left: isSummoned ? '46%' : '50%',
             transform: 'translate(-50%, -50%)',
             width: '85%',
             textAlign: 'center',
@@ -75,17 +81,29 @@ const DescriptionPrefix = ({ minion }: DescriptionPrefixProps) => {
     ) : null;
 };
 
-export type MinionDescriptionProps = {
+type MinionDescriptionStyleProps = {
+    isTriple: boolean;
+    isSummoned: boolean;
+};
+
+export type MinionDescriptionProps = MinionDescriptionStyleProps & {
     minion: Minion;
-    minionType: minionTypes;
 };
 export const MinionDescription = ({
-    minionType,
+    isSummoned,
+    isTriple,
     minion,
 }: MinionDescriptionProps) => {
-    const { powerDescription, tripleCardPowerDescription, isTriple } = minion;
+    const {
+        powerDescription,
+        tripleCardPowerDescription,
+        types: [minionType],
+    } = minion;
 
-    const { classes } = useMinionPowerDescriptionStyles(isTriple);
+    const { classes } = useMinionPowerDescriptionStyles({
+        isTriple,
+        isSummoned,
+    });
     const nameBackgroundImageUrl = isTriple
         ? '/minion-power-description.triple.png'
         : '/minion-power-description.regular.png';
@@ -99,8 +117,8 @@ export const MinionDescription = ({
             <Image
                 className={classes.minionPowerDescriptionImage}
                 priority
-                width={147}
-                height={90}
+                width={isSummoned ? 132 : 147}
+                height={isSummoned ? 87 : 90}
                 src={nameBackgroundImageUrl}
                 alt=""
             ></Image>

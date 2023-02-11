@@ -2,17 +2,19 @@ import Image from 'next/image';
 
 import { Flex, Text } from '@mantine/core';
 
-import { useMinionHitpointsStyles } from '../../styles/minion.styles';
-import { minionIds } from '@prisma/client';
+import {
+    MinionHitpointsStyleProps,
+    useMinionHitpointsStyles,
+} from '../../styles/minion.styles';
 
-export type MinionCountOfHitpointsProps = {
-    minionId: minionIds;
-    countOfHitpoints: number;
-};
 export const MinionCountOfHitpoints = ({
     countOfHitpoints,
-}: MinionCountOfHitpointsProps) => {
-    const { classes } = useMinionHitpointsStyles(countOfHitpoints);
+    isSummoned,
+}: MinionHitpointsStyleProps) => {
+    const { classes } = useMinionHitpointsStyles({
+        countOfHitpoints,
+        isSummoned,
+    });
 
     return (
         <Flex className={classes.countOfHitpointsContainer}>

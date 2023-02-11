@@ -2,18 +2,23 @@ import Image from 'next/image';
 
 import { Flex, Text } from '@mantine/core';
 
-import { useMinionAttackPowerStyles } from '../../styles/minion.styles';
+import {
+    MinionAttackPowerStyleProps,
+    useMinionAttackPowerStyles,
+} from '../../styles/minion.styles';
 
-export type MinionAttackPowerProps = { attackPower: number };
-export const MinionAttackPower = ({ attackPower }: MinionAttackPowerProps) => {
-    const { classes } = useMinionAttackPowerStyles(attackPower);
+export const MinionAttackPower = ({
+    attackPower,
+    isSummoned,
+}: MinionAttackPowerStyleProps) => {
+    const { classes } = useMinionAttackPowerStyles({ attackPower, isSummoned });
 
     return (
         <Flex className={classes.attackPowerContainer}>
             <Image
                 priority
-                width={55}
-                height={55}
+                width={isSummoned ? 60 : 55}
+                height={isSummoned ? 60 : 55}
                 src="/attack-power.png"
                 alt=""
             ></Image>

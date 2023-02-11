@@ -2,14 +2,14 @@ import Image from 'next/image';
 
 import { Box, createStyles, MantineTheme } from '@mantine/core';
 
-const useMinionNameStyles = createStyles<string, string>(
-    (theme: MantineTheme, name: string) => ({
+const useMinionNameStyles = createStyles<string, MinionNameStyleProps>(
+    (theme: MantineTheme, { name, isSummoned }: MinionNameStyleProps) => ({
         minionNameContainer: {
             position: 'absolute',
-            width: 180,
+            width: isSummoned ? 160 : 180,
             height: 30,
-            left: 26,
-            top: 146,
+            left: isSummoned ? 42 : 26,
+            top: isSummoned ? 143 : 146,
         },
         minionNameImage: {
             position: 'absolute',
@@ -30,9 +30,16 @@ const useMinionNameStyles = createStyles<string, string>(
     })
 );
 
-export type MinionNameProps = { name: string; isTriple: boolean };
-export const MinionName = ({ name, isTriple }: MinionNameProps) => {
-    const { classes } = useMinionNameStyles(name);
+export type MinionNameStyleProps = {
+    name: string;
+    isSummoned: boolean;
+};
+
+export type MinionNameProps = MinionNameStyleProps & {
+    isTriple: boolean;
+};
+export const MinionName = ({ name, isTriple, isSummoned }: MinionNameProps) => {
+    const { classes } = useMinionNameStyles({ isSummoned, name });
     const nameBackgroundImageUrl = isTriple
         ? '/minion-name.triple.png'
         : '/minion-name.regular.png';
@@ -42,7 +49,7 @@ export const MinionName = ({ name, isTriple }: MinionNameProps) => {
             <Image
                 className={classes.minionNameImage}
                 priority
-                width={157}
+                width={isSummoned ? 140 : 157}
                 height={37}
                 src={nameBackgroundImageUrl}
                 alt=""
