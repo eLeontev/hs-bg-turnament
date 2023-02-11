@@ -30,8 +30,6 @@ export const GameConfigMinionCard = ({
     minionType,
     tavernTier,
 }: GameConfigMinionCardProps) => {
-    const { minionId } = minion;
-
     const t = useI18nLabelTranslate();
 
     const tripleMinionIds = useGameConfigStore(tripleMinionIdsSelector);
@@ -40,7 +38,16 @@ export const GameConfigMinionCard = ({
         removeTripleMinionIdsSelector
     );
 
+    const { minionId } = minion;
     const isTriple = tripleMinionIds.has(minionId);
+
+    const { countOfHitPoints, tripleCountOfHitPoints } = minion;
+    const { attackPower, tripleAttackPower } = minion;
+
+    const calculatedAttackPower = isTriple ? tripleAttackPower : attackPower;
+    const calculatedCountOfHitpoints = isTriple
+        ? tripleCountOfHitPoints
+        : countOfHitPoints;
 
     const onChangeAction = isTriple
         ? removeTripleMinionIds
@@ -61,6 +68,8 @@ export const GameConfigMinionCard = ({
                 key={minion.minionId}
                 minion={{
                     ...minion,
+                    countOfHitPoints: calculatedCountOfHitpoints,
+                    attackPower: calculatedAttackPower,
                     isTriple,
                 }}
                 minionType={minionType}

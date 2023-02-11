@@ -6,7 +6,9 @@ import { minionI18nKeys } from '../../i18n/enums/i18n.minion.enums';
 
 const ballOfMinionsMinion: Minion = {
     countOfHitPoints: 5,
+    tripleCountOfHitPoints: 10,
     attackPower: 5,
+    tripleAttackPower: 10,
     isTaunt: false,
     hasWindFury: false,
     hasReborn: false,

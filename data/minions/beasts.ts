@@ -6,7 +6,9 @@ import { Minion } from '../../features/play-game/models/play-game.minion.models'
 
 const alleycatMinion: Minion = {
     countOfHitPoints: 1,
+    tripleCountOfHitPoints: 2,
     attackPower: 1,
+    tripleAttackPower: 2,
     isTaunt: false,
     hasWindFury: false,
     hasReborn: false,
@@ -28,7 +30,9 @@ const alleycatMinion: Minion = {
 
 const scavengingHyenaMinion: Minion = {
     countOfHitPoints: 2,
+    tripleCountOfHitPoints: 4,
     attackPower: 2,
+    tripleAttackPower: 4,
     isTaunt: false,
     hasWindFury: false,
     hasReborn: false,
@@ -50,7 +54,9 @@ const scavengingHyenaMinion: Minion = {
 
 const leapfroggerMinion: Minion = {
     countOfHitPoints: 3,
+    tripleCountOfHitPoints: 3,
     attackPower: 3,
+    tripleAttackPower: 3,
     isTaunt: false,
     hasWindFury: false,
     hasReborn: false,
@@ -70,8 +76,10 @@ const leapfroggerMinion: Minion = {
 };
 
 const rabidSauroliskMinion: Minion = {
-    countOfHitPoints: 3,
-    attackPower: 2,
+    countOfHitPoints: 2,
+    tripleCountOfHitPoints: 4,
+    attackPower: 3,
+    tripleAttackPower: 6,
     isTaunt: false,
     hasWindFury: false,
     hasReborn: false,
@@ -91,8 +99,10 @@ const rabidSauroliskMinion: Minion = {
 };
 
 const sewerRatMinion: Minion = {
-    countOfHitPoints: 3,
-    attackPower: 2,
+    countOfHitPoints: 2,
+    tripleCountOfHitPoints: 4,
+    attackPower: 3,
+    tripleAttackPower: 6,
     isTaunt: false,
     hasWindFury: false,
     hasReborn: false,
@@ -112,8 +122,10 @@ const sewerRatMinion: Minion = {
 };
 
 const monstrousMacawMinion: Minion = {
-    countOfHitPoints: 5,
-    attackPower: 3,
+    countOfHitPoints: 3,
+    tripleCountOfHitPoints: 6,
+    attackPower: 5,
+    tripleAttackPower: 10,
     isTaunt: false,
     hasWindFury: false,
     hasReborn: false,
@@ -134,7 +146,9 @@ const monstrousMacawMinion: Minion = {
 
 const ratPackMinion: Minion = {
     countOfHitPoints: 2,
+    tripleCountOfHitPoints: 4,
     attackPower: 2,
+    tripleAttackPower: 4,
     isTaunt: false,
     hasWindFury: false,
     hasReborn: false,
@@ -155,8 +169,10 @@ const ratPackMinion: Minion = {
 };
 
 const caveHydraMinion: Minion = {
-    countOfHitPoints: 2,
-    attackPower: 4,
+    countOfHitPoints: 4,
+    tripleCountOfHitPoints: 8,
+    attackPower: 2,
+    tripleAttackPower: 4,
     isTaunt: false,
     hasWindFury: false,
     hasReborn: false,
@@ -177,8 +193,10 @@ const caveHydraMinion: Minion = {
 };
 
 const reanimatingRattlerMinion: Minion = {
-    countOfHitPoints: 5,
-    attackPower: 3,
+    countOfHitPoints: 3,
+    tripleCountOfHitPoints: 6,
+    attackPower: 5,
+    tripleAttackPower: 10,
     isTaunt: false,
     hasWindFury: false,
     hasReborn: false,
@@ -199,8 +217,10 @@ const reanimatingRattlerMinion: Minion = {
 };
 
 const savannahHighmaneMinion: Minion = {
-    countOfHitPoints: 6,
-    attackPower: 5,
+    countOfHitPoints: 5,
+    tripleCountOfHitPoints: 10,
+    attackPower: 6,
+    tripleAttackPower: 12,
     isTaunt: false,
     hasWindFury: false,
     hasReborn: false,
@@ -223,7 +243,9 @@ const savannahHighmaneMinion: Minion = {
 
 const agamagganMinion: Minion = {
     countOfHitPoints: 6,
+    tripleAttackPower: 12,
     attackPower: 6,
+    tripleCountOfHitPoints: 12,
     isTaunt: false,
     hasWindFury: false,
     hasReborn: false,
@@ -244,7 +266,9 @@ const agamagganMinion: Minion = {
 
 const mamaBearMinion: Minion = {
     countOfHitPoints: 5,
+    tripleCountOfHitPoints: 10,
     attackPower: 5,
+    tripleAttackPower: 10,
     isTaunt: false,
     hasWindFury: false,
     hasReborn: false,
@@ -265,7 +289,9 @@ const mamaBearMinion: Minion = {
 
 const ghastcoilerMinion: Minion = {
     countOfHitPoints: 7,
+    tripleCountOfHitPoints: 14,
     attackPower: 7,
+    tripleAttackPower: 14,
     isTaunt: false,
     hasWindFury: false,
     hasReborn: false,
@@ -286,7 +312,9 @@ const ghastcoilerMinion: Minion = {
 
 const goldrinnMinion: Minion = {
     countOfHitPoints: 4,
+    tripleCountOfHitPoints: 4,
     attackPower: 4,
+    tripleAttackPower: 4,
     isTaunt: false,
     hasWindFury: false,
     hasReborn: false,

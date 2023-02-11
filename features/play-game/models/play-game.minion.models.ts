@@ -17,6 +17,8 @@ export enum minionUniqueBehaviorIds {
 export type Minion = {
     countOfHitPoints: number;
     attackPower: number;
+    tripleCountOfHitPoints: number;
+    tripleAttackPower: number;
     isTaunt: boolean;
     hasWindFury: boolean;
     hasReborn: boolean;
