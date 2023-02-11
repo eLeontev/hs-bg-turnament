@@ -112,8 +112,8 @@ export const ruMinionMessages: I18nTransMessages<namespaces.minions> = {
 
     turtleName: 'Черепашонок',
     turtleDescription: '',
-    turtlePowerDescription: 'Taunt',
-    turtleTripleCardPowerDescription: 'Taunt',
+    turtlePowerDescription: 'Провокация',
+    turtleTripleCardPowerDescription: 'Провокация',
 
     ratName: 'Крысы',
     ratDescription: '',
