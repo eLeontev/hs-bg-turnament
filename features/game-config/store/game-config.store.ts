@@ -9,9 +9,8 @@ export type GameConfigState = {
 };
 
 export type GameConfigApi = {
-    setSelectedMinionTypes: (minionType: minionTypes) => void;
+    setSelectedMinionTypes: (selectedMinionTypes: Array<minionTypes>) => void;
     setSelectedTavernTiers: (tavernTier: tavernTiers) => void;
-    removeSelectedMinionType: (minionType: minionTypes) => void;
     removeSelectedTavernTier: (tavernTier: tavernTiers) => void;
     setTripleMinionIds: (minionId: minionIds) => void;
     removeTripleMinionIds: (minionId: minionIds) => void;
@@ -35,13 +34,8 @@ export const useGameConfigStore = create<GameConfigState & GameConfigApi>(
     (set, get) => ({
         ...initialState,
 
-        setSelectedMinionTypes: (minionType: minionTypes) =>
-            set({
-                selectedMinionTypes: setSelectedEntry(
-                    get().selectedMinionTypes,
-                    minionType
-                ),
-            }),
+        setSelectedMinionTypes: (selectedMinionTypes: Array<minionTypes>) =>
+            set({ selectedMinionTypes }),
         setSelectedTavernTiers: (tavernTier: tavernTiers) =>
             set({
                 selectedTavernTiers: setSelectedEntry(
@@ -49,13 +43,7 @@ export const useGameConfigStore = create<GameConfigState & GameConfigApi>(
                     tavernTier
                 ),
             }),
-        removeSelectedMinionType: (minionType: minionTypes) =>
-            set({
-                selectedMinionTypes: removeSelectedEntry(
-                    get().selectedMinionTypes,
-                    minionType
-                ),
-            }),
+
         removeSelectedTavernTier: (tavernTier: tavernTiers) =>
             set({
                 selectedTavernTiers: removeSelectedEntry(
@@ -82,9 +70,6 @@ export const setSelectedMinionTypesSelector = ({
 export const setSelectedTavernTiersSelector = ({
     setSelectedTavernTiers,
 }: GameConfigApi) => setSelectedTavernTiers;
-export const removeSelectedMinionTypeSelector = ({
-    removeSelectedMinionType,
-}: GameConfigApi) => removeSelectedMinionType;
 export const removeSelectedTavernTierSelector = ({
     removeSelectedTavernTier,
 }: GameConfigApi) => removeSelectedTavernTier;
@@ -96,6 +81,9 @@ export const removeTripleMinionIdsSelector = ({
 }: GameConfigApi) => removeTripleMinionIds;
 
 export const selectedMinionTypesSelector = ({
+    selectedMinionTypes,
+}: GameConfigState) => selectedMinionTypes;
+export const selectedMinionTypesSetSelector = ({
     selectedMinionTypes,
 }: GameConfigState) => new Set(selectedMinionTypes);
 export const selectedTavernTiersSelector = ({

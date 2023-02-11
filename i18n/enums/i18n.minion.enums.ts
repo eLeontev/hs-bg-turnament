@@ -3,6 +3,10 @@ export enum minionI18nKeys {
     minionTypeAll = 'minionTypeAll',
     minionTypeNoType = 'minionTypeNoType',
 
+    // powers
+    deathrattle = 'deathrattle',
+    battlecry = 'battlecry',
+
     // beasts
     alleycatName = 'alleycatName',
     alleycatDescription = 'alleycatDescription',

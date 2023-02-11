@@ -5,14 +5,18 @@ import { I18nTransMessages } from '../i18n.models';
 export const ruMinionMessages: I18nTransMessages<namespaces.minions> = {
     minionTypeBeasts: 'звери',
     minionTypeAll: 'все',
-    minionTypeNoType: '',
+    minionTypeNoType: 'без типа',
+
+    // powers
+    deathrattle: 'Предсмертный хрип:',
+    battlecry: 'Боевой клич:',
 
     // beasts
     alleycatName: 'Бродячий кот',
     alleycatDescription:
         'Всем плевать, что ты кот. Если хочешь чего-то добиться в Прибамбасске, нужны красивые цацки.',
-    alleycatPowerDescription: 'Боевой клич: призывает кошку 1/1.',
-    alleycatTripleCardPowerDescription: 'Боевой клич: призывает кошку 2/2.',
+    alleycatPowerDescription: 'призывает кошку 1/1.',
+    alleycatTripleCardPowerDescription: 'призывает кошку 2/2.',
 
     scavengingHyenaName: 'Гиена-падальщица',
     scavengingHyenaDescription:
@@ -25,9 +29,9 @@ export const ruMinionMessages: I18nTransMessages<namespaces.minions> = {
     leapfroggerName: 'Попрыгуха',
     leapfroggerDescription: '',
     leapfroggerPowerDescription:
-        'Предсмертный хрип: ваш зверь получает +1/+1 и этот «Предсмертный хрип».',
+        'ваш зверь получает +1/+1 и этот «Предсмертный хрип».',
     leapfroggerTripleCardPowerDescription:
-        'Предсмертный хрип: ваш зверь получает +2/+2 и этот «Предсмертный хрип».',
+        'ваш зверь получает +2/+2 и этот «Предсмертный хрип».',
 
     rabidSauroliskName: 'Бешеный завролиск',
     rabidSauroliskDescription: '',
@@ -38,10 +42,9 @@ export const ruMinionMessages: I18nTransMessages<namespaces.minions> = {
 
     sewerRatName: 'Сточная крыса',
     sewerRatDescription: '',
-    sewerRatPowerDescription:
-        'Предсмертный хрип: призывает черепаху 2/3 с «Провокацией».',
+    sewerRatPowerDescription: 'призывает черепаху 2/3 с «Провокацией».',
     sewerRatTripleCardPowerDescription:
-        'Предсмертный хрип: призывает черепаху 4/6 с «Провокацией».',
+        'призывает черепаху 4/6 с «Провокацией».',
 
     monstrousMacawName: 'Страшный ара',
     monstrousMacawDescription: '',
@@ -54,9 +57,9 @@ export const ruMinionMessages: I18nTransMessages<namespaces.minions> = {
     ratPackDescription:
         'Странники в ночи бывают разные, и не всегда прекрасные.',
     ratPackPowerDescription:
-        'Предсмертный хрип: призывает крысу 1/1 за каждую единицу атаки этого существа.',
+        'призывает крысу 1/1 за каждую единицу атаки этого существа.',
     ratPackTripleCardPowerDescription:
-        'Предсмертный хрип: призывает крысу 2/2 за каждую единицу атаки этого существа.',
+        'призывает крысу 2/2 за каждую единицу атаки этого существа.',
 
     caveHydraName: 'Пещерная гидра',
     caveHydraDescription: 'Можно улучшить до пещерного скрытня.',
@@ -67,18 +70,15 @@ export const ruMinionMessages: I18nTransMessages<namespaces.minions> = {
 
     reanimatingRattlerName: 'Оживляющая змея',
     reanimatingRattlerDescription: '',
-    reanimatingRattlerPowerDescription:
-        'Боевой клич: ваш зверь получает «Перерождение».',
+    reanimatingRattlerPowerDescription: 'ваш зверь получает «Перерождение».',
     reanimatingRattlerTripleCardPowerDescription:
-        'Боевой клич: ваш зверь получает «Перерождение».',
+        'ваш зверь получает «Перерождение».',
 
     savannahHighmaneName: 'Высокогрив саванны',
     savannahHighmaneDescription:
         'Где-то в джунглях, в дремучих джунглях... льва сейчас доедают гиены.',
-    savannahHighmanePowerDescription:
-        'Предсмертный хрип: призывает двух гиен 2/2.',
-    savannahHighmaneTripleCardPowerDescription:
-        'Предсмертный хрип: призывает двух гиен 4/4.',
+    savannahHighmanePowerDescription: 'призывает двух гиен 2/2.',
+    savannahHighmaneTripleCardPowerDescription: 'призывает двух гиен 4/4.',
 
     agamagganName: 'Агамагган, Великий Вепрь',
     agamagganDescription: '',
@@ -95,15 +95,14 @@ export const ruMinionMessages: I18nTransMessages<namespaces.minions> = {
     ghastcoilerName: 'Гибельный змей',
     ghastcoilerDescription: '',
     ghastcoilerPowerDescription:
-        'Предсмертный хрип: призывает 2 случайных существ с «Предсмертным хрипом».',
+        'призывает 2 случайных существ с «Предсмертным хрипом».',
     ghastcoilerTripleCardPowerDescription:
-        'Предсмертный хрип: призывает 4 случайных существ с «Предсмертным хрипом».',
+        'призывает 4 случайных существ с «Предсмертным хрипом».',
 
     goldrinnName: 'Голдринн, Великий волк',
     goldrinnDescription: '',
-    goldrinnPowerDescription: 'Предсмертный хрип: ваши звери получают +5/+5.',
-    goldrinnTripleCardPowerDescription:
-        'Предсмертный хрип: ваши звери получают +10/+10.',
+    goldrinnPowerDescription: 'ваши звери получают +5/+5.',
+    goldrinnTripleCardPowerDescription: 'ваши звери получают +10/+10.',
 
     // all
     ballOfMinionsName: 'Ворох существ',

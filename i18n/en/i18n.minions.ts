@@ -5,13 +5,17 @@ import { I18nTransMessages } from '../i18n.models';
 export const enMinionMessages: I18nTransMessages<namespaces.minions> = {
     minionTypeBeasts: 'beasts',
     minionTypeAll: 'all',
-    minionTypeNoType: '',
+    minionTypeNoType: 'no type',
+
+    // powers
+    deathrattle: 'Deathrattle:',
+    battlecry: 'Battlecry:',
 
     // beasts
     alleycatName: 'Alleycat',
     alleycatDescription: 'To be a cool cat in Gadgetzan, you gotta have bling.',
-    alleycatPowerDescription: 'Battlecry: Summon a 1/1 Cat.',
-    alleycatTripleCardPowerDescription: 'Battlecry: Summon a 2/2 Cat.',
+    alleycatPowerDescription: 'Summon a 1/1 Cat.',
+    alleycatTripleCardPowerDescription: 'Summon a 2/2 Cat.',
 
     scavengingHyenaName: 'Scavenging Hyena',
     scavengingHyenaDescription: `Hyenas prefer the bones of kodos or windserpents, but they'll eat pretty much anything. Even Brussels sprouts.`,
@@ -23,9 +27,9 @@ export const enMinionMessages: I18nTransMessages<namespaces.minions> = {
     leapfroggerName: 'Leapfrogger',
     leapfroggerDescription: '',
     leapfroggerPowerDescription:
-        'Deathrattle: Give a friendly Beast +1/+1 and this Deathrattle.',
+        'Give a friendly Beast +1/+1 and this Deathrattle.',
     leapfroggerTripleCardPowerDescription:
-        'Deathrattle: Give a friendly Beast +2/+2 and this Deathrattle.',
+        'Give a friendly Beast +2/+2 and this Deathrattle.',
 
     rabidSauroliskName: 'Rabid Saurolisk',
     rabidSauroliskDescription: '',
@@ -36,9 +40,8 @@ export const enMinionMessages: I18nTransMessages<namespaces.minions> = {
 
     sewerRatName: 'Sewer Rat',
     sewerRatDescription: '',
-    sewerRatPowerDescription: 'Deathrattle: Summon a 2/3 Turtle with Taunt.',
-    sewerRatTripleCardPowerDescription:
-        'Deathrattle: Summon a 4/6 Turtle with Taunt.',
+    sewerRatPowerDescription: 'Summon a 2/3 Turtle with Taunt.',
+    sewerRatTripleCardPowerDescription: 'Summon a 4/6 Turtle with Taunt.',
 
     monstrousMacawName: 'Monstrous Macaw',
     monstrousMacawDescription: '',
@@ -47,8 +50,8 @@ export const enMinionMessages: I18nTransMessages<namespaces.minions> = {
 
     ratPackName: 'Rat Pack',
     ratPackDescription: `He's gonna do it his way.`,
-    ratPackPowerDescription: `Deathrattle: Summon a number of 1/1 Rats equal to this minion's Attack.`,
-    ratPackTripleCardPowerDescription: `Deathrattle: Summon a number of 2/2 Rats equal to this minion's Attack.`,
+    ratPackPowerDescription: `Summon a number of 1/1 Rats equal to this minion's Attack.`,
+    ratPackTripleCardPowerDescription: `Summon a number of 2/2 Rats equal to this minion's Attack.`,
 
     caveHydraName: 'Cave Hydra',
     caveHydraDescription: 'Can be upgraded into a Cave Lurker.',
@@ -59,17 +62,15 @@ export const enMinionMessages: I18nTransMessages<namespaces.minions> = {
 
     reanimatingRattlerName: 'Reanimating Rattler',
     reanimatingRattlerDescription: '',
-    reanimatingRattlerPowerDescription:
-        'Battlecry: Give a friendly Beast Reborn.',
+    reanimatingRattlerPowerDescription: 'Give a friendly Beast Reborn.',
     reanimatingRattlerTripleCardPowerDescription:
-        'Battlecry: Give a friendly Beast Reborn.',
+        'Give a friendly Beast Reborn.',
 
     savannahHighmaneName: 'Savannah Highmane',
     savannahHighmaneDescription:
         'In the jungle, the mighty jungle, the lion gets slowly consumed by hyenas.',
-    savannahHighmanePowerDescription: 'Deathrattle: Summon two 2/2 Hyenas.',
-    savannahHighmaneTripleCardPowerDescription:
-        'Deathrattle: Summon two 4/4 Hyenas.',
+    savannahHighmanePowerDescription: 'Summon two 2/2 Hyenas.',
+    savannahHighmaneTripleCardPowerDescription: 'Summon two 4/4 Hyenas.',
 
     agamagganName: 'Agamaggan, the Great Boar',
     agamagganDescription: '',
@@ -84,16 +85,14 @@ export const enMinionMessages: I18nTransMessages<namespaces.minions> = {
 
     ghastcoilerName: 'Ghastcoiler',
     ghastcoilerDescription: '',
-    ghastcoilerPowerDescription:
-        'Deathrattle: Summon 2 random Deathrattle minions.',
+    ghastcoilerPowerDescription: 'Summon 2 random Deathrattle minions.',
     ghastcoilerTripleCardPowerDescription:
-        'Deathrattle: Summon 4 random Deathrattle minions.',
+        'Summon 4 random Deathrattle minions.',
 
     goldrinnName: 'Goldrinn, the Great Wolf',
     goldrinnDescription: '',
-    goldrinnPowerDescription: 'Deathrattle: Give your Beasts +5/+5.',
-    goldrinnTripleCardPowerDescription:
-        'Deathrattle: Give your Beasts +10/+10.',
+    goldrinnPowerDescription: 'Give your Beasts +5/+5.',
+    goldrinnTripleCardPowerDescription: 'Give your Beasts +10/+10.',
 
     // all
     ballOfMinionsName: 'Ball of Minions',
