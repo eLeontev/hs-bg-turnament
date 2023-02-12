@@ -15,6 +15,7 @@ import { MinionDescription } from './minion.description';
 import { Minion } from '../../../play-game/models/play-game.minion.models';
 import { tavernTiers } from '../../../play-game/models/play-game.tavern.models';
 import { summonedMinionsSet } from '../../../../data/summoned-minions';
+import { MinionAbilities } from './minion.abilities';
 
 const useMinionCardStyles = createStyles<string, boolean>(
     (theme: MantineTheme, isTriple: boolean) => ({
@@ -49,6 +50,7 @@ export const MinionCard = ({ minion, tavernTier }: MinionCardProps) => {
     const isSummoned = summonedMinionsSet.has(minionId);
     return (
         <Box className={classes.minionCard}>
+            <MinionAbilities minion={minion}></MinionAbilities>
             <Box className={classes.tripleOverride}>
                 <Image
                     priority
