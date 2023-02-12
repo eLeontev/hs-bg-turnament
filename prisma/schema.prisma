@@ -73,6 +73,29 @@ enum minionTypes {
   noType
 }
 
+enum minionAbilities {
+  summon
+  targetBaff
+  randomBaff
+  uniqueBehavior
+}
+
+enum recruitPhases {
+  afterBuyMinion
+  afterSellMinion
+  beforePlayMinion
+  afterPlayMinion
+}
+
+enum combatPhases {
+  beforeCombat
+  beforeAttack
+  afterAttack
+  afterKill
+  afterDeath
+  afterCombat
+}
+
 model PlayGamePlayer {
   playerIdInGame   String      @id @map("_id")
   playerLogin      String

@@ -37,6 +37,7 @@ export const playGamePlayerDetailsSchema = basePlayerDetailsSchema.merge(
         countOfArmor: countOfHitPointsSchema,
         isWonLastTime: isWonLastTimeSchema,
         opponentKey: opponentKeySchema,
+        tavernTier: z.number().min(1).max(6),
     })
 );
 

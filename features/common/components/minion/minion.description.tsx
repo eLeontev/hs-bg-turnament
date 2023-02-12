@@ -2,14 +2,25 @@ import Image from 'next/image';
 
 import { Box, Text, createStyles, MantineTheme, Space } from '@mantine/core';
 
-import { minionTypes } from '@prisma/client';
+import {
+    playerTavernTierSelector,
+    usePlayersStore,
+} from '../../../play-game/components/store/play-game.players.store';
 
 import { MinionTrans } from '../../../../i18n/i18n.trans.component';
 
+import { useI18nMinionTranslate } from '../../../../i18n/i18n.hooks';
+
 import { minionTypesI18nKeys } from '../../../../i18n/i18n.constants';
 
-import { Minion } from '../../../play-game/models/play-game.minion.models';
 import { minionI18nKeys } from '../../../../i18n/enums/i18n.minion.enums';
+
+import { Minion } from '../../../play-game/models/play-game.minion.models';
+
+import { tavernTiers } from '../../../play-game/models/play-game.tavern.models';
+
+import { minionsWithSummonMap } from '../../../../data/summoned-minions';
+import { summonedMinions } from '../../../../data/minions';
 
 const useMinionPowerDescriptionStyles = createStyles<
     string,
@@ -81,6 +92,52 @@ const DescriptionPrefix = ({ minion }: DescriptionPrefixProps) => {
     ) : null;
 };
 
+const getDescription = (
+    t: (i18nKey: minionI18nKeys) => string,
+    minion: Minion,
+    playerTavernTier: tavernTiers
+): string => {
+    const { isTriple, tripleCardPowerDescription, powerDescription, minionId } =
+        minion;
+    const powerDescriptionI18nKey = isTriple
+        ? tripleCardPowerDescription
+        : powerDescription;
+
+    let powerDesciprion = t(powerDescriptionI18nKey);
+
+    const getSummonedMinionDetails = minionsWithSummonMap.get(minionId);
+
+    if (getSummonedMinionDetails) {
+        const summonedMinionsFromAbility = getSummonedMinionDetails(
+            minion,
+            playerTavernTier
+        );
+        powerDesciprion = powerDesciprion.replace(
+            '$(count)',
+            `${summonedMinionsFromAbility.length}`
+        );
+
+        const [{ minionId, minionType, tavernTier }] =
+            summonedMinionsFromAbility;
+        const summonedMinion =
+            summonedMinions[tavernTier][minionType].get(minionId);
+
+        if (summonedMinion) {
+            const {
+                attackPower,
+                countOfHitPoints,
+                tripleAttackPower,
+                tripleCountOfHitPoints,
+            } = summonedMinion;
+            const hp = isTriple ? tripleCountOfHitPoints : countOfHitPoints;
+            const attack = isTriple ? tripleAttackPower : attackPower;
+
+            return powerDesciprion.replace('$(attack/hp)', `+${attack}/+${hp}`);
+        }
+    }
+    return powerDesciprion;
+};
+
 type MinionDescriptionStyleProps = {
     isTriple: boolean;
     isSummoned: boolean;
@@ -95,22 +152,21 @@ export const MinionDescription = ({
     minion,
 }: MinionDescriptionProps) => {
     const {
-        powerDescription,
-        tripleCardPowerDescription,
         types: [minionType],
     } = minion;
 
+    const t = useI18nMinionTranslate();
     const { classes } = useMinionPowerDescriptionStyles({
         isTriple,
         isSummoned,
     });
+    const playerTavernTier = usePlayersStore(playerTavernTierSelector);
+
     const nameBackgroundImageUrl = isTriple
         ? '/minion-power-description.triple.png'
         : '/minion-power-description.regular.png';
 
-    const powerDescriptionI18nKey = isTriple
-        ? tripleCardPowerDescription
-        : powerDescription;
+    const description = getDescription(t, minion, playerTavernTier);
 
     return (
         <Box className={classes.minionPowerDescriptionContainer}>
@@ -124,7 +180,7 @@ export const MinionDescription = ({
             ></Image>
             <Text className={classes.minionPowerDescription}>
                 <DescriptionPrefix minion={minion}></DescriptionPrefix>
-                <MinionTrans i18nKey={powerDescriptionI18nKey}></MinionTrans>
+                {description}
             </Text>
             <Text className={classes.minionType}>
                 <MinionTrans

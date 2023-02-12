@@ -10,10 +10,6 @@ import { tavernTiers } from './play-game.tavern.models';
 export type MinionId = z.infer<typeof minionIdSchema>;
 export type MinionIds = Array<MinionId>;
 
-export enum minionUniqueBehaviorIds {
-    uniqueBehaviorId,
-}
-
 export type Minion = {
     countOfHitPoints: number;
     attackPower: number;
@@ -35,19 +31,26 @@ export type Minion = {
     powerDescription: minionI18nKeys;
     isTriple: boolean;
     tripleCardPowerDescription: minionI18nKeys;
-    uniqueBehaviorId?: minionUniqueBehaviorIds;
 };
 
-export type SummonedMinionDetails = {
+export type SummonedMinion = {
+    isSummoned: boolean;
     tavernTier: tavernTiers;
     minionType: minionTypes;
     minionId: minionIds;
 };
 
-export type SummonedMinionsMap = Map<minionIds, SummonedMinionDetails>;
+export type SummonedMinions = Array<SummonedMinion>;
+
+export type MinionsWithSummonMap = Map<
+    minionIds,
+    (minion: Minion, tavernTier: tavernTiers) => SummonedMinions
+>;
+
+export type MinionMap = Map<minionIds, Minion>;
 
 export type Minions = {
     [level in tavernTiers]: {
-        [type in minionTypes]: Map<minionIds, Minion>;
+        [type in minionTypes]: MinionMap;
     };
 };

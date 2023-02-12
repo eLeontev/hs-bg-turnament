@@ -54,7 +54,10 @@ import {
     allSummoned6StartTavern,
 } from './minions/all.summoned';
 
-import { Minions } from '../features/play-game/models/play-game.minion.models';
+import {
+    Minions,
+    SummonedMinions,
+} from '../features/play-game/models/play-game.minion.models';
 import { tavernTiers } from '../features/play-game/models/play-game.tavern.models';
 
 export const minions: Minions = {
@@ -122,3 +125,24 @@ export const summonedMinions: Minions = {
         [minionTypes.noType]: noTypeSummoned6StartTavern,
     },
 };
+
+export const minionIdsWithDeathRattle: SummonedMinions = [];
+
+Object.entries(minions).forEach(([tavernTier, minionTypesObject]) => {
+    Object.entries(minionTypesObject).forEach(
+        ([minionType, minionsTavernMap]) => {
+            Array.from(minionsTavernMap).forEach(
+                ([minionId, { hasDeathRattle }]) => {
+                    if (hasDeathRattle) {
+                        minionIdsWithDeathRattle.push({
+                            isSummoned: false,
+                            minionId,
+                            minionType: minionType as minionTypes,
+                            tavernTier: Number(tavernTier) as tavernTiers,
+                        });
+                    }
+                }
+            );
+        }
+    );
+});

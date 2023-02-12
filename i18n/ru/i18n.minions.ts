@@ -15,8 +15,8 @@ export const ruMinionMessages: I18nTransMessages<namespaces.minions> = {
     alleycatName: 'Бродячий кот',
     alleycatDescription:
         'Всем плевать, что ты кот. Если хочешь чего-то добиться в Прибамбасске, нужны красивые цацки.',
-    alleycatPowerDescription: 'призывает кошку 1/1.',
-    alleycatTripleCardPowerDescription: 'призывает кошку 2/2.',
+    alleycatPowerDescription: 'призывает кошку $(attack/hp).',
+    alleycatTripleCardPowerDescription: 'призывает кошку $(attack/hp).',
 
     scavengingHyenaName: 'Гиена-падальщица',
     scavengingHyenaDescription:
@@ -42,9 +42,10 @@ export const ruMinionMessages: I18nTransMessages<namespaces.minions> = {
 
     sewerRatName: 'Сточная крыса',
     sewerRatDescription: '',
-    sewerRatPowerDescription: 'призывает черепаху 2/3 с «Провокацией».',
+    sewerRatPowerDescription:
+        'призывает черепаху $(attack/hp) с «Провокацией».',
     sewerRatTripleCardPowerDescription:
-        'призывает черепаху 4/6 с «Провокацией».',
+        'призывает черепаху $(attack/hp) с «Провокацией».',
 
     monstrousMacawName: 'Страшный ара',
     monstrousMacawDescription: '',
@@ -57,9 +58,9 @@ export const ruMinionMessages: I18nTransMessages<namespaces.minions> = {
     ratPackDescription:
         'Странники в ночи бывают разные, и не всегда прекрасные.',
     ratPackPowerDescription:
-        'призывает крысу 1/1 за каждую единицу атаки этого существа.',
+        'призывает крысу $(attack/hp) за каждую единицу атаки этого существа.',
     ratPackTripleCardPowerDescription:
-        'призывает крысу 2/2 за каждую единицу атаки этого существа.',
+        'призывает крысу $(attack/hp) за каждую единицу атаки этого существа.',
 
     caveHydraName: 'Пещерная гидра',
     caveHydraDescription: 'Можно улучшить до пещерного скрытня.',
@@ -77,8 +78,9 @@ export const ruMinionMessages: I18nTransMessages<namespaces.minions> = {
     savannahHighmaneName: 'Высокогрив саванны',
     savannahHighmaneDescription:
         'Где-то в джунглях, в дремучих джунглях... льва сейчас доедают гиены.',
-    savannahHighmanePowerDescription: 'призывает двух гиен 2/2.',
-    savannahHighmaneTripleCardPowerDescription: 'призывает двух гиен 4/4.',
+    savannahHighmanePowerDescription: 'призывает $(count) гиен $(attack/hp).',
+    savannahHighmaneTripleCardPowerDescription:
+        'призывает $(count) гиен $(attack/hp).',
 
     agamagganName: 'Агамагган, Великий Вепрь',
     agamagganDescription: '',
@@ -95,9 +97,9 @@ export const ruMinionMessages: I18nTransMessages<namespaces.minions> = {
     ghastcoilerName: 'Гибельный змей',
     ghastcoilerDescription: '',
     ghastcoilerPowerDescription:
-        'призывает 2 случайных существ с «Предсмертным хрипом».',
+        'призывает $(count) случайных существ с «Предсмертным хрипом».',
     ghastcoilerTripleCardPowerDescription:
-        'призывает 4 случайных существ с «Предсмертным хрипом».',
+        'призывает $(count) случайных существ с «Предсмертным хрипом».',
 
     goldrinnName: 'Голдринн, Великий волк',
     goldrinnDescription: '',

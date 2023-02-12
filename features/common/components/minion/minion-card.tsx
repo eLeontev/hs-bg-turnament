@@ -39,11 +39,7 @@ export type MinionCardProps = {
     minionType: minionTypes;
 };
 
-export const MinionCard = ({
-    minion,
-    tavernTier,
-    minionType,
-}: MinionCardProps) => {
+export const MinionCard = ({ minion, tavernTier }: MinionCardProps) => {
     const { isTriple, avatarSrc, avatarTripleSrc, name, minionId } = minion;
 
     const { classes } = useMinionCardStyles(isTriple);

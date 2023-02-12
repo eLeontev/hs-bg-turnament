@@ -14,8 +14,8 @@ export const enMinionMessages: I18nTransMessages<namespaces.minions> = {
     // beasts
     alleycatName: 'Alleycat',
     alleycatDescription: 'To be a cool cat in Gadgetzan, you gotta have bling.',
-    alleycatPowerDescription: 'Summon a 1/1 Cat.',
-    alleycatTripleCardPowerDescription: 'Summon a 2/2 Cat.',
+    alleycatPowerDescription: 'Summon a $(attack/hp) Cat.',
+    alleycatTripleCardPowerDescription: 'Summon a $(attack/hp) Cat.',
 
     scavengingHyenaName: 'Scavenging Hyena',
     scavengingHyenaDescription: `Hyenas prefer the bones of kodos or windserpents, but they'll eat pretty much anything. Even Brussels sprouts.`,
@@ -40,8 +40,9 @@ export const enMinionMessages: I18nTransMessages<namespaces.minions> = {
 
     sewerRatName: 'Sewer Rat',
     sewerRatDescription: '',
-    sewerRatPowerDescription: 'Summon a 2/3 Turtle with Taunt.',
-    sewerRatTripleCardPowerDescription: 'Summon a 4/6 Turtle with Taunt.',
+    sewerRatPowerDescription: 'Summon a $(attack/hp) Turtle with Taunt.',
+    sewerRatTripleCardPowerDescription:
+        'Summon a $(attack/hp) Turtle with Taunt.',
 
     monstrousMacawName: 'Monstrous Macaw',
     monstrousMacawDescription: '',
@@ -50,8 +51,8 @@ export const enMinionMessages: I18nTransMessages<namespaces.minions> = {
 
     ratPackName: 'Rat Pack',
     ratPackDescription: `He's gonna do it his way.`,
-    ratPackPowerDescription: `Summon a number of 1/1 Rats equal to this minion's Attack.`,
-    ratPackTripleCardPowerDescription: `Summon a number of 2/2 Rats equal to this minion's Attack.`,
+    ratPackPowerDescription: `Summon a number of $(attack/hp) Rats equal to this minion's Attack.`,
+    ratPackTripleCardPowerDescription: `Summon a number of $(attack/hp) Rats equal to this minion's Attack.`,
 
     caveHydraName: 'Cave Hydra',
     caveHydraDescription: 'Can be upgraded into a Cave Lurker.',
@@ -69,8 +70,9 @@ export const enMinionMessages: I18nTransMessages<namespaces.minions> = {
     savannahHighmaneName: 'Savannah Highmane',
     savannahHighmaneDescription:
         'In the jungle, the mighty jungle, the lion gets slowly consumed by hyenas.',
-    savannahHighmanePowerDescription: 'Summon two 2/2 Hyenas.',
-    savannahHighmaneTripleCardPowerDescription: 'Summon two 4/4 Hyenas.',
+    savannahHighmanePowerDescription: 'Summon $(count) $(attack/hp) Hyenas.',
+    savannahHighmaneTripleCardPowerDescription:
+        'Summon $(count) $(attack/hp) Hyenas.',
 
     agamagganName: 'Agamaggan, the Great Boar',
     agamagganDescription: '',
@@ -85,9 +87,9 @@ export const enMinionMessages: I18nTransMessages<namespaces.minions> = {
 
     ghastcoilerName: 'Ghastcoiler',
     ghastcoilerDescription: '',
-    ghastcoilerPowerDescription: 'Summon 2 random Deathrattle minions.',
+    ghastcoilerPowerDescription: 'Summon $(count) random Deathrattle minions.',
     ghastcoilerTripleCardPowerDescription:
-        'Summon 4 random Deathrattle minions.',
+        'Summon $(count) random Deathrattle minions.',
 
     goldrinnName: 'Goldrinn, the Great Wolf',
     goldrinnDescription: '',
