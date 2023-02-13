@@ -14,6 +14,10 @@ import { playGameActions } from '../play-game.enums';
 
 import { PlayGamePlayers } from '../../player/player.models';
 import { PlayerKey } from '../../../models/common.models';
+import {
+    BaseCards,
+    CardIds,
+} from '../../../data/minions/battle-cries/minions.battle-cries';
 
 export type DurationInMs = number;
 
@@ -21,6 +25,8 @@ export type PlayGamePhaseData = z.infer<typeof playGamePhaseDataSchema>;
 
 export type PlayGameData = PlayGamePhaseData & {
     minionTypes: Array<minionTypes>;
+    allCardsIds: CardIds;
+    availableCards: BaseCards;
 };
 
 export type PlayGame = {

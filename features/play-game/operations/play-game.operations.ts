@@ -14,7 +14,9 @@ export const startPlayGameOperation = (
         data: {
             gameId,
             ...playGameData,
+            allCardsIds: playGameData.allCardsIds,
             players: { create: players },
+            availableCards: { create: playGameData.availableCards },
         },
     });
 

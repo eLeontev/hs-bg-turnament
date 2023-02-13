@@ -2,7 +2,10 @@ import { playGamePhases, PendingGamePlayer } from '@prisma/client';
 
 import { getPlayerHeroIdsMap } from './play-game.hero.service';
 import { getPhaseData } from './play-game.phase.service';
-import { getSelectMinionTypes } from './play-game.select-minion-types.service';
+import {
+    getAvailableMinions,
+    getSelectedMinionTypes,
+} from './play-game.select-minion-types.service';
 
 import {
     getPlayGameOperation,
@@ -68,11 +71,16 @@ export const startPlayGame = async (
         initialRound
     );
 
-    const minionTypes = getSelectMinionTypes();
+    const minionTypes = getSelectedMinionTypes();
+    const { allCardsIds, availableCards } = await getAvailableMinions(
+        minionTypes
+    );
 
     await startPlayGameOperation(gameId, playGamePlayers, {
         ...phaseData,
         minionTypes,
+        allCardsIds,
+        availableCards,
         round: initialRound,
     });
 

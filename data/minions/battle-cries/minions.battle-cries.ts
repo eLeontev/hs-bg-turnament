@@ -1,6 +1,7 @@
-import { minionIds } from '@prisma/client';
+import { minionIds, minionTypes } from '@prisma/client';
+
 import { Minion } from '../../../features/play-game/models/play-game.minion.models';
-import { summonedMinions } from '../../minions';
+import { tavernTiers } from '../../../features/play-game/models/play-game.tavern.models';
 
 export enum battleCries {
     increseHP = 'increseHP',
@@ -25,17 +26,25 @@ export type CardValues = {
 };
 
 export type CardId = string;
+export type CardIds = Array<string>;
 
 export type Buff<B extends battleCries> = {
     battleCry: B;
     value: CardValues[B];
     source: any;
 };
-export type Card = {
+export type BaseCard = {
     cardId: CardId;
     minionId: minionIds;
+    minionType: minionTypes;
+    tavernTier: tavernTiers;
+};
+
+export type Card = BaseCard & {
     buffs: Array<Buff<battleCries>>;
 };
+
+export type BaseCards = Array<BaseCard>;
 export type Cards = Array<Card>;
 
 export type BattleCryHandlerArgs = {

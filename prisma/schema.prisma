@@ -61,9 +61,9 @@ enum minionIds {
 
   ballOfMinions
 
-  tabbycat 
+  tabbycat
   turtle
-  rat 
+  rat
   hyena
 }
 
@@ -114,6 +114,15 @@ model PlayGamePlayer {
   playGameGameId   String?
 }
 
+model Card {
+  cardId         String      @id @map("_id")
+  minionId       minionIds
+  minionType     minionTypes
+  tavernTier     Int
+  PlayGame       PlayGame?   @relation(fields: [playGameGameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
+  playGameGameId String?
+}
+
 model PlayGame {
   gameId            String           @id @map("_id")
   phase             playGamePhases
@@ -121,5 +130,7 @@ model PlayGame {
   phaseStartDate    String
   round             Int
   minionTypes       minionTypes[]
+  allCardsIds       String[]
+  availableCards    Card[]
   players           PlayGamePlayer[]
 }
