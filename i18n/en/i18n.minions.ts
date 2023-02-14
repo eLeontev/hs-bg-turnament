@@ -125,6 +125,12 @@ export const enMinionMessages: I18nTransMessages<namespaces.minions> = {
     ballOfMinionsTripleCardPowerDescription:
         'When you sell this, give its stats to two random friendly minions.',
 
+    // no-type
+    brannName: 'Brann Bronzebeard',
+    brannDescription: 'Contains 75% more fiber than his brother Magni!',
+    brannPowerDescription: 'Your Battlecries trigger twice.',
+    brannTripleCardPowerDescription: 'Your Battlecries trigger three times.',
+
     // test
     testName: 'testName',
     testDescription: 'testDescription',

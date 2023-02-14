@@ -65,6 +65,8 @@ enum minionIds {
   turtle
   rat
   hyena
+
+  brann
 }
 
 enum minionTypes {

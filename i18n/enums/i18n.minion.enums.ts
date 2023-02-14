@@ -105,6 +105,12 @@ export enum minionI18nKeys {
     ballOfMinionsPowerDescription = 'ballOfMinionsPowerDescription',
     ballOfMinionsTripleCardPowerDescription = 'ballOfMinionsTripleCardPowerDescription',
 
+    // no-type
+    brannName = 'brannName',
+    brannDescription = 'brannDescription',
+    brannPowerDescription = 'brannPowerDescription',
+    brannTripleCardPowerDescription = 'brannTripleCardPowerDescription',
+
     // test
     testName = 'testName',
     testDescription = 'testDescription',

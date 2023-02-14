@@ -135,6 +135,13 @@ export const ruMinionMessages: I18nTransMessages<namespaces.minions> = {
     ballOfMinionsTripleCardPowerDescription:
         'Когда вы продаете это существо, два ваших случайных существа получают прибавку в размере его характеристик.',
 
+    // no-type
+    brannName: 'Бранн Бронзобород',
+    brannDescription:
+        'Бранн надеется пойти по стопам своего великого брата и когда-нибудь стать... нет, не бриллиантовой статуей, а обликом героя.',
+    brannPowerDescription: 'Ваши «Боевые кличи» срабатывают дважды.',
+    brannTripleCardPowerDescription: 'Ваши «Боевые кличи» срабатывают трижды.',
+
     // test
     testName: 'testName',
     testDescription: 'testDescription',
