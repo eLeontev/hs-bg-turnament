@@ -4,6 +4,10 @@ import prisma from '../../../lib/prisma';
 import { GameId, PlayerIdInGame } from '../../../models/common.models';
 import { PlayGameData, PlayGamePhaseData } from '../models/play-game.models';
 import { PlayGamePlayers } from '../../player/player.models';
+import {
+    CardId,
+    CardIds,
+} from '../../../data/minions/battle-cries/minions.battle-cries';
 
 export const startPlayGameOperation = (
     gameId: GameId,
@@ -14,16 +18,18 @@ export const startPlayGameOperation = (
         data: {
             gameId,
             ...playGameData,
-            allCardsIds: playGameData.allCardsIds,
             players: { create: players },
             availableCards: { create: playGameData.availableCards },
         },
     });
 
-export const getPlayGameOperation = (gameId: GameId) =>
+export const getPlayGameOperation = (
+    gameId: GameId,
+    withAvailableCards?: boolean
+) =>
     prisma.playGame.findFirstOrThrow({
         where: { gameId },
-        include: { players: true },
+        include: { players: true, availableCards: withAvailableCards },
     });
 
 export const getPlayGameWithoutPlayerOperation = (gameId: GameId) =>
@@ -60,3 +66,12 @@ export const selectPlayGamePlayerHeroOperation = (
         where: { playerIdInGame },
         data: { selectedHeroId },
     });
+
+export const markCardAvailableOperation = (cardId: CardId) =>
+    prisma.card.update({ where: { cardId }, data: { isInUse: false } });
+
+export const markCardInUseOperation = (cardId: CardId) =>
+    prisma.card.update({ where: { cardId }, data: { isInUse: true } });
+
+export const markCardsInUseOperation = (availableCardIds: CardIds) =>
+    Promise.all(availableCardIds.map(markCardInUseOperation));

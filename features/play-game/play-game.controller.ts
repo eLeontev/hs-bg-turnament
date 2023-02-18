@@ -25,10 +25,8 @@ import { playGameActions } from './play-game.enums';
 
 import { StartPlayGameInput } from '../player/player.models';
 import { TRCPProps } from '../../models/trcp.models';
-import {
-    PlayGameBaseInput,
-    PlayGameSelectHeroInput,
-} from './models/play-game.models';
+import { PlayGameBaseInput } from './models/play-game.models';
+import { SelectHeroPlayerInput } from './models/play-game.player-actions.models';
 
 import { getHash } from '../../utils.ts/hash-server.utils';
 
@@ -59,7 +57,7 @@ export const getPlayerHeroIdsQuery = ({
 export const selectPlayGamePlayerHeroMutation = async ({
     input,
     ctx,
-}: TRCPProps<PlayGameSelectHeroInput>) => {
+}: TRCPProps<SelectHeroPlayerInput>) => {
     await selectPlayGamePlayerHero(input);
 
     const { heroId, playerIdInGame } = input;

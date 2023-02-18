@@ -46,5 +46,5 @@ export const getAvailableMinions = async (minionTypes: Array<minionTypes>) => {
         cardId: allCardsIds[i],
     }));
 
-    return { allCardsIds, availableCards };
+    return availableCards;
 };

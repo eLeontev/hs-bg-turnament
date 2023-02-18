@@ -10,6 +10,7 @@ import { playGameActions } from '../play-game.enums';
 import { GameId } from '../../../models/common.models';
 
 import { dateInUtcString } from '../../../utils.ts/date.utils';
+import { phaseInitializationService } from '../services/play-game.phase-initialization.service';
 
 export const performEndPhaseActivity = async (
     io: Server,
@@ -23,6 +24,10 @@ export const performEndPhaseActivity = async (
     const phase = shouldFinishHeroSelection
         ? playGamePhases.recruit
         : playGamePhases.combat;
+
+    if (phase === playGamePhases.recruit) {
+        await phaseInitializationService.initRecruitPhase(gameId);
+    }
 
     notifyPlayersInPlayGame(io, gameId, {
         action: playGameActions.phaseChangedTo,

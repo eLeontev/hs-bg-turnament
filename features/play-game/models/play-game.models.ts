@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { heroIds, minionTypes, playGamePhases } from '@prisma/client';
+import { heroIds, minionTypes } from '@prisma/client';
 
 import {
     playGameBaseInputSchema,
@@ -14,10 +14,7 @@ import { playGameActions } from '../play-game.enums';
 
 import { PlayGamePlayers } from '../../player/player.models';
 import { PlayerKey } from '../../../models/common.models';
-import {
-    BaseCards,
-    CardIds,
-} from '../../../data/minions/battle-cries/minions.battle-cries';
+import { BaseCards } from '../../../data/minions/battle-cries/minions.battle-cries';
 
 export type DurationInMs = number;
 
@@ -25,7 +22,6 @@ export type PlayGamePhaseData = z.infer<typeof playGamePhaseDataSchema>;
 
 export type PlayGameData = PlayGamePhaseData & {
     minionTypes: Array<minionTypes>;
-    allCardsIds: CardIds;
     availableCards: BaseCards;
 };
 
@@ -35,8 +31,6 @@ export type PlayGame = {
 } & PlayGameData;
 
 export type PlayGameBaseInput = z.infer<typeof playGameBaseInputSchema>;
-
-export type PlayGameSelectHeroInput = z.infer<typeof playGameSelectHeroSchema>;
 
 export type PlayGameJoinLeavePayload = z.infer<
     typeof playGameJoinLeavePayloadSchema

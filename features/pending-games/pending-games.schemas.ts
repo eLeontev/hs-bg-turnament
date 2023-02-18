@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { maxGameNameLength, minGameNameLength } from './pending-games.config';
 import { playerIdSchema, playerLoginSchema } from '../player/player.schemas';
 
+export const cardIdSchema = z.string();
 export const gameIdSchema = z.string();
 
 export const gameNameSchema = z

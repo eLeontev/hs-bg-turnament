@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { cardIdSchema } from '../../pending-games/pending-games.schemas';
 
 import { heroIdSchema } from './play-game.hero.schemas';
 import { minionIdSchema } from './play-game.minion.schemas';
@@ -9,11 +10,11 @@ export const selectHeroPlayerInputSchema = playGameBaseInputSchema.merge(
 );
 
 export const purchasePlayerInputSchema = playGameBaseInputSchema.merge(
-    z.object({ minionId: minionIdSchema })
+    z.object({ cardId: cardIdSchema })
 );
 
 export const sellMinionPlayerInputSchema = playGameBaseInputSchema.merge(
-    z.object({ minionId: minionIdSchema })
+    z.object({ cardId: cardIdSchema })
 );
 
 export const rollTavernMinionsPlayerInputSchema = playGameBaseInputSchema;

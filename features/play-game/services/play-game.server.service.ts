@@ -16,17 +16,20 @@ import {
 import { playerKeySchema } from '../../player/player.schemas';
 import { heroIdsSchema } from '../schemas/play-game.hero.schemas';
 
+import { getAmountOfGoldOnRoundStart } from './play-game.gold.service';
+
 import {
+    defaultCardPurchasePrice,
     defaultCountOfHitPoints,
+    defaultTavernUpdatePrice,
+    initialRound,
     initialTavernTier,
 } from '../../../constants/play-game.config.constants';
 
 import { PlayGamePlayer, PlayGamePlayers } from '../../player/player.models';
 import { GameId, PlayerIdInGame } from '../../../models/common.models';
-import {
-    PlayGameBaseInput,
-    PlayGameSelectHeroInput,
-} from '../models/play-game.models';
+import { PlayGameBaseInput } from '../models/play-game.models';
+import { SelectHeroPlayerInput } from '../models/play-game.player-actions.models';
 
 import { getHashesFromValues } from '../../../utils.ts/hash-server.utils';
 import { dateInUtcString } from '../../../utils.ts/date.utils';
@@ -48,6 +51,9 @@ export const startPlayGame = async (
         ({ playerLogin, playerIdInGame }): PlayGamePlayer => ({
             playerIdInGame,
             playerLogin,
+            goldAmount: getAmountOfGoldOnRoundStart(initialRound),
+            tavernUpdatePrice: defaultTavernUpdatePrice,
+            cardPurchasePrice: defaultCardPurchasePrice,
             playerKey: playerKeySchema.parse(
                 hashesFromPlayerIdsInGame.get(playerIdInGame)
             ),
@@ -59,12 +65,12 @@ export const startPlayGame = async (
             isWonLastTime: null,
             opponentId: null,
             opponentKey: null,
-            deskMinionIds: [],
-            handMinionIds: [],
+            tavernCardIds: [],
+            handCardIds: [],
+            deskCardIds: [],
         })
     );
 
-    const initialRound = 0;
     const phaseData = getPhaseData(
         playGamePhases.heroSelection,
         dateInUtcString(),
@@ -72,19 +78,30 @@ export const startPlayGame = async (
     );
 
     const minionTypes = getSelectedMinionTypes();
-    const { allCardsIds, availableCards } = await getAvailableMinions(
-        minionTypes
-    );
+    const availableCards = await getAvailableMinions(minionTypes);
 
     await startPlayGameOperation(gameId, playGamePlayers, {
         ...phaseData,
         minionTypes,
-        allCardsIds,
         availableCards,
         round: initialRound,
     });
 
     return phaseData;
+};
+
+export const getPlayerAndAwailableCards = async (
+    { gameId, playerIdInGame }: PlayGameBaseInput,
+    withAvailableCards?: boolean
+) => {
+    const { players, availableCards } = await getPlayGameOperation(
+        gameId,
+        withAvailableCards
+    );
+
+    const player = isPlayerInGameValidator(players, playerIdInGame);
+
+    return { player, availableCards };
 };
 
 export const getPlayGame = async ({
@@ -108,8 +125,9 @@ export const getPlayGame = async ({
                 countOfArmor,
                 countOfHitPoints,
                 tavernTier,
-                deskMinionIds,
-                handMinionIds,
+                tavernCardIds,
+                handCardIds,
+                deskCardIds,
             }) => ({
                 playerLogin,
                 playerKey,
@@ -119,8 +137,9 @@ export const getPlayGame = async ({
                 isWonLastTime,
                 opponentKey,
                 tavernTier,
-                deskMinionIds,
-                handMinionIds,
+                tavernCardIds, // TODO send only desk card ids
+                handCardIds,
+                deskCardIds,
             })
         ),
     };
@@ -143,10 +162,12 @@ export const isSelectHeroPhaseValidator = (phase: playGamePhases) => {
     }
 };
 
-export const isPlayerInGameValidator = (
-    players: PlayGamePlayers,
+export const isPlayerInGameValidator = <
+    T extends { playerIdInGame: PlayerIdInGame }
+>(
+    players: Array<T>,
     playerIdInGame: PlayerIdInGame
-) => {
+): T => {
     const playGamePlayer = players.find(
         (player) => player.playerIdInGame === playerIdInGame
     );
@@ -182,7 +203,7 @@ export const selectPlayGamePlayerHero = async ({
     gameId,
     playerIdInGame,
     heroId,
-}: PlayGameSelectHeroInput) => {
+}: SelectHeroPlayerInput) => {
     const { phase, players } = await getPlayGameOperation(gameId);
 
     const playGamePlayer = isPlayerInGameValidator(players, playerIdInGame);

@@ -1,4 +1,5 @@
 import { heroIds } from '@prisma/client';
+import { CardIds } from '../../../data/minions/battle-cries/minions.battle-cries';
 import prisma from '../../../lib/prisma';
 
 import { PlayerIdInGame } from '../../../models/common.models';
@@ -47,3 +48,43 @@ export const setPlayersOpponentsOperation = (
     Promise.all(
         playGamePlayers.map((player) => setPlayerOpponentOperation(player))
     );
+
+export const updatePlayerCardsOperation = (
+    playerIdInGame: PlayerIdInGame,
+    tavernCardIds: CardIds,
+    goldAmount: number
+) =>
+    prisma.playGamePlayer.update({
+        where: { playerIdInGame },
+        data: { tavernCardIds, goldAmount },
+    });
+
+export const sellPlayerCardOperation = (
+    playerIdInGame: PlayerIdInGame,
+    deskCardIds: CardIds,
+    goldAmount: number
+) =>
+    prisma.playGamePlayer.update({
+        where: { playerIdInGame },
+        data: { deskCardIds, goldAmount },
+    });
+
+export const addCardToPlayerHandCardsOperation = (
+    playerIdInGame: PlayerIdInGame,
+    tavernCardIds: CardIds,
+    handCardIds: CardIds
+) =>
+    prisma.playGamePlayer.update({
+        where: { playerIdInGame },
+        data: { tavernCardIds, handCardIds },
+    });
+
+export const addCardToPlayerDeskCardsOperation = (
+    playerIdInGame: PlayerIdInGame,
+    handCardIds: CardIds,
+    deskCardIds: CardIds
+) =>
+    prisma.playGamePlayer.update({
+        where: { playerIdInGame },
+        data: { handCardIds, deskCardIds },
+    });
