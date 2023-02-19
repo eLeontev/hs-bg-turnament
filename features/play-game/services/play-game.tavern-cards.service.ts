@@ -155,7 +155,7 @@ export class TavernCardsService {
     ) {
         let availableCardsForPlayer = availableCards.filter(
             ({ tavernTier, isInUse }: CardFromDB) =>
-                playerTavernTier >= tavernTier || isInUse
+                playerTavernTier >= tavernTier && !isInUse
         );
 
         const countOfCards = countOfCardPertavernTier[playerTavernTier];
