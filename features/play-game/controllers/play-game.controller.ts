@@ -1,4 +1,4 @@
-import { togglePlayGameEngine } from './engine/play-game.engine';
+import { togglePlayGameEngine } from '../engine/play-game.engine';
 
 import {
     getPlayerHeroIds,
@@ -6,29 +6,29 @@ import {
     getPlayGameRecruitPhaseInitialData,
     selectPlayGamePlayerHero,
     startPlayGame,
-} from './services/play-game.server.service';
+} from '../services/play-game.server.service';
 import {
     getPendingGames,
     deletePendingGame,
-} from '../pending-games/services/pending-game.server.service';
-import { cancelDeletePendingGame } from '../pending-games/services/pending-games.scheduled.service';
+} from '../../pending-games/services/pending-game.server.service';
+import { cancelDeletePendingGame } from '../../pending-games/services/pending-games.scheduled.service';
 
 import {
     notifyOnlinePlayersPlayGameStarted,
     notifyPlayersInPlayGame,
-} from './sockets/play-game.notification.socket';
-import { notifyPendingGames } from '../pending-games/sockets/pending-games.notification.socket';
+} from '../sockets/play-game.notification.socket';
+import { notifyPendingGames } from '../../pending-games/sockets/pending-games.notification.socket';
 
-import { pendingGameStartMessage } from '../pending-games/pending-games.constants';
+import { pendingGameStartMessage } from '../../pending-games/pending-games.constants';
 
-import { playGameActions } from './play-game.enums';
+import { playGameActions } from '../play-game.enums';
 
-import { StartPlayGameInput } from '../player/player.models';
-import { TRCPProps } from '../../models/trcp.models';
-import { PlayGameBaseInput } from './models/play-game.models';
-import { SelectHeroPlayerInput } from './models/play-game.player-actions.models';
+import { StartPlayGameInput } from '../../player/player.models';
+import { TRCPProps } from '../../../models/trcp.models';
+import { PlayGameBaseInput } from '../models/play-game.models';
+import { SelectHeroPlayerInput } from '../models/play-game.player-actions.models';
 
-import { getHash } from '../../utils.ts/hash-server.utils';
+import { getHash } from '../../../utils.ts/hash-server.utils';
 
 export const playGameQuery = ({ input }: TRCPProps<PlayGameBaseInput>) =>
     getPlayGame(input);

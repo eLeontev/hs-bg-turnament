@@ -17,6 +17,9 @@ export const sellMinionPlayerInputSchema = playGameBaseInputSchema.merge(
     z.object({ cardId: cardIdSchema })
 );
 
+export const playMinionPlayerInputSchema = playGameBaseInputSchema.merge(
+    z.object({ cardId: cardIdSchema, targetId: cardIdSchema.optional() })
+);
 export const rollTavernMinionsPlayerInputSchema = playGameBaseInputSchema;
 export const upgradeTavernMinionsPlayerInputSchema = playGameBaseInputSchema;
 

@@ -69,9 +69,3 @@ export const playGameDetailsOutputSchema = playGamePhaseDataSchema.merge(
         players: z.array(playGamePlayerDetailsSchema),
     })
 );
-
-export const playGameSelectHeroSchema = playGameBaseInputSchema.merge(
-    z.object({
-        heroId: heroIdSchema,
-    })
-);

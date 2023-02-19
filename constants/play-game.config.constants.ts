@@ -14,6 +14,8 @@ export const defaultCountOfGoldForSell = 1;
 export const initialAmounOfGoldPerRound = 3;
 export const maxAmounOfGoldPerRound = 10;
 
+export const initialTavernTierUpgradePrice = 3;
+
 export const countOfCardPertavernTier = {
     [tavernTiers['☆']]: 3,
     [tavernTiers['☆☆']]: 4,

@@ -7,7 +7,6 @@ import {
     playGameJoinLeavePayloadSchema,
     playGamePhaseDataSchema,
     playGamePlayerDetailsWithSelectedHeroIdSchema,
-    playGameSelectHeroSchema,
 } from '../schemas/play-game.schemas';
 
 import { playGameActions } from '../play-game.enums';

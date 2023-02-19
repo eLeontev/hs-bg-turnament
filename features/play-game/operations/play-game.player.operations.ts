@@ -9,6 +9,7 @@ import {
     PlayGamePlayerWithSelectedHero,
     PlayGamePlayerWithSelectedHeros,
 } from '../../player/player.models';
+import { tavernTiers } from '../models/play-game.tavern.models';
 
 export const setHeroToPlayerOperation = (
     playerIdInGame: PlayerIdInGame,
@@ -87,4 +88,14 @@ export const addCardToPlayerDeskCardsOperation = (
     prisma.playGamePlayer.update({
         where: { playerIdInGame },
         data: { handCardIds, deskCardIds },
+    });
+
+export const upgradePlayerTavernTierOperation = (
+    playerIdInGame: PlayerIdInGame,
+    tavernTier: tavernTiers,
+    goldAmount: number
+) =>
+    prisma.playGamePlayer.update({
+        where: { playerIdInGame },
+        data: { tavernTier, goldAmount },
     });

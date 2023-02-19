@@ -10,11 +10,13 @@ import {
     addCardToPlayerHandCardsOperation,
     sellPlayerCardOperation,
     updatePlayerCardsOperation,
+    upgradePlayerTavernTierOperation,
 } from '../operations/play-game.player.operations';
 
 import {
     countOfCardPertavernTier,
     defaultCountOfGoldForSell,
+    initialTavernTierUpgradePrice,
 } from '../../../constants/play-game.config.constants';
 
 import {
@@ -27,12 +29,13 @@ import { tavernTiers } from '../models/play-game.tavern.models';
 import {
     PurchasePlayerInput,
     SellMinionsPlayerInput,
+    UpgradeTavernPlayerInput,
 } from '../models/play-game.player-actions.models';
 
 import { getExcludedRandom } from '../../../utils.ts/random.utils';
 
 export class TavernCardsService {
-    async getCards(baseInput: PlayGameBaseInput): Promise<Cards> {
+    async rollTavernMinions(baseInput: PlayGameBaseInput): Promise<Cards> {
         const { player, availableCards } = await getPlayerAndAwailableCards(
             baseInput,
             true
@@ -126,6 +129,31 @@ export class TavernCardsService {
             goldAmount + defaultCountOfGoldForSell
         );
         await markCardAvailableOperation(sellCardInput.cardId);
+    }
+
+    async upgradeTavern(input: UpgradeTavernPlayerInput): Promise<void> {
+        const {
+            player: { tavernTier, goldAmount },
+        } = await getPlayerAndAwailableCards(input);
+
+        if (tavernTier === tavernTiers['☆☆☆☆☆☆']) {
+            throw new Error('you tavern is already at max level');
+        }
+
+        // TODO: add logic to calculate tavern price based on round + reducing
+        if (initialTavernTierUpgradePrice > goldAmount) {
+            throw new Error(
+                'you do not have enough currency to upgrade your tavern'
+            );
+        }
+
+        const restGoldAmount = goldAmount - initialTavernTierUpgradePrice;
+
+        await upgradePlayerTavernTierOperation(
+            input.playerIdInGame,
+            tavernTier + 1,
+            goldAmount - restGoldAmount
+        );
     }
 
     private async getCardsToPlayer(
