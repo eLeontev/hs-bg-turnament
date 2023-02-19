@@ -20,6 +20,10 @@ import {
     getSavePlayerIdInGame,
     setPlayerKey,
 } from '../../../utils.ts/storage.utils';
+import {
+    initPlayerSelector,
+    usePlayerStore,
+} from '../components/store/play-game.player.store';
 
 export const useSetPlayGameBaseInput = () =>
     useMemo(
@@ -68,9 +72,11 @@ export const usePlayGameInitialization = () => {
 
 export const useInitialRecruitPhaseData = () => {
     const setRecruitPhaseData = usePlayGameStore(setRecruitPhaseDataSelector);
+    const initPlayer = usePlayerStore(initPlayerSelector);
 
     const baseInput = useSetPlayGameBaseInput();
     const phaseDataQuery = trpc.recruitPhaseInitialData.useQuery(baseInput);
+    const playerDataQuery = trpc.getPlayerData.useQuery(baseInput);
 
     useEffect(() => {
         const phaseData = phaseDataQuery.data;
@@ -78,4 +84,11 @@ export const useInitialRecruitPhaseData = () => {
             setRecruitPhaseData(phaseData);
         }
     }, [phaseDataQuery, setRecruitPhaseData]);
+
+    useEffect(() => {
+        const player = playerDataQuery.data;
+        if (player) {
+            initPlayer(player);
+        }
+    }, [playerDataQuery, initPlayer]);
 };

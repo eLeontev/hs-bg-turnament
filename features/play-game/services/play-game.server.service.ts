@@ -9,6 +9,7 @@ import {
 
 import {
     getPlayGameOperation,
+    getPlayGamePlayerOperation,
     selectPlayGamePlayerHeroOperation,
     startPlayGameOperation,
 } from '../operations/play-game.operations';
@@ -26,13 +27,18 @@ import {
     initialTavernTier,
 } from '../../../constants/play-game.config.constants';
 
-import { PlayGamePlayer, PlayGamePlayers } from '../../player/player.models';
+import {
+    PlayGamePlayer,
+    PlayGamePlayerData,
+    PlayGamePlayers,
+} from '../../player/player.models';
 import { GameId, PlayerIdInGame } from '../../../models/common.models';
 import { PlayGameBaseInput } from '../models/play-game.models';
 import { SelectHeroPlayerInput } from '../models/play-game.player-actions.models';
 
 import { getHashesFromValues } from '../../../utils.ts/hash-server.utils';
 import { dateInUtcString } from '../../../utils.ts/date.utils';
+import { initPlayGamePlayer } from './play-game.player.service';
 
 export const startPlayGame = async (
     gameId: GameId,
@@ -48,27 +54,17 @@ export const startPlayGame = async (
     const playerHeroIdsMap = getPlayerHeroIdsMap(playerIdsInGame);
 
     const playGamePlayers = pendingGamePlayers.map(
-        ({ playerLogin, playerIdInGame }): PlayGamePlayer => ({
-            playerIdInGame,
-            playerLogin,
-            goldAmount: getAmountOfGoldOnRoundStart(initialRound),
-            tavernUpdatePrice: defaultTavernUpdatePrice,
-            cardPurchasePrice: defaultCardPurchasePrice,
-            playerKey: playerKeySchema.parse(
-                hashesFromPlayerIdsInGame.get(playerIdInGame)
-            ),
-            heroIds: heroIdsSchema.parse(playerHeroIdsMap.get(playerIdInGame)),
-            selectedHeroId: null,
-            countOfArmor: 0,
-            countOfHitPoints: defaultCountOfHitPoints,
-            tavernTier: initialTavernTier,
-            isWonLastTime: null,
-            opponentId: null,
-            opponentKey: null,
-            tavernCardIds: [],
-            handCardIds: [],
-            deskCardIds: [],
-        })
+        ({ playerLogin, playerIdInGame }) =>
+            initPlayGamePlayer({
+                playerLogin,
+                playerIdInGame,
+                playerKey: playerKeySchema.parse(
+                    hashesFromPlayerIdsInGame.get(playerIdInGame)
+                ),
+                heroIds: heroIdsSchema.parse(
+                    playerHeroIdsMap.get(playerIdInGame)
+                ),
+            })
     );
 
     const phaseData = getPhaseData(
@@ -220,4 +216,14 @@ export const getPlayGameRecruitPhaseInitialData = async (
     const { phase, phaseDurationInMs, phaseStartDate, round } =
         await getPlayGame(playGameBaseInput);
     return { phase, phaseDurationInMs, phaseStartDate, round };
+};
+
+export const getPlayGamePlayer = async ({
+    playerIdInGame,
+}: PlayGameBaseInput): Promise<PlayGamePlayerData> => {
+    // TODO: is player in gameId check required?
+    const { playGameGameId, ...playGamePlayer } =
+        await getPlayGamePlayerOperation(playerIdInGame);
+
+    return { ...playGamePlayer, opponentId: null };
 };

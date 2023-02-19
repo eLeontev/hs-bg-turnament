@@ -1,9 +1,13 @@
 import { playGamePhases } from '@prisma/client';
 import { z } from 'zod';
 
-import { gameIdSchema } from '../../pending-games/pending-games.schemas';
-import { heroIdSchema } from './play-game.hero.schemas';
 import {
+    cardIdSchema,
+    gameIdSchema,
+} from '../../pending-games/pending-games.schemas';
+import { heroIdSchema, heroIdsSchema } from './play-game.hero.schemas';
+import {
+    playerIdInGameSchema,
     playerIdSchema,
     playerKeySchema,
     playerLoginSchema,
@@ -28,18 +32,44 @@ const basePlayerDetailsSchema = z.object({
 });
 
 export const countOfHitPointsSchema = z.number().min(0);
+export const countOfArmorSchema = z.number().min(0);
 export const isWonLastTimeSchema = z.boolean().nullable();
 export const opponentKeySchema = z.string().nullable();
+export const tavernTierSchema = z.number().min(1).max(6);
+export const selectedHeroIdSchema = heroIdSchema.nullable();
 
-export const playGamePlayerDetailsSchema = basePlayerDetailsSchema.merge(
+export const goldAmountSchema = z.number().min(0);
+export const tavernUpdatePriceSchema = z.number().min(0);
+export const cardPurchaseSchema = z.number().min(0);
+export const tavernCardIdsSchema = z.array(cardIdSchema);
+export const handCardIdsSchema = z.array(cardIdSchema);
+export const deskCardIdsSchema = z.array(cardIdSchema);
+
+export const playGameGamePlayerDetailsSchema = basePlayerDetailsSchema.merge(
     z.object({
-        selectedHeroId: heroIdSchema.nullable(),
-        countOfArmor: countOfHitPointsSchema,
+        selectedHeroId: selectedHeroIdSchema,
+        countOfArmor: countOfArmorSchema,
         isWonLastTime: isWonLastTimeSchema,
-        opponentKey: opponentKeySchema,
-        tavernTier: z.number().min(1).max(6),
+        tavernTier: tavernTierSchema,
     })
 );
+
+export const playGamePlayerDetailsSchema =
+    playGameGamePlayerDetailsSchema.merge(
+        z.object({
+            opponentKey: opponentKeySchema,
+            playerIdInGame: playerIdInGameSchema,
+            heroIds: heroIdsSchema,
+            goldAmount: goldAmountSchema,
+            tavernUpdatePrice: tavernUpdatePriceSchema,
+            cardPurchasePrice: cardPurchaseSchema,
+            countOfHitPoints: countOfHitPointsSchema,
+            tavernCardIds: tavernCardIdsSchema,
+            opponentId: z.string().nullable(),
+            handCardIds: handCardIdsSchema,
+            deskCardIds: deskCardIdsSchema,
+        })
+    );
 
 export const playGamePlayerDetailsWithSelectedHeroIdSchema =
     basePlayerDetailsSchema.merge(z.object({ selectedHeroId: heroIdSchema }));
@@ -66,6 +96,6 @@ export const playGameDetailsOutputSchema = playGamePhaseDataSchema.merge(
         gameId: gameIdSchema,
         playerKey: playerKeySchema,
         minionTypes: minionTypesSchema,
-        players: z.array(playGamePlayerDetailsSchema),
+        players: z.array(playGameGamePlayerDetailsSchema),
     })
 );

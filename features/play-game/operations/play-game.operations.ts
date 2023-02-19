@@ -58,6 +58,9 @@ export const isPlayerInPlayGameOperation = (
         include: { players: { where: { playerIdInGame } } },
     });
 
+export const getPlayGamePlayerOperation = (playerIdInGame: PlayerIdInGame) =>
+    prisma.playGamePlayer.findFirstOrThrow({ where: { playerIdInGame } });
+
 export const selectPlayGamePlayerHeroOperation = (
     playerIdInGame: PlayerIdInGame,
     selectedHeroId: heroIds

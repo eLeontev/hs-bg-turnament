@@ -186,18 +186,20 @@ export class TavernCardsService {
                 playerTavernTier >= tavernTier && !isInUse
         );
 
-        const countOfCards = countOfCardPertavernTier[playerTavernTier];
+        let countOfCards = countOfCardPertavernTier[playerTavernTier];
         const cardsForPlayer: Cards = [];
         const cardsForPlayerSet = new Set();
 
         let randomCardForPlayer: CardFromDB;
+
         while (countOfCards) {
             [randomCardForPlayer, availableCardsForPlayer] = getExcludedRandom(
                 availableCardsForPlayer
             );
-
             cardsForPlayer.push({ ...randomCardForPlayer, buffs: [] });
             cardsForPlayerSet.add(randomCardForPlayer.cardId);
+
+            countOfCards = countOfCards - 1;
         }
 
         return cardsForPlayer;

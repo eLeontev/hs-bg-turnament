@@ -34,7 +34,8 @@ export const togglePhase =
         const round = await changePlayGamePhase(io, gameId);
 
         const { isGameOver, winner } = await isPlayGameOver(gameId);
-        if (isGameOver) {
+        if (isGameOver && round > 4) {
+            // TODO: temporary mock
             return finishPlayGame(io, gameId, winner);
         }
 
