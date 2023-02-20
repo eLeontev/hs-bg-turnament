@@ -21,7 +21,6 @@ export const performEndPhaseActivity = async (
     // build all batte results
     // notify players to get battle results
 
-    console.log(phase);
     if (phase === playGamePhases.recruit) {
         await phaseInitializationService.initRecruitPhase(gameId);
     }
