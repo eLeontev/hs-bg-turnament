@@ -15,16 +15,13 @@ import { phaseInitializationService } from '../services/play-game.phase-initiali
 export const performEndPhaseActivity = async (
     io: Server,
     gameId: GameId,
-    shouldFinishHeroSelection?: boolean
+    phase: playGamePhases
 ) => {
     // -> calculate/check all players activities per phase
     // build all batte results
     // notify players to get battle results
 
-    const phase = shouldFinishHeroSelection
-        ? playGamePhases.recruit
-        : playGamePhases.combat;
-
+    console.log(phase);
     if (phase === playGamePhases.recruit) {
         await phaseInitializationService.initRecruitPhase(gameId);
     }

@@ -163,7 +163,7 @@ export class TavernCardsService {
         goldAmount: number
     ): Promise<Cards> {
         const cardsForPlayer = this.formCards(availableCards, tavernTier);
-        const playerTavernCardIds = availableCards.map(
+        const playerTavernCardIds = cardsForPlayer.map(
             ({ cardId }): CardId => cardId
         );
 

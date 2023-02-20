@@ -27,7 +27,7 @@ export const togglePhase =
         if (shouldFinishHeroSelection) {
             await finishHeroSelection(gameId);
         }
-        await performEndPhaseActivity(io, gameId, shouldFinishHeroSelection);
+        await performEndPhaseActivity(io, gameId, phase);
 
         await performStartPhaseActivity(io, gameId);
 
