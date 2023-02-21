@@ -4,6 +4,7 @@ import { getPlayerAndAwailableCards } from './play-game.server.service';
 
 import {
     markCardAvailableOperation,
+    markCardsAvailableOperation,
     markCardsInUseOperation,
 } from '../operations/play-game.operations';
 import {
@@ -40,7 +41,8 @@ export class TavernCardsService {
             baseInput,
             true
         );
-        const { tavernTier, goldAmount, tavernUpdatePrice } = player;
+        const { tavernTier, goldAmount, tavernUpdatePrice, tavernCardIds } =
+            player;
 
         if (tavernUpdatePrice > goldAmount) {
             throw new Error('Invalid amount of currency');
@@ -48,6 +50,7 @@ export class TavernCardsService {
 
         const goldAmountAfterCardsUpdate = goldAmount - tavernUpdatePrice;
 
+        await markCardsAvailableOperation(tavernCardIds);
         return await this.getCardsToPlayer(
             baseInput,
             availableCards,
@@ -58,10 +61,11 @@ export class TavernCardsService {
 
     async assignCardsOnPhaseInit(baseInput: PlayGameBaseInput): Promise<Cards> {
         const {
-            player: { tavernTier, goldAmount },
+            player: { tavernTier, goldAmount, tavernCardIds },
             availableCards,
         } = await getPlayerAndAwailableCards(baseInput, true);
 
+        await markCardsAvailableOperation(tavernCardIds);
         return await this.getCardsToPlayer(
             baseInput,
             availableCards,

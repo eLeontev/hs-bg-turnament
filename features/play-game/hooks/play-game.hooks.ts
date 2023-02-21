@@ -7,7 +7,7 @@ import { formPlayGamePlayers } from '../services/play-game.player.service';
 
 import {
     initStateSelector,
-    setRecruitPhaseDataSelector,
+    isReadySelector,
     usePlayGameStore,
 } from '../components/store/play-game.store';
 import {
@@ -37,12 +37,18 @@ export const useSetPlayGameBaseInput = () =>
 export const usePlayGameInitialization = () => {
     const baseInput = useSetPlayGameBaseInput();
 
+    const isReady = usePlayGameStore(isReadySelector);
     const initState = usePlayGameStore(initStateSelector);
+
     const setPlayers = usePlayersStore(setPlayersSelector);
 
     const playGameDetailsQuery = trpc.playGameDetails.useQuery(baseInput);
 
     useEffect(() => {
+        if (isReady) {
+            return;
+        }
+
         const playGameDetails = playGameDetailsQuery.data;
 
         if (playGameDetails) {
@@ -65,26 +71,19 @@ export const usePlayGameInitialization = () => {
 
             setPlayers(formPlayGamePlayers(players));
         }
-    }, [playGameDetailsQuery, initState, setPlayers, baseInput]);
+    }, [playGameDetailsQuery, initState, setPlayers, baseInput, isReady]);
 
     return playGameDetailsQuery;
 };
 
 export const useInitialRecruitPhaseData = () => {
-    const setRecruitPhaseData = usePlayGameStore(setRecruitPhaseDataSelector);
     const initPlayer = usePlayerStore(initPlayerSelector);
 
     const baseInput = useSetPlayGameBaseInput();
-    const phaseDataQuery = trpc.recruitPhaseInitialData.useQuery(baseInput);
-    const playerDataQuery = trpc.getPlayerData.useQuery(baseInput);
 
-    useEffect(() => {
-        const phaseData = phaseDataQuery.data;
-        if (phaseData) {
-            setRecruitPhaseData(phaseData);
-        }
-    }, [phaseDataQuery, setRecruitPhaseData]);
-
+    const playerDataQuery = trpc.getPlayerData.useQuery(baseInput, {
+        cacheTime: 0,
+    });
     useEffect(() => {
         const player = playerDataQuery.data;
         if (player) {

@@ -5,6 +5,11 @@ import { trpc } from '../../../lib/client';
 
 import { IconButton } from '../../common/components/button.component';
 
+import {
+    displayOverlaySelector,
+    useWaitingPlayGameStore,
+} from './stores/pending-game.waiting-game.store';
+
 import { GameId } from '../../../models/common.models';
 
 import { getSavePlayerId } from '../../../utils.ts/storage.utils';
@@ -14,9 +19,13 @@ export type StartPendingGameProps = { gameId: GameId };
 export const StartPendingGameComponent = ({
     gameId,
 }: StartPendingGameProps) => {
+    const displayOverlay = useWaitingPlayGameStore(displayOverlaySelector);
     const mutation = trpc.startPlayGame.useMutation();
-    const onClick = () =>
+
+    const onClick = () => {
+        displayOverlay();
         mutation.mutate({ gameId, playerId: getSavePlayerId() });
+    };
 
     return (
         <IconButton color="green" onClick={onClick}>

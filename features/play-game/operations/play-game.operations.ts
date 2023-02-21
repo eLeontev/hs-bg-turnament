@@ -73,6 +73,9 @@ export const selectPlayGamePlayerHeroOperation = (
 export const markCardAvailableOperation = (cardId: CardId) =>
     prisma.card.update({ where: { cardId }, data: { isInUse: false } });
 
+export const markCardsAvailableOperation = (availableCardIds: CardIds) =>
+    Promise.all(availableCardIds.map(markCardAvailableOperation));
+
 export const markCardInUseOperation = (cardId: CardId) =>
     prisma.card.update({ where: { cardId }, data: { isInUse: true } });
 
