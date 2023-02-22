@@ -74,10 +74,19 @@ export const markCardAvailableOperation = (cardId: CardId) =>
     prisma.card.update({ where: { cardId }, data: { isInUse: false } });
 
 export const markCardsAvailableOperation = (availableCardIds: CardIds) =>
-    Promise.all(availableCardIds.map(markCardAvailableOperation));
+    prisma.card.updateMany({
+        where: { cardId: { in: availableCardIds } },
+        data: { isInUse: false },
+    });
 
 export const markCardInUseOperation = (cardId: CardId) =>
     prisma.card.update({ where: { cardId }, data: { isInUse: true } });
 
 export const markCardsInUseOperation = (availableCardIds: CardIds) =>
-    Promise.all(availableCardIds.map(markCardInUseOperation));
+    prisma.card.updateMany({
+        where: { cardId: { in: availableCardIds } },
+        data: { isInUse: true },
+    });
+
+export const getCardsOperation = (cardsIds: CardIds) =>
+    prisma.card.findMany({ where: { cardId: { in: cardsIds } } });

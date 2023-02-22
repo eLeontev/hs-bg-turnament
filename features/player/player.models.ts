@@ -5,7 +5,7 @@ import {
 } from '@prisma/client';
 
 import {
-    playGamePlayerDetailsSchema,
+    playGamePlayerWithCardsSchema,
     startPlayGameInputSchema,
 } from '../play-game/schemas/play-game.schemas';
 
@@ -15,6 +15,7 @@ import {
     PlayerKey,
     PlayerLogin,
 } from '../../models/common.models';
+import { Cards } from '../../data/minions/battle-cries/minions.battle-cries';
 
 export type PublicPlayer = {
     playerLogin: PlayerLogin;
@@ -30,7 +31,9 @@ export type PendingGamePlayer = Player & {
 };
 
 export type PlayGamePlayer = Omit<PrismaPlayGamePlayer, 'playGameGameId'>;
-export type PlayGamePlayerData = z.infer<typeof playGamePlayerDetailsSchema>;
+export type PlayGamePlayerWithCards = PlayGamePlayer & { cards: Cards };
+
+export type PlayGamePlayerData = z.infer<typeof playGamePlayerWithCardsSchema>;
 
 export type PublicPlayers = Array<PublicPlayer>;
 export type PendingGamePlayers = Array<PendingGamePlayer>;

@@ -32,7 +32,7 @@ export const getAvailableMinions = async (minionTypes: Array<minionTypes>) => {
                             ...new Array(countOfMinionsPerDeck).fill({
                                 minionId,
                                 tavernTier: Number(tavernTier),
-                                minionType,
+                                minionTypes: [minionType],
                                 cardId: '',
                             })
                         )

@@ -1,5 +1,5 @@
 import { TRCPProps } from '../../../models/trcp.models';
-import { PlayGamePlayer } from '../../player/player.models';
+import { PlayGamePlayerWithCards } from '../../player/player.models';
 import { PlayGameBaseInput } from '../models/play-game.models';
 import {
     PlayMinionPlayerInput,
@@ -18,7 +18,7 @@ export class PlayGamePlayerController {
 
     async playerDataQuery({
         input,
-    }: TRCPProps<PlayGameBaseInput>): Promise<PlayGamePlayer> {
+    }: TRCPProps<PlayGameBaseInput>): Promise<PlayGamePlayerWithCards> {
         return getPlayGamePlayer(input);
     }
 

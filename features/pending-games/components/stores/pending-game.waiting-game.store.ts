@@ -16,6 +16,7 @@ export const useWaitingPlayGameStore = create<
     displayOverlay: () => set({ isWaitingForPlayGame: true }),
     hideOverlay: () => set({ isWaitingForPlayGame: false }),
 }));
+
 export const displayOverlaySelector = ({
     displayOverlay,
 }: WaitingPlayGameApi) => displayOverlay;

@@ -200,8 +200,12 @@ export class TavernCardsService {
             [randomCardForPlayer, availableCardsForPlayer] = getExcludedRandom(
                 availableCardsForPlayer
             );
-            cardsForPlayer.push({ ...randomCardForPlayer, buffs: [] });
-            cardsForPlayerSet.add(randomCardForPlayer.cardId);
+
+            // TODO: limitation to prevent cases where we have not enough cards for players
+            if (randomCardForPlayer) {
+                cardsForPlayer.push({ ...randomCardForPlayer, buffs: [] });
+                cardsForPlayerSet.add(randomCardForPlayer.cardId);
+            }
 
             countOfCards = countOfCards - 1;
         }

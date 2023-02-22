@@ -1,14 +1,16 @@
 import { z } from 'zod';
 import { create } from 'zustand';
 
-import { playGamePlayerDetailsSchema } from '../../schemas/play-game.schemas';
+import { playGamePlayerWithCardsSchema } from '../../schemas/play-game.schemas';
 
 import { PlayerKey } from '../../../../models/common.models';
 import { tavernTiers } from '../../models/play-game.tavern.models';
 
 import { getPlayerKey } from '../../../../utils.ts/storage.utils';
 
-export type PlayGamePlayerDetails = z.infer<typeof playGamePlayerDetailsSchema>;
+export type PlayGamePlayerDetails = z.infer<
+    typeof playGamePlayerWithCardsSchema
+>;
 
 export type PlayGameStorePlayers = Map<PlayerKey, PlayGamePlayerDetails>;
 export type PlayGamePlayersDataState = {

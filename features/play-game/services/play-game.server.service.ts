@@ -1,4 +1,4 @@
-import { playGamePhases, PendingGamePlayer } from '@prisma/client';
+import { playGamePhases, PendingGamePlayer, Card } from '@prisma/client';
 
 import { getPlayerHeroIdsMap } from './play-game.hero.service';
 import { getPhaseData } from './play-game.phase.service';
@@ -8,6 +8,7 @@ import {
 } from './play-game.select-minion-types.service';
 
 import {
+    getCardsOperation,
     getPlayGameOperation,
     getPlayGamePlayerOperation,
     selectPlayGamePlayerHeroOperation,
@@ -17,20 +18,13 @@ import {
 import { playerKeySchema } from '../../player/player.schemas';
 import { heroIdsSchema } from '../schemas/play-game.hero.schemas';
 
-import { getAmountOfGoldOnRoundStart } from './play-game.gold.service';
-
-import {
-    defaultCardPurchasePrice,
-    defaultCountOfHitPoints,
-    defaultTavernUpdatePrice,
-    initialRound,
-    initialTavernTier,
-} from '../../../constants/play-game.config.constants';
+import { initialRound } from '../../../constants/play-game.config.constants';
 
 import {
     PlayGamePlayer,
     PlayGamePlayerData,
     PlayGamePlayers,
+    PlayGamePlayerWithCards,
 } from '../../player/player.models';
 import { GameId, PlayerIdInGame } from '../../../models/common.models';
 import { PlayGameBaseInput } from '../models/play-game.models';
@@ -220,10 +214,22 @@ export const getPlayGameRecruitPhaseInitialData = async (
 
 export const getPlayGamePlayer = async ({
     playerIdInGame,
-}: PlayGameBaseInput): Promise<PlayGamePlayerData> => {
+}: PlayGameBaseInput): Promise<PlayGamePlayerWithCards> => {
     // TODO: is player in gameId check required?
     const { playGameGameId, ...playGamePlayer } =
         await getPlayGamePlayerOperation(playerIdInGame);
-
-    return { ...playGamePlayer, opponentId: null };
+    const { tavernCardIds, handCardIds, deskCardIds } = playGamePlayer;
+    const cards = await getCardsOperation([
+        ...tavernCardIds,
+        ...handCardIds,
+        ...deskCardIds,
+    ]);
+    return {
+        ...playGamePlayer,
+        cards: cards.map(({ playGameGameId, ...card }: Card) => ({
+            ...card,
+            buffs: [],
+        })),
+        opponentId: null,
+    };
 };

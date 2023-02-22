@@ -12,7 +12,7 @@ import {
     playGameDetailsOutputSchema,
     playGameGamePlayerDetailsSchema,
     playGamePhaseDataSchema,
-    playGamePlayerDetailsSchema,
+    playGamePlayerWithCardsSchema,
     startPlayGameInputSchema,
 } from '../schemas/play-game.schemas';
 import { heroIdsSchema } from '../schemas/play-game.hero.schemas';
@@ -21,7 +21,7 @@ import { playerController } from '../controllers/play-game.player-controller';
 export const playGameProcedures = {
     getPlayerData: procedure
         .input(playGameBaseInputSchema)
-        .output(playGamePlayerDetailsSchema)
+        .output(playGamePlayerWithCardsSchema)
         .query(({ input, ctx }) =>
             playerController.playerDataQuery({ input, ctx })
         ),

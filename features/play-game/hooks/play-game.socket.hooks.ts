@@ -1,11 +1,17 @@
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { useSocket } from '../../../lib/socket.client';
 
 import { playGameJoinLeavePayloadSchema } from '../schemas/play-game.schemas';
 
-import { playGamePageUrl } from '../../../constants/urls';
+import { playGameActionsHandler } from '../services/play-game.actions.service';
+
+import {
+    displayOverlaySelector,
+    hideOverlaySelector,
+    useWaitingPlayGameStore,
+} from '../../pending-games/components/stores/pending-game.waiting-game.store';
 
 import {
     playGameEventNames,
@@ -15,22 +21,28 @@ import {
 import { GameId } from '../../../models/common.models';
 
 import { getPlayerIdInGame, setGameId } from '../../../utils.ts/storage.utils';
-import { playGameActionsHandler } from '../services/play-game.actions.service';
+
+import { playGamePageUrl } from '../../../constants/urls';
 
 export const useStartPlayGameFromSocket = () => {
     const socket = useSocket();
     const router = useRouter();
 
+    const displayOverlay = useWaitingPlayGameStore(displayOverlaySelector);
+    const hideOverlay = useWaitingPlayGameStore(hideOverlaySelector);
+
     useEffect(() => {
         socket.on(playGameEventNames.startPlayGame, (gameId: GameId) => {
+            displayOverlay();
             setGameId(gameId);
             router.push(playGamePageUrl);
         });
 
         return () => {
             socket.removeAllListeners(playGameEventNames.startPlayGame);
+            hideOverlay();
         };
-    }, [socket, router]);
+    }, [socket, router, displayOverlay, hideOverlay]);
 };
 
 export const usePlayGameActions = (gameId: GameId) => {

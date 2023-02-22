@@ -6,6 +6,7 @@ import { playerIdSchema, playerLoginSchema } from '../player/player.schemas';
 export const cardIdSchema = z.string();
 export const gameIdSchema = z.string();
 
+export const cardSchema = z.object({});
 export const gameNameSchema = z
     .string()
     .min(minGameNameLength)

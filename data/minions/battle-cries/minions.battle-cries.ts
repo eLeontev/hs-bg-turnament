@@ -36,7 +36,7 @@ export type Buff<B extends battleCries> = {
 export type BaseCard = {
     cardId: CardId;
     minionId: minionIds;
-    minionType: minionTypes;
+    minionTypes: Array<minionTypes>;
     tavernTier: tavernTiers;
 };
 

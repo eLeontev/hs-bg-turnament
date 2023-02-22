@@ -121,11 +121,11 @@ model PlayGamePlayer {
 }
 
 model Card {
-  cardId         String      @id @map("_id")
+  cardId         String        @id @map("_id")
   minionId       minionIds
-  minionType     minionTypes
+  minionTypes    minionTypes[]
   tavernTier     Int
-  PlayGame       PlayGame?   @relation(fields: [playGameGameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
+  PlayGame       PlayGame?     @relation(fields: [playGameGameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
   playGameGameId String?
   isInUse        Boolean?
 }

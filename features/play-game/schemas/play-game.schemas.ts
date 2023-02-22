@@ -12,7 +12,8 @@ import {
     playerKeySchema,
     playerLoginSchema,
 } from '../../player/player.schemas';
-import { minionTypesSchema } from './play-game.minion.schemas';
+import { minionIdSchema, minionTypesSchema } from './play-game.minion.schemas';
+import { Card } from '../../../data/minions/battle-cries/minions.battle-cries';
 
 export const startPlayGameInputSchema = z.object({
     playerId: playerIdSchema,
@@ -45,6 +46,16 @@ export const tavernCardIdsSchema = z.array(cardIdSchema);
 export const handCardIdsSchema = z.array(cardIdSchema);
 export const deskCardIdsSchema = z.array(cardIdSchema);
 
+export const cardSchema = z.object({
+    cardId: cardIdSchema,
+    minionId: minionIdSchema,
+    minionTypes: minionTypesSchema,
+    tavernTier: tavernTierSchema,
+    buffs: z.array(z.any()),
+});
+
+export const cardsSchema = z.array(cardSchema);
+
 export const playGameGamePlayerDetailsSchema = basePlayerDetailsSchema.merge(
     z.object({
         selectedHeroId: selectedHeroIdSchema,
@@ -54,8 +65,8 @@ export const playGameGamePlayerDetailsSchema = basePlayerDetailsSchema.merge(
     })
 );
 
-export const playGamePlayerDetailsSchema =
-    playGameGamePlayerDetailsSchema.merge(
+export const playGamePlayerWithCardsSchema = playGameGamePlayerDetailsSchema
+    .merge(
         z.object({
             opponentKey: opponentKeySchema,
             playerIdInGame: playerIdInGameSchema,
@@ -68,6 +79,11 @@ export const playGamePlayerDetailsSchema =
             opponentId: z.string().nullable(),
             handCardIds: handCardIdsSchema,
             deskCardIds: deskCardIdsSchema,
+        })
+    )
+    .merge(
+        z.object({
+            cards: cardsSchema,
         })
     );
 
