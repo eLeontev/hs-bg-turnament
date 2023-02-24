@@ -20,18 +20,16 @@ export const performEndPhaseActivity = async (
     // -> calculate/check all players activities per phase
     // build all batte results
     // notify players to get battle results
-
-    if (phase === playGamePhases.recruit) {
-        await phaseInitializationService.initRecruitPhase(gameId);
-    }
-
-    notifyPlayersInPlayGame(io, gameId, {
-        action: playGameActions.phaseChangedTo,
-        payload: {
-            phase,
-            phaseDurationInMs: getPhaseDuration(phase),
-            phaseStartDate: dateInUtcString(),
-            round: 0,
-        },
-    });
+    // if (phase === playGamePhases.recruit) {
+    //     await phaseInitializationService.initRecruitPhase(gameId);
+    // }
+    // notifyPlayersInPlayGame(io, gameId, {
+    //     action: playGameActions.phaseChangedTo,
+    //     payload: {
+    //         phase,
+    //         phaseDurationInMs: getPhaseDuration(phase),
+    //         phaseStartDate: dateInUtcString(),
+    //         round: 0,
+    //     },
+    // });
 };

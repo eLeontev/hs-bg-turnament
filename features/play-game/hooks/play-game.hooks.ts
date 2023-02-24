@@ -8,6 +8,7 @@ import { formPlayGamePlayers } from '../services/play-game.player.service';
 import {
     initStateSelector,
     isReadySelector,
+    roundSelector,
     usePlayGameStore,
 } from '../components/store/play-game.store';
 import {
@@ -42,7 +43,9 @@ export const usePlayGameInitialization = () => {
 
     const setPlayers = usePlayersStore(setPlayersSelector);
 
-    const playGameDetailsQuery = trpc.playGameDetails.useQuery(baseInput);
+    const playGameDetailsQuery = trpc.playGameDetails.useQuery(baseInput, {
+        cacheTime: 0,
+    });
 
     useEffect(() => {
         if (isReady) {
@@ -76,18 +79,18 @@ export const usePlayGameInitialization = () => {
     return playGameDetailsQuery;
 };
 
-export const useInitialRecruitPhaseData = () => {
+export const useOnRecruitPhaseInit = () => {
     const initPlayer = usePlayerStore(initPlayerSelector);
-
     const baseInput = useSetPlayGameBaseInput();
 
-    const playerDataQuery = trpc.getPlayerData.useQuery(baseInput, {
+    const round = usePlayGameStore(roundSelector);
+
+    const { refetch } = trpc.getPlayerData.useQuery(baseInput, {
+        enabled: false,
         cacheTime: 0,
     });
+
     useEffect(() => {
-        const player = playerDataQuery.data;
-        if (player) {
-            initPlayer(player);
-        }
-    }, [playerDataQuery, initPlayer]);
+        refetch().then(({ data }) => data && initPlayer(data));
+    }, [round, refetch, initPlayer]);
 };

@@ -4,7 +4,7 @@ import { CardId } from '../../../../data/minions/battle-cries/minions.battle-cri
 import { Button } from '../../../common/components/button.component';
 import { MinionCard } from '../../../common/components/minion/minion-card';
 import { GridComponent } from '../../../common/components/table.grid.component';
-import { useInitialRecruitPhaseData } from '../../hooks/play-game.hooks';
+import { useOnRecruitPhaseInit } from '../../hooks/play-game.hooks';
 import { Minion } from '../../models/play-game.minion.models';
 import {
     cardSelector,
@@ -64,7 +64,7 @@ export const TavernTier = () => {
     return <Button label={`tavern tier: ${tavernTier}`}></Button>;
 };
 export const RecruitDesk = () => {
-    useInitialRecruitPhaseData();
+    useOnRecruitPhaseInit();
 
     return (
         <GridComponent>

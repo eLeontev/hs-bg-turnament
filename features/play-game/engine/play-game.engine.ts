@@ -29,9 +29,7 @@ export const togglePhase =
         }
         await performEndPhaseActivity(io, gameId, phase);
 
-        await performStartPhaseActivity(io, gameId);
-
-        const round = await changePlayGamePhase(io, gameId);
+        const round = await performStartPhaseActivity(io, gameId, phase);
 
         const { isGameOver, winner } = await isPlayGameOver(gameId);
         if (isGameOver && round > 4) {

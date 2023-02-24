@@ -12,12 +12,15 @@ export class PlayGamePhaseInitializationService {
 
         const alivePlayers = getAlivePlayers(players);
 
-        alivePlayers.map(({ playerIdInGame }: PlayGamePlayer) =>
-            tavernCardsService.assignCardsOnPhaseInit({
-                gameId,
-                playerIdInGame,
-            })
+        const assignOperations = alivePlayers.map(
+            ({ playerIdInGame }: PlayGamePlayer) =>
+                tavernCardsService.assignCardsOnPhaseInit({
+                    gameId,
+                    playerIdInGame,
+                })
         );
+
+        await Promise.all(assignOperations);
     }
 }
 
