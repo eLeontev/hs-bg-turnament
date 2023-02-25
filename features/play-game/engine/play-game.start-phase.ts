@@ -11,14 +11,12 @@ import { GameId } from '../../../models/common.models';
 import { playGamePhases } from '@prisma/client';
 import { dateInUtcString } from '../../../utils.ts/date.utils';
 import { playGameActions } from '../play-game.enums';
-import {
-    getPhaseData,
-    getPhaseDuration,
-} from '../services/play-game.phase.service';
+import { getPhaseData } from '../services/play-game.phase.service';
 import { notifyPlayersInPlayGame } from '../sockets/play-game.notification.socket';
 import { PlayGamePhaseData } from '../models/play-game.models';
 import { phaseSiquence, roundIncrement } from './play-game.engine.constants';
 import { phaseInitializationService } from '../services/play-game.phase-initialization.service';
+import { goldService } from '../services/play-game.gold.service';
 
 export const performStartPhaseActivity = async (
     io: Server,
@@ -36,6 +34,7 @@ export const performStartPhaseActivity = async (
     );
 
     await changePlayGamePhaseOperation(gameId, playGameData);
+    await goldService.setGoldOnPhaseInit(gameId, playGameData.round);
 
     notifyPlayersInPlayGame(io, gameId, {
         action: playGameActions.phaseChangedTo,

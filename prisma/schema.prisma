@@ -99,25 +99,26 @@ enum combatPhases {
 }
 
 model PlayGamePlayer {
-  playerIdInGame    String    @id @map("_id")
-  goldAmount        Int
-  tavernUpdatePrice Int
-  cardPurchasePrice Int
-  playerLogin       String
-  playerKey         String
-  selectedHeroId    heroIds?
-  heroIds           heroIds[]
-  countOfHitPoints  Int
-  countOfArmor      Int
-  isWonLastTime     Boolean?
-  opponentId        String?
-  opponentKey       String?
-  tavernTier        Int
-  tavernCardIds     String[]
-  deskCardIds       String[]
-  handCardIds       String[]
-  PlayGame          PlayGame? @relation(fields: [playGameGameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
-  playGameGameId    String?
+  playerIdInGame      String    @id @map("_id")
+  goldAmount          Int
+  minionsRollPrice    Int
+  minionSellPrice     Int
+  minionPurchasePrice Int
+  playerLogin         String
+  playerKey           String
+  selectedHeroId      heroIds?
+  heroIds             heroIds[]
+  countOfHitPoints    Int
+  countOfArmor        Int
+  isWonLastTime       Boolean?
+  opponentId          String?
+  opponentKey         String?
+  tavernTier          Int
+  tavernCardIds       String[]
+  deskCardIds         String[]
+  handCardIds         String[]
+  PlayGame            PlayGame? @relation(fields: [playGameGameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
+  playGameGameId      String?
 }
 
 model Card {

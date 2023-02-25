@@ -10,7 +10,6 @@ import {
 import {
     playGameBaseInputSchema,
     playGameDetailsOutputSchema,
-    playGameGamePlayerDetailsSchema,
     playGamePhaseDataSchema,
     playGamePlayerWithCardsSchema,
     startPlayGameInputSchema,

@@ -1,75 +1,316 @@
-import { Flex } from '@mantine/core';
+import { Badge, Box, Flex, Rating } from '@mantine/core';
+import { IconSun, IconMoon } from '@tabler/icons';
+import {
+    initialTavernTierUpgradePrice,
+    maxAmounOfGoldPerRound,
+} from '../../../../constants/play-game.config.constants';
 import { minions } from '../../../../data/minions';
 import { CardId } from '../../../../data/minions/battle-cries/minions.battle-cries';
+import { trpc } from '../../../../lib/client';
 import { Button } from '../../../common/components/button.component';
 import { MinionCard } from '../../../common/components/minion/minion-card';
 import { GridComponent } from '../../../common/components/table.grid.component';
+import { PlayGamePlayer } from '../../../player/player.models';
 import { useOnRecruitPhaseInit } from '../../hooks/play-game.hooks';
 import { Minion } from '../../models/play-game.minion.models';
+import { PlayGameBaseInput } from '../../models/play-game.models';
+import { tavernTiers } from '../../models/play-game.tavern.models';
+import {
+    isPlayCardActionDisabled,
+    isPurchaseCardActionDisabled,
+    isSellCardActionDisabled,
+} from '../../validators/play-game.player-actions.validators';
 import {
     cardSelector,
+    goldAmountSelector,
     tavernCardIdsSelector,
+    minionsRollPriceSelector,
     tavernTierSelector,
+    increaseGoldAmountSelector,
+    updateTavernTierSelector,
     usePlayerStore,
+    updateTavernCardsSelector,
+    deskCardIdsSelector,
+    handCardIdsSelector,
+    purchaseCardSelector,
+    sellCardSelector,
+    playCardSelector,
+    decreaseGoldAmountSelector,
 } from '../store/play-game.player.store';
+import { baseInputSelector, usePlayGameStore } from '../store/play-game.store';
 
-type CardProps = { cardId: CardId };
-const Card = ({ cardId }: CardProps) => {
+type CardProps = {
+    cardId: CardId;
+    isActionDisabled: (player: PlayGamePlayer, cardId: CardId) => boolean;
+    isLoading: boolean;
+    action: () => void;
+    label: string;
+};
+const Card = ({
+    cardId,
+    action,
+    isActionDisabled,
+    isLoading,
+    label,
+}: CardProps) => {
     const {
         tavernTier,
         minionTypes: [miniontype],
         minionId,
     } = usePlayerStore(cardSelector(cardId));
+    const player = usePlayerStore();
 
     return (
-        <MinionCard
-            minion={minions[tavernTier][miniontype].get(minionId) as Minion}
-            minionType={miniontype}
-            tavernTier={tavernTier}
-        ></MinionCard>
+        <Box>
+            <MinionCard
+                minion={minions[tavernTier][miniontype].get(minionId) as Minion}
+                minionType={miniontype}
+                tavernTier={tavernTier}
+            ></MinionCard>
+            <Button
+                disabled={isActionDisabled(player, cardId)}
+                loading={isLoading}
+                label={label}
+                onClick={action}
+            ></Button>
+        </Box>
     );
 };
+
 const TavernMinions = () => {
+    const baseInput = usePlayGameStore(baseInputSelector);
+
     const tavernCardIds = usePlayerStore(tavernCardIdsSelector);
+    const purchaseCard = usePlayerStore(purchaseCardSelector);
+
+    const decreaseGoldAmount = usePlayerStore(decreaseGoldAmountSelector);
+
+    const { mutateAsync, isLoading } = trpc.purchaseMinion.useMutation();
+
+    const action = (cardId: CardId) => {
+        const isDisabled = isPurchaseCardActionDisabled(
+            usePlayerStore.getState(),
+            cardId
+        );
+
+        if (isDisabled) {
+            alert('not enought smt to buy minion');
+
+            return;
+        }
+
+        decreaseGoldAmount(usePlayerStore.getState().minionPurchasePrice);
+        mutateAsync({ ...baseInput, cardId })
+            .then(() => purchaseCard(cardId))
+            .catch(console.error);
+    };
 
     return (
-        <Flex>
+        <Flex h={330}>
             {tavernCardIds.map((cardId) => (
-                <Card key={cardId} cardId={cardId}></Card>
+                <Card
+                    key={cardId}
+                    cardId={cardId}
+                    isLoading={isLoading}
+                    action={() => action(cardId)}
+                    label="Buy minion"
+                    isActionDisabled={isPurchaseCardActionDisabled}
+                ></Card>
             ))}
         </Flex>
     );
 };
 
-const BuyMinionTest = () => {
-    // const data = usePlayGameStore();
-    // console.log(data);
-    return <>BuyMinionTest</>;
+const DeskMinions = () => {
+    const baseInput = usePlayGameStore(baseInputSelector);
+
+    const deskCardIds = usePlayerStore(deskCardIdsSelector);
+    const sellCard = usePlayerStore(sellCardSelector);
+
+    const increaseGoldAmount = usePlayerStore(increaseGoldAmountSelector);
+
+    const { mutateAsync, isLoading } = trpc.sellMinion.useMutation();
+
+    const action = (cardId: CardId) => {
+        const isDisabled = isSellCardActionDisabled(
+            usePlayerStore.getState(),
+            cardId
+        );
+
+        if (isDisabled) {
+            alert('not enought smt to buy minion');
+
+            return;
+        }
+
+        increaseGoldAmount(usePlayerStore.getState().minionSellPrice);
+        mutateAsync({ ...baseInput, cardId })
+            .then(() => sellCard(cardId))
+            .catch(console.error);
+    };
+
+    return (
+        <Flex h={330}>
+            {deskCardIds.map((cardId) => (
+                <Card
+                    key={cardId}
+                    cardId={cardId}
+                    isLoading={isLoading}
+                    action={() => action(cardId)}
+                    label="Sell minion"
+                    isActionDisabled={isSellCardActionDisabled}
+                ></Card>
+            ))}
+        </Flex>
+    );
 };
 
-const PlayMinionTest = () => {
-    // const data = usePlayGameStore();
-    // console.log(data);
-    return <>PlayMinionTest</>;
+const HandMinions = () => {
+    const baseInput = usePlayGameStore(baseInputSelector);
+
+    const handCardIds = usePlayerStore(handCardIdsSelector);
+    const playCard = usePlayerStore(playCardSelector);
+
+    const { mutateAsync, isLoading } = trpc.playMinion.useMutation();
+
+    const action = (cardId: CardId) => {
+        const isDisabled = isPlayCardActionDisabled(
+            usePlayerStore.getState(),
+            cardId
+        );
+
+        if (isDisabled) {
+            alert('not enought smt to play minion');
+
+            return;
+        }
+
+        mutateAsync({ ...baseInput, cardId })
+            .then(() => playCard(cardId))
+            .catch(console.error);
+    };
+
+    return (
+        <Flex h={330}>
+            {handCardIds.map((cardId) => (
+                <Card
+                    key={cardId}
+                    cardId={cardId}
+                    isLoading={isLoading}
+                    action={() => action(cardId)}
+                    label="Play minion"
+                    isActionDisabled={isPlayCardActionDisabled}
+                ></Card>
+            ))}
+        </Flex>
+    );
 };
 
-const SellMinionTest = () => {
-    // const data = usePlayGameStore();
-    // console.log(data);
-    return <>SellMinionTest</>;
+export const GoldAmount = () => {
+    const goldAmount = usePlayerStore(goldAmountSelector);
+
+    return (
+        <Flex>
+            <Rating
+                size="lg"
+                value={goldAmount}
+                count={maxAmounOfGoldPerRound}
+                emptySymbol={<IconSun />}
+                fullSymbol={<IconMoon />}
+                color="yellow"
+            ></Rating>
+            <Badge color="yellow" size="lg">
+                {goldAmount}
+            </Badge>
+        </Flex>
+    );
 };
 
 export const TavernTier = () => {
+    const baseInput: PlayGameBaseInput = usePlayGameStore(baseInputSelector);
+
     const tavernTier = usePlayerStore(tavernTierSelector);
-    return <Button label={`tavern tier: ${tavernTier}`}></Button>;
+    const updateTavernTier = usePlayerStore(updateTavernTierSelector);
+
+    const goldAmount = usePlayerStore(goldAmountSelector);
+    const decreaseGoldAmount = usePlayerStore(decreaseGoldAmountSelector);
+
+    const { mutateAsync, isLoading } = trpc.upgradeTavern.useMutation();
+
+    const hasNotEnoughGold = initialTavernTierUpgradePrice > goldAmount;
+    const isLastTavernTier = tavernTier === tavernTiers['☆☆☆☆☆☆'];
+
+    const isActionDisabled = hasNotEnoughGold || isLastTavernTier;
+
+    const action = () => {
+        if (isActionDisabled) {
+            alert('not enough gold');
+
+            return;
+        }
+
+        mutateAsync(baseInput).then(updateTavernTier).catch(console.error);
+        decreaseGoldAmount(initialTavernTierUpgradePrice);
+    };
+
+    return (
+        <Button
+            disabled={isActionDisabled}
+            onClick={action}
+            loading={isLoading}
+            label={`tavern tier: ${tavernTier}`}
+        ></Button>
+    );
 };
+
+export const RollTaverMinions = () => {
+    const baseInput: PlayGameBaseInput = usePlayGameStore(baseInputSelector);
+
+    const goldAmount = usePlayerStore(goldAmountSelector);
+    const minionsRollPrice = usePlayerStore(minionsRollPriceSelector);
+
+    const decreaseGoldAmount = usePlayerStore(decreaseGoldAmountSelector);
+    const updateTavernCards = usePlayerStore(updateTavernCardsSelector);
+
+    const { mutateAsync, isLoading } = trpc.rollTavernMinions.useMutation();
+
+    const isActionDisabled = minionsRollPrice > goldAmount;
+    const action = () => {
+        if (isActionDisabled) {
+            alert('not enough gold');
+
+            return;
+        }
+
+        decreaseGoldAmount(minionsRollPrice);
+        mutateAsync(baseInput).then(updateTavernCards).catch(console.error);
+    };
+
+    return (
+        <Button
+            onClick={action}
+            disabled={isActionDisabled}
+            loading={isLoading}
+            label="roll tavern minions"
+            color="teal"
+        ></Button>
+    );
+};
+
 export const RecruitDesk = () => {
     useOnRecruitPhaseInit();
 
     return (
         <GridComponent>
-            <TavernTier></TavernTier>
+            <Flex>
+                <TavernTier></TavernTier>
+                <GoldAmount></GoldAmount>
+                <RollTaverMinions></RollTaverMinions>
+            </Flex>
+
             <TavernMinions></TavernMinions>
+            <DeskMinions></DeskMinions>
+            <HandMinions></HandMinions>
         </GridComponent>
     );
 };

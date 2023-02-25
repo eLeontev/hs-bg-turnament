@@ -7,9 +7,9 @@ export enum playGameActions {
 
 export enum playGamePlayerActions {
     selectHero = 'selectHero',
-    purchase = 'purchase',
+    purchaseMinion = 'purchaseMinion',
     sellMinion = 'sellMinion',
-    playMinion = 'playMinions',
+    playMinion = 'playMinion',
     rollTavernMinions = 'rollTavernMinions',
     upgradeTavern = 'upgradeTavern',
     useHeroPower = 'useHeroPoseer',

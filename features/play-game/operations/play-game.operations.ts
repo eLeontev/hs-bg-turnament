@@ -1,7 +1,11 @@
 import { heroIds } from '@prisma/client';
 import prisma from '../../../lib/prisma';
 
-import { GameId, PlayerIdInGame } from '../../../models/common.models';
+import {
+    GameId,
+    PlayerIdInGame,
+    PlayerIdInGames,
+} from '../../../models/common.models';
 import { PlayGameData, PlayGamePhaseData } from '../models/play-game.models';
 import { PlayGamePlayers } from '../../player/player.models';
 import {
@@ -61,6 +65,9 @@ export const isPlayerInPlayGameOperation = (
 export const getPlayGamePlayerOperation = (playerIdInGame: PlayerIdInGame) =>
     prisma.playGamePlayer.findFirstOrThrow({ where: { playerIdInGame } });
 
+export const getPlayGamePlayersOperation = (playGameGameId: GameId) =>
+    prisma.playGamePlayer.findMany({ where: { playGameGameId } });
+
 export const selectPlayGamePlayerHeroOperation = (
     playerIdInGame: PlayerIdInGame,
     selectedHeroId: heroIds
@@ -90,3 +97,12 @@ export const markCardsInUseOperation = (availableCardIds: CardIds) =>
 
 export const getCardsOperation = (cardsIds: CardIds) =>
     prisma.card.findMany({ where: { cardId: { in: cardsIds } } });
+
+export const setGoldAmountToPlayersOperation = (
+    playerIdsInGame: PlayerIdInGames,
+    goldAmount: number
+) =>
+    prisma.playGamePlayer.updateMany({
+        where: { playerIdInGame: { in: playerIdsInGame } },
+        data: { goldAmount },
+    });

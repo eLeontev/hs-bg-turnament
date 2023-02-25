@@ -11,14 +11,15 @@ import {
 import { PlayGameHeroSelected } from '../models/play-game.models';
 import {
     initialRound,
-    defaultTavernUpdatePrice,
-    defaultCardPurchasePrice,
+    defaultMinionsRollPrice,
+    defaultMinionPurchasePrice,
     defaultCountOfHitPoints,
     initialTavernTier,
+    defaultMinionSellPrice,
 } from '../../../constants/play-game.config.constants';
-import { getAmountOfGoldOnRoundStart } from './play-game.gold.service';
 import { PlayGamePlayer } from '../../player/player.models';
 import { HeroIds } from '../models/play-game.hero.models';
+import { getAmountOfGoldOnRoundStart } from '../utils/gold-amount.utils';
 
 export const formPlayGamePlayers = (players: Array<PlayGamePlayerDetails>) =>
     players.reduce(
@@ -56,8 +57,9 @@ export const initPlayGamePlayer = ({
     playerKey,
     heroIds,
     goldAmount: getAmountOfGoldOnRoundStart(initialRound),
-    tavernUpdatePrice: defaultTavernUpdatePrice,
-    cardPurchasePrice: defaultCardPurchasePrice,
+    minionsRollPrice: defaultMinionsRollPrice,
+    minionPurchasePrice: defaultMinionPurchasePrice,
+    minionSellPrice: defaultMinionSellPrice,
     selectedHeroId: null,
     countOfArmor: 0,
     countOfHitPoints: defaultCountOfHitPoints,

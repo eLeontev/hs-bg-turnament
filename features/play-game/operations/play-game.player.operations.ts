@@ -70,6 +70,16 @@ export const sellPlayerCardOperation = (
         data: { deskCardIds, goldAmount },
     });
 
+export const playPlayerCardOperation = (
+    playerIdInGame: PlayerIdInGame,
+    handCardIds: CardIds,
+    deskCardIds: CardIds
+) =>
+    prisma.playGamePlayer.update({
+        where: { playerIdInGame },
+        data: { handCardIds, deskCardIds },
+    });
+
 export const addCardToPlayerHandCardsOperation = (
     playerIdInGame: PlayerIdInGame,
     tavernCardIds: CardIds,
@@ -78,16 +88,6 @@ export const addCardToPlayerHandCardsOperation = (
     prisma.playGamePlayer.update({
         where: { playerIdInGame },
         data: { tavernCardIds, handCardIds },
-    });
-
-export const addCardToPlayerDeskCardsOperation = (
-    playerIdInGame: PlayerIdInGame,
-    handCardIds: CardIds,
-    deskCardIds: CardIds
-) =>
-    prisma.playGamePlayer.update({
-        where: { playerIdInGame },
-        data: { handCardIds, deskCardIds },
     });
 
 export const upgradePlayerTavernTierOperation = (

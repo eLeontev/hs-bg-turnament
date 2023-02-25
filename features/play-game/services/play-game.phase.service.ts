@@ -1,5 +1,7 @@
 import { playGamePhases } from '@prisma/client';
+import { initialAmounOfGoldPerRound } from '../../../constants/play-game.config.constants';
 import { PlayGamePhaseData } from '../models/play-game.models';
+import { getAmountOfGoldOnRoundStart } from './play-game.gold.service';
 
 export const heroSelectionPhaseDurationInMs = 40000; // 40s
 export const recruitPhaseDurationInMs = 20000; // 20s

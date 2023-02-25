@@ -40,8 +40,8 @@ export const tavernTierSchema = z.number().min(1).max(6);
 export const selectedHeroIdSchema = heroIdSchema.nullable();
 
 export const goldAmountSchema = z.number().min(0);
-export const tavernUpdatePriceSchema = z.number().min(0);
-export const cardPurchaseSchema = z.number().min(0);
+export const minionsRollPriceSchema = z.number().min(0);
+export const minionPurchasePriceSchema = z.number().min(0);
 export const tavernCardIdsSchema = z.array(cardIdSchema);
 export const handCardIdsSchema = z.array(cardIdSchema);
 export const deskCardIdsSchema = z.array(cardIdSchema);
@@ -72,8 +72,8 @@ export const playGamePlayerWithCardsSchema = playGameGamePlayerDetailsSchema
             playerIdInGame: playerIdInGameSchema,
             heroIds: heroIdsSchema,
             goldAmount: goldAmountSchema,
-            tavernUpdatePrice: tavernUpdatePriceSchema,
-            cardPurchasePrice: cardPurchaseSchema,
+            minionsRollPrice: minionsRollPriceSchema,
+            minionPurchasePrice: minionPurchasePriceSchema,
             countOfHitPoints: countOfHitPointsSchema,
             tavernCardIds: tavernCardIdsSchema,
             opponentId: z.string().nullable(),

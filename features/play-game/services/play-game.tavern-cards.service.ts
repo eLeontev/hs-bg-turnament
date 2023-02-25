@@ -16,8 +16,8 @@ import {
 
 import {
     countOfCardPertavernTier,
-    defaultCountOfGoldForSell,
     initialTavernTierUpgradePrice,
+    maxCountOfCardsInHand,
 } from '../../../constants/play-game.config.constants';
 
 import {
@@ -34,6 +34,14 @@ import {
 } from '../models/play-game.player-actions.models';
 
 import { getExcludedRandom } from '../../../utils.ts/random.utils';
+import {
+    purchaseCardValidator,
+    sellCardValidator,
+} from '../validators/play-game.player-actions.validators';
+import {
+    purchaseCardPlayerStateAction,
+    sellCardPlayerStateAction,
+} from '../utils/play-game.player-actions.utils';
 
 export class TavernCardsService {
     async rollTavernMinions(baseInput: PlayGameBaseInput): Promise<Cards> {
@@ -41,14 +49,14 @@ export class TavernCardsService {
             baseInput,
             true
         );
-        const { tavernTier, goldAmount, tavernUpdatePrice, tavernCardIds } =
+        const { tavernTier, goldAmount, minionsRollPrice, tavernCardIds } =
             player;
 
-        if (tavernUpdatePrice > goldAmount) {
+        if (minionsRollPrice > goldAmount) {
             throw new Error('Invalid amount of currency');
         }
 
-        const goldAmountAfterCardsUpdate = goldAmount - tavernUpdatePrice;
+        const goldAmountAfterCardsUpdate = goldAmount - minionsRollPrice;
 
         await markCardsAvailableOperation(tavernCardIds);
         return await this.getCardsToPlayer(
@@ -78,61 +86,39 @@ export class TavernCardsService {
         cardId,
         ...baseInput
     }: PurchasePlayerInput): Promise<void> {
-        const {
-            player: {
-                playerIdInGame,
-                handCardIds,
-                tavernCardIds,
-                goldAmount,
-                cardPurchasePrice,
-            },
-        } = await getPlayerAndAwailableCards(baseInput);
+        const { player } = await getPlayerAndAwailableCards(baseInput);
 
-        if (!tavernCardIds.includes(cardId)) {
-            throw new Error(
-                'the card you are gonna purchase does not exist in your tavern cards collection'
-            );
-        }
+        purchaseCardValidator(player, cardId);
 
-        if (cardPurchasePrice > goldAmount) {
-            throw new Error(
-                'you do not have enough currency to purchase the card'
-            );
-        }
-
-        const handCardsToUpdate = [...handCardIds, cardId];
-        const tavernCardsToUpdate = tavernCardIds.filter(
-            (tavernCardId) => tavernCardId !== cardId
+        const { tavernCardIds, handCardIds } = purchaseCardPlayerStateAction(
+            player,
+            cardId
         );
 
         await addCardToPlayerHandCardsOperation(
-            playerIdInGame,
-            tavernCardsToUpdate,
-            handCardsToUpdate
+            player.playerIdInGame,
+            tavernCardIds,
+            handCardIds
         );
     }
 
-    async sellCard(sellCardInput: SellMinionsPlayerInput): Promise<void> {
-        const {
-            player: { playerIdInGame, deskCardIds, goldAmount },
-        } = await getPlayerAndAwailableCards(sellCardInput);
+    async sellCard({
+        cardId,
+        ...baseInput
+    }: SellMinionsPlayerInput): Promise<void> {
+        const { player } = await getPlayerAndAwailableCards(baseInput);
+        const { goldAmount, minionSellPrice } = player;
 
-        const deskCardIdsWithotSoldCardId = deskCardIds.filter(
-            (cardId) => cardId !== sellCardInput.cardId
-        );
+        const { deskCardIds } = sellCardPlayerStateAction(player, cardId);
 
-        if (deskCardIdsWithotSoldCardId.length === deskCardIds.length) {
-            throw new Error(
-                'the card you are gonna sell does not exist in your cards collection'
-            );
-        }
+        sellCardValidator(player, cardId);
 
         await sellPlayerCardOperation(
-            playerIdInGame,
-            deskCardIdsWithotSoldCardId,
-            goldAmount + defaultCountOfGoldForSell
+            baseInput.playerIdInGame,
+            deskCardIds,
+            goldAmount + minionSellPrice
         );
-        await markCardAvailableOperation(sellCardInput.cardId);
+        await markCardAvailableOperation(cardId);
     }
 
     async upgradeTavern(input: UpgradeTavernPlayerInput): Promise<void> {
@@ -156,7 +142,7 @@ export class TavernCardsService {
         await upgradePlayerTavernTierOperation(
             input.playerIdInGame,
             tavernTier + 1,
-            goldAmount - restGoldAmount
+            restGoldAmount
         );
     }
 

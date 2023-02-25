@@ -34,7 +34,7 @@ export type RearrangeMinionsAttackOrderPlayerInput = z.infer<
 
 export type PlayGamePlayerActionInput = {
     [playGamePlayerActions.selectHero]: SelectHeroPlayerInput;
-    [playGamePlayerActions.purchase]: PurchasePlayerInput;
+    [playGamePlayerActions.purchaseMinion]: PurchasePlayerInput;
     [playGamePlayerActions.sellMinion]: SellMinionsPlayerInput;
     [playGamePlayerActions.rollTavernMinions]: RollTavernMinionsPlayerInput;
     [playGamePlayerActions.upgradeTavern]: UpgradeTavernPlayerInput;

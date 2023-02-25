@@ -14,6 +14,7 @@ import {
 import { playGamePlayerActions } from '../play-game.enums';
 import { selectPlayGamePlayerHeroMutation } from '../controllers/play-game.controller';
 import { playerController } from '../controllers/play-game.player-controller';
+import { cardsSchema } from '../schemas/play-game.schemas';
 
 export const playerProcedures = {
     [playGamePlayerActions.selectHero]: procedure
@@ -21,7 +22,7 @@ export const playerProcedures = {
         .mutation(({ input, ctx }) =>
             selectPlayGamePlayerHeroMutation({ input, ctx })
         ),
-    [playGamePlayerActions.purchase]: procedure
+    [playGamePlayerActions.purchaseMinion]: procedure
         .input(purchasePlayerInputSchema)
         .mutation(({ input, ctx }) =>
             playerController.purchaseMinionMutation({ input, ctx })
@@ -38,6 +39,7 @@ export const playerProcedures = {
         ),
     [playGamePlayerActions.rollTavernMinions]: procedure
         .input(rollTavernMinionsPlayerInputSchema)
+        .output(cardsSchema)
         .mutation(({ input, ctx }) =>
             playerController.rollTavernMinionsMutation({ input, ctx })
         ),

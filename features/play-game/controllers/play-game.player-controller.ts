@@ -1,3 +1,4 @@
+import { Cards } from '../../../data/minions/battle-cries/minions.battle-cries';
 import { TRCPProps } from '../../../models/trcp.models';
 import { PlayGamePlayerWithCards } from '../../player/player.models';
 import { PlayGameBaseInput } from '../models/play-game.models';
@@ -25,7 +26,7 @@ export class PlayGamePlayerController {
     async playMinionMutation({
         input,
     }: TRCPProps<PlayMinionPlayerInput>): Promise<void> {
-        await this.playCardService.playMinion(input);
+        await this.playCardService.playCard(input);
     }
 
     async purchaseMinionMutation({
@@ -42,8 +43,8 @@ export class PlayGamePlayerController {
 
     async rollTavernMinionsMutation({
         input,
-    }: TRCPProps<RollTavernMinionsPlayerInput>): Promise<void> {
-        await this.tavernCardsService.rollTavernMinions(input);
+    }: TRCPProps<RollTavernMinionsPlayerInput>): Promise<Cards> {
+        return await this.tavernCardsService.rollTavernMinions(input);
     }
 
     async upgradeTavernMutation({

@@ -1,30 +1,32 @@
 import { getPlayerAndAwailableCards } from './play-game.server.service';
 
-import { addCardToPlayerDeskCardsOperation } from '../operations/play-game.player.operations';
+import { playPlayerCardOperation } from '../operations/play-game.player.operations';
 
 import { PlayMinionPlayerInput } from '../models/play-game.player-actions.models';
+import { playCardPlayerStateAction } from '../utils/play-game.player-actions.utils';
+import { playCardValidator } from '../validators/play-game.player-actions.validators';
 
 export class PlayCardService {
-    async playMinion({
-        targetId,
+    async playCard({
         cardId,
+        targetId,
         ...baseInput
-    }: PlayMinionPlayerInput): Promise<any> {
-        const { player } = await getPlayerAndAwailableCards(baseInput, false);
-        const { handCardIds, deskCardIds } = player;
+    }: PlayMinionPlayerInput): Promise<void> {
+        const { player } = await getPlayerAndAwailableCards(baseInput);
 
-        const filteredHandCardIds = handCardIds.filter(
-            (handCardId) => handCardId !== cardId
+        // TODO: add play minion logic to change return type to return battle cry effect
+
+        playCardValidator(player, cardId);
+
+        const { deskCardIds, handCardIds } = playCardPlayerStateAction(
+            player,
+            cardId
         );
 
-        if (filteredHandCardIds.length === handCardIds.length) {
-            throw new Error('the card does not exisit in your hand');
-        }
-
-        await addCardToPlayerDeskCardsOperation(
+        await playPlayerCardOperation(
             baseInput.playerIdInGame,
-            filteredHandCardIds,
-            [...deskCardIds, cardId]
+            handCardIds,
+            deskCardIds
         );
     }
 }
