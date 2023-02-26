@@ -10,6 +10,7 @@ import {
 import {
     addCardToPlayerHandCardsOperation,
     sellPlayerCardOperation,
+    updateFrozenPlayerCardsOperation,
     updatePlayerCardsOperation,
     upgradePlayerTavernTierOperation,
 } from '../operations/play-game.player.operations';
@@ -17,7 +18,6 @@ import {
 import {
     countOfCardPertavernTier,
     initialTavernTierUpgradePrice,
-    maxCountOfCardsInHand,
 } from '../../../constants/play-game.config.constants';
 
 import {
@@ -28,6 +28,7 @@ import {
 import { PlayGameBaseInput } from '../models/play-game.models';
 import { tavernTiers } from '../models/play-game.tavern.models';
 import {
+    FreezeMinionsPlayerInput,
     PurchasePlayerInput,
     SellMinionsPlayerInput,
     UpgradeTavernPlayerInput,
@@ -43,6 +44,7 @@ import {
     sellCardPlayerStateAction,
 } from '../utils/play-game.player-actions.utils';
 
+const noFrozenCardIds: CardIds = [];
 export class TavernCardsService {
     async rollTavernMinions(baseInput: PlayGameBaseInput): Promise<Cards> {
         const { player, availableCards } = await getPlayerAndAwailableCards(
@@ -63,22 +65,29 @@ export class TavernCardsService {
             baseInput,
             availableCards,
             tavernTier,
-            goldAmountAfterCardsUpdate
+            goldAmountAfterCardsUpdate,
+            noFrozenCardIds
         );
     }
 
     async assignCardsOnPhaseInit(baseInput: PlayGameBaseInput): Promise<Cards> {
         const {
-            player: { tavernTier, goldAmount, tavernCardIds },
+            player: { tavernTier, goldAmount, tavernCardIds, frozenCardIds },
             availableCards,
         } = await getPlayerAndAwailableCards(baseInput, true);
 
-        await markCardsAvailableOperation(tavernCardIds);
+        const frozenCardIdsSet = new Set(frozenCardIds);
+        const availableTavernCardsCards = tavernCardIds.filter(
+            (cardId) => !frozenCardIdsSet.has(cardId)
+        );
+
+        await markCardsAvailableOperation(availableTavernCardsCards);
         return await this.getCardsToPlayer(
             baseInput,
             availableCards,
             tavernTier,
-            goldAmount
+            goldAmount,
+            frozenCardIds
         );
     }
 
@@ -146,16 +155,36 @@ export class TavernCardsService {
         );
     }
 
+    async freezeMinionsMutation(
+        input: FreezeMinionsPlayerInput
+    ): Promise<void> {
+        const { player } = await getPlayerAndAwailableCards(input);
+        const { tavernCardIds, playerIdInGame } = player;
+
+        const frozenCardIds = player.frozenCardIds.length
+            ? noFrozenCardIds
+            : [...tavernCardIds];
+
+        await updateFrozenPlayerCardsOperation(playerIdInGame, frozenCardIds);
+    }
+
     private async getCardsToPlayer(
         baseInput: PlayGameBaseInput,
         availableCards: CardFromDB[],
         tavernTier: tavernTiers,
-        goldAmount: number
+        goldAmount: number,
+        frozenCardIds: CardIds
     ): Promise<Cards> {
-        const cardsForPlayer = this.formCards(availableCards, tavernTier);
-        const playerTavernCardIds = cardsForPlayer.map(
-            ({ cardId }): CardId => cardId
+        const cardsForPlayer = this.formCards(
+            availableCards,
+            tavernTier,
+            frozenCardIds.length
         );
+
+        const playerTavernCardIds = [
+            ...frozenCardIds,
+            ...cardsForPlayer.map(({ cardId }): CardId => cardId),
+        ];
 
         await this.updateAvailableCards(playerTavernCardIds);
         await this.updatePlayerCardsData(
@@ -169,14 +198,16 @@ export class TavernCardsService {
 
     private formCards(
         availableCards: CardFromDB[],
-        playerTavernTier: tavernTiers
+        playerTavernTier: tavernTiers,
+        countOfFrozenCards: number
     ) {
         let availableCardsForPlayer = availableCards.filter(
             ({ tavernTier, isInUse }: CardFromDB) =>
                 playerTavernTier >= tavernTier && !isInUse
         );
 
-        let countOfCards = countOfCardPertavernTier[playerTavernTier];
+        let countOfCards =
+            countOfCardPertavernTier[playerTavernTier] - countOfFrozenCards;
         const cardsForPlayer: Cards = [];
         const cardsForPlayerSet = new Set();
 

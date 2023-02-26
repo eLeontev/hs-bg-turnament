@@ -22,6 +22,7 @@ export const playMinionPlayerInputSchema = playGameBaseInputSchema.merge(
 );
 export const rollTavernMinionsPlayerInputSchema = playGameBaseInputSchema;
 export const upgradeTavernMinionsPlayerInputSchema = playGameBaseInputSchema;
+export const freezeMinionsPlayerInputSchema = playGameBaseInputSchema;
 
 // TODO: depends on Hero power
 export const useHeroPowerPlayerInputSchema = playGameBaseInputSchema;

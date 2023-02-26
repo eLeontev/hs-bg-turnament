@@ -117,6 +117,7 @@ model PlayGamePlayer {
   tavernCardIds       String[]
   deskCardIds         String[]
   handCardIds         String[]
+  frozenCardIds       String[]
   PlayGame            PlayGame? @relation(fields: [playGameGameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
   playGameGameId      String?
 }

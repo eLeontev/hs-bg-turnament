@@ -45,6 +45,7 @@ export const minionPurchasePriceSchema = z.number().min(0);
 export const tavernCardIdsSchema = z.array(cardIdSchema);
 export const handCardIdsSchema = z.array(cardIdSchema);
 export const deskCardIdsSchema = z.array(cardIdSchema);
+export const frozenCardIdsSchema = z.array(cardIdSchema);
 
 export const cardSchema = z.object({
     cardId: cardIdSchema,
@@ -79,6 +80,7 @@ export const playGamePlayerWithCardsSchema = playGameGamePlayerDetailsSchema
             opponentId: z.string().nullable(),
             handCardIds: handCardIdsSchema,
             deskCardIds: deskCardIdsSchema,
+            frozenCardIds: frozenCardIdsSchema,
         })
     )
     .merge(

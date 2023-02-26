@@ -3,6 +3,7 @@ import { TRCPProps } from '../../../models/trcp.models';
 import { PlayGamePlayerWithCards } from '../../player/player.models';
 import { PlayGameBaseInput } from '../models/play-game.models';
 import {
+    FreezeMinionsPlayerInput,
     PlayMinionPlayerInput,
     PurchasePlayerInput,
     RollTavernMinionsPlayerInput,
@@ -51,6 +52,12 @@ export class PlayGamePlayerController {
         input,
     }: TRCPProps<UpgradeTavernPlayerInput>): Promise<void> {
         await this.tavernCardsService.upgradeTavern(input);
+    }
+
+    async freezeMinionsMutation({
+        input,
+    }: TRCPProps<FreezeMinionsPlayerInput>): Promise<void> {
+        await this.tavernCardsService.freezeMinionsMutation(input);
     }
 }
 

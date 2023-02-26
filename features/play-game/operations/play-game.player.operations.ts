@@ -99,3 +99,12 @@ export const upgradePlayerTavernTierOperation = (
         where: { playerIdInGame },
         data: { tavernTier, goldAmount },
     });
+
+export const updateFrozenPlayerCardsOperation = (
+    playerIdInGame: PlayerIdInGame,
+    frozenCardIds: CardIds
+) =>
+    prisma.playGamePlayer.update({
+        where: { playerIdInGame },
+        data: { frozenCardIds },
+    });

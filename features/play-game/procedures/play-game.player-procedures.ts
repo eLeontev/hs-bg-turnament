@@ -1,6 +1,7 @@
 import { procedure } from '../../../trpc/runtime-config';
 
 import {
+    freezeMinionsPlayerInputSchema,
     playMinionPlayerInputSchema,
     purchasePlayerInputSchema,
     rearrangeMinionsAttackOrderPlayerInputSchema,
@@ -47,6 +48,11 @@ export const playerProcedures = {
         .input(upgradeTavernMinionsPlayerInputSchema)
         .mutation(({ input, ctx }) =>
             playerController.upgradeTavernMutation({ input, ctx })
+        ),
+    [playGamePlayerActions.freezeMinions]: procedure
+        .input(freezeMinionsPlayerInputSchema)
+        .mutation(({ input, ctx }) =>
+            playerController.freezeMinionsMutation({ input, ctx })
         ),
     [playGamePlayerActions.useHeroPower]: procedure
         .input(useHeroPowerPlayerInputSchema)
