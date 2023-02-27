@@ -40,11 +40,12 @@ import {
     sellCardValidator,
 } from '../validators/play-game.player-actions.validators';
 import {
+    freezeTogglePlayerStateAction,
+    noFrozenCardIds,
     purchaseCardPlayerStateAction,
     sellCardPlayerStateAction,
 } from '../utils/play-game.player-actions.utils';
 
-const noFrozenCardIds: CardIds = [];
 export class TavernCardsService {
     async rollTavernMinions(baseInput: PlayGameBaseInput): Promise<Cards> {
         const { player, availableCards } = await getPlayerAndAwailableCards(
@@ -99,15 +100,14 @@ export class TavernCardsService {
 
         purchaseCardValidator(player, cardId);
 
-        const { tavernCardIds, handCardIds } = purchaseCardPlayerStateAction(
-            player,
-            cardId
-        );
+        const { tavernCardIds, handCardIds, frozenCardIds } =
+            purchaseCardPlayerStateAction(player, cardId);
 
         await addCardToPlayerHandCardsOperation(
             player.playerIdInGame,
             tavernCardIds,
-            handCardIds
+            handCardIds,
+            frozenCardIds
         );
     }
 
@@ -159,13 +159,13 @@ export class TavernCardsService {
         input: FreezeMinionsPlayerInput
     ): Promise<void> {
         const { player } = await getPlayerAndAwailableCards(input);
-        const { tavernCardIds, playerIdInGame } = player;
 
-        const frozenCardIds = player.frozenCardIds.length
-            ? noFrozenCardIds
-            : [...tavernCardIds];
+        const { frozenCardIds } = freezeTogglePlayerStateAction(player);
 
-        await updateFrozenPlayerCardsOperation(playerIdInGame, frozenCardIds);
+        await updateFrozenPlayerCardsOperation(
+            player.playerIdInGame,
+            frozenCardIds
+        );
     }
 
     private async getCardsToPlayer(

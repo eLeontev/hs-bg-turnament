@@ -8,8 +8,8 @@ export const countOfMinionsPerDeck = 5; // how many minion with the same ID will
 export const initialRound = 0;
 
 export const defaultMinionsRollPrice = 1;
-export const defaultMinionPurchasePrice = 3;
-export const defaultMinionSellPrice = 1;
+export const defaultMinionPurchasePrice = 1;
+export const defaultMinionSellPrice = 3;
 
 export const initialAmounOfGoldPerRound = 2;
 export const maxAmounOfGoldPerRound = 10;

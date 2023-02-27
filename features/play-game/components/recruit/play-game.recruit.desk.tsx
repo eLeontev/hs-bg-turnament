@@ -1,5 +1,5 @@
 import { Badge, Box, Flex, Rating } from '@mantine/core';
-import { IconSun, IconMoon } from '@tabler/icons';
+import { IconSun, IconMoon, IconIceCream } from '@tabler/icons';
 import {
     initialTavernTierUpgradePrice,
     maxAmounOfGoldPerRound,
@@ -15,6 +15,7 @@ import { useOnRecruitPhaseInit } from '../../hooks/play-game.hooks';
 import { Minion } from '../../models/play-game.minion.models';
 import { PlayGameBaseInput } from '../../models/play-game.models';
 import { tavernTiers } from '../../models/play-game.tavern.models';
+import { noFrozenCardIds } from '../../utils/play-game.player-actions.utils';
 import {
     isPlayCardActionDisabled,
     isPurchaseCardActionDisabled,
@@ -36,6 +37,8 @@ import {
     sellCardSelector,
     playCardSelector,
     decreaseGoldAmountSelector,
+    freezeMinionsSelector,
+    frozenCardIdsSelector,
 } from '../store/play-game.player.store';
 import { baseInputSelector, usePlayGameStore } from '../store/play-game.store';
 
@@ -45,6 +48,7 @@ type CardProps = {
     isLoading: boolean;
     action: () => void;
     label: string;
+    isFrozen?: boolean;
 };
 const Card = ({
     cardId,
@@ -52,6 +56,7 @@ const Card = ({
     isActionDisabled,
     isLoading,
     label,
+    isFrozen,
 }: CardProps) => {
     const {
         tavernTier,
@@ -67,6 +72,7 @@ const Card = ({
                 minionType={miniontype}
                 tavernTier={tavernTier}
             ></MinionCard>
+            {isFrozen && <IconIceCream></IconIceCream>}
             <Button
                 disabled={isActionDisabled(player, cardId)}
                 loading={isLoading}
@@ -81,6 +87,7 @@ const TavernMinions = () => {
     const baseInput = usePlayGameStore(baseInputSelector);
 
     const tavernCardIds = usePlayerStore(tavernCardIdsSelector);
+    const frozenCardIds = usePlayerStore(frozenCardIdsSelector);
     const purchaseCard = usePlayerStore(purchaseCardSelector);
 
     const decreaseGoldAmount = usePlayerStore(decreaseGoldAmountSelector);
@@ -115,6 +122,7 @@ const TavernMinions = () => {
                     action={() => action(cardId)}
                     label="Buy minion"
                     isActionDisabled={isPurchaseCardActionDisabled}
+                    isFrozen={frozenCardIds.includes(cardId)}
                 ></Card>
             ))}
         </Flex>
@@ -297,6 +305,27 @@ export const RollTaverMinions = () => {
     );
 };
 
+export const FreezeToggle = () => {
+    const baseInput: PlayGameBaseInput = usePlayGameStore(baseInputSelector);
+
+    const freezeMinions = usePlayerStore(freezeMinionsSelector);
+
+    const { mutateAsync, isLoading } = trpc.freezeMinions.useMutation();
+
+    const action = () =>
+        mutateAsync(baseInput).then(freezeMinions).catch(console.error);
+
+    return (
+        <Button
+            onClick={action}
+            disabled={isLoading}
+            loading={isLoading}
+            label="freeze minions"
+            color="green"
+        ></Button>
+    );
+};
+
 export const RecruitDesk = () => {
     useOnRecruitPhaseInit();
 
@@ -305,6 +334,7 @@ export const RecruitDesk = () => {
             <Flex>
                 <TavernTier></TavernTier>
                 <GoldAmount></GoldAmount>
+                <FreezeToggle></FreezeToggle>
                 <RollTaverMinions></RollTaverMinions>
             </Flex>
 
