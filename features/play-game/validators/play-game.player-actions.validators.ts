@@ -4,6 +4,7 @@ import {
 } from '../../../constants/play-game.config.constants';
 import { CardId } from '../../../data/minions/battle-cries/minions.battle-cries';
 import { PlayGamePlayer } from '../../player/player.models';
+import { tavernTiers } from '../models/play-game.tavern.models';
 
 // TODO: add disable reason to tooltip
 
@@ -84,3 +85,35 @@ export const isPlayCardActionDisabled = (
     player: PlayGamePlayer,
     cardId: CardId
 ): boolean => isActionDisabled(playCardValidator, player, cardId);
+
+export const rollMinionsValidator = ({
+    minionsRollPrice,
+    goldAmount,
+}: PlayGamePlayer) => {
+    if (minionsRollPrice > goldAmount) {
+        throw new Error('Invalid amount of currency');
+    }
+};
+
+export const isRollMinionsDisabled = (player: PlayGamePlayer): boolean =>
+    isActionDisabled(rollMinionsValidator, player, '');
+
+export const tavernTierUpgradeValidator = ({
+    tavernTier,
+    goldAmount,
+    tavernTierUpgradePrice,
+}: PlayGamePlayer) => {
+    if (tavernTier === tavernTiers['☆☆☆☆☆☆']) {
+        throw new Error('you tavern is already at max level');
+    }
+
+    // TODO: add logic to calculate tavern price based on round + reducing
+    if (tavernTierUpgradePrice > goldAmount) {
+        throw new Error(
+            'you do not have enough currency to upgrade your tavern'
+        );
+    }
+};
+
+export const isTavernTierUpgradeDisabled = (player: PlayGamePlayer): boolean =>
+    isActionDisabled(tavernTierUpgradeValidator, player, '');

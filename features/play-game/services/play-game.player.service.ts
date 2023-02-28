@@ -16,6 +16,7 @@ import {
     defaultCountOfHitPoints,
     initialTavernTier,
     defaultMinionSellPrice,
+    initialTavernTierUpgradePrice,
 } from '../../../constants/play-game.config.constants';
 import { PlayGamePlayer } from '../../player/player.models';
 import { HeroIds } from '../models/play-game.hero.models';
@@ -60,6 +61,7 @@ export const initPlayGamePlayer = ({
     minionsRollPrice: defaultMinionsRollPrice,
     minionPurchasePrice: defaultMinionPurchasePrice,
     minionSellPrice: defaultMinionSellPrice,
+    tavernTierUpgradePrice: initialTavernTierUpgradePrice,
     selectedHeroId: null,
     countOfArmor: 0,
     countOfHitPoints: defaultCountOfHitPoints,
@@ -70,4 +72,5 @@ export const initPlayGamePlayer = ({
     tavernCardIds: [],
     handCardIds: [],
     deskCardIds: [],
+    frozenCardIds: [],
 });

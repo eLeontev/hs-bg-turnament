@@ -13,16 +13,18 @@ import {
     freezeTogglePlayerStateAction,
     playCardPlayerStateAction,
     purchaseCardPlayerStateAction,
+    rollMinionsPlayerStateAction,
     sellCardPlayerStateAction,
+    tavernTierUpgradePlayerStateAction,
 } from '../../utils/play-game.player-actions.utils';
 
 export type PlayGamePlayerState = PlayGamePlayerWithCards & {};
 
+// TODO: align naming here and between client -> server
 export type PlayGamePlayerStoreApi = {
     initPlayer: (player: PlayGamePlayer) => void;
+
     updateTavernTier: () => void;
-    increaseGoldAmount: (price: number) => void;
-    decreaseGoldAmount: (price: number) => void;
     updateTavernCards: (cards: Cards) => void;
     purchaseCard: (cardId: CardId) => void;
     sellCard: (cardId: CardId) => void;
@@ -45,16 +47,10 @@ export const usePlayerStore = create<
 >((set) => ({
     ...initialPlayGamePlayerState,
     initPlayer: (player: PlayGamePlayer) => set({ ...player }),
-    updateTavernTier: () =>
-        set((state: PlayGamePlayerState) => ({
-            tavernTier: state.tavernTier + 1,
-        })),
-    decreaseGoldAmount: (price: number) =>
-        set((state) => ({ goldAmount: state.goldAmount - price })),
-    increaseGoldAmount: (price: number) =>
-        set((state) => ({ goldAmount: state.goldAmount + price })),
+    updateTavernTier: () => set(tavernTierUpgradePlayerStateAction),
     updateTavernCards: (cards: Cards) =>
         set((state) => ({
+            ...rollMinionsPlayerStateAction(state),
             tavernCardIds: cards.map(({ cardId }: Card) => cardId),
             cards: [
                 ...state.cards.filter(
@@ -78,13 +74,6 @@ export const initPlayerSelector = ({ initPlayer }: PlayGamePlayerStoreApi) =>
 export const updateTavernTierSelector = ({
     updateTavernTier,
 }: PlayGamePlayerStoreApi) => updateTavernTier;
-
-export const increaseGoldAmountSelector = ({
-    increaseGoldAmount,
-}: PlayGamePlayerStoreApi) => increaseGoldAmount;
-export const decreaseGoldAmountSelector = ({
-    decreaseGoldAmount,
-}: PlayGamePlayerStoreApi) => decreaseGoldAmount;
 
 export const updateTavernCardsSelector = ({
     updateTavernCards,

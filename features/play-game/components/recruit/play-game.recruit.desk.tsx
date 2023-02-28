@@ -1,9 +1,6 @@
 import { Badge, Box, Flex, Rating } from '@mantine/core';
 import { IconSun, IconMoon, IconIceCream } from '@tabler/icons';
-import {
-    initialTavernTierUpgradePrice,
-    maxAmounOfGoldPerRound,
-} from '../../../../constants/play-game.config.constants';
+import { maxAmounOfGoldPerRound } from '../../../../constants/play-game.config.constants';
 import { minions } from '../../../../data/minions';
 import { CardId } from '../../../../data/minions/battle-cries/minions.battle-cries';
 import { trpc } from '../../../../lib/client';
@@ -14,20 +11,18 @@ import { PlayGamePlayer } from '../../../player/player.models';
 import { useOnRecruitPhaseInit } from '../../hooks/play-game.hooks';
 import { Minion } from '../../models/play-game.minion.models';
 import { PlayGameBaseInput } from '../../models/play-game.models';
-import { tavernTiers } from '../../models/play-game.tavern.models';
-import { noFrozenCardIds } from '../../utils/play-game.player-actions.utils';
 import {
     isPlayCardActionDisabled,
     isPurchaseCardActionDisabled,
+    isRollMinionsDisabled,
     isSellCardActionDisabled,
+    isTavernTierUpgradeDisabled,
 } from '../../validators/play-game.player-actions.validators';
 import {
     cardSelector,
     goldAmountSelector,
     tavernCardIdsSelector,
-    minionsRollPriceSelector,
     tavernTierSelector,
-    increaseGoldAmountSelector,
     updateTavernTierSelector,
     usePlayerStore,
     updateTavernCardsSelector,
@@ -36,7 +31,6 @@ import {
     purchaseCardSelector,
     sellCardSelector,
     playCardSelector,
-    decreaseGoldAmountSelector,
     freezeMinionsSelector,
     frozenCardIdsSelector,
 } from '../store/play-game.player.store';
@@ -90,8 +84,6 @@ const TavernMinions = () => {
     const frozenCardIds = usePlayerStore(frozenCardIdsSelector);
     const purchaseCard = usePlayerStore(purchaseCardSelector);
 
-    const decreaseGoldAmount = usePlayerStore(decreaseGoldAmountSelector);
-
     const { mutateAsync, isLoading } = trpc.purchaseMinion.useMutation();
 
     const action = (cardId: CardId) => {
@@ -106,10 +98,8 @@ const TavernMinions = () => {
             return;
         }
 
-        decreaseGoldAmount(usePlayerStore.getState().minionPurchasePrice);
-        mutateAsync({ ...baseInput, cardId })
-            .then(() => purchaseCard(cardId))
-            .catch(console.error);
+        purchaseCard(cardId);
+        mutateAsync({ ...baseInput, cardId }).catch(console.error);
     };
 
     return (
@@ -135,8 +125,6 @@ const DeskMinions = () => {
     const deskCardIds = usePlayerStore(deskCardIdsSelector);
     const sellCard = usePlayerStore(sellCardSelector);
 
-    const increaseGoldAmount = usePlayerStore(increaseGoldAmountSelector);
-
     const { mutateAsync, isLoading } = trpc.sellMinion.useMutation();
 
     const action = (cardId: CardId) => {
@@ -151,10 +139,8 @@ const DeskMinions = () => {
             return;
         }
 
-        increaseGoldAmount(usePlayerStore.getState().minionSellPrice);
-        mutateAsync({ ...baseInput, cardId })
-            .then(() => sellCard(cardId))
-            .catch(console.error);
+        sellCard(cardId);
+        mutateAsync({ ...baseInput, cardId }).catch(console.error);
     };
 
     return (
@@ -193,9 +179,8 @@ const HandMinions = () => {
             return;
         }
 
-        mutateAsync({ ...baseInput, cardId })
-            .then(() => playCard(cardId))
-            .catch(console.error);
+        playCard(cardId);
+        mutateAsync({ ...baseInput, cardId }).catch(console.error);
     };
 
     return (
@@ -237,18 +222,14 @@ export const GoldAmount = () => {
 export const TavernTier = () => {
     const baseInput: PlayGameBaseInput = usePlayGameStore(baseInputSelector);
 
+    const player = usePlayerStore();
     const tavernTier = usePlayerStore(tavernTierSelector);
-    const updateTavernTier = usePlayerStore(updateTavernTierSelector);
 
-    const goldAmount = usePlayerStore(goldAmountSelector);
-    const decreaseGoldAmount = usePlayerStore(decreaseGoldAmountSelector);
+    const updateTavernTier = usePlayerStore(updateTavernTierSelector);
 
     const { mutateAsync, isLoading } = trpc.upgradeTavern.useMutation();
 
-    const hasNotEnoughGold = initialTavernTierUpgradePrice > goldAmount;
-    const isLastTavernTier = tavernTier === tavernTiers['☆☆☆☆☆☆'];
-
-    const isActionDisabled = hasNotEnoughGold || isLastTavernTier;
+    const isActionDisabled = isTavernTierUpgradeDisabled(player);
 
     const action = () => {
         if (isActionDisabled) {
@@ -257,8 +238,8 @@ export const TavernTier = () => {
             return;
         }
 
-        mutateAsync(baseInput).then(updateTavernTier).catch(console.error);
-        decreaseGoldAmount(initialTavernTierUpgradePrice);
+        updateTavernTier();
+        mutateAsync(baseInput).catch(console.error);
     };
 
     return (
@@ -274,15 +255,12 @@ export const TavernTier = () => {
 export const RollTaverMinions = () => {
     const baseInput: PlayGameBaseInput = usePlayGameStore(baseInputSelector);
 
-    const goldAmount = usePlayerStore(goldAmountSelector);
-    const minionsRollPrice = usePlayerStore(minionsRollPriceSelector);
-
-    const decreaseGoldAmount = usePlayerStore(decreaseGoldAmountSelector);
+    const player = usePlayerStore();
     const updateTavernCards = usePlayerStore(updateTavernCardsSelector);
 
     const { mutateAsync, isLoading } = trpc.rollTavernMinions.useMutation();
+    const isActionDisabled = isRollMinionsDisabled(player);
 
-    const isActionDisabled = minionsRollPrice > goldAmount;
     const action = () => {
         if (isActionDisabled) {
             alert('not enough gold');
@@ -290,7 +268,6 @@ export const RollTaverMinions = () => {
             return;
         }
 
-        decreaseGoldAmount(minionsRollPrice);
         mutateAsync(baseInput).then(updateTavernCards).catch(console.error);
     };
 

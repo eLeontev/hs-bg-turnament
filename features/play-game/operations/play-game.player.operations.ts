@@ -84,11 +84,12 @@ export const addCardToPlayerHandCardsOperation = (
     playerIdInGame: PlayerIdInGame,
     tavernCardIds: CardIds,
     handCardIds: CardIds,
-    frozenCardIds: CardIds
+    frozenCardIds: CardIds,
+    goldAmount: number
 ) =>
     prisma.playGamePlayer.update({
         where: { playerIdInGame },
-        data: { tavernCardIds, handCardIds, frozenCardIds },
+        data: { tavernCardIds, handCardIds, frozenCardIds, goldAmount },
     });
 
 export const upgradePlayerTavernTierOperation = (

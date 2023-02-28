@@ -15,10 +15,7 @@ import {
     upgradePlayerTavernTierOperation,
 } from '../operations/play-game.player.operations';
 
-import {
-    countOfCardPertavernTier,
-    initialTavernTierUpgradePrice,
-} from '../../../constants/play-game.config.constants';
+import { countOfCardPertavernTier } from '../../../constants/play-game.config.constants';
 
 import {
     CardId,
@@ -37,13 +34,17 @@ import {
 import { getExcludedRandom } from '../../../utils.ts/random.utils';
 import {
     purchaseCardValidator,
+    rollMinionsValidator,
     sellCardValidator,
+    tavernTierUpgradeValidator,
 } from '../validators/play-game.player-actions.validators';
 import {
     freezeTogglePlayerStateAction,
     noFrozenCardIds,
     purchaseCardPlayerStateAction,
+    rollMinionsPlayerStateAction,
     sellCardPlayerStateAction,
+    tavernTierUpgradePlayerStateAction,
 } from '../utils/play-game.player-actions.utils';
 
 export class TavernCardsService {
@@ -52,21 +53,18 @@ export class TavernCardsService {
             baseInput,
             true
         );
-        const { tavernTier, goldAmount, minionsRollPrice, tavernCardIds } =
-            player;
+        const { tavernTier, tavernCardIds } = player;
 
-        if (minionsRollPrice > goldAmount) {
-            throw new Error('Invalid amount of currency');
-        }
+        rollMinionsValidator(player);
 
-        const goldAmountAfterCardsUpdate = goldAmount - minionsRollPrice;
+        const { goldAmount } = rollMinionsPlayerStateAction(player);
 
         await markCardsAvailableOperation(tavernCardIds);
         return await this.getCardsToPlayer(
             baseInput,
             availableCards,
             tavernTier,
-            goldAmountAfterCardsUpdate,
+            goldAmount,
             noFrozenCardIds
         );
     }
@@ -100,14 +98,15 @@ export class TavernCardsService {
 
         purchaseCardValidator(player, cardId);
 
-        const { tavernCardIds, handCardIds, frozenCardIds } =
+        const { tavernCardIds, handCardIds, frozenCardIds, goldAmount } =
             purchaseCardPlayerStateAction(player, cardId);
 
         await addCardToPlayerHandCardsOperation(
             player.playerIdInGame,
             tavernCardIds,
             handCardIds,
-            frozenCardIds
+            frozenCardIds,
+            goldAmount
         );
     }
 
@@ -116,42 +115,34 @@ export class TavernCardsService {
         ...baseInput
     }: SellMinionsPlayerInput): Promise<void> {
         const { player } = await getPlayerAndAwailableCards(baseInput);
-        const { goldAmount, minionSellPrice } = player;
-
-        const { deskCardIds } = sellCardPlayerStateAction(player, cardId);
 
         sellCardValidator(player, cardId);
+
+        const { deskCardIds, goldAmount } = sellCardPlayerStateAction(
+            player,
+            cardId
+        );
 
         await sellPlayerCardOperation(
             baseInput.playerIdInGame,
             deskCardIds,
-            goldAmount + minionSellPrice
+            goldAmount
         );
         await markCardAvailableOperation(cardId);
     }
 
     async upgradeTavern(input: UpgradeTavernPlayerInput): Promise<void> {
-        const {
-            player: { tavernTier, goldAmount },
-        } = await getPlayerAndAwailableCards(input);
+        const { player } = await getPlayerAndAwailableCards(input);
 
-        if (tavernTier === tavernTiers['☆☆☆☆☆☆']) {
-            throw new Error('you tavern is already at max level');
-        }
+        tavernTierUpgradeValidator(player);
 
-        // TODO: add logic to calculate tavern price based on round + reducing
-        if (initialTavernTierUpgradePrice > goldAmount) {
-            throw new Error(
-                'you do not have enough currency to upgrade your tavern'
-            );
-        }
-
-        const restGoldAmount = goldAmount - initialTavernTierUpgradePrice;
+        const { goldAmount, tavernTier } =
+            tavernTierUpgradePlayerStateAction(player);
 
         await upgradePlayerTavernTierOperation(
             input.playerIdInGame,
-            tavernTier + 1,
-            restGoldAmount
+            tavernTier,
+            goldAmount
         );
     }
 
