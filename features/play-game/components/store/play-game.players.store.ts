@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { create } from 'zustand';
 
-import { playGamePlayerWithCardsSchema } from '../../schemas/play-game.schemas';
+import { playGameGamePlayerDetailsSchema } from '../../schemas/play-game.schemas';
 
 import { PlayerKey } from '../../../../models/common.models';
 import { tavernTiers } from '../../models/play-game.tavern.models';
@@ -9,7 +9,7 @@ import { tavernTiers } from '../../models/play-game.tavern.models';
 import { getPlayerKey } from '../../../../utils.ts/storage.utils';
 
 export type PlayGamePlayerDetails = z.infer<
-    typeof playGamePlayerWithCardsSchema
+    typeof playGameGamePlayerDetailsSchema
 >;
 
 export type PlayGameStorePlayers = Map<PlayerKey, PlayGamePlayerDetails>;
@@ -25,7 +25,6 @@ export type PlayGamePlayersStoreApi = {
     ) => void;
 };
 
-export type PlayGameState = PlayGamePlayersDataState & PlayGamePlayersStoreApi;
 export const usePlayersStore = create<
     PlayGamePlayersDataState & PlayGamePlayersStoreApi
 >((set) => ({
@@ -46,8 +45,6 @@ export const setPlayersSelector = ({ setPlayers }: PlayGamePlayersStoreApi) =>
 export const onlinePlayersSelector = ({
     onlinePlayers,
 }: PlayGamePlayersDataState) => onlinePlayers;
-export const playersSelector = ({ players }: PlayGamePlayersDataState) =>
-    players;
 
 export const playerTavernTierSelector = ({
     players,

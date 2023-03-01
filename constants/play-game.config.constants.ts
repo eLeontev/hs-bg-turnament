@@ -12,7 +12,7 @@ export const defaultMinionPurchasePrice = 3;
 export const defaultMinionSellPrice = 1;
 
 export const initialAmounOfGoldPerRound = 2;
-export const maxAmounOfGoldPerRound = 10;
+export const maxAmountOfGoldPerRound = 10;
 
 export const initialTavernTierUpgradePrice = 3;
 

@@ -34,7 +34,7 @@ import {
 import { getExcludedRandom } from '../../../utils.ts/random.utils';
 import {
     purchaseCardValidator,
-    rollMinionsValidator,
+    rollTavernCardsValidator,
     sellCardValidator,
     tavernTierUpgradeValidator,
 } from '../validators/play-game.player-actions.validators';
@@ -55,7 +55,7 @@ export class TavernCardsService {
         );
         const { tavernTier, tavernCardIds } = player;
 
-        rollMinionsValidator(player);
+        rollTavernCardsValidator(player);
 
         const { goldAmount } = rollMinionsPlayerStateAction(player);
 

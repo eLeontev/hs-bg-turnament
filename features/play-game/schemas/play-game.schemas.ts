@@ -13,7 +13,6 @@ import {
     playerLoginSchema,
 } from '../../player/player.schemas';
 import { minionIdSchema, minionTypesSchema } from './play-game.minion.schemas';
-import { Card } from '../../../data/minions/battle-cries/minions.battle-cries';
 
 export const startPlayGameInputSchema = z.object({
     playerId: playerIdSchema,
@@ -43,6 +42,7 @@ export const goldAmountSchema = z.number().min(0);
 export const minionsRollPriceSchema = z.number().min(0);
 export const minionPurchasePriceSchema = z.number().min(0);
 export const tavernTierUpgradePriceSchema = z.number().min(0);
+export const minionSellPriceSchema = z.number().min(0);
 export const tavernCardIdsSchema = z.array(cardIdSchema);
 export const handCardIdsSchema = z.array(cardIdSchema);
 export const deskCardIdsSchema = z.array(cardIdSchema);
@@ -77,6 +77,7 @@ export const playGamePlayerWithCardsSchema = playGameGamePlayerDetailsSchema
             minionsRollPrice: minionsRollPriceSchema,
             minionPurchasePrice: minionPurchasePriceSchema,
             tavernTierUpgradePrice: tavernTierUpgradePriceSchema,
+            minionSellPrice: minionSellPriceSchema,
             countOfHitPoints: countOfHitPointsSchema,
             tavernCardIds: tavernCardIdsSchema,
             opponentId: z.string().nullable(),
