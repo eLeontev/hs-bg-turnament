@@ -1,39 +1,57 @@
 import { CardId } from '../../../../data/minions/battle-cries/minions.battle-cries';
-import { PlayGamePlayer } from '../../../player/player.models';
-import { cardSelector, usePlayerStore } from '../store/play-game.player.store';
+import {
+    cardSelector,
+    isFrozenCardSelector,
+    usePlayerStore,
+} from '../store/play-game.player.store';
 import { Box } from '@mantine/core';
 import { MinionCard } from '../../../common/components/minion/minion-card';
 import { minions } from '../../../../data/minions';
 import { Minion } from '../../models/play-game.minion.models';
 import { IconIceCream } from '@tabler/icons';
 import { Button } from '../../../common/components/button.component';
-import { ActionValidatorResult } from '../../validators/play-game.player-actions.validators';
+import { ActionValidator } from '../../validators/play-game.player-actions.validators';
+import { baseInputSelector, usePlayGameStore } from '../store/play-game.store';
+import { PlayGameBaseInput } from '../../models/play-game.models';
 
-type MinionCardInGameProps = {
+type MinionCardWithOwnState = {
     cardId: CardId;
-    isActionDisabled: (
-        player: PlayGamePlayer,
-        cardId: CardId
-    ) => ActionValidatorResult;
-    isLoading: boolean;
-    action: () => void;
-    label: string;
-    isFrozen?: boolean;
+    actionValidator: ActionValidator;
+    stateAction: (cardId: CardId) => void;
+    request: (
+        playerAction: PlayGameBaseInput & { cardId: CardId }
+    ) => Promise<void>;
+    cardActionLabel: string;
 };
-export const MinionCardInGame = ({
+export const MinionCardWithOwnState = ({
     cardId,
-    action,
-    isActionDisabled,
-    isLoading,
-    label,
-    isFrozen,
-}: MinionCardInGameProps) => {
+    request,
+    stateAction,
+    actionValidator,
+    cardActionLabel,
+}: MinionCardWithOwnState) => {
+    const baseInput = usePlayGameStore(baseInputSelector);
+
+    const player = usePlayerStore();
+    const isFrozen = usePlayerStore(isFrozenCardSelector(cardId));
+    const card = usePlayerStore(cardSelector(cardId));
+
+    const actionValidatorResult = actionValidator(player, cardId);
+
+    const action = () => {
+        if (actionValidatorResult) {
+            return alert(actionValidatorResult);
+        }
+
+        stateAction(cardId);
+        request({ ...baseInput, cardId }).catch(console.error);
+    };
+
     const {
         tavernTier,
-        minionTypes: [minionType],
         minionId,
-    } = usePlayerStore(cardSelector(cardId));
-    const player = usePlayerStore();
+        minionTypes: [minionType],
+    } = card; // TODO: improve minion cards
 
     return (
         <Box>
@@ -44,9 +62,8 @@ export const MinionCardInGame = ({
             ></MinionCard>
             {isFrozen && <IconIceCream></IconIceCream>}
             <Button
-                disabled={Boolean(isActionDisabled(player, cardId))}
-                loading={isLoading}
-                label={label}
+                disabled={Boolean(actionValidatorResult)}
+                label={cardActionLabel}
                 onClick={action}
             ></Button>
         </Box>

@@ -27,6 +27,10 @@ export enum validatorErrors {
 
 export type ValidatorResult = void | validatorErrors;
 export type ActionValidatorResult = false | validatorErrors;
+export type ActionValidator = (
+    player: PlayGamePlayer,
+    cardId: CardId
+) => ActionValidatorResult;
 
 export type ValidatorErrorsMap = {
     [validatorError in validatorErrors]: string;

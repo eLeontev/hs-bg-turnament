@@ -108,6 +108,8 @@ export const cardSelector =
 
 export const goldAmountSelector = ({ goldAmount }: PlayGamePlayerState) =>
     goldAmount;
-export const minionsRollPriceSelector = ({
-    minionsRollPrice,
-}: PlayGamePlayerState) => minionsRollPrice;
+
+export const isFrozenCardSelector =
+    (cardId: CardId) =>
+    ({ frozenCardIds }: PlayGamePlayerState) =>
+        frozenCardIds.includes(cardId);
