@@ -22,7 +22,6 @@ import { initialRound } from '../../../constants/play-game.config.constants';
 
 import {
     PlayGamePlayer,
-    PlayGamePlayerData,
     PlayGamePlayers,
     PlayGamePlayerWithCards,
 } from '../../player/player.models';

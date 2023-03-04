@@ -6,8 +6,8 @@ export const CombatDesk = () => {
     console.log(data);
     useEffect(() => {
         setTimeout(() => {
-            data.switchToRecrutPhase();
+            data.switchToRecruitPhase();
         }, data.phaseDurationInMs);
-    }, []);
+    }, [data]);
     return <>combat desk</>;
 };

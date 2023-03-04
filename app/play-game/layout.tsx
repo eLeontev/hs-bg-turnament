@@ -12,7 +12,7 @@ import { OverlayLoader } from '../../features/common/components/loader.component
 
 import {
     usePlayGameInitialization,
-    useSetPlayGameBaseInput,
+    useSetPlayGameInitialization,
 } from '../../features/play-game/hooks/play-game.hooks';
 import { useI18nLabelTranslate } from '../../i18n/i18n.hooks';
 
@@ -82,7 +82,7 @@ const pageProps = {};
 export default function PlayGameLayoutWithTRPCPage({
     children,
 }: PlayGameLayoutProps) {
-    useSetPlayGameBaseInput();
+    useSetPlayGameInitialization();
 
     // TODO: report error for appDir
     const Page = trpc.withTRPC(PlayGameLayout) as NextAddDirPage;

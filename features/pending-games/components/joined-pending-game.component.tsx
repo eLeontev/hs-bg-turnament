@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+
 import { Card, Flex, Space } from '@mantine/core';
 
 import { JoinedPendingGamePlayers } from './joined-pending-game.players.component';
@@ -9,6 +11,7 @@ import {
     useOnlineGameSocketRoom,
     useOnlinePlayerKeys,
 } from '../../common/sockets/online-game.socket.hooks';
+import { useSetPendingGameId } from '../hooks/pending-games.hooks';
 
 import { PendingGame, PendingGames } from '../pending-games.models';
 import { PublicPlayer } from '../../player/player.models';
@@ -16,7 +19,6 @@ import { PublicPlayer } from '../../player/player.models';
 import { getPlayerId, getPlayerKey } from '../../../utils.ts/storage.utils';
 import { DeletePendingGame } from './delete-pending-game.component';
 import { GameId } from '../../../models/common.models';
-import { ReactElement } from 'react';
 
 export type JoinedPendingGameContainerProps = { pendingGames: PendingGames };
 export type JoinedPendingGameProps = { pendingGame: PendingGame };
@@ -57,10 +59,12 @@ export const AuthorActions = ({
 );
 
 export const JoinedPendingGame = ({ pendingGame }: JoinedPendingGameProps) => {
-    useOnlineGameSocketRoom(pendingGame.gameId);
+    const { authorId, gameId, players } = pendingGame;
+
+    useOnlineGameSocketRoom(gameId);
+    useSetPendingGameId(gameId);
     useOnlinePlayerKeys();
 
-    const { authorId, gameId, players } = pendingGame;
     const isAuthor = authorId === getPlayerId();
 
     return (

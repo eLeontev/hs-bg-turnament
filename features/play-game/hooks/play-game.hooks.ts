@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
 import { trpc } from '../../../lib/client';
 
@@ -6,6 +6,8 @@ import { formSelectedHeroIds } from '../services/play-game.client.service';
 import { formPlayGamePlayers } from '../services/play-game.player.service';
 
 import {
+    baseInputSelector,
+    initialPlayGameState,
     initStateSelector,
     isReadySelector,
     roundSelector,
@@ -26,17 +28,24 @@ import {
     usePlayerStore,
 } from '../components/store/play-game.player.store';
 
-export const useSetPlayGameBaseInput = () =>
-    useMemo(
-        () => ({
-            playerIdInGame: getSavePlayerIdInGame(),
-            gameId: getSaveGameId(),
-        }),
-        []
+export const useSetPlayGameInitialization = () => {
+    const initState = usePlayGameStore(initStateSelector);
+
+    const gameId = getSaveGameId();
+    const playerIdInGame = getSavePlayerIdInGame();
+
+    useEffect(
+        () =>
+            initState({
+                ...initialPlayGameState,
+                baseInput: { gameId, playerIdInGame },
+            }),
+        [initState, gameId, playerIdInGame]
     );
+};
 
 export const usePlayGameInitialization = () => {
-    const baseInput = useSetPlayGameBaseInput();
+    const baseInput = usePlayGameStore(baseInputSelector);
 
     const isReady = usePlayGameStore(isReadySelector);
     const initState = usePlayGameStore(initStateSelector);
@@ -81,7 +90,7 @@ export const usePlayGameInitialization = () => {
 
 export const useOnRecruitPhaseInit = (afterInitAction?: () => void) => {
     const initPlayer = usePlayerStore(initPlayerSelector);
-    const baseInput = useSetPlayGameBaseInput();
+    const baseInput = usePlayGameStore(baseInputSelector);
 
     const round = usePlayGameStore(roundSelector);
 
