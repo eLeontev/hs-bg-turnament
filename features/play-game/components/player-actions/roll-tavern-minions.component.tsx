@@ -7,30 +7,35 @@ import {
 import { trpc } from '../../../../lib/client';
 import { isRollMinionsDisabled } from '../../validators/play-game.player-actions.validators';
 import { Button } from '../../../common/components/button.component';
+import {
+    startErrorHandlerSelector,
+    usePlayGameErrorHandlerStore,
+} from '../store/play-game.error-handler.store';
 
 export const RollTavernMinions = () => {
     const baseInput: PlayGameBaseInput = usePlayGameStore(baseInputSelector);
+    const startErrorHandler = usePlayGameErrorHandlerStore(
+        startErrorHandlerSelector
+    );
 
     const player = usePlayerStore();
     const updateTavernCards = usePlayerStore(updateTavernCardsSelector);
 
     const { mutateAsync, isLoading } = trpc.rollTavernMinions.useMutation();
-    const validatorErrorMessage = isRollMinionsDisabled(player);
+    const errorI18nKey = isRollMinionsDisabled(player);
 
     const action = () => {
-        if (validatorErrorMessage) {
-            alert(validatorErrorMessage);
-
-            return;
+        if (errorI18nKey) {
+            return startErrorHandler(errorI18nKey);
         }
 
-        mutateAsync(baseInput).then(updateTavernCards).catch(console.error);
+        mutateAsync(baseInput).then(updateTavernCards).catch(startErrorHandler);
     };
 
     return (
         <Button
             onClick={action}
-            disabled={Boolean(validatorErrorMessage)}
+            disabled={Boolean(errorI18nKey)}
             loading={isLoading}
             label="roll tavern minions"
             color="teal"

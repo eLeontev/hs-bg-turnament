@@ -79,7 +79,7 @@ export const usePlayGameInitialization = () => {
     return playGameDetailsQuery;
 };
 
-export const useOnRecruitPhaseInit = () => {
+export const useOnRecruitPhaseInit = (afterInitAction?: () => void) => {
     const initPlayer = usePlayerStore(initPlayerSelector);
     const baseInput = useSetPlayGameBaseInput();
 
@@ -91,6 +91,16 @@ export const useOnRecruitPhaseInit = () => {
     });
 
     useEffect(() => {
-        refetch().then(({ data }) => data && initPlayer(data));
-    }, [round, refetch, initPlayer]);
+        refetch().then(({ data }) => {
+            if (!data) {
+                return;
+            }
+
+            initPlayer(data);
+
+            if (afterInitAction) {
+                afterInitAction();
+            }
+        });
+    }, [round, refetch, initPlayer, afterInitAction]);
 };

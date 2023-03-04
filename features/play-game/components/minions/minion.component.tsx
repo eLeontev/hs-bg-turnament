@@ -13,6 +13,10 @@ import { Button } from '../../../common/components/button.component';
 import { ActionValidator } from '../../validators/play-game.player-actions.validators';
 import { baseInputSelector, usePlayGameStore } from '../store/play-game.store';
 import { PlayGameBaseInput } from '../../models/play-game.models';
+import {
+    startErrorHandlerSelector,
+    usePlayGameErrorHandlerStore,
+} from '../store/play-game.error-handler.store';
 
 type MinionCardWithOwnState = {
     cardId: CardId;
@@ -31,20 +35,23 @@ export const MinionCardWithOwnState = ({
     cardActionLabel,
 }: MinionCardWithOwnState) => {
     const baseInput = usePlayGameStore(baseInputSelector);
+    const startErrorHandler = usePlayGameErrorHandlerStore(
+        startErrorHandlerSelector
+    );
 
     const player = usePlayerStore();
     const isFrozen = usePlayerStore(isFrozenCardSelector(cardId));
     const card = usePlayerStore(cardSelector(cardId));
 
-    const actionValidatorResult = actionValidator(player, cardId);
+    const errorMessageI18nKey = actionValidator(player, cardId);
 
     const action = () => {
-        if (actionValidatorResult) {
-            return alert(actionValidatorResult);
+        if (errorMessageI18nKey) {
+            return startErrorHandler(errorMessageI18nKey);
         }
 
         stateAction(cardId);
-        request({ ...baseInput, cardId }).catch(console.error);
+        request({ ...baseInput, cardId }).catch(startErrorHandler);
     };
 
     const {
@@ -62,7 +69,7 @@ export const MinionCardWithOwnState = ({
             ></MinionCard>
             {isFrozen && <IconIceCream></IconIceCream>}
             <Button
-                disabled={Boolean(actionValidatorResult)}
+                disabled={Boolean(errorMessageI18nKey)}
                 label={cardActionLabel}
                 onClick={action}
             ></Button>

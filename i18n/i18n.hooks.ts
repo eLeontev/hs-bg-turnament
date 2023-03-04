@@ -1,6 +1,11 @@
 import { useEffect } from 'react';
 
-import { labelTranslate, heroTranslate, minionTranslate } from './i18n.service';
+import {
+    labelTranslate,
+    heroTranslate,
+    minionTranslate,
+    errorMessageTranslate,
+} from './i18n.service';
 
 import { localeSelector, setLocaleSelector, useI18nStore } from './i18n.store';
 
@@ -43,4 +48,9 @@ export const useI18nHeroTranslate = () => {
 export const useI18nMinionTranslate = () => {
     const locale = useI18nStore(localeSelector);
     return minionTranslate(locale);
+};
+
+export const useI18nErrorMessageTranslate = () => {
+    const locale = useI18nStore(localeSelector);
+    return errorMessageTranslate(locale);
 };

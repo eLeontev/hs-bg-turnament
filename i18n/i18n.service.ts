@@ -4,6 +4,7 @@ import { locales, namespaces } from './enums/i18n.enums';
 import { labelI18nKeys } from './enums/i18n.label.enums';
 import { heroI18nKeys } from './enums/i18n.hero.enums';
 import { minionI18nKeys } from './enums/i18n.minion.enums';
+import { errorMessageI18nKeys } from './enums/i18n.error-message.enums';
 
 import { namespacesMap } from './i18n.models';
 
@@ -21,3 +22,7 @@ export const heroTranslate = (locale: locales) => (i18Key: heroI18nKeys) =>
 
 export const minionTranslate = (locale: locales) => (i18Key: minionI18nKeys) =>
     translate(locale, namespaces.minions, i18Key);
+
+export const errorMessageTranslate =
+    (locale: locales) => (i18Key: errorMessageI18nKeys) =>
+        translate(locale, namespaces.errorMessages, i18Key);

@@ -7,4 +7,5 @@ export enum namespaces {
     labels = 'labels',
     heroes = 'heroes',
     minions = 'minions',
+    errorMessages = 'errorMessages',
 }

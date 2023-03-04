@@ -1,6 +1,9 @@
 'use client';
 
+import { Box } from '@mantine/core';
+
 import { PlayGameDesk } from '../../features/play-game/components/play-game.desk.component';
+import { ErrorHandlerComponent } from '../../features/play-game/components/error-handler/error-handler.component';
 
 import {
     useOnlineGameSocketRoom,
@@ -20,7 +23,12 @@ const PlayGameScreen = () => {
     usePlayGameActions(gameId);
     useOnlinePlayerKeys();
 
-    return <PlayGameDesk></PlayGameDesk>;
+    return (
+        <Box>
+            <ErrorHandlerComponent></ErrorHandlerComponent>
+            <PlayGameDesk></PlayGameDesk>;
+        </Box>
+    );
 };
 
 export default PlayGameScreen;
