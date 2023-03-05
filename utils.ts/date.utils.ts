@@ -25,3 +25,8 @@ export const formatUIDistance = (
         includeSeconds: true,
         locale: localesMap[locale],
     })} ${timePostfix}`;
+
+export const getDelayIMsFromNow = (
+    dateInUtc: string,
+    delayInMs: number
+): number => Number(new Date(dateInUtc)) + delayInMs - Number(new Date());

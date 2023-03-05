@@ -4,6 +4,7 @@ import { Box } from '@mantine/core';
 
 import { PlayGameDesk } from '../../features/play-game/components/play-game.desk.component';
 import { ErrorHandlerComponent } from '../../features/play-game/components/error-handler/error-handler.component';
+import { PhaseWaiterComponent } from '../../features/play-game/components/play-game.phase-waiter.component';
 
 import {
     useOnlineGameSocketRoom,
@@ -26,6 +27,7 @@ const PlayGameScreen = () => {
     return (
         <Box>
             <ErrorHandlerComponent></ErrorHandlerComponent>
+            <PhaseWaiterComponent></PhaseWaiterComponent>
             <PlayGameDesk></PlayGameDesk>;
         </Box>
     );
