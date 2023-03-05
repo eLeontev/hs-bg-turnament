@@ -8,7 +8,8 @@ datasource db {
 }
 
 model PendingGamePlayer {
-  playerId          String       @id @map("_id")
+  id                String       @id @default(auto()) @map("_id") @db.ObjectId
+  playerId          String       @unique()
   playerKey         String
   playerIdInGame    String
   playerLogin       String
@@ -17,7 +18,8 @@ model PendingGamePlayer {
 }
 
 model PendingGame {
-  gameId      String              @id @map("_id")
+  id          String              @id @default(auto()) @map("_id") @db.ObjectId
+  gameId      String              @unique()
   gameName    String
   authorId    String
   authorLogin String
@@ -99,7 +101,8 @@ enum combatPhases {
 }
 
 model PlayGamePlayer {
-  playerIdInGame         String    @id @map("_id")
+  id                     String    @id @default(auto()) @map("_id") @db.ObjectId
+  playerIdInGame         String    @unique()
   goldAmount             Int
   minionsRollPrice       Int
   minionSellPrice        Int
@@ -124,7 +127,8 @@ model PlayGamePlayer {
 }
 
 model Card {
-  cardId         String        @id @map("_id")
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  cardId         String        @unique()
   minionId       minionIds
   minionTypes    minionTypes[]
   tavernTier     Int
@@ -134,7 +138,8 @@ model Card {
 }
 
 model PlayGame {
-  gameId            String           @id @map("_id")
+  id                String           @id @default(auto()) @map("_id") @db.ObjectId
+  gameId            String           @unique()
   phase             playGamePhases
   phaseDurationInMs Int
   phaseStartDate    String
