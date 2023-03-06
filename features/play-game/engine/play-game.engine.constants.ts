@@ -1,6 +1,6 @@
 import { playGamePhases } from '@prisma/client';
 
-export const phaseSiquence = {
+export const phaseSequence = {
     [playGamePhases.heroSelection]: playGamePhases.recruit,
     [playGamePhases.combat]: playGamePhases.recruit,
     [playGamePhases.recruit]: playGamePhases.recruit,

@@ -21,7 +21,7 @@ import { useI18nLabelTranslate } from '../../../i18n/i18n.hooks';
 
 import { labelI18nKeys } from '../../../i18n/enums/i18n.label.enums';
 
-export const logoutlabels = {
+export const logoutLabels = {
     title: labelI18nKeys.logoutConfirmationTitle,
     cancelLabel: labelI18nKeys.cancelButtonLabel,
     confirmLabel: labelI18nKeys.logoutLabel,
@@ -39,7 +39,7 @@ export const Login = () => {
 
     return login ? (
         <Group spacing="xs">
-            <ConfirmationModal {...props} {...logoutlabels}></ConfirmationModal>
+            <ConfirmationModal {...props} {...logoutLabels}></ConfirmationModal>
             <Text>{t(labelI18nKeys.welcomeLoginLabel)}</Text>
             <Text fw={700}>{login}</Text>
             <Button

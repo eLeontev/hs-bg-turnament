@@ -30,7 +30,10 @@ export type PendingGamePlayer = Player & {
     playerIdInGame: PlayerIdInGame;
 };
 
-export type PlayGamePlayer = Omit<PrismaPlayGamePlayer, 'playGameGameId'>;
+export type PlayGamePlayer = Omit<
+    PrismaPlayGamePlayer,
+    'playGameGameId' | 'id'
+>;
 export type PlayGamePlayerWithCards = PlayGamePlayer & { cards: Cards };
 
 export type PlayGamePlayerData = z.infer<typeof playGamePlayerWithCardsSchema>;
@@ -45,5 +48,5 @@ export type PlayGamePlayerWithSelectedHero = {
     playerIdInGame: PlayerIdInGame;
     selectedHeroId: heroIds;
 };
-export type PlayGamePlayerWithSelectedHeros =
+export type PlayGamePlayerWithSelectedHeroes =
     Array<PlayGamePlayerWithSelectedHero>;

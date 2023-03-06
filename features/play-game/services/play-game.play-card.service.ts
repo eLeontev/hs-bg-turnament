@@ -1,4 +1,4 @@
-import { getPlayerAndAwailableCards } from './play-game.server.service';
+import { getPlayerAndAvailableCards } from './play-game.server.service';
 
 import { playPlayerCardOperation } from '../operations/play-game.player.operations';
 
@@ -12,7 +12,7 @@ export class PlayCardService {
         targetId,
         ...baseInput
     }: PlayMinionPlayerInput): Promise<void> {
-        const { player } = await getPlayerAndAwailableCards(baseInput);
+        const { player } = await getPlayerAndAvailableCards(baseInput);
 
         // TODO: add play minion logic to change return type to return battle cry effect
 

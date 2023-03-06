@@ -28,7 +28,7 @@ export enum labelI18nKeys {
     pendingGameNoGamesFound = 'pendingGameNoGamesFound',
     pendingGameAuthor = 'pendingGameAuthor',
     pendingGameGameName = 'pendingGameGameName',
-    pendingGameCreactionTime = 'pendingGameCreactionTime',
+    pendingGameCreationTime = 'pendingGameCreationTime',
     playerInGameDisableReasonLabel = 'playerInGameDisableReasonLabel',
     createPendingGameInputLabel = 'createPendingGameInputLabel',
     createPendingGameInputPlaceholder = 'createPendingGameInputPlaceholder',

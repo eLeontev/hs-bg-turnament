@@ -1,9 +1,8 @@
-import { format, formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
 import { enUS, ru } from 'date-fns/locale';
 
 import { locales } from '../i18n/enums/i18n.enums';
 
-export const UIdateFormat = 'MM/dd/yy H:m::s';
 export const tenSecondInMs = 10000;
 
 export const localesMap = {
@@ -12,9 +11,6 @@ export const localesMap = {
 };
 
 export const dateInUtcString = () => new Date().toUTCString();
-
-export const formatToUI = (date: string) =>
-    format(new Date(date), UIdateFormat);
 
 export const formatUIDistance = (
     date: string,

@@ -16,11 +16,11 @@ export const getHashesFromValues = async (values: Array<string>) => {
     return hashes;
 };
 
-export const getHashes = async (lenght: number): Promise<Array<string>> => {
+export const getHashes = async (length: number): Promise<Array<string>> => {
     let hashes = [];
-    while (lenght) {
-        lenght = lenght - 1;
-        hashes.push(await getHash(`${lenght}`));
+    while (length) {
+        length = length - 1;
+        hashes.push(await getHash(`${length}`));
     }
 
     return hashes;

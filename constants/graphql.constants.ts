@@ -1,1 +1,1 @@
-export const unknownGrapgQLErrorMessage = 'unknown graphQl error';
+export const unknownGraphQlErrorMessage = 'unknown graphQl error';

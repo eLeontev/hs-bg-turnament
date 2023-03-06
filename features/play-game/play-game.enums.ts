@@ -13,6 +13,6 @@ export enum playGamePlayerActions {
     rollTavernMinions = 'rollTavernMinions',
     upgradeTavern = 'upgradeTavern',
     freezeMinions = 'freezeMinions',
-    useHeroPower = 'useHeroPoseer',
+    useHeroPower = 'useHeroPower',
     rearrangeMinionsAttackOrder = 'rearrangeMinionsAttackOrder',
 }

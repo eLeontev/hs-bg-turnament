@@ -5,8 +5,8 @@ import {
 import { PlayGamePlayer } from '../../player/player.models';
 import { tavernTiers } from '../models/play-game.tavern.models';
 
-// TODO: imrove types to pass only required values
-// that should imrove performance on FE (to prevent update component on each state change)
+// TODO: improve types to pass only required values
+// that should improve performance on FE (to prevent update component on each state change)
 
 export const noFrozenCardIds: CardIds = [];
 

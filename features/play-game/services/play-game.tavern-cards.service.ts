@@ -1,6 +1,6 @@
 import { Card as CardFromDB } from '@prisma/client';
 
-import { getPlayerAndAwailableCards } from './play-game.server.service';
+import { getPlayerAndAvailableCards } from './play-game.server.service';
 
 import {
     markCardAvailableOperation,
@@ -15,7 +15,7 @@ import {
     upgradePlayerTavernTierOperation,
 } from '../operations/play-game.player.operations';
 
-import { countOfCardPertavernTier } from '../../../constants/play-game.config.constants';
+import { countOfCardPerTavernTier } from '../../../constants/play-game.config.constants';
 
 import {
     CardId,
@@ -49,7 +49,7 @@ import {
 
 export class TavernCardsService {
     async rollTavernMinions(baseInput: PlayGameBaseInput): Promise<Cards> {
-        const { player, availableCards } = await getPlayerAndAwailableCards(
+        const { player, availableCards } = await getPlayerAndAvailableCards(
             baseInput,
             true
         );
@@ -73,7 +73,7 @@ export class TavernCardsService {
         const {
             player: { tavernTier, goldAmount, tavernCardIds, frozenCardIds },
             availableCards,
-        } = await getPlayerAndAwailableCards(baseInput, true);
+        } = await getPlayerAndAvailableCards(baseInput, true);
 
         const frozenCardIdsSet = new Set(frozenCardIds);
         const availableTavernCardsCards = tavernCardIds.filter(
@@ -94,7 +94,7 @@ export class TavernCardsService {
         cardId,
         ...baseInput
     }: PurchasePlayerInput): Promise<void> {
-        const { player } = await getPlayerAndAwailableCards(baseInput);
+        const { player } = await getPlayerAndAvailableCards(baseInput);
 
         purchaseCardValidator(player, cardId);
 
@@ -114,7 +114,7 @@ export class TavernCardsService {
         cardId,
         ...baseInput
     }: SellMinionsPlayerInput): Promise<void> {
-        const { player } = await getPlayerAndAwailableCards(baseInput);
+        const { player } = await getPlayerAndAvailableCards(baseInput);
 
         sellCardValidator(player, cardId);
 
@@ -132,7 +132,7 @@ export class TavernCardsService {
     }
 
     async upgradeTavern(input: UpgradeTavernPlayerInput): Promise<void> {
-        const { player } = await getPlayerAndAwailableCards(input);
+        const { player } = await getPlayerAndAvailableCards(input);
 
         tavernTierUpgradeValidator(player);
 
@@ -149,7 +149,7 @@ export class TavernCardsService {
     async freezeMinionsMutation(
         input: FreezeMinionsPlayerInput
     ): Promise<void> {
-        const { player } = await getPlayerAndAwailableCards(input);
+        const { player } = await getPlayerAndAvailableCards(input);
 
         const { frozenCardIds } = freezeTogglePlayerStateAction(player);
 
@@ -198,7 +198,7 @@ export class TavernCardsService {
         );
 
         let countOfCards =
-            countOfCardPertavernTier[playerTavernTier] - countOfFrozenCards;
+            countOfCardPerTavernTier[playerTavernTier] - countOfFrozenCards;
         const cardsForPlayer: Cards = [];
         const cardsForPlayerSet = new Set();
 

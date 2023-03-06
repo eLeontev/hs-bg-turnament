@@ -7,7 +7,7 @@ import {
     PlayGamePlayer,
     PlayGamePlayers,
     PlayGamePlayerWithSelectedHero,
-    PlayGamePlayerWithSelectedHeros,
+    PlayGamePlayerWithSelectedHeroes,
 } from '../../player/player.models';
 import { tavernTiers } from '../models/play-game.tavern.models';
 
@@ -21,7 +21,7 @@ export const setHeroToPlayerOperation = (
     });
 
 export const setHeroToPlayersOperation = (
-    playGamePlayers: PlayGamePlayerWithSelectedHeros
+    playGamePlayers: PlayGamePlayerWithSelectedHeroes
 ) =>
     Promise.all(
         playGamePlayers.map(

@@ -70,18 +70,18 @@ const getTimerParams = (
         new Date(timeLeftUTC)
     );
 
-    const milisecondsLeft =
+    const millisecondsLeft =
         durationInMs > diffInMs ? durationInMs - diffInMs : 0;
-    const rawValue = milisecondsLeft / durationInMs;
+    const rawValue = millisecondsLeft / durationInMs;
     const value = rawValue * 100;
 
     const color = colorsGradations[getColorIndex(rawValue)];
-    const formatDevider =
+    const formatDivider =
         durationFormat === durationFormats.minutes ? 1000 * 60 : 1000;
 
     const label = formatDuration(
         {
-            [durationFormat]: Math.round(milisecondsLeft / formatDevider),
+            [durationFormat]: Math.round(millisecondsLeft / formatDivider),
         },
         { locale: localesMap[locale] }
     );

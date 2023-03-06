@@ -3,21 +3,21 @@ import Image from 'next/image';
 import { Flex, Text } from '@mantine/core';
 
 import {
-    MinionHitpointsStyleProps,
-    useMinionHitpointsStyles,
+    MinionHitPointsStyleProps,
+    useMinionHitPointsStyles,
 } from '../../styles/minion.styles';
 
-export const MinionCountOfHitpoints = ({
-    countOfHitpoints,
+export const MinionCountOfHitPoints = ({
+    countOfHitPoints,
     isSummoned,
-}: MinionHitpointsStyleProps) => {
-    const { classes } = useMinionHitpointsStyles({
-        countOfHitpoints,
+}: MinionHitPointsStyleProps) => {
+    const { classes } = useMinionHitPointsStyles({
+        countOfHitPoints,
         isSummoned,
     });
 
     return (
-        <Flex className={classes.countOfHitpointsContainer}>
+        <Flex className={classes.countOfHitPointsContainer}>
             <Image
                 priority
                 width={56}
@@ -25,7 +25,7 @@ export const MinionCountOfHitpoints = ({
                 src="/hit-points.png"
                 alt=""
             ></Image>
-            <Text className={classes.countOfHitpoints}>{countOfHitpoints}</Text>
+            <Text className={classes.countOfHitPoints}>{countOfHitPoints}</Text>
         </Flex>
     );
 };

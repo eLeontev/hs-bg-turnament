@@ -33,15 +33,13 @@ const usePendingGameMutation = <R, B, C>(
 ) => {
     const [pendingGameMutation] = useMutation<R, B>(mutation);
 
-    const action = async (config: C) => {
+    return (config: C) => {
         try {
             return serviceAction(pendingGameMutation, config);
         } catch (e) {
             alert((e as { message: string }).message);
         }
     };
-
-    return action;
 };
 
 export const useCreatePendingGame = () => {

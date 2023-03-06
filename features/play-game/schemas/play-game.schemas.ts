@@ -99,7 +99,7 @@ const playGamePhasesValues = [
     playGamePhases.heroSelection,
     playGamePhases.recruit,
     playGamePhases.combat,
-] as const; // TODO: no automatic way to generate zod enums fron objects (casting or manual)
+] as const; // TODO: no automatic way to generate zod enums from objects (casting or manual)
 export const playGameZodPhasesSchema = z.enum(playGamePhasesValues);
 
 export const playGamePhaseDurationInMsSchema = z.number().min(1000);

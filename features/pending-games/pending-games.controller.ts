@@ -35,7 +35,7 @@ import { Message, PlayerIdInGameResponse } from '../../models/graphql.models';
 import { getSocket } from '../../utils.ts/socket.utils';
 import {
     cancelDeletePendingGame,
-    schedulePendingGameDelition,
+    schedulePendingGameDeletion,
 } from './services/pending-games.scheduled.service';
 
 export const createPendingGameHandler = async (
@@ -49,7 +49,7 @@ export const createPendingGameHandler = async (
 
     const io = getSocket(res);
     notifyPendingGames(io, getPendingGames());
-    schedulePendingGameDelition(io, createPendingGameBody.playerId, gameId);
+    schedulePendingGameDeletion(io, createPendingGameBody.playerId, gameId);
 
     return { playerIdInGame, playerKey };
 };

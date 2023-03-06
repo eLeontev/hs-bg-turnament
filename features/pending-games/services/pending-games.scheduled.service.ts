@@ -7,7 +7,7 @@ import {
 
 import { notifyPendingGames } from '../sockets/pending-games.notification.socket';
 
-import { pendginGameLiveDurationInMs } from '../pending-games.constants';
+import { pendingGameLiveDurationInMs } from '../pending-games.constants';
 
 import { GameId, PlayerId } from '../../../models/common.models';
 
@@ -18,7 +18,7 @@ import {
     scheduleTask,
 } from '../../../utils.ts/scheduled-time.utils';
 
-export const schedulePendingGameDelition = (
+export const schedulePendingGameDeletion = (
     io: Server,
     playerId: PlayerId,
     gameId: GameId
@@ -32,7 +32,7 @@ export const schedulePendingGameDelition = (
     scheduleTask(
         action,
         formActionId(actionTypes.deletePendingGame, gameId),
-        pendginGameLiveDurationInMs
+        pendingGameLiveDurationInMs
     );
 };
 

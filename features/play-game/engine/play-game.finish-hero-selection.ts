@@ -10,13 +10,13 @@ import { GameId } from '../../../models/common.models';
 import {
     PlayGamePlayer,
     PlayGamePlayers,
-    PlayGamePlayerWithSelectedHeros,
+    PlayGamePlayerWithSelectedHeroes,
 } from '../../player/player.models';
 
 import { getRandom } from '../../../utils.ts/random.utils';
 
 const assignHeroToPlayers = async (players: PlayGamePlayers) => {
-    const playerWithSelectedHeroes: PlayGamePlayerWithSelectedHeros = players
+    const playerWithSelectedHeroes: PlayGamePlayerWithSelectedHeroes = players
         .filter(({ selectedHeroId }: PlayGamePlayer) => !selectedHeroId)
         .map(({ playerIdInGame, heroIds }: PlayGamePlayer) => ({
             playerIdInGame,

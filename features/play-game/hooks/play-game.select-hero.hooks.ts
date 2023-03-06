@@ -41,14 +41,14 @@ export const useSelectHero = (playGameBaseInput: PlayGameBaseInput) => {
     const setSelectedHeroId = usePlayGameStore(setSelectedHeroIdSelector);
 
     return async (heroId: heroIds | undefined) => {
-        const selectHeroplayerInput = selectHeroPlayerInputSchema.parse({
+        const selectHeroPlayerInput = selectHeroPlayerInputSchema.parse({
             ...playGameBaseInput,
             heroId,
         });
 
-        await mutateAsync(selectHeroplayerInput);
+        await mutateAsync(selectHeroPlayerInput);
 
-        const { heroId: selectedHeroId } = selectHeroplayerInput;
+        const { heroId: selectedHeroId } = selectHeroPlayerInput;
 
         setSelectedHeroId(selectedHeroId);
         playGameActionsHandler({

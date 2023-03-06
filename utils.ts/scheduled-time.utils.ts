@@ -17,7 +17,7 @@ export const scheduleTask = <T>(
     }
 };
 
-export const scheduleTaskWithoutCanceletion = <T>(
+export const scheduleTaskWithoutCancellation = <T>(
     action: () => any,
     delayInMs: number
 ) => scheduleTask(action, null, delayInMs);

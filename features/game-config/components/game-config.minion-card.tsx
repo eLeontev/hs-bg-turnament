@@ -45,7 +45,7 @@ export const GameConfigMinionCard = ({
     const { attackPower, tripleAttackPower } = minion;
 
     const calculatedAttackPower = isTriple ? tripleAttackPower : attackPower;
-    const calculatedCountOfHitpoints = isTriple
+    const calculatedCountOfHitPoints = isTriple
         ? tripleCountOfHitPoints
         : countOfHitPoints;
 
@@ -58,7 +58,7 @@ export const GameConfigMinionCard = ({
     return (
         <Box>
             <Switch
-                className={classes.toggletriple}
+                className={classes.toggleTriple}
                 checked={isTriple}
                 onLabel={t(labelI18nKeys.switchToTriple)}
                 offLabel={t(labelI18nKeys.switchToRegular)}
@@ -68,7 +68,7 @@ export const GameConfigMinionCard = ({
                 key={minion.minionId}
                 minion={{
                     ...minion,
-                    countOfHitPoints: calculatedCountOfHitpoints,
+                    countOfHitPoints: calculatedCountOfHitPoints,
                     attackPower: calculatedAttackPower,
                     isTriple,
                 }}

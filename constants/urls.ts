@@ -1,4 +1,4 @@
-export const grapqlUrl = '/api/graphql';
+export const graphqlUrl = '/api/graphql';
 
 export const rootPageUrl = '/';
 export const loginPageUrl = '/login';

@@ -4,17 +4,15 @@ import { playGamePhases } from '@prisma/client';
 import { getPhaseDuration } from '../services/play-game.phase.service';
 
 import { finishHeroSelection } from './play-game.finish-hero-selection';
-import { changePlayGamePhase } from './play-game.change-phase';
 import { finishPlayGame } from './play-game.finish-game';
 import { GameId } from '../../../models/common.models';
-import { performEndPhaseActivity } from './play-game.end-phase';
 import { performStartPhaseActivity } from './play-game.start-phase';
 
 import { isPlayGameOver } from './play-game.game-over.validation';
 
-import { phaseSiquence } from './play-game.engine.constants';
+import { phaseSequence } from './play-game.engine.constants';
 
-import { scheduleTaskWithoutCanceletion } from '../../../utils.ts/scheduled-time.utils';
+import { scheduleTaskWithoutCancellation } from '../../../utils.ts/scheduled-time.utils';
 
 export const togglePhase =
     (
@@ -27,7 +25,6 @@ export const togglePhase =
         if (shouldFinishHeroSelection) {
             await finishHeroSelection(gameId);
         }
-        await performEndPhaseActivity(io, gameId, phase);
 
         const round = await performStartPhaseActivity(io, gameId, phase);
 
@@ -47,11 +44,11 @@ export const togglePlayGameEngine = (
     round: number,
     shouldFinishHeroSelection?: boolean
 ) => {
-    scheduleTaskWithoutCanceletion(
+    scheduleTaskWithoutCancellation(
         togglePhase(
             io,
             gameId,
-            phaseSiquence[phase],
+            phaseSequence[phase],
             shouldFinishHeroSelection
         ),
         getPhaseDuration(phase, round)

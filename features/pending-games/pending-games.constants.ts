@@ -14,4 +14,4 @@ export const pendingGameStartMessage: Message = {
 
 export const noGameName = '';
 
-export const pendginGameLiveDurationInMs = 900000; // 15min
+export const pendingGameLiveDurationInMs = 900000; // 15min

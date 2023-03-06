@@ -42,7 +42,7 @@ export const ruLabelMessages: I18nTransMessages<namespaces.labels> = {
     pendingGameNoGamesFound: 'Пока игр нет',
     pendingGameAuthor: 'Автор',
     pendingGameGameName: 'Название игры',
-    pendingGameCreactionTime: 'Дата создания',
+    pendingGameCreationTime: 'Дата создания',
     playerInGameDisableReasonLabel: 'одновременно доступна только одна игра',
     createPendingGameInputLabel:
         'Пожалуйста, введите название игры перед тем как создать ее',

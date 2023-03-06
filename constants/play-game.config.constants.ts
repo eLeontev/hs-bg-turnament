@@ -11,12 +11,12 @@ export const defaultMinionsRollPrice = 1;
 export const defaultMinionPurchasePrice = 3;
 export const defaultMinionSellPrice = 1;
 
-export const initialAmounOfGoldPerRound = 2;
+export const initialAmountOfGoldPerRound = 2;
 export const maxAmountOfGoldPerRound = 10;
 
 export const initialTavernTierUpgradePrice = 3;
 
-export const countOfCardPertavernTier = {
+export const countOfCardPerTavernTier = {
     [tavernTiers['☆']]: 3,
     [tavernTiers['☆☆']]: 4,
     [tavernTiers['☆☆☆']]: 4,

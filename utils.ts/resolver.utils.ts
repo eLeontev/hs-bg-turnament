@@ -1,6 +1,6 @@
 import { GraphQLError } from 'graphql';
 import { NextApiResponse } from 'next';
-import { unknownGrapgQLErrorMessage } from '../constants/graphql.constants';
+import { unknownGraphQlErrorMessage } from '../constants/graphql.constants';
 import { Parent, RequestHandler } from '../models/resolver.models';
 
 export const withoutParent =
@@ -15,7 +15,7 @@ export const withErrorHandler =
             return await requestHandler(...args);
         } catch ({ message }) {
             throw new GraphQLError(
-                String(message) || unknownGrapgQLErrorMessage
+                String(message) || unknownGraphQlErrorMessage
             );
         }
     };

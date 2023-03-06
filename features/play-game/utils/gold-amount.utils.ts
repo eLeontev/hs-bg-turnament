@@ -1,10 +1,10 @@
 import {
-    initialAmounOfGoldPerRound,
+    initialAmountOfGoldPerRound,
     maxAmountOfGoldPerRound,
 } from '../../../constants/play-game.config.constants';
 
 export const getAmountOfGoldOnRoundStart = (round: number): number => {
-    const suggestedAmountOfGold = initialAmounOfGoldPerRound + round;
+    const suggestedAmountOfGold = initialAmountOfGoldPerRound + round;
 
     return suggestedAmountOfGold > maxAmountOfGoldPerRound
         ? maxAmountOfGoldPerRound

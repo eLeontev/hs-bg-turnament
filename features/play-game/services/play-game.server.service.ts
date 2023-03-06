@@ -79,7 +79,7 @@ export const startPlayGame = async (
     return phaseData;
 };
 
-export const getPlayerAndAwailableCards = async (
+export const getPlayerAndAvailableCards = async (
     { gameId, playerIdInGame }: PlayGameBaseInput,
     withAvailableCards?: boolean
 ) => {

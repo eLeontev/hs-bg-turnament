@@ -11,7 +11,7 @@ import { GameId, PlayerId } from '../../../models/common.models';
 import {
     getListOfOnlinePlayerIds,
     joinPlayerIdToTheRoom,
-    leavePlayerKeyfromTheRoom,
+    leavePlayerKeyFromTheRoom,
 } from './online-game.service';
 
 import { isPlayerInPlayGameOperation } from '../../play-game/operations/play-game.operations';
@@ -39,7 +39,7 @@ const leavePlayerFromOnlineRoom = (
     payload: JoinLeaveOnlineRoomPayload
 ) => {
     const { gameId } = payload;
-    leavePlayerKeyfromTheRoom(payload);
+    leavePlayerKeyFromTheRoom(payload);
 
     const onlineRoomName = getOnlineGameRoom(gameId, payload.isPlayGame);
     socket.leave(onlineRoomName);

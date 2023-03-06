@@ -10,11 +10,11 @@ import {
     useLoginStore,
 } from '../../features/login/components/store/login.store';
 
-export type LoginlayoutProps = {
+export type LoginLayoutProps = {
     children: ReactElement;
 };
 
-const Loginlayout = ({ children }: LoginlayoutProps) => {
+const LoginLayout = ({ children }: LoginLayoutProps) => {
     const isLoggedIn = useLoginStore(isLoggedInSelector);
     const router = useRouter();
 
@@ -27,4 +27,4 @@ const Loginlayout = ({ children }: LoginlayoutProps) => {
     return children;
 };
 
-export default Loginlayout;
+export default LoginLayout;

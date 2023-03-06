@@ -11,7 +11,7 @@ const registerPlayerKeyOnline = (
     playerKey: PlayerKey
 ) => new Set(onlinePlayerKeys.add(playerKey));
 
-const registerPlayerKeyOffine = (
+const registerPlayerKeyOffline = (
     onlinePlayerKeys: OnlinePlayerKeys,
     playerKey: PlayerKey
 ) => {
@@ -36,12 +36,12 @@ export const joinPlayerIdToTheRoom = ({
     );
 };
 
-export const leavePlayerKeyfromTheRoom = ({
+export const leavePlayerKeyFromTheRoom = ({
     gameId,
     playerKey,
 }: JoinLeaveOnlineRoomPayload) => {
     const onlinePlayerKeys = getOnlinePlayerKeysInTheRoom(gameId);
-    const restOnlinePlayerKeys = registerPlayerKeyOffine(
+    const restOnlinePlayerKeys = registerPlayerKeyOffline(
         onlinePlayerKeys,
         playerKey
     );
@@ -49,7 +49,7 @@ export const leavePlayerKeyfromTheRoom = ({
     if (restOnlinePlayerKeys.size) {
         onlineRooms.set(
             gameId,
-            registerPlayerKeyOffine(onlinePlayerKeys, playerKey)
+            registerPlayerKeyOffline(onlinePlayerKeys, playerKey)
         );
     } else {
         onlineRooms.delete(gameId);

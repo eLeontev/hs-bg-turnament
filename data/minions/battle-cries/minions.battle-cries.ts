@@ -4,7 +4,7 @@ import { Minion } from '../../../features/play-game/models/play-game.minion.mode
 import { tavernTiers } from '../../../features/play-game/models/play-game.tavern.models';
 
 export enum battleCries {
-    increseHP = 'increseHP',
+    increaseHP = 'increaseHP',
     increaseAttack = 'increaseAttack',
     increaseStats = 'increaseStats',
     setStats = 'setStats',
@@ -13,9 +13,10 @@ export enum battleCries {
     addReborn = 'addReborn',
     summon = 'summon',
 }
+
 export type StatsBuffValues = { hp: number; attack: number };
 export type CardValues = {
-    [battleCries.increseHP]: number;
+    [battleCries.increaseHP]: number;
     [battleCries.increaseAttack]: number;
     [battleCries.increaseStats]: StatsBuffValues;
     [battleCries.setStats]: StatsBuffValues;
@@ -52,7 +53,7 @@ export type BattleCryHandlerArgs = {
     targetCardId?: CardId;
     tableCards: Cards;
 };
-export type BattleCryHanlder = (
+export type BattleCryHandler = (
     battleCryHandlerArgs: BattleCryHandlerArgs
 ) => void;
 
@@ -63,6 +64,6 @@ export const alleyCatBattleCryHandler = ({
     // TODO
 };
 
-export const minionsBattleCries = new Map<minionIds, BattleCryHanlder>([
+export const minionsBattleCries = new Map<minionIds, BattleCryHandler>([
     [minionIds.alleycat, alleyCatBattleCryHandler],
 ]);

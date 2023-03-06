@@ -11,7 +11,7 @@ import { JoinPendingGame } from './join-pending-game.component';
 
 import { useFormatDistance } from '../hooks/pending-games.time.hooks';
 
-import { pendginGameLiveDurationInMs } from '../pending-games.constants';
+import { pendingGameLiveDurationInMs } from '../pending-games.constants';
 
 import { useI18nLabelTranslate } from '../../../i18n/i18n.hooks';
 
@@ -48,7 +48,7 @@ export const PendingGameComponent = ({
             <Timer
                 className={classes.timer}
                 timeLeftUTC={createdDate}
-                durationInMs={pendginGameLiveDurationInMs}
+                durationInMs={pendingGameLiveDurationInMs}
                 durationFormat={durationFormats.minutes}
             ></Timer>
             <Flex key={gameId} direction="row" justify="space-between">
@@ -62,7 +62,7 @@ export const PendingGameComponent = ({
                     value={gameName}
                 ></PairComponent>
                 <PairComponent
-                    label={t(labelI18nKeys.pendingGameCreactionTime)}
+                    label={t(labelI18nKeys.pendingGameCreationTime)}
                     value={dateDistance}
                 ></PairComponent>
                 {isAuthor && (

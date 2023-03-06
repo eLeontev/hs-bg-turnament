@@ -14,7 +14,7 @@ import { playGameActions } from '../play-game.enums';
 import { getPhaseData } from '../services/play-game.phase.service';
 import { notifyPlayersInPlayGame } from '../sockets/play-game.notification.socket';
 import { PlayGamePhaseData } from '../models/play-game.models';
-import { phaseSiquence, roundIncrement } from './play-game.engine.constants';
+import { phaseSequence, roundIncrement } from './play-game.engine.constants';
 import { phaseInitializationService } from '../services/play-game.phase-initialization.service';
 import { goldService } from '../services/play-game.gold.service';
 
@@ -28,7 +28,7 @@ export const performStartPhaseActivity = async (
     await phaseInitializationService.initRecruitPhase(gameId);
 
     const playGameData: PlayGamePhaseData = getPhaseData(
-        phaseSiquence[phase],
+        phaseSequence[phase],
         dateInUtcString(),
         round + roundIncrement
     );

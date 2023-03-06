@@ -1,5 +1,6 @@
 const Head = () => (
     <head>
+        <title>HS BG competition</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         {/* <link

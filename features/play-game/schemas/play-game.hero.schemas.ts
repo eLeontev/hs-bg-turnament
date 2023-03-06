@@ -11,6 +11,6 @@ export const heroIdsValues = [
     heroIds.brukan,
     heroIds.cthun,
     heroIds.captain,
-] as const; // TODO: no automatic way to generate zod enums fron objects (casting or manual)
+] as const; // TODO: no automatic way to generate zod enums from objects (casting or manual)
 export const heroIdSchema = z.enum(heroIdsValues);
 export const heroIdsSchema = z.array(heroIdSchema);

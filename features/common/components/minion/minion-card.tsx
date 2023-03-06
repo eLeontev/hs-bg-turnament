@@ -6,7 +6,7 @@ import { minionTypes } from '@prisma/client';
 
 import { useI18nMinionTranslate } from '../../../../i18n/i18n.hooks';
 
-import { MinionCountOfHitpoints } from './minion.hit-points';
+import { MinionCountOfHitPoints } from './minion.hit-points';
 import { MinionName } from './minion.name';
 import { MinionAttackPower } from './minion.attack-power';
 import { MinionTavernTier } from './minion.tavern-tier';
@@ -79,10 +79,10 @@ export const MinionCard = ({ minion, tavernTier }: MinionCardProps) => {
                 isSummoned={isSummoned}
                 attackPower={minion.attackPower}
             ></MinionAttackPower>
-            <MinionCountOfHitpoints
+            <MinionCountOfHitPoints
                 isSummoned={isSummoned}
-                countOfHitpoints={minion.countOfHitPoints}
-            ></MinionCountOfHitpoints>
+                countOfHitPoints={minion.countOfHitPoints}
+            ></MinionCountOfHitPoints>
         </Box>
     );
 };

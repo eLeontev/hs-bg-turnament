@@ -6,7 +6,6 @@ import {
     joinPendingGameBodySchema,
     leavePendingGameBodySchema,
 } from './pending-games.schemas';
-import { PlayerKey, PlayerLogin } from '../../models/common.models';
 
 import { PendingGamePlayers, PublicPlayer } from '../player/player.models';
 

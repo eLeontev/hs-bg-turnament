@@ -103,7 +103,7 @@ const getDescription = (
         ? tripleCardPowerDescription
         : powerDescription;
 
-    let powerDesciprion = t(powerDescriptionI18nKey);
+    let powerDescriptionLabel = t(powerDescriptionI18nKey);
 
     const getSummonedMinionDetails = minionsWithSummonMap.get(minionId);
 
@@ -112,7 +112,7 @@ const getDescription = (
             minion,
             playerTavernTier
         );
-        powerDesciprion = powerDesciprion.replace(
+        powerDescriptionLabel = powerDescriptionLabel.replace(
             '$(count)',
             `${summonedMinionsFromAbility.length}`
         );
@@ -132,10 +132,13 @@ const getDescription = (
             const hp = isTriple ? tripleCountOfHitPoints : countOfHitPoints;
             const attack = isTriple ? tripleAttackPower : attackPower;
 
-            return powerDesciprion.replace('$(attack/hp)', `+${attack}/+${hp}`);
+            return powerDescriptionLabel.replace(
+                '$(attack/hp)',
+                `+${attack}/+${hp}`
+            );
         }
     }
-    return powerDesciprion;
+    return powerDescription;
 };
 
 type MinionDescriptionStyleProps = {

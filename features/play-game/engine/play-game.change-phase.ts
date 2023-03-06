@@ -7,7 +7,7 @@ import {
     getPlayGameWithoutPlayerOperation,
 } from '../operations/play-game.operations';
 
-import { phaseSiquence, roundIncrement } from './play-game.engine.constants';
+import { phaseSequence, roundIncrement } from './play-game.engine.constants';
 
 import { GameId } from '../../../models/common.models';
 import { PlayGamePhaseData } from '../models/play-game.models';
@@ -18,7 +18,7 @@ export const changePlayGamePhase = async (io: Server, gameId: GameId) => {
     const { round, phase } = await getPlayGameWithoutPlayerOperation(gameId);
 
     const playGameData: PlayGamePhaseData = getPhaseData(
-        phaseSiquence[phase],
+        phaseSequence[phase],
         dateInUtcString(),
         round + roundIncrement
     );
