@@ -11,6 +11,8 @@ import {
 } from '../../player/player.models';
 import { tavernTiers } from '../models/play-game.tavern.models';
 
+import { RearrangeCardsOrderPayload } from '../utils/play-game.player-actions.utils';
+
 export const setHeroToPlayerOperation = (
     playerIdInGame: PlayerIdInGame,
     selectedHeroId: heroIds
@@ -109,4 +111,13 @@ export const updateFrozenPlayerCardsOperation = (
     prisma.playGamePlayer.update({
         where: { playerIdInGame },
         data: { frozenCardIds },
+    });
+
+export const rearrangeCardsOrderOperation = (
+    playerIdInGame: PlayerIdInGame,
+    data: RearrangeCardsOrderPayload
+) =>
+    prisma.playGamePlayer.update({
+        where: { playerIdInGame },
+        data,
     });

@@ -18,4 +18,6 @@ export const ruErrorMessages: I18nTransMessages<namespaces.errorMessages> = {
         'Не хватает денег на смену кард в таверне',
     tavernTierUpgradeNonEnoughCurrency: 'Ваша таверна уже максимального уровня',
     tavernTierUpgradeMaxTier: 'Не хватает денег на пошывение уровня таверны',
+    rearrangeCardNotFound:
+        'Карта, порядок, которой вы пытаетеся поменять, не найдена',
 };

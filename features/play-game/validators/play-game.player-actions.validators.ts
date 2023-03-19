@@ -10,6 +10,8 @@ import { errorMessageI18nKeys } from '../../../i18n/enums/i18n.error-message.enu
 // TODO: improve types to pass only required values
 // that should improve performance on FE (to prevent update component on each state change)
 
+export const notFoundIndex = -1;
+
 export type ValidatorResult = void | errorMessageI18nKeys;
 export type ActionValidatorResult = false | errorMessageI18nKeys;
 export type ActionValidator = (
@@ -123,3 +125,11 @@ export const isTavernTierUpgradeDisabled = (
     player: PlayGamePlayer
 ): ActionValidatorResult =>
     isActionDisabled(tavernTierUpgradeValidator, player, '');
+
+export const rearrangeCardsOrderValidator = (
+    cardIndex: number
+): ValidatorResult => {
+    if (cardIndex === notFoundIndex) {
+        throw new Error(errorMessageI18nKeys.rearrangeCardNotFound);
+    }
+};

@@ -6,6 +6,7 @@ import {
     FreezeMinionsPlayerInput,
     PlayMinionPlayerInput,
     PurchasePlayerInput,
+    RearrangeCardsOrderPlayerInput,
     RollTavernMinionsPlayerInput,
     SellMinionsPlayerInput,
     UpgradeTavernPlayerInput,
@@ -13,10 +14,12 @@ import {
 import { playCardService } from '../services/play-game.play-card.service';
 import { getPlayGamePlayer } from '../services/play-game.server.service';
 import { tavernCardsService } from '../services/play-game.tavern-cards.service';
+import { orderService } from '../services/play-game.order.service';
 
 export class PlayGamePlayerController {
     private playCardService = playCardService;
     private tavernCardsService = tavernCardsService;
+    private orderService = orderService;
 
     async playerDataQuery({
         input,
@@ -58,6 +61,12 @@ export class PlayGamePlayerController {
         input,
     }: TRCPProps<FreezeMinionsPlayerInput>): Promise<void> {
         await this.tavernCardsService.freezeMinionsMutation(input);
+    }
+
+    async rearrangeCardsOrderMutation({
+        input,
+    }: TRCPProps<RearrangeCardsOrderPlayerInput>): Promise<void> {
+        await this.orderService.rearrangeCardsOrderMutation(input);
     }
 }
 

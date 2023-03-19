@@ -15,4 +15,6 @@ export enum errorMessageI18nKeys {
 
     tavernTierUpgradeNonEnoughCurrency = 'tavernTierUpgradeNonEnoughCurrency',
     tavernTierUpgradeMaxTier = 'tavernTierUpgradeMaxTier',
+
+    rearrangeCardNotFound = 'rearrangeCardNotFound'
 }

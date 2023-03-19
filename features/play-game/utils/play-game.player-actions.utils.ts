@@ -4,6 +4,7 @@ import {
 } from '../../../data/minions/battle-cries/minions.battle-cries';
 import { PlayGamePlayer } from '../../player/player.models';
 import { tavernTiers } from '../models/play-game.tavern.models';
+import { cardsPlacements } from '../../pending-games/pending-games.schemas';
 
 // TODO: improve types to pass only required values
 // that should improve performance on FE (to prevent update component on each state change)
@@ -82,3 +83,21 @@ export const tavernTierUpgradePlayerStateAction = ({
     tavernTier: tavernTier + 1,
     goldAmount: goldAmount - tavernTierUpgradePrice,
 });
+
+export type RearrangeCardsOrderPayload = {
+    [cardPlacement in cardsPlacements]?: CardIds;
+};
+export type CardOrderPayload = { cardId: CardId; index: number };
+export const rearrangeCardsOrderStateAction = (
+    player: PlayGamePlayer,
+    cardPlacement: cardsPlacements,
+    from: CardOrderPayload,
+    to: CardOrderPayload
+): RearrangeCardsOrderPayload => {
+    const cardIds = [...player[cardPlacement]];
+
+    cardIds[from.index] = to.cardId;
+    cardIds[to.index] = from.cardId;
+
+    return { [cardPlacement]: cardIds };
+};

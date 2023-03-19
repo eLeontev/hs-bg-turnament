@@ -20,4 +20,5 @@ export const enErrorMessages: I18nTransMessages<namespaces.errorMessages> = {
     tavernTierUpgradeNonEnoughCurrency: 'You tavern is already at max level',
     tavernTierUpgradeMaxTier:
         'You do not have enough currency to upgrade your tavern',
+    rearrangeCardNotFound: 'Card to rearrange is not found',
 };

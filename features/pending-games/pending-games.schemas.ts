@@ -31,3 +31,15 @@ export const leavePendingGameBodySchema = z.object({
     playerId: playerIdSchema,
     gameId: gameIdSchema,
 });
+
+export enum cardsPlacements {
+    tavernCardIds = 'tavernCardIds',
+    deskCardIds = 'deskCardIds',
+    handCardIds = 'handCardIds',
+}
+
+export const cardsPlacementSchema = z.enum([
+    cardsPlacements.tavernCardIds,
+    cardsPlacements.deskCardIds,
+    cardsPlacements.handCardIds,
+]);

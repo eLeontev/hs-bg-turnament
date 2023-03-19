@@ -4,7 +4,7 @@ import {
     freezeMinionsPlayerInputSchema,
     playMinionPlayerInputSchema,
     purchasePlayerInputSchema,
-    rearrangeMinionsAttackOrderPlayerInputSchema,
+    rearrangeCardsOrderPlayerInputSchema,
     rollTavernMinionsPlayerInputSchema,
     selectHeroPlayerInputSchema,
     sellMinionPlayerInputSchema,
@@ -57,7 +57,9 @@ export const playerProcedures = {
     [playGamePlayerActions.useHeroPower]: procedure
         .input(useHeroPowerPlayerInputSchema)
         .mutation(() => 'TODO'),
-    [playGamePlayerActions.rearrangeMinionsAttackOrder]: procedure
-        .input(rearrangeMinionsAttackOrderPlayerInputSchema)
-        .mutation(() => 'TODO'),
+    [playGamePlayerActions.rearrangeCardsOrder]: procedure
+        .input(rearrangeCardsOrderPlayerInputSchema)
+        .mutation(({ input, ctx }) =>
+            playerController.rearrangeCardsOrderMutation({ input, ctx })
+        ),
 };

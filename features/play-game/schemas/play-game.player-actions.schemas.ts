@@ -1,8 +1,10 @@
 import { z } from 'zod';
-import { cardIdSchema } from '../../pending-games/pending-games.schemas';
+import {
+    cardIdSchema,
+    cardsPlacementSchema,
+} from '../../pending-games/pending-games.schemas';
 
 import { heroIdSchema } from './play-game.hero.schemas';
-import { minionIdSchema } from './play-game.minion.schemas';
 import { playGameBaseInputSchema } from './play-game.schemas';
 
 export const selectHeroPlayerInputSchema = playGameBaseInputSchema.merge(
@@ -27,7 +29,11 @@ export const freezeMinionsPlayerInputSchema = playGameBaseInputSchema;
 // TODO: depends on Hero power
 export const useHeroPowerPlayerInputSchema = playGameBaseInputSchema;
 
-export const rearrangeMinionsAttackOrderPlayerInputSchema =
+export const rearrangeCardsOrderPlayerInputSchema =
     playGameBaseInputSchema.merge(
-        z.object({ minionIdsOrder: z.array(minionIdSchema) })
+        z.object({
+            cardsPlacement: cardsPlacementSchema,
+            fromCardId: cardIdSchema,
+            toCardId: cardIdSchema,
+        })
     );

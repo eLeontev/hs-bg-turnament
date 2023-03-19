@@ -7,7 +7,7 @@ import {
     rollTavernMinionsPlayerInputSchema,
     upgradeTavernMinionsPlayerInputSchema,
     useHeroPowerPlayerInputSchema,
-    rearrangeMinionsAttackOrderPlayerInputSchema,
+    rearrangeCardsOrderPlayerInputSchema,
     playMinionPlayerInputSchema,
     freezeMinionsPlayerInputSchema,
 } from '../schemas/play-game.player-actions.schemas';
@@ -32,8 +32,8 @@ export type FreezeMinionsPlayerInput = z.infer<
 export type UseHeroPowerPlayerInput = z.infer<
     typeof useHeroPowerPlayerInputSchema
 >;
-export type RearrangeMinionsAttackOrderPlayerInput = z.infer<
-    typeof rearrangeMinionsAttackOrderPlayerInputSchema
+export type RearrangeCardsOrderPlayerInput = z.infer<
+    typeof rearrangeCardsOrderPlayerInputSchema
 >;
 
 export type PlayGamePlayerActionInput = {
@@ -44,5 +44,5 @@ export type PlayGamePlayerActionInput = {
     [playGamePlayerActions.upgradeTavern]: UpgradeTavernPlayerInput;
     [playGamePlayerActions.freezeMinions]: FreezeMinionsPlayerInput;
     [playGamePlayerActions.useHeroPower]: UseHeroPowerPlayerInput;
-    [playGamePlayerActions.rearrangeMinionsAttackOrder]: RearrangeMinionsAttackOrderPlayerInput;
+    [playGamePlayerActions.rearrangeCardsOrder]: RearrangeCardsOrderPlayerInput;
 };
