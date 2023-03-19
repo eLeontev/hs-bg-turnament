@@ -11,6 +11,8 @@ export const defaultMinionsRollPrice = 1;
 export const defaultMinionPurchasePrice = 3;
 export const defaultMinionSellPrice = 1;
 
+export const defaultCountOfCardsToTriple = 3;
+
 export const initialAmountOfGoldPerRound = 2;
 export const maxAmountOfGoldPerRound = 10;
 

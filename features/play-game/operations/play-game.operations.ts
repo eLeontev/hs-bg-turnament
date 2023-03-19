@@ -12,6 +12,7 @@ import {
     CardId,
     CardIds,
 } from '../../../data/minions/battle-cries/minions.battle-cries';
+import { TripleCardTemplate } from '../services/play-game.triple.service';
 
 export const startPlayGameOperation = (
     gameId: GameId,
@@ -106,3 +107,12 @@ export const setGoldAmountToPlayersOperation = (
         where: { playerIdInGame: { in: playerIdsInGame } },
         data: { goldAmount },
     });
+
+export const selectedCardsOperation = (cardIds: CardIds) =>
+    prisma.card.findMany({ where: { cardId: { in: cardIds } } });
+
+export const getCardOperation = (cardId: CardId) =>
+    prisma.card.findFirstOrThrow({ where: { cardId } });
+
+export const createTripleCardOperation = (data: TripleCardTemplate) =>
+    prisma.card.create({ data });
